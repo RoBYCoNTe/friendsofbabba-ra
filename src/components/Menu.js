@@ -3,6 +3,7 @@ import { getResources, useGetIdentity, useTranslate } from "react-admin";
 
 import MenuItem from "./MenuItem";
 import React from "react";
+import compose from "../compose";
 import { connect } from "react-redux";
 import useMenu from "./hook/useMenu";
 import { withRouter } from "react-router-dom";
@@ -54,7 +55,10 @@ const Menu = ({ hasDashboard, open, location, onMenuClick, menuConfig }) => {
   );
 };
 
-export default connect((state) => ({
-  open: state.admin.ui.sidebarOpen,
-  resources: getResources(state),
-}))(withRouter(Menu));
+export default compose(
+  withRouter,
+  connect((state) => ({
+    open: state.admin.ui.sidebarOpen,
+    resources: getResources(state),
+  }))
+)(Menu);

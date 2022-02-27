@@ -1,4 +1,4 @@
-import { IconButton, Toolbar } from "@material-ui/core";
+import { IconButton, Toolbar, useMediaQuery } from "@material-ui/core";
 import { LoadingIndicator, useGetIdentity, useTranslate } from "react-admin";
 import React, { useCallback } from "react";
 
@@ -48,7 +48,7 @@ const AppBar = ({ open, logout, drawerWidth }) => {
   const classes = useStyles({ drawerWidth });
   const dispatch = useDispatch();
   const translate = useTranslate();
-
+  const isXSmall = useMediaQuery((theme) => theme.breakpoints.down("xs"));
   const { identity } = useGetIdentity();
   const handleToggleSidebar = useCallback(
     () => dispatch(toggleSidebar()),
@@ -60,7 +60,7 @@ const AppBar = ({ open, logout, drawerWidth }) => {
       position="fixed"
       color="secondary"
       className={classnames(classes.appBar, {
-        [classes.appBarShift]: open,
+        [classes.appBarShift]: open && !isXSmall,
       })}
     >
       <Toolbar>
@@ -70,7 +70,7 @@ const AppBar = ({ open, logout, drawerWidth }) => {
           onClick={handleToggleSidebar}
           edge="start"
           className={classnames(classes.menuButton, {
-            [classes.hide]: open,
+            [classes.hide]: open && !isXSmall,
           })}
         >
           <MenuIcon />
@@ -81,10 +81,12 @@ const AppBar = ({ open, logout, drawerWidth }) => {
           id="react-admin-title"
           noWrap
         />
-        <div className={classes.spacer} />
-        <Typography variant="body1">
-          {translate("app.welcome", identity)}
-        </Typography>
+        {!isXSmall && <div className={classes.spacer} />}
+        {!isXSmall && (
+          <Typography variant="body1">
+            {translate("app.welcome", identity)}
+          </Typography>
+        )}
         <LoadingIndicator />
         <UserMenu logout={logout} />
       </Toolbar>

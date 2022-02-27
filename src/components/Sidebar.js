@@ -1,4 +1,10 @@
-import { Drawer, IconButton, Typography, makeStyles } from "@material-ui/core";
+import {
+  Drawer,
+  IconButton,
+  Typography,
+  makeStyles,
+  useMediaQuery,
+} from "@material-ui/core";
 import React, { useCallback } from "react";
 
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
@@ -25,11 +31,11 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.primary.main,
     },
   },
-  drawer: ({ drawerWidth }) => ({
-    // width: drawerWidth,
+  drawer: {
+    zIndex: 1,
     flexShrink: 0,
     whiteSpace: "nowrap",
-  }),
+  },
   drawerOpen: ({ drawerWidth }) => ({
     width: drawerWidth - 1,
     transition: theme.transitions.create("width", {
@@ -53,7 +59,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "flex-end",
     padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
     ...theme.mixins.toolbar,
   },
 }));
@@ -71,9 +76,13 @@ const Sidebar = ({
     () => dispatch(toggleSidebar()),
     [dispatch]
   );
+  const isXSmall = useMediaQuery((theme) => theme.breakpoints.down("xs"));
+
   return (
     <Drawer
-      variant="permanent"
+      open={open}
+      onClose={handleToggleSidebar}
+      variant={isXSmall ? "temporary" : "permanent"}
       className={classnames(classes.drawer, {
         [classes.drawerOpen]: open,
         [classes.drawerClose]: !open,

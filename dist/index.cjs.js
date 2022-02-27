@@ -375,6 +375,9 @@ var AppBar = function AppBar(_ref2) {
   });
   var dispatch = reactRedux.useDispatch();
   var translate = reactAdmin.useTranslate();
+  var isXSmall = core.useMediaQuery(function (theme) {
+    return theme.breakpoints.down("xs");
+  });
 
   var _useGetIdentity = reactAdmin.useGetIdentity(),
       identity = _useGetIdentity.identity;
@@ -385,21 +388,21 @@ var AppBar = function AppBar(_ref2) {
   return /*#__PURE__*/React__default["default"].createElement(core.AppBar, {
     position: "fixed",
     color: "secondary",
-    className: classnames__default["default"](classes.appBar, _defineProperty({}, classes.appBarShift, open))
+    className: classnames__default["default"](classes.appBar, _defineProperty({}, classes.appBarShift, open && !isXSmall))
   }, /*#__PURE__*/React__default["default"].createElement(core.Toolbar, null, /*#__PURE__*/React__default["default"].createElement(core.IconButton, {
     color: "inherit",
     "aria-label": "open drawer",
     onClick: handleToggleSidebar,
     edge: "start",
-    className: classnames__default["default"](classes.menuButton, _defineProperty({}, classes.hide, open))
+    className: classnames__default["default"](classes.menuButton, _defineProperty({}, classes.hide, open && !isXSmall))
   }, /*#__PURE__*/React__default["default"].createElement(MenuIcon__default["default"], null)), /*#__PURE__*/React__default["default"].createElement(Typography__default["default"], {
     className: classes.title,
     variant: "h6",
     id: "react-admin-title",
     noWrap: true
-  }), /*#__PURE__*/React__default["default"].createElement("div", {
+  }), !isXSmall && /*#__PURE__*/React__default["default"].createElement("div", {
     className: classes.spacer
-  }), /*#__PURE__*/React__default["default"].createElement(Typography__default["default"], {
+  }), !isXSmall && /*#__PURE__*/React__default["default"].createElement(Typography__default["default"], {
     variant: "body1"
   }, translate("app.welcome", identity)), /*#__PURE__*/React__default["default"].createElement(reactAdmin.LoadingIndicator, null), /*#__PURE__*/React__default["default"].createElement(UserMenu, {
     logout: logout
@@ -445,6 +448,18 @@ var MenuItem = function MenuItem(_ref) {
   }, /*#__PURE__*/React.createElement(resource.icon)) : /*#__PURE__*/React.createElement(resource.icon)), /*#__PURE__*/React__default["default"].createElement(core.ListItemText, {
     primary: resource.localize !== false ? translate("menu.items.".concat(resource.label)) : resource.label
   }));
+};
+
+var compose = function compose() {
+  for (var _len = arguments.length, funcs = new Array(_len), _key = 0; _key < _len; _key++) {
+    funcs[_key] = arguments[_key];
+  }
+
+  return function (Comp) {
+    return funcs.reduceRight(function (prev, curr) {
+      return curr(prev);
+    }, Comp);
+  };
 };
 
 var createMenuItem = function createMenuItem(resource, badges) {
@@ -582,12 +597,12 @@ var Menu = function Menu(_ref) {
   }));
 };
 
-var Menu$1 = reactRedux.connect(function (state) {
+var Menu$1 = compose(reactRouterDom.withRouter, reactRedux.connect(function (state) {
   return {
     open: state.admin.ui.sidebarOpen,
     resources: reactAdmin.getResources(state)
   };
-})(reactRouterDom.withRouter(Menu));
+}))(Menu);
 
 var useStyles = core.makeStyles(function (theme) {
   return {
@@ -608,16 +623,13 @@ var useStyles = core.makeStyles(function (theme) {
         color: theme.palette.primary.main
       }
     },
-    drawer: function drawer(_ref) {
-      _ref.drawerWidth;
-      return {
-        // width: drawerWidth,
-        flexShrink: 0,
-        whiteSpace: "nowrap"
-      };
+    drawer: {
+      zIndex: 1,
+      flexShrink: 0,
+      whiteSpace: "nowrap"
     },
-    drawerOpen: function drawerOpen(_ref2) {
-      var drawerWidth = _ref2.drawerWidth;
+    drawerOpen: function drawerOpen(_ref) {
+      var drawerWidth = _ref.drawerWidth;
       return {
         width: drawerWidth - 1,
         transition: theme.transitions.create("width", {
@@ -645,15 +657,15 @@ var useStyles = core.makeStyles(function (theme) {
   };
 });
 
-var Sidebar = function Sidebar(_ref3) {
+var Sidebar = function Sidebar(_ref2) {
   var _classnames, _classnames2;
 
-  var children = _ref3.children,
-      open = _ref3.open,
-      drawerWidth = _ref3.drawerWidth,
-      appTitle = _ref3.appTitle,
-      appSubTitle = _ref3.appSubTitle,
-      appVersion = _ref3.appVersion;
+  var children = _ref2.children,
+      open = _ref2.open,
+      drawerWidth = _ref2.drawerWidth,
+      appTitle = _ref2.appTitle,
+      appSubTitle = _ref2.appSubTitle,
+      appVersion = _ref2.appVersion;
   var classes = useStyles({
     drawerWidth: drawerWidth
   });
@@ -661,8 +673,13 @@ var Sidebar = function Sidebar(_ref3) {
   var handleToggleSidebar = React.useCallback(function () {
     return dispatch(raCore.toggleSidebar());
   }, [dispatch]);
+  var isXSmall = core.useMediaQuery(function (theme) {
+    return theme.breakpoints.down("xs");
+  });
   return /*#__PURE__*/React__default["default"].createElement(core.Drawer, {
-    variant: "permanent",
+    open: open,
+    onClose: handleToggleSidebar,
+    variant: isXSmall ? "temporary" : "permanent",
     className: classnames__default["default"](classes.drawer, (_classnames = {}, _defineProperty(_classnames, classes.drawerOpen, open), _defineProperty(_classnames, classes.drawerClose, !open), _classnames)),
     classes: {
       paper: classnames__default["default"]((_classnames2 = {}, _defineProperty(_classnames2, classes.drawerOpen, open), _defineProperty(_classnames2, classes.drawerClose, !open), _classnames2))
@@ -824,21 +841,12 @@ var mapStateToProps = function mapStateToProps(state) {
   return {
     open: state.admin.ui.sidebarOpen
   };
-}; // const EnhancedLayout = compose(
-//   connect(
-//     mapStateToProps,
-//     {} // Avoid connect passing dispatch in props
-//   ),
-//   withRouter,
-//   withStyles(styles, { name: "RaLayout" })
-// )(LayoutWithoutTheme);
+};
 
-
-var EnhancedLayout = styles$1.withStyles(styles, {
+var EnhancedLayout = compose(reactRedux.connect(mapStateToProps, {} // Avoid connect passing dispatch in props
+), reactRouterDom.withRouter, styles$1.withStyles(styles, {
   name: "RaLayout"
-})(LayoutWithoutTheme);
-EnhancedLayout = reactRouterDom.withRouter(EnhancedLayout);
-EnhancedLayout = reactRedux.connect(mapStateToProps, {})(EnhancedLayout);
+}))(LayoutWithoutTheme);
 
 var Layout = function Layout(_ref) {
   var themeOverride = _ref.theme,

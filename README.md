@@ -4,9 +4,9 @@ I'm a big fan of [react-admin](https://github.com/marmelab/react-admin) and I've
 
 ![React-Admin Mini Drawer](docs/demo.gif)
 
-## How to use
+## How To Use
 
-Basically you have to install the package:
+Install the package:
 
 ```sh
 npm i --save ra-ui-materialui-layout
@@ -29,16 +29,17 @@ const App = () => (
 **Rembemre** that this `Layout` component support the same documented options described in
 [react-admin documentation](https://marmelab.com/react-admin/Theming.html#using-a-custom-layout), in addition I've added the following props (useful for the mini drawer):
 
-- `drawerWidth`: the width of the drawer. Default is 240px.
-- `appTitle`: the title of the app. Default is 'React-Admin'.
-- `appSubTitle`: the subtitle of the app. Default is 'Material-UI'.
-- `appVersion`: the version of the app. Default is '1.0.0'.
+| Prop name   | Type   | Default       | Description             |
+| ----------- | ------ | ------------- | ----------------------- |
+| drawerWidth | number | 240           | the width of the drawer |
+| appTitle    | string | 'React-Admin' | the title of the app    |
+| appSubTitle | string | 'Material-UI' | the subtitle of the app |
+| appVersion  | string | '1.0.0'       | the version of the app  |
 
 ## TODO
 
 - badge support
 - custom menu support
-- mobile support
 - documentation
 
 ## How to contribute

@@ -14,6 +14,7 @@ import PropTypes from "prop-types";
 import SettingsIcon from "@material-ui/icons/SettingsOutlined";
 import Sidebar from "./Sidebar";
 import { ThemeProvider } from "@material-ui/styles";
+import compose from "../compose";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
@@ -119,20 +120,14 @@ const mapStateToProps = (state) => ({
   open: state.admin.ui.sidebarOpen,
 });
 
-// const EnhancedLayout = compose(
-//   connect(
-//     mapStateToProps,
-//     {} // Avoid connect passing dispatch in props
-//   ),
-//   withRouter,
-//   withStyles(styles, { name: "RaLayout" })
-// )(LayoutWithoutTheme);
-
-let EnhancedLayout = withStyles(styles, { name: "RaLayout" })(
-  LayoutWithoutTheme
-);
-EnhancedLayout = withRouter(EnhancedLayout);
-EnhancedLayout = connect(mapStateToProps, {})(EnhancedLayout);
+const EnhancedLayout = compose(
+  connect(
+    mapStateToProps,
+    {} // Avoid connect passing dispatch in props
+  ),
+  withRouter,
+  withStyles(styles, { name: "RaLayout" })
+)(LayoutWithoutTheme);
 
 const Layout = ({ theme: themeOverride, ...props }) => {
   const themeProp = useRef(themeOverride);

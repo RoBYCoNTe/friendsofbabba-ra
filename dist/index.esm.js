@@ -1,7 +1,7 @@
 import { useTranslate, useGetIdentity, LoadingIndicator, getResources as getResources$1, defaultTheme, Notification } from 'react-admin';
 import React, { useCallback, createElement, useRef, useState, useEffect } from 'react';
 import { makeStyles, withStyles, createStyles, createTheme } from '@material-ui/core/styles';
-import { AppBar as AppBar$1, Toolbar, IconButton as IconButton$1, Badge as Badge$1, ListItem, ListItemIcon, ListItemText, makeStyles as makeStyles$1, List, ListSubheader, Divider, Drawer, Typography as Typography$1 } from '@material-ui/core';
+import { useMediaQuery, AppBar as AppBar$1, Toolbar, IconButton as IconButton$1, Badge as Badge$1, ListItem, ListItemIcon, ListItemText, makeStyles as makeStyles$1, List, ListSubheader, Divider, Drawer, Typography as Typography$1 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
@@ -354,6 +354,9 @@ var AppBar = function AppBar(_ref2) {
   });
   var dispatch = useDispatch();
   var translate = useTranslate();
+  var isXSmall = useMediaQuery(function (theme) {
+    return theme.breakpoints.down("xs");
+  });
 
   var _useGetIdentity = useGetIdentity(),
       identity = _useGetIdentity.identity;
@@ -364,21 +367,21 @@ var AppBar = function AppBar(_ref2) {
   return /*#__PURE__*/React.createElement(AppBar$1, {
     position: "fixed",
     color: "secondary",
-    className: classnames(classes.appBar, _defineProperty({}, classes.appBarShift, open))
+    className: classnames(classes.appBar, _defineProperty({}, classes.appBarShift, open && !isXSmall))
   }, /*#__PURE__*/React.createElement(Toolbar, null, /*#__PURE__*/React.createElement(IconButton$1, {
     color: "inherit",
     "aria-label": "open drawer",
     onClick: handleToggleSidebar,
     edge: "start",
-    className: classnames(classes.menuButton, _defineProperty({}, classes.hide, open))
+    className: classnames(classes.menuButton, _defineProperty({}, classes.hide, open && !isXSmall))
   }, /*#__PURE__*/React.createElement(MenuIcon, null)), /*#__PURE__*/React.createElement(Typography, {
     className: classes.title,
     variant: "h6",
     id: "react-admin-title",
     noWrap: true
-  }), /*#__PURE__*/React.createElement("div", {
+  }), !isXSmall && /*#__PURE__*/React.createElement("div", {
     className: classes.spacer
-  }), /*#__PURE__*/React.createElement(Typography, {
+  }), !isXSmall && /*#__PURE__*/React.createElement(Typography, {
     variant: "body1"
   }, translate("app.welcome", identity)), /*#__PURE__*/React.createElement(LoadingIndicator, null), /*#__PURE__*/React.createElement(UserMenu, {
     logout: logout
@@ -424,6 +427,18 @@ var MenuItem = function MenuItem(_ref) {
   }, /*#__PURE__*/createElement(resource.icon)) : /*#__PURE__*/createElement(resource.icon)), /*#__PURE__*/React.createElement(ListItemText, {
     primary: resource.localize !== false ? translate("menu.items.".concat(resource.label)) : resource.label
   }));
+};
+
+var compose = function compose() {
+  for (var _len = arguments.length, funcs = new Array(_len), _key = 0; _key < _len; _key++) {
+    funcs[_key] = arguments[_key];
+  }
+
+  return function (Comp) {
+    return funcs.reduceRight(function (prev, curr) {
+      return curr(prev);
+    }, Comp);
+  };
 };
 
 var createMenuItem = function createMenuItem(resource, badges) {
@@ -561,12 +576,12 @@ var Menu = function Menu(_ref) {
   }));
 };
 
-var Menu$1 = connect(function (state) {
+var Menu$1 = compose(withRouter, connect(function (state) {
   return {
     open: state.admin.ui.sidebarOpen,
     resources: getResources$1(state)
   };
-})(withRouter(Menu));
+}))(Menu);
 
 var useStyles = makeStyles$1(function (theme) {
   return {
@@ -587,16 +602,13 @@ var useStyles = makeStyles$1(function (theme) {
         color: theme.palette.primary.main
       }
     },
-    drawer: function drawer(_ref) {
-      _ref.drawerWidth;
-      return {
-        // width: drawerWidth,
-        flexShrink: 0,
-        whiteSpace: "nowrap"
-      };
+    drawer: {
+      zIndex: 1,
+      flexShrink: 0,
+      whiteSpace: "nowrap"
     },
-    drawerOpen: function drawerOpen(_ref2) {
-      var drawerWidth = _ref2.drawerWidth;
+    drawerOpen: function drawerOpen(_ref) {
+      var drawerWidth = _ref.drawerWidth;
       return {
         width: drawerWidth - 1,
         transition: theme.transitions.create("width", {
@@ -624,15 +636,15 @@ var useStyles = makeStyles$1(function (theme) {
   };
 });
 
-var Sidebar = function Sidebar(_ref3) {
+var Sidebar = function Sidebar(_ref2) {
   var _classnames, _classnames2;
 
-  var children = _ref3.children,
-      open = _ref3.open,
-      drawerWidth = _ref3.drawerWidth,
-      appTitle = _ref3.appTitle,
-      appSubTitle = _ref3.appSubTitle,
-      appVersion = _ref3.appVersion;
+  var children = _ref2.children,
+      open = _ref2.open,
+      drawerWidth = _ref2.drawerWidth,
+      appTitle = _ref2.appTitle,
+      appSubTitle = _ref2.appSubTitle,
+      appVersion = _ref2.appVersion;
   var classes = useStyles({
     drawerWidth: drawerWidth
   });
@@ -640,8 +652,13 @@ var Sidebar = function Sidebar(_ref3) {
   var handleToggleSidebar = useCallback(function () {
     return dispatch(toggleSidebar());
   }, [dispatch]);
+  var isXSmall = useMediaQuery(function (theme) {
+    return theme.breakpoints.down("xs");
+  });
   return /*#__PURE__*/React.createElement(Drawer, {
-    variant: "permanent",
+    open: open,
+    onClose: handleToggleSidebar,
+    variant: isXSmall ? "temporary" : "permanent",
     className: classnames(classes.drawer, (_classnames = {}, _defineProperty(_classnames, classes.drawerOpen, open), _defineProperty(_classnames, classes.drawerClose, !open), _classnames)),
     classes: {
       paper: classnames((_classnames2 = {}, _defineProperty(_classnames2, classes.drawerOpen, open), _defineProperty(_classnames2, classes.drawerClose, !open), _classnames2))
@@ -803,21 +820,12 @@ var mapStateToProps = function mapStateToProps(state) {
   return {
     open: state.admin.ui.sidebarOpen
   };
-}; // const EnhancedLayout = compose(
-//   connect(
-//     mapStateToProps,
-//     {} // Avoid connect passing dispatch in props
-//   ),
-//   withRouter,
-//   withStyles(styles, { name: "RaLayout" })
-// )(LayoutWithoutTheme);
+};
 
-
-var EnhancedLayout = withStyles(styles, {
+var EnhancedLayout = compose(connect(mapStateToProps, {} // Avoid connect passing dispatch in props
+), withRouter, withStyles(styles, {
   name: "RaLayout"
-})(LayoutWithoutTheme);
-EnhancedLayout = withRouter(EnhancedLayout);
-EnhancedLayout = connect(mapStateToProps, {})(EnhancedLayout);
+}))(LayoutWithoutTheme);
 
 var Layout = function Layout(_ref) {
   var themeOverride = _ref.theme,

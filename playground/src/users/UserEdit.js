@@ -27,7 +27,7 @@ const UserEditForm = ({ permissions, save, ...props }) => {
     });
 
   return (
-    <TabbedForm defaultValue={{ role: "user" }} {...props} save={newSave}>
+    <TabbedForm {...props} save={newSave}>
       <FormTab label="user.form.summary" path="">
         {permissions === "admin" && <TextInput disabled source="id" />}
         <TextInput
