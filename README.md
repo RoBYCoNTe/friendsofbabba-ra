@@ -24,14 +24,15 @@ const App = () => (
 );
 ```
 
-## Configuration
+## Props
 
-The layout support the following configuration options:
+**Rembemre** that this Layout support the same documented options described in
+[react-admin documentation](https://marmelab.com/react-admin/Theming.html#using-a-custom-layout), in addition I've added the following props:
 
 - `drawerWidth`: the width of the drawer. Default is 240px.
-- `appTitle`: the title of the app. Default is the name of the app.
-- `appSubTitle`: the subtitle of the app. Default is the version of the app.
-- `appVersion`: the version of the app. Default is the version of the app.
+- `appTitle`: the title of the app. Default is 'React-Admin'.
+- `appSubTitle`: the subtitle of the app. Default is 'Material-UI'.
+- `appVersion`: the version of the app. Default is '1.0.0'.
 
 ## TODO
 
