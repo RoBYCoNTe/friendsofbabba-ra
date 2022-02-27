@@ -26,8 +26,8 @@ const App = () => (
 
 ## Props
 
-**Rembemre** that this Layout support the same documented options described in
-[react-admin documentation](https://marmelab.com/react-admin/Theming.html#using-a-custom-layout), in addition I've added the following props:
+**Rembemre** that this `Layout` component support the same documented options described in
+[react-admin documentation](https://marmelab.com/react-admin/Theming.html#using-a-custom-layout), in addition I've added the following props (useful for the mini drawer):
 
 - `drawerWidth`: the width of the drawer. Default is 240px.
 - `appTitle`: the title of the app. Default is 'React-Admin'.
