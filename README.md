@@ -23,8 +23,6 @@ const App = () => (
 
 ## TODO
 
----
-
 - badge management
 - user menu personalization
 - documentation
