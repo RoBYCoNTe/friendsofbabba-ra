@@ -1,4 +1,4 @@
-# RA MaterialUI Layout
+# react-admin Material UI Mini drawer variant layout
 
 I'm a big fan of [react-admin](https://github.com/marmelab/react-admin) and I've built a simple layout using [Material UI Mini drawer variant](https://v4.mui.com/components/drawers/) as you can see in this example:
 
@@ -26,8 +26,15 @@ const App = () => (
 
 ## Props
 
-**Rembemre** that this `Layout` component support the same documented options described in
-[react-admin documentation](https://marmelab.com/react-admin/Theming.html#using-a-custom-layout), in addition I've added the following props (useful for the mini drawer):
+Let's start saying that this component is a wrapper for react-admin layout component
+and support the same documented options described in
+[react-admin documentation](https://marmelab.com/react-admin/Theming.html#using-a-custom-layout).
+
+For this reason, instead of using the props described below, you can override
+components like `AppBar`, `Sidebar` or `Menu` by passing them to the `layout` as prop
+(as react-admin explain in his documentation linked before).
+
+In addition I've added the following props (useful for the mini drawer):
 
 | Prop name   | Type   | Default       | Description             |
 | ----------- | ------ | ------------- | ----------------------- |
@@ -36,11 +43,26 @@ const App = () => (
 | appSubTitle | string | 'Material-UI' | the subtitle of the app |
 | appVersion  | string | '1.0.0'       | the version of the app  |
 
-## TODO
+Supposing you want to just overwrite them, you can create your layout copy and
+override the props you want to change.
 
-- badge support
-- custom menu support
-- documentation
+```js
+import { Layout } from "ra-ui-materialui-layout";
+import { Admin, Resource } from "react-admin";
+const MyLayout = (props) => (
+  <Layout
+    {...props}
+    drawerWidth={300}
+    appTitle="My App"
+    appSubTitle="My Subtitle"
+  />
+);
+const App = () => (
+  <Admin layout={MyLayout}>
+    <Resource name="..." />
+  </Admin>
+);
+```
 
 ## How to contribute
 
