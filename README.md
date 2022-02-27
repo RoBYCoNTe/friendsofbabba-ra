@@ -2,6 +2,8 @@
 
 I'm a fan of react-admin and I've built a simple layout using MaterialUI Mini Drawer.
 
+![React-Admin Mini Drawer](docs/demo.gif)
+
 ## How to use
 
 ```sh
