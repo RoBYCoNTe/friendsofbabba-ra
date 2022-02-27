@@ -16,6 +16,9 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  titleSidebarClose: {
+    marginLeft: theme.spacing(2),
+  },
   appBar: {
     flexGrow: 1,
     zIndex: theme.zIndex.drawer + 1,
@@ -33,7 +36,11 @@ const useStyles = makeStyles((theme) => ({
     }),
   }),
   menuButton: {
-    marginRight: 36,
+    marginRight: theme.spacing(2),
+    marginLeft: -20,
+    [theme.breakpoints.down("sm")]: {
+      marginRight: theme.spacing(0),
+    },
   },
   hide: {
     display: "none",
@@ -76,7 +83,9 @@ const AppBar = ({ open, logout, drawerWidth }) => {
           <MenuIcon />
         </IconButton>
         <Typography
-          className={classes.title}
+          className={classnames(classes.title, {
+            [classes.titleSidebarClose]: !open,
+          })}
           variant="h6"
           id="react-admin-title"
           noWrap

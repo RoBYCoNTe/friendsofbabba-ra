@@ -18,10 +18,9 @@ var reactRedux = require('react-redux');
 var CssBaseline = require('@material-ui/core/CssBaseline');
 var DashboardTwoToneIcon = require('@material-ui/icons/DashboardTwoTone');
 var reactRouterDom = require('react-router-dom');
-var SettingsIcon = require('@material-ui/icons/SettingsOutlined');
-require('@material-ui/icons/ViewModule');
 var DashboardIcon = require('@material-ui/icons/Dashboard');
 var get = require('lodash/get');
+var SettingsIcon = require('@material-ui/icons/SettingsOutlined');
 var ChevronLeftIcon = require('@material-ui/icons/ChevronLeft');
 var styles$2 = require('@material-ui/styles');
 
@@ -37,9 +36,9 @@ var Menu__default = /*#__PURE__*/_interopDefaultLegacy(Menu$2);
 var classnames__default = /*#__PURE__*/_interopDefaultLegacy(classnames);
 var CssBaseline__default = /*#__PURE__*/_interopDefaultLegacy(CssBaseline);
 var DashboardTwoToneIcon__default = /*#__PURE__*/_interopDefaultLegacy(DashboardTwoToneIcon);
-var SettingsIcon__default = /*#__PURE__*/_interopDefaultLegacy(SettingsIcon);
 var DashboardIcon__default = /*#__PURE__*/_interopDefaultLegacy(DashboardIcon);
 var get__default = /*#__PURE__*/_interopDefaultLegacy(get);
+var SettingsIcon__default = /*#__PURE__*/_interopDefaultLegacy(SettingsIcon);
 var ChevronLeftIcon__default = /*#__PURE__*/_interopDefaultLegacy(ChevronLeftIcon);
 
 function ownKeys(object, enumerableOnly) {
@@ -334,6 +333,9 @@ var useStyles$2 = styles$1.makeStyles(function (theme) {
     title: {
       flexGrow: 1
     },
+    titleSidebarClose: {
+      marginLeft: theme.spacing(2)
+    },
     appBar: {
       flexGrow: 1,
       zIndex: theme.zIndex.drawer + 1,
@@ -353,9 +355,12 @@ var useStyles$2 = styles$1.makeStyles(function (theme) {
         })
       };
     },
-    menuButton: {
-      marginRight: 36
-    },
+    menuButton: _defineProperty({
+      marginRight: theme.spacing(2),
+      marginLeft: -20
+    }, theme.breakpoints.down("sm"), {
+      marginRight: theme.spacing(0)
+    }),
     hide: {
       display: "none"
     },
@@ -396,7 +401,7 @@ var AppBar = function AppBar(_ref2) {
     edge: "start",
     className: classnames__default["default"](classes.menuButton, _defineProperty({}, classes.hide, open && !isXSmall))
   }, /*#__PURE__*/React__default["default"].createElement(MenuIcon__default["default"], null)), /*#__PURE__*/React__default["default"].createElement(Typography__default["default"], {
-    className: classes.title,
+    className: classnames__default["default"](classes.title, _defineProperty({}, classes.titleSidebarClose, !open)),
     variant: "h6",
     id: "react-admin-title",
     noWrap: true
@@ -426,7 +431,7 @@ var Badge = function Badge(_ref) {
 };
 
 var isSelected = function isSelected(location, resource) {
-  var selected = location.pathname === "/".concat(resource.to) || location.pathname === resource.to || location.pathname.indexOf("/".concat(resource.to, "?")) === 0 || location.pathname.indexOf("/".concat(resource.to, "/")) === 0 && !location.pathname.endsWith("/create");
+  var selected = location.pathname === resource.to || location.pathname.indexOf("".concat(resource.to, "?")) === 0 || location.pathname.indexOf("".concat(resource.to, "/")) === 0;
   return selected;
 };
 
@@ -698,7 +703,11 @@ var Sidebar = function Sidebar(_ref2) {
     variant: "caption"
   }, appSubTitle, " (", appVersion, ")")), /*#__PURE__*/React__default["default"].createElement(core.IconButton, {
     onClick: handleToggleSidebar
-  }, /*#__PURE__*/React__default["default"].createElement(ChevronLeftIcon__default["default"], null))), children);
+  }, /*#__PURE__*/React__default["default"].createElement(ChevronLeftIcon__default["default"], null))), React__default["default"].Children.map(children, function (child) {
+    return /*#__PURE__*/React__default["default"].cloneElement(child, {
+      onMenuClick: isXSmall ? handleToggleSidebar : undefined
+    });
+  }));
 };
 
 Sidebar.propTypes = {
@@ -724,10 +733,12 @@ var styles = function styles(theme) {
       justifyContent: "flex-end",
       padding: theme.spacing(0, 1)
     }, theme.mixins.toolbar),
-    content: {
+    content: _defineProperty({
       flexGrow: 1,
       padding: theme.spacing(3)
-    }
+    }, theme.breakpoints.down("xs"), {
+      padding: theme.spacing(0)
+    })
   });
 };
 

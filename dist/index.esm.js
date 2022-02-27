@@ -14,10 +14,9 @@ import { useDispatch, useSelector, connect } from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import DashboardTwoToneIcon from '@material-ui/icons/DashboardTwoTone';
 import { Link, withRouter } from 'react-router-dom';
-import SettingsIcon from '@material-ui/icons/SettingsOutlined';
-import '@material-ui/icons/ViewModule';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import get from 'lodash/get';
+import SettingsIcon from '@material-ui/icons/SettingsOutlined';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { ThemeProvider } from '@material-ui/styles';
 
@@ -313,6 +312,9 @@ var useStyles$2 = makeStyles(function (theme) {
     title: {
       flexGrow: 1
     },
+    titleSidebarClose: {
+      marginLeft: theme.spacing(2)
+    },
     appBar: {
       flexGrow: 1,
       zIndex: theme.zIndex.drawer + 1,
@@ -332,9 +334,12 @@ var useStyles$2 = makeStyles(function (theme) {
         })
       };
     },
-    menuButton: {
-      marginRight: 36
-    },
+    menuButton: _defineProperty({
+      marginRight: theme.spacing(2),
+      marginLeft: -20
+    }, theme.breakpoints.down("sm"), {
+      marginRight: theme.spacing(0)
+    }),
     hide: {
       display: "none"
     },
@@ -375,7 +380,7 @@ var AppBar = function AppBar(_ref2) {
     edge: "start",
     className: classnames(classes.menuButton, _defineProperty({}, classes.hide, open && !isXSmall))
   }, /*#__PURE__*/React.createElement(MenuIcon, null)), /*#__PURE__*/React.createElement(Typography, {
-    className: classes.title,
+    className: classnames(classes.title, _defineProperty({}, classes.titleSidebarClose, !open)),
     variant: "h6",
     id: "react-admin-title",
     noWrap: true
@@ -405,7 +410,7 @@ var Badge = function Badge(_ref) {
 };
 
 var isSelected = function isSelected(location, resource) {
-  var selected = location.pathname === "/".concat(resource.to) || location.pathname === resource.to || location.pathname.indexOf("/".concat(resource.to, "?")) === 0 || location.pathname.indexOf("/".concat(resource.to, "/")) === 0 && !location.pathname.endsWith("/create");
+  var selected = location.pathname === resource.to || location.pathname.indexOf("".concat(resource.to, "?")) === 0 || location.pathname.indexOf("".concat(resource.to, "/")) === 0;
   return selected;
 };
 
@@ -677,7 +682,11 @@ var Sidebar = function Sidebar(_ref2) {
     variant: "caption"
   }, appSubTitle, " (", appVersion, ")")), /*#__PURE__*/React.createElement(IconButton$1, {
     onClick: handleToggleSidebar
-  }, /*#__PURE__*/React.createElement(ChevronLeftIcon, null))), children);
+  }, /*#__PURE__*/React.createElement(ChevronLeftIcon, null))), React.Children.map(children, function (child) {
+    return /*#__PURE__*/React.cloneElement(child, {
+      onMenuClick: isXSmall ? handleToggleSidebar : undefined
+    });
+  }));
 };
 
 Sidebar.propTypes = {
@@ -703,10 +712,12 @@ var styles = function styles(theme) {
       justifyContent: "flex-end",
       padding: theme.spacing(0, 1)
     }, theme.mixins.toolbar),
-    content: {
+    content: _defineProperty({
       flexGrow: 1,
       padding: theme.spacing(3)
-    }
+    }, theme.breakpoints.down("xs"), {
+      padding: theme.spacing(0)
+    })
   });
 };
 

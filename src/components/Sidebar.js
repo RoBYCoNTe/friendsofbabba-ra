@@ -112,7 +112,11 @@ const Sidebar = ({
           <ChevronLeftIcon />
         </IconButton>
       </div>
-      {children}
+      {React.Children.map(children, (child) =>
+        React.cloneElement(child, {
+          onMenuClick: isXSmall ? handleToggleSidebar : undefined,
+        })
+      )}
     </Drawer>
   );
 };

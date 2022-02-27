@@ -3,9 +3,16 @@ import React, { createElement } from "react";
 
 import Badge from "./Badge";
 import { Link } from "react-router-dom";
-import { isSelected } from "./config/sidebar";
 import { useTranslate } from "react-admin";
 
+const isSelected = (location, resource) => {
+  const selected =
+    location.pathname === resource.to ||
+    location.pathname.indexOf(`${resource.to}?`) === 0 ||
+    location.pathname.indexOf(`${resource.to}/`) === 0;
+
+  return selected;
+};
 const MenuItem = ({ location, resource, onMenuClick }) => {
   const translate = useTranslate();
 
