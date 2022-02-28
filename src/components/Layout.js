@@ -8,10 +8,8 @@ import {
 
 import AppBar from "./AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import DashboardTwoToneIcon from "@material-ui/icons/DashboardTwoTone";
 import Menu from "./Menu";
 import PropTypes from "prop-types";
-import SettingsIcon from "@material-ui/icons/SettingsOutlined";
 import Sidebar from "./Sidebar";
 import { ThemeProvider } from "@material-ui/styles";
 import compose from "../compose";
@@ -62,7 +60,6 @@ class LayoutWithoutTheme extends React.Component {
 
   render() {
     const {
-      config,
       appBar = AppBar,
       children,
       classes,
@@ -94,7 +91,6 @@ class LayoutWithoutTheme extends React.Component {
           drawerWidth,
           children: createElement(menu, {
             open,
-            config,
             logout,
             hasDashboard: !!dashboard,
             menuConfig: this.props.menu,
@@ -155,7 +151,6 @@ Layout.propTypes = {
   appSubTitle: PropTypes.string,
   appVersion: PropTypes.string,
   drawerWidth: PropTypes.number,
-  menu: PropTypes.object,
 };
 
 Layout.defaultProps = {
@@ -164,18 +159,6 @@ Layout.defaultProps = {
   appSubTitle: "Material-UI",
   appVersion: "1.0.0",
   drawerWidth: 240,
-  config: {
-    dashboard: {
-      icon: DashboardTwoToneIcon,
-      order: 5,
-      expanded: true,
-    },
-    admin: {
-      icon: SettingsIcon,
-      order: 100,
-      expanded: true,
-    },
-  },
 };
 
 export default Layout;

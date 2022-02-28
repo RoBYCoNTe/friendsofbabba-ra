@@ -1,7 +1,7 @@
 import { useTranslate, useGetIdentity, LoadingIndicator, getResources as getResources$1, defaultTheme, Notification } from 'react-admin';
-import React, { useCallback, createElement, useRef, useState, useEffect } from 'react';
+import React, { useCallback, createElement, useState, useEffect, useRef } from 'react';
 import { makeStyles, withStyles, createStyles, createTheme } from '@material-ui/core/styles';
-import { useMediaQuery, AppBar as AppBar$1, Toolbar, IconButton as IconButton$1, Badge as Badge$1, ListItem, ListItemIcon, ListItemText, makeStyles as makeStyles$1, List, ListSubheader, Divider, Drawer, Typography as Typography$1 } from '@material-ui/core';
+import { useMediaQuery, AppBar as AppBar$1, Toolbar, IconButton as IconButton$1, makeStyles as makeStyles$1, List, ListSubheader, Divider, Badge as Badge$1, ListItem, ListItemIcon, ListItemText, Drawer, Typography as Typography$1 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
@@ -9,14 +9,12 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import IconButton from '@material-ui/core/IconButton';
 import Menu$2 from '@material-ui/core/Menu';
 import classnames from 'classnames';
-import { toggleSidebar } from 'ra-core';
+import { toggleSidebar, useDataProvider, usePermissions as usePermissions$1 } from 'ra-core';
 import { useDispatch, useSelector, connect } from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import DashboardTwoToneIcon from '@material-ui/icons/DashboardTwoTone';
 import { Link, withRouter } from 'react-router-dom';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import get from 'lodash/get';
-import SettingsIcon from '@material-ui/icons/SettingsOutlined';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { ThemeProvider } from '@material-ui/styles';
 
@@ -84,6 +82,24 @@ function _defineProperty(obj, key, value) {
   }
 
   return obj;
+}
+
+function _extends() {
+  _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
 }
 
 function _inherits(subClass, superClass) {
@@ -399,6 +415,48 @@ AppBar.propTypes = {
   drawerWidth: PropTypes.number.isRequired
 };
 
+var _excluded$2 = ["children", "open", "label"];
+var useStyles$1 = makeStyles$1(function (theme) {
+  return {
+    subHeader: {
+      backgroundColor: theme.palette.background.paper,
+      zIndex: theme.zIndex.appBar,
+      fontWeight: "bold",
+      color: theme.palette.text.primary
+    }
+  };
+});
+
+var MenuGroup = function MenuGroup(_ref) {
+  var children = _ref.children,
+      open = _ref.open,
+      label = _ref.label,
+      props = _objectWithoutProperties(_ref, _excluded$2);
+
+  var classes = useStyles$1();
+  return /*#__PURE__*/React.createElement(List, {
+    subheader: open ? /*#__PURE__*/React.createElement(ListSubheader, {
+      className: classes.subHeader
+    }, label) : null
+  }, React.Children.map(children, function (child) {
+    return /*#__PURE__*/React.cloneElement(child, _objectSpread2({}, props));
+  }), /*#__PURE__*/React.createElement(Divider, null));
+};
+
+MenuGroup.propTypes = {
+  /** Children to render inside the MenuGroup */
+  children: PropTypes.node,
+
+  /** Indicates if sidebar is open or not. */
+  open: PropTypes.bool,
+
+  /** Label to use for this group. */
+  label: PropTypes.string.isRequired,
+
+  /** Name of the groups to merge. */
+  group: PropTypes.string
+};
+
 var _excluded$1 = ["titleAccess", "children"];
 
 var Badge = function Badge(_ref) {
@@ -409,29 +467,50 @@ var Badge = function Badge(_ref) {
   return /*#__PURE__*/React.createElement(Badge$1, props, children);
 };
 
-var isSelected = function isSelected(location, resource) {
-  var selected = location.pathname === resource.to || location.pathname.indexOf("".concat(resource.to, "?")) === 0 || location.pathname.indexOf("".concat(resource.to, "/")) === 0;
+var isSelected = function isSelected(location, to) {
+  var selected = location.pathname === to || location.pathname.indexOf("".concat(to, "?")) === 0 || location.pathname.indexOf("".concat(to, "/")) === 0;
   return selected;
 };
 
 var MenuItem = function MenuItem(_ref) {
   var location = _ref.location,
-      resource = _ref.resource,
+      badge = _ref.badge,
+      to = _ref.to,
+      icon = _ref.icon,
+      localize = _ref.localize,
+      label = _ref.label,
       onMenuClick = _ref.onMenuClick;
   var translate = useTranslate();
   return /*#__PURE__*/React.createElement(ListItem, {
     button: true,
     component: Link,
-    to: resource.to,
+    to: to,
     onClick: onMenuClick,
-    selected: isSelected(location, resource)
-  }, /*#__PURE__*/React.createElement(ListItemIcon, null, resource.badge && resource.badge.show ? /*#__PURE__*/React.createElement(Badge, {
-    color: resource.badge.type,
-    variant: resource.badge.variant,
-    badgeContent: resource.badge.value
-  }, /*#__PURE__*/createElement(resource.icon)) : /*#__PURE__*/createElement(resource.icon)), /*#__PURE__*/React.createElement(ListItemText, {
-    primary: resource.localize !== false ? translate("menu.items.".concat(resource.label)) : resource.label
+    selected: isSelected(location, to)
+  }, /*#__PURE__*/React.createElement(ListItemIcon, null, badge && badge.show ? /*#__PURE__*/React.createElement(Badge, {
+    color: badge.color,
+    variant: badge.variant,
+    badgeContent: badge.value
+  }, /*#__PURE__*/createElement(icon)) : /*#__PURE__*/createElement(icon)), /*#__PURE__*/React.createElement(ListItemText, {
+    primary: localize !== false ? translate("menu.items.".concat(label)) : label
   }));
+};
+
+MenuItem.propTypes = {
+  label: PropTypes.string.isRequired,
+  icon: PropTypes.elementType.isRequired,
+  to: PropTypes.string.isRequired,
+  badge: PropTypes.shape({
+    show: PropTypes.bool,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    variant: PropTypes.oneOf(["standard", "dot", "dot-small"]),
+    color: PropTypes.oneOf(["primary", "secondary", "default"])
+  }),
+  localize: PropTypes.bool,
+  // location: PropTypes.shape({
+  //   pathname: PropTypes.string.isRequired,
+  // }).isRequired,
+  onMenuClick: PropTypes.func
 };
 
 var compose = function compose() {
@@ -446,17 +525,19 @@ var compose = function compose() {
   };
 };
 
-var createMenuItem = function createMenuItem(resource, badges) {
+var createMenuItem = function createMenuItem(item, badges) {
   return {
-    badge: get(badges, "".concat(resource.name), null),
-    order: get(resource, "options.order", 0),
-    label: resource.name,
-    icon: resource.icon,
-    to: resource.path || "/".concat(resource.name)
+    localize: item.options.localize,
+    badge: get(badges, "".concat(item.name), null),
+    order: get(item, "options.order", 0),
+    label: item.name,
+    icon: item.icon,
+    to: item.path || "/".concat(item.name)
   };
 };
 
-var createGroups = function createGroups(config, resources, permissions, badges, hasDashboard) {
+var createGroups = function createGroups(order, resources, permissions, badges, hasDashboard) {
+  var items = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : [];
   var groups = (hasDashboard ? [{
     path: "/",
     name: "dashboard",
@@ -466,6 +547,14 @@ var createGroups = function createGroups(config, resources, permissions, badges,
     }
   }] : []).concat(resources.filter(function (r) {
     return r.hasList && r.options && r.icon;
+  })).concat(items.map(function (i) {
+    return _objectSpread2(_objectSpread2({}, i), {}, {
+      options: {
+        roles: i.roles,
+        group: i.group,
+        localize: i.localize
+      }
+    });
   })).filter(function (item) {
     return permissions && (item.options.roles === undefined || item.options.roles.filter(function (role) {
       return permissions(role);
@@ -477,17 +566,15 @@ var createGroups = function createGroups(config, resources, permissions, badges,
     });
 
     if (group) {
-      group.content.push(createMenuItem(resource, badges));
-      group.content.sort(function (a, b) {
+      group.items.push(createMenuItem(resource, badges));
+      group.items.sort(function (a, b) {
         return a.order > b.order ? 1 : a.order < b.order ? -1 : 0;
       });
     } else {
       group = {
-        icon: get(config, "[".concat(groupName, "].icon")),
         label: groupName,
-        order: get(config, "[".concat(groupName, "].order"), 1000),
-        content: [createMenuItem(resource, badges)],
-        expanded: get(config, "[".concat(groupName, "].expanded"), false)
+        items: [createMenuItem(resource, badges)],
+        order: get(order, groupName, 1000)
       };
       groups.push(group);
     }
@@ -498,6 +585,27 @@ var createGroups = function createGroups(config, resources, permissions, badges,
     return a.order > b.order ? 1 : a.order < b.order ? -1 : 0;
   });
   return groups;
+};
+
+var useBadges = function useBadges(badges) {
+  var dataProvider = useDataProvider();
+
+  var _useState = useState({}),
+      _useState2 = _slicedToArray(_useState, 2),
+      badgesData = _useState2[0],
+      setBadgesData = _useState2[1];
+
+  useEffect(function () {
+    if (typeof badges === "string") {
+      dataProvider[badges]().then(function (_ref) {
+        var data = _ref.data;
+        return setBadgesData(data);
+      });
+    } else {
+      setBadgesData(badges);
+    }
+  }, [badges, dataProvider]);
+  return badgesData;
 };
 
 var _require = require("ra-core"),
@@ -511,50 +619,50 @@ var _require3 = require("react-redux"),
     shallowEqual = _require3.shallowEqual;
 
 var useMenu = function useMenu(_ref) {
-  var hasDashboard = _ref.hasDashboard,
-      _ref$config = _ref.config,
-      config = _ref$config === void 0 ? {} : _ref$config;
+  var order = _ref.order,
+      hasDashboard = _ref.hasDashboard,
+      badges = _ref.badges,
+      _ref$items = _ref.items,
+      items = _ref$items === void 0 ? [] : _ref$items;
+  var badgesMap = useBadges(badges);
 
-  // const { data: badges } = useBadges();
   var _usePermissions = usePermissions(),
       loaded = _usePermissions.loaded,
       permissions = _usePermissions.permissions;
 
   var resources = useSelector(getResources, shallowEqual);
   var menu = useMemo(function () {
-    return loaded ? createGroups(config, resources, permissions, [], hasDashboard) : [];
-  }, [resources, permissions, loaded, config, hasDashboard]);
+    return loaded ? createGroups(order, resources, permissions, badgesMap, hasDashboard, items) : [];
+  }, [order, resources, permissions, badgesMap, loaded, hasDashboard, items]);
   return menu;
 };
-
-var useStyles$1 = makeStyles$1(function (theme) {
-  return {
-    subHeader: {
-      backgroundColor: theme.palette.background.paper,
-      zIndex: theme.zIndex.appBar,
-      fontWeight: "bold",
-      color: theme.palette.text.primary
-    }
-  };
-});
 
 var Menu = function Menu(_ref) {
   var hasDashboard = _ref.hasDashboard,
       open = _ref.open,
       location = _ref.location,
       onMenuClick = _ref.onMenuClick,
-      menuConfig = _ref.menuConfig;
+      badges = _ref.badges,
+      items = _ref.items,
+      children = _ref.children,
+      _ref$mode = _ref.mode,
+      mode = _ref$mode === void 0 ? "build" : _ref$mode,
+      order = _ref.order;
 
   var _useGetIdentity = useGetIdentity(),
       loading = _useGetIdentity.loading,
       loaded = _useGetIdentity.loaded,
       identity = _useGetIdentity.identity;
 
+  var _usePermissions = usePermissions$1(),
+      permissions = _usePermissions.permissions;
+
   var menu = useMenu({
+    order: order,
     hasDashboard: hasDashboard,
-    config: menuConfig
+    badges: badges,
+    items: items
   });
-  var classes = useStyles$1();
   var translate = useTranslate();
 
   if (loading || !loaded || identity === null || identity.id <= 0) {
@@ -562,25 +670,66 @@ var Menu = function Menu(_ref) {
   }
 
   return /*#__PURE__*/React.createElement(List, {
-    component: "nav",
-    className: classes.root
-  }, menu.map(function (group, idx) {
-    return /*#__PURE__*/React.createElement(List, {
+    component: "nav"
+  }, mode === "build" && menu.map(function (group, idx) {
+    return /*#__PURE__*/React.createElement(MenuGroup, {
       key: idx,
-      subheader: open ? /*#__PURE__*/React.createElement(ListSubheader, {
-        className: classes.subHeader
-      }, translate("menu.groups.".concat(group.label))) : null
-    }, group.content.map(function (resource, index) {
-      return /*#__PURE__*/React.createElement(MenuItem, {
+      open: open,
+      label: translate("menu.groups.".concat(group.label))
+    }, group.items.map(function (item, index) {
+      return /*#__PURE__*/React.createElement(MenuItem, _extends({}, item, {
         key: index,
-        resource: resource,
         location: location,
         onMenuClick: onMenuClick
-      });
-    }), /*#__PURE__*/React.createElement(Divider, null));
+      }));
+    }));
+  }), React.Children.map(children, function (child) {
+    return /*#__PURE__*/React.cloneElement(child, {
+      open: open,
+      menu: menu,
+      location: location,
+      permissions: permissions,
+      onMenuClick: onMenuClick
+    });
   }));
 };
 
+Menu.propTypes = {
+  hasDashboard: PropTypes.bool.isRequired,
+  open: PropTypes.bool.isRequired,
+  location: PropTypes.object.isRequired,
+  onMenuClick: PropTypes.func,
+
+  /** List of custom menu items that will be merged with existing menu. */
+  items: PropTypes.arrayOf(PropTypes.shape({
+    /** Name of the menu item. */
+    name: PropTypes.string.isRequired,
+
+    /** Icon used for this menu item. */
+    icon: PropTypes.elementType.isRequired,
+
+    /** Path connected to the routing system (ex. /posts). */
+    path: PropTypes.string,
+
+    /** List of roles allowed. */
+    roles: PropTypes.arrayOf(PropTypes.string)
+  })),
+
+  /**
+   * Indicates generation mode for menu. If you want to compose it use custom
+   * and create your own menu using MenuGroup and MenuItems.
+   **/
+  mode: PropTypes.oneOf(["build", "custom"]),
+
+  /** Allows configuration of groups */
+  order: PropTypes.object,
+  badges: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.objectOf({
+    show: PropTypes.bool,
+    label: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    color: PropTypes.oneOf(["primary", "secondary", "default"])
+  }))])
+};
 var Menu$1 = compose(withRouter, connect(function (state) {
   return {
     open: state.admin.ui.sidebarOpen,
@@ -767,7 +916,6 @@ var LayoutWithoutTheme = /*#__PURE__*/function (_React$Component) {
     key: "render",
     value: function render() {
       var _this$props = this.props,
-          config = _this$props.config,
           _this$props$appBar = _this$props.appBar,
           appBar = _this$props$appBar === void 0 ? AppBar : _this$props$appBar,
           children = _this$props.children,
@@ -801,7 +949,6 @@ var LayoutWithoutTheme = /*#__PURE__*/function (_React$Component) {
         drawerWidth: drawerWidth,
         children: /*#__PURE__*/createElement(menu, {
           open: open,
-          config: config,
           logout: logout,
           hasDashboard: !!dashboard,
           menuConfig: this.props.menu
@@ -867,27 +1014,14 @@ Layout.propTypes = {
   appTitle: PropTypes.string.isRequired,
   appSubTitle: PropTypes.string,
   appVersion: PropTypes.string,
-  drawerWidth: PropTypes.number,
-  menu: PropTypes.object
+  drawerWidth: PropTypes.number
 };
 Layout.defaultProps = {
   theme: defaultTheme,
   appTitle: "React Admin",
   appSubTitle: "Material-UI",
   appVersion: "1.0.0",
-  drawerWidth: 240,
-  config: {
-    dashboard: {
-      icon: DashboardTwoToneIcon,
-      order: 5,
-      expanded: true
-    },
-    admin: {
-      icon: SettingsIcon,
-      order: 100,
-      expanded: true
-    }
-  }
+  drawerWidth: 240
 };
 
-export { Layout };
+export { AppBar, Layout, Menu$1 as Menu, MenuGroup, MenuItem, Sidebar };

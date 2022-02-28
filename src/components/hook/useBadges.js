@@ -1,10 +1,18 @@
-import { useQueryWithStore } from "ra-core";
+import { useEffect, useState } from "react";
 
-const useBadges = () => {
-  const { loaded, data } = useQueryWithStore({
-    type: "getBadges",
-  });
-  return loaded ? data || { data: [] } : { data: [] };
+import { useDataProvider } from "ra-core";
+
+const useBadges = (badges) => {
+  const dataProvider = useDataProvider();
+  const [badgesData, setBadgesData] = useState({});
+  useEffect(() => {
+    if (typeof badges === "string") {
+      dataProvider[badges]().then(({ data }) => setBadgesData(data));
+    } else {
+      setBadgesData(badges);
+    }
+  }, [badges, dataProvider]);
+  return badgesData;
 };
 
 export default useBadges;

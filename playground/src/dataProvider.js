@@ -1,10 +1,12 @@
+import addBadgesFeature from "./addBadgesFeature";
 import addUploadFeature from "./addUploadFeature";
 import { cacheDataProviderProxy } from "react-admin";
 import data from "./data";
 import fakeRestProvider from "ra-data-fakerest";
 
 const dataProvider = fakeRestProvider(data, true);
-const uploadCapableDataProvider = addUploadFeature(dataProvider);
+const badgesCapableDataProvider = addBadgesFeature(dataProvider);
+const uploadCapableDataProvider = addUploadFeature(badgesCapableDataProvider);
 const sometimesFailsDataProvider = new Proxy(uploadCapableDataProvider, {
   get: (target, name) => (resource, params) => {
     // set session_ended=true in localStorage to trigger an API auth error

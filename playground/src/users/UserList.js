@@ -37,7 +37,6 @@ const UserList = ({ permissions, ...props }) => (
   <List
     {...props}
     filters={getUserFilters(permissions)}
-    filterDefaultValues={{ role: "user" }}
     sort={{ field: "name", order: "ASC" }}
     bulkActionButtons={<UserBulkActionButtons />}
   >

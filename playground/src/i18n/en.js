@@ -7,9 +7,11 @@ export const messages = {
   menu: {
     groups: {
       admin: "Administration",
+      dashboard: "Dashboard",
     },
     items: {
       users: "Users",
+      posts: "Posts",
     },
   },
   simple: {

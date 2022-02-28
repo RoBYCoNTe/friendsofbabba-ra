@@ -3,49 +3,72 @@ import React, { createElement } from "react";
 
 import Badge from "./Badge";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 import { useTranslate } from "react-admin";
 
-const isSelected = (location, resource) => {
+const isSelected = (location, to) => {
   const selected =
-    location.pathname === resource.to ||
-    location.pathname.indexOf(`${resource.to}?`) === 0 ||
-    location.pathname.indexOf(`${resource.to}/`) === 0;
+    location.pathname === to ||
+    location.pathname.indexOf(`${to}?`) === 0 ||
+    location.pathname.indexOf(`${to}/`) === 0;
 
   return selected;
 };
-const MenuItem = ({ location, resource, onMenuClick }) => {
+const MenuItem = ({
+  location,
+  badge,
+  to,
+  icon,
+  localize,
+  label,
+  onMenuClick,
+}) => {
   const translate = useTranslate();
 
   return (
     <ListItem
       button
       component={Link}
-      to={resource.to}
+      to={to}
       onClick={onMenuClick}
-      selected={isSelected(location, resource)}
+      selected={isSelected(location, to)}
     >
       <ListItemIcon>
-        {resource.badge && resource.badge.show ? (
+        {badge && badge.show ? (
           <Badge
-            color={resource.badge.type}
-            variant={resource.badge.variant}
-            badgeContent={resource.badge.value}
+            color={badge.color}
+            variant={badge.variant}
+            badgeContent={badge.value}
           >
-            {createElement(resource.icon)}
+            {createElement(icon)}
           </Badge>
         ) : (
-          createElement(resource.icon)
+          createElement(icon)
         )}
       </ListItemIcon>
       <ListItemText
-        primary={
-          resource.localize !== false
-            ? translate(`menu.items.${resource.label}`)
-            : resource.label
-        }
+        primary={localize !== false ? translate(`menu.items.${label}`) : label}
       />
     </ListItem>
   );
+};
+
+MenuItem.propTypes = {
+  label: PropTypes.string.isRequired,
+  icon: PropTypes.elementType.isRequired,
+  to: PropTypes.string.isRequired,
+  badge: PropTypes.shape({
+    show: PropTypes.bool,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    variant: PropTypes.oneOf(["standard", "dot", "dot-small"]),
+    color: PropTypes.oneOf(["primary", "secondary", "default"]),
+  }),
+  localize: PropTypes.bool,
+
+  // location: PropTypes.shape({
+  //   pathname: PropTypes.string.isRequired,
+  // }).isRequired,
+  onMenuClick: PropTypes.func,
 };
 
 export default MenuItem;
