@@ -8,7 +8,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "repository": "git://github.com/robyconte/ra-ui-materialui-layout.git",
-  "version": "0.1.1",
+  "version": "0.1.5",
   "private": false,
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
@@ -57,9 +57,9 @@
     "rollup-plugin-peer-deps-external": "^2.2.4"
   },
   "peerDependencies": {
-    "react": "^17.0.2",
+    "react": "^16.13.1",
     "react-admin": "^3.5.5",
-    "react-dom": "^17.0.2",
-    "ra-core": "^3.19.10"
+    "react-dom": "^16.13.1",
+    "ra-core": "^3.16.3"
   }
 }

@@ -1,10 +1,6 @@
 import { Notification, defaultTheme } from "react-admin";
 import React, { createElement, useEffect, useRef, useState } from "react";
-import {
-  createStyles,
-  createTheme,
-  withStyles,
-} from "@material-ui/core/styles";
+import { createStyles, withStyles } from "@material-ui/core/styles";
 
 import AppBar from "./AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -14,6 +10,7 @@ import Sidebar from "./Sidebar";
 import { ThemeProvider } from "@material-ui/styles";
 import compose from "../compose";
 import { connect } from "react-redux";
+import { createMuiTheme } from "@material-ui/core/styles";
 import { withRouter } from "react-router-dom";
 
 const styles = (theme) =>
@@ -129,12 +126,12 @@ const EnhancedLayout = compose(
 
 const Layout = ({ theme: themeOverride, ...props }) => {
   const themeProp = useRef(themeOverride);
-  const [theme, setTheme] = useState(() => createTheme(themeOverride));
+  const [theme, setTheme] = useState(() => createMuiTheme(themeOverride));
 
   useEffect(() => {
     if (themeProp.current !== themeOverride) {
       themeProp.current = themeOverride;
-      setTheme(createTheme(themeOverride));
+      setTheme(createMuiTheme(themeOverride));
     }
   }, [themeOverride, themeProp, theme, setTheme]);
 

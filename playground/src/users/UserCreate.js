@@ -7,7 +7,6 @@ import {
   FormTab,
   TabbedForm,
   TextInput,
-  required,
 } from "react-admin";
 
 const UserCreate = ({ permissions, ...props }) => (

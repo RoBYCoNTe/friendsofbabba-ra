@@ -1,6 +1,6 @@
 import { useTranslate, useGetIdentity, LoadingIndicator, getResources as getResources$1, defaultTheme, Notification } from 'react-admin';
 import React, { useCallback, createElement, useState, useEffect, useRef } from 'react';
-import { makeStyles, withStyles, createStyles, createTheme } from '@material-ui/core/styles';
+import { makeStyles, withStyles, createStyles, createMuiTheme } from '@material-ui/core/styles';
 import { useMediaQuery, AppBar as AppBar$1, Toolbar, IconButton as IconButton$1, makeStyles as makeStyles$1, List, ListSubheader, Divider, Badge as Badge$1, ListItem, ListItemIcon, ListItemText, Drawer, Typography as Typography$1 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import PropTypes from 'prop-types';
@@ -992,7 +992,7 @@ var Layout = function Layout(_ref) {
   var themeProp = useRef(themeOverride);
 
   var _useState = useState(function () {
-    return createTheme(themeOverride);
+    return createMuiTheme(themeOverride);
   }),
       _useState2 = _slicedToArray(_useState, 2),
       theme = _useState2[0],
@@ -1001,7 +1001,7 @@ var Layout = function Layout(_ref) {
   useEffect(function () {
     if (themeProp.current !== themeOverride) {
       themeProp.current = themeOverride;
-      setTheme(createTheme(themeOverride));
+      setTheme(createMuiTheme(themeOverride));
     }
   }, [themeOverride, themeProp, theme, setTheme]);
   return /*#__PURE__*/React.createElement(ThemeProvider, {

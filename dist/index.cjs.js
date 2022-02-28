@@ -1011,7 +1011,7 @@ var Layout = function Layout(_ref) {
   var themeProp = React.useRef(themeOverride);
 
   var _useState = React.useState(function () {
-    return styles$1.createTheme(themeOverride);
+    return styles$1.createMuiTheme(themeOverride);
   }),
       _useState2 = _slicedToArray(_useState, 2),
       theme = _useState2[0],
@@ -1020,7 +1020,7 @@ var Layout = function Layout(_ref) {
   React.useEffect(function () {
     if (themeProp.current !== themeOverride) {
       themeProp.current = themeOverride;
-      setTheme(styles$1.createTheme(themeOverride));
+      setTheme(styles$1.createMuiTheme(themeOverride));
     }
   }, [themeOverride, themeProp, theme, setTheme]);
   return /*#__PURE__*/React__default["default"].createElement(styles$2.ThemeProvider, {

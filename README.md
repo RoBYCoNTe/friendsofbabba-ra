@@ -73,14 +73,7 @@ const App = () => (
 
 ### Menu
 
-The menu component has been designed to be fully customizable. You can use it in many ways:
-
-- You can pass a custom menu component to the `layout` prop
-- You can pass a custom menu component to the `layout` prop and override the default menu component
-- You can pass a custom menu component to the `layout` prop and override the default menu component and the default menu items
-- You can pass a custom menu component to the `layout` prop and override the default menu component and the default menu items and the default menu groups
-
-Suppose you want to customize everything withouth use default menu items and groups:
+The menu component has been designed to be fully customizable and you can use it in many ways. Suppose you want to customize everything withouth use default menu items and groups:
 
 ```js
 import { Layout, Menu, MenuGroup, MenuItem } from "ra-ui-materialui-layout";
