@@ -154,7 +154,23 @@ For example, an output badges config can be like this:
 
 ### UserMenu
 
-The `UserMenu` component allows you to customize the user menu (in the top right corner).
+The `UserMenu` component allows you to customize the user menu (in the
+top right corner). Please refer to this example:
+
+```js
+import { UserMenu, UserMenuItem } from "ra-ui-materialui-layout";
+import * as Icons from "@material-ui/icons";
+const MyUserMenu = (props) => (
+  <UserMenu {...props}>
+    <UserMenuItem
+      label="User Profile"
+      to="/user-profile"
+      icon={<Icons.AccountUser />}
+    />
+    {props.logout}
+  </UserMenu>
+);
+```
 
 ## How to contribute
 
