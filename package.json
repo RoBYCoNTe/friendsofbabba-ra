@@ -8,7 +8,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "repository": "git://github.com/robyconte/ra-ui-materialui-layout.git",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "private": false,
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",

@@ -1,23 +1,25 @@
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import get from "lodash/get";
 
-const createMenuItem = (item, badges) => ({
+const createMenuItem = (item, badges, translate) => ({
   localize: item.options.localize,
   badge: get(badges, `${item.name}`, null),
   order: get(item, "options.order", 0),
-  label: item.name,
+  label: translate(`menu.items.${item.name}`),
   icon: item.icon,
+  sub: item.options?.sub || item.sub,
   to: item.path || `/${item.name}`,
 });
 
-const createGroups = (
+const createGroups = ({
   order,
   resources,
   permissions,
   badges,
   hasDashboard,
-  items = []
-) => {
+  items = [],
+  translate,
+}) => {
   let groups = (
     hasDashboard
       ? [
@@ -26,7 +28,7 @@ const createGroups = (
             name: "dashboard",
             icon: DashboardIcon,
             options: {
-              group: "dashboard",
+              group: translate("menu.groups.dashboard"),
             },
           },
         ]
@@ -53,14 +55,14 @@ const createGroups = (
       let groupName = resource.options ? resource.options.group : "";
       let group = groups.find((g) => g.label === groupName);
       if (group) {
-        group.items.push(createMenuItem(resource, badges));
+        group.items.push(createMenuItem(resource, badges, translate));
         group.items.sort((a, b) =>
           a.order > b.order ? 1 : a.order < b.order ? -1 : 0
         );
       } else {
         group = {
           label: groupName,
-          items: [createMenuItem(resource, badges)],
+          items: [createMenuItem(resource, badges, translate)],
           order: get(order, groupName, 1000),
         };
         groups.push(group);

@@ -24,7 +24,10 @@ const App = () => (
 );
 ```
 
-The first step is to add some configuration to your resources files. They need to instruct the layout component on how to render the resource in group of items inside the drawer. For example, if you want to show `posts` in the drawer under `Dashboard` group you need to add the following configuration:
+The first step is to add some configuration to your resources files. They need
+to instruct the layout component on how to render the resource in group of items
+inside the drawer. For example, if you want to show `posts` in the drawer under
+`Dashboard` group you need to add the following configuration:
 
 ```js
 export default {
@@ -33,16 +36,20 @@ export default {
 }
 ```
 
-In this example, the resource will be rendered in the drawer under the `Dashboard` group
-and only the user role will be able to see it (`roles` is another option exposed in this layout that can be helpful to customize resources access).
+In this example, the resource will be rendered in the drawer under the `Dashboard`
+group and only the user role will be able to see it (`roles` is another option
+exposed in this layout that can be helpful to customize resources access).
 
 ## Components
 
 ### Layout
 
-The `Layout` component follow the same props as the [react-admin](https://marmelab.com/react-admin/Theming.html#using-a-custom-layout).
+The `Layout` component follow the same props as the
+[react-admin](https://marmelab.com/react-admin/Theming.html#using-a-custom-layout).
 
-You can override components like `AppBar`, `Sidebar` or `Menu` by passing them to the `layout` as prop, in addition I've added the following props (useful for the mini drawer):
+You can override components like `AppBar`, `Sidebar` or `Menu` by passing them to
+the `layout` as prop, in addition I've added the following props (useful for
+the mini drawer):
 
 | Prop name   | Type   | Default     | Description             |
 | ----------- | ------ | ----------- | ----------------------- |
@@ -73,7 +80,9 @@ const App = () => (
 
 ### Menu
 
-The menu component has been designed to be fully customizable and you can use it in many ways. Suppose you want to customize everything withouth use default menu items and groups:
+The menu component has been designed to be fully customizable and you can use it
+in many ways. Suppose you want to customize everything withouth use default menu
+items and groups:
 
 ```js
 import { Layout, Menu, MenuGroup, MenuItem } from "ra-ui-materialui-layout";
@@ -86,7 +95,33 @@ const CustomMenu = (props) => (
 );
 ```
 
-The `mode` prop can be used to customize the menu. The default menu is a `Menu` component with `mode="build"` prop, this means that the menu will be built from the `MenuItem` and `MenuGroup` components generated scanning the resources. You can also use `mode="custom"` to customize the menu and show what you really need or `mode="build"` to use the default menu and add your custom items that will be **placed at the end** of the menu.
+The `mode` prop can be used to customize the menu. The default menu is a `Menu`
+component with `mode="build"` prop, this means that the menu will be built
+from the `MenuItem` and `MenuGroup` components generated scanning the resources.
+You can also use `mode="custom"` to customize the menu and show what you really
+need or `mode="build"` to use the default menu and add your custom items
+that will be **placed at the end** of the menu.
+
+### MenuItem
+
+Menu item can be used in many ways, you can use it to redirect users to external
+URL like docs or links or you can publish your own custom routes to specific
+pages like in this example:
+
+```js
+import { Layout, Menu, MenuGroup, MenuItem } from "ra-ui-materialui-layout";
+const CustomMenu = (props) => (
+  <Menu {...props}>
+    <MenuGroup label="Useful Link">
+      <MenuItem {...props} href="https://www.google.it" target="_blank" />
+      <MenuItem {...props} to="/local-custom-page">
+    </MenuGroup>
+  </Menu>
+)
+```
+
+**Remember** that `MenuItem` must be used inside a `MenuGroup` component.
+The current version of this library doesn't support nested menus or root items.
 
 ### Badges
 

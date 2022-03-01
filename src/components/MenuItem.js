@@ -4,7 +4,6 @@ import React, { createElement } from "react";
 import Badge from "./Badge";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { useTranslate } from "react-admin";
 
 const isSelected = (location, to) => {
   const selected =
@@ -19,16 +18,16 @@ const MenuItem = ({
   badge,
   to,
   icon,
-  localize,
   label,
+  sub,
   onMenuClick,
+  ...props
 }) => {
-  const translate = useTranslate();
-
   return (
     <ListItem
+      {...props}
       button
-      component={Link}
+      component={props.href ? "a" : Link}
       to={to}
       onClick={onMenuClick}
       selected={isSelected(location, to)}
@@ -46,9 +45,7 @@ const MenuItem = ({
           createElement(icon)
         )}
       </ListItemIcon>
-      <ListItemText
-        primary={localize !== false ? translate(`menu.items.${label}`) : label}
-      />
+      <ListItemText primary={label} secondary={sub} />
     </ListItem>
   );
 };

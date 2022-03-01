@@ -1,4 +1,4 @@
-import { useTranslate, useGetIdentity, LoadingIndicator, getResources as getResources$1, defaultTheme, Notification } from 'react-admin';
+import { useTranslate as useTranslate$1, useGetIdentity, LoadingIndicator, getResources as getResources$1, defaultTheme, Notification } from 'react-admin';
 import React, { useCallback, createElement, useState, useEffect, useRef } from 'react';
 import { makeStyles, withStyles, createStyles, createMuiTheme } from '@material-ui/core/styles';
 import { useMediaQuery, AppBar as AppBar$1, Toolbar, IconButton as IconButton$1, makeStyles as makeStyles$1, List, ListSubheader, Divider, Badge as Badge$1, ListItem, ListItemIcon, ListItemText, Drawer, Typography as Typography$1 } from '@material-ui/core';
@@ -374,7 +374,7 @@ var AppBar = function AppBar(_ref2) {
     drawerWidth: drawerWidth
   });
   var dispatch = useDispatch();
-  var translate = useTranslate();
+  var translate = useTranslate$1();
   var isXSmall = useMediaQuery(function (theme) {
     return theme.breakpoints.down("xs");
   });
@@ -415,7 +415,7 @@ AppBar.propTypes = {
   drawerWidth: PropTypes.number.isRequired
 };
 
-var _excluded$2 = ["children", "open", "label"];
+var _excluded$3 = ["children", "open", "label"];
 var useStyles$1 = makeStyles$1(function (theme) {
   return {
     subHeader: {
@@ -431,7 +431,7 @@ var MenuGroup = function MenuGroup(_ref) {
   var children = _ref.children,
       open = _ref.open,
       label = _ref.label,
-      props = _objectWithoutProperties(_ref, _excluded$2);
+      props = _objectWithoutProperties(_ref, _excluded$3);
 
   var classes = useStyles$1();
   return /*#__PURE__*/React.createElement(List, {
@@ -457,15 +457,17 @@ MenuGroup.propTypes = {
   group: PropTypes.string
 };
 
-var _excluded$1 = ["titleAccess", "children"];
+var _excluded$2 = ["titleAccess", "children"];
 
 var Badge = function Badge(_ref) {
   _ref.titleAccess;
       var children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded$1);
+      props = _objectWithoutProperties(_ref, _excluded$2);
 
   return /*#__PURE__*/React.createElement(Badge$1, props, children);
 };
+
+var _excluded$1 = ["location", "badge", "to", "icon", "label", "sub", "onMenuClick"];
 
 var isSelected = function isSelected(location, to) {
   var selected = location.pathname === to || location.pathname.indexOf("".concat(to, "?")) === 0 || location.pathname.indexOf("".concat(to, "/")) === 0;
@@ -477,22 +479,24 @@ var MenuItem = function MenuItem(_ref) {
       badge = _ref.badge,
       to = _ref.to,
       icon = _ref.icon,
-      localize = _ref.localize,
       label = _ref.label,
-      onMenuClick = _ref.onMenuClick;
-  var translate = useTranslate();
-  return /*#__PURE__*/React.createElement(ListItem, {
+      sub = _ref.sub,
+      onMenuClick = _ref.onMenuClick,
+      props = _objectWithoutProperties(_ref, _excluded$1);
+
+  return /*#__PURE__*/React.createElement(ListItem, _extends({}, props, {
     button: true,
-    component: Link,
+    component: props.href ? "a" : Link,
     to: to,
     onClick: onMenuClick,
     selected: isSelected(location, to)
-  }, /*#__PURE__*/React.createElement(ListItemIcon, null, badge && badge.show ? /*#__PURE__*/React.createElement(Badge, {
+  }), /*#__PURE__*/React.createElement(ListItemIcon, null, badge && badge.show ? /*#__PURE__*/React.createElement(Badge, {
     color: badge.color,
     variant: badge.variant,
     badgeContent: badge.value
   }, /*#__PURE__*/createElement(icon)) : /*#__PURE__*/createElement(icon)), /*#__PURE__*/React.createElement(ListItemText, {
-    primary: localize !== false ? translate("menu.items.".concat(label)) : label
+    primary: label,
+    secondary: sub
   }));
 };
 
@@ -525,25 +529,35 @@ var compose = function compose() {
   };
 };
 
-var createMenuItem = function createMenuItem(item, badges) {
+var createMenuItem = function createMenuItem(item, badges, translate) {
+  var _item$options;
+
   return {
     localize: item.options.localize,
     badge: get(badges, "".concat(item.name), null),
     order: get(item, "options.order", 0),
-    label: item.name,
+    label: translate("menu.items.".concat(item.name)),
     icon: item.icon,
+    sub: ((_item$options = item.options) === null || _item$options === void 0 ? void 0 : _item$options.sub) || item.sub,
     to: item.path || "/".concat(item.name)
   };
 };
 
-var createGroups = function createGroups(order, resources, permissions, badges, hasDashboard) {
-  var items = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : [];
+var createGroups = function createGroups(_ref) {
+  var order = _ref.order,
+      resources = _ref.resources,
+      permissions = _ref.permissions,
+      badges = _ref.badges,
+      hasDashboard = _ref.hasDashboard,
+      _ref$items = _ref.items,
+      items = _ref$items === void 0 ? [] : _ref$items,
+      translate = _ref.translate;
   var groups = (hasDashboard ? [{
     path: "/",
     name: "dashboard",
     icon: DashboardIcon,
     options: {
-      group: "dashboard"
+      group: translate("menu.groups.dashboard")
     }
   }] : []).concat(resources.filter(function (r) {
     return r.hasList && r.options && r.icon;
@@ -566,14 +580,14 @@ var createGroups = function createGroups(order, resources, permissions, badges, 
     });
 
     if (group) {
-      group.items.push(createMenuItem(resource, badges));
+      group.items.push(createMenuItem(resource, badges, translate));
       group.items.sort(function (a, b) {
         return a.order > b.order ? 1 : a.order < b.order ? -1 : 0;
       });
     } else {
       group = {
         label: groupName,
-        items: [createMenuItem(resource, badges)],
+        items: [createMenuItem(resource, badges, translate)],
         order: get(order, groupName, 1000)
       };
       groups.push(group);
@@ -610,7 +624,8 @@ var useBadges = function useBadges(badges) {
 
 var _require = require("ra-core"),
     usePermissions = _require.usePermissions,
-    getResources = _require.getResources;
+    getResources = _require.getResources,
+    useTranslate = _require.useTranslate;
 
 var _require2 = require("react"),
     useMemo = _require2.useMemo;
@@ -625,6 +640,7 @@ var useMenu = function useMenu(_ref) {
       _ref$items = _ref.items,
       items = _ref$items === void 0 ? [] : _ref$items;
   var badgesMap = useBadges(badges);
+  var translate = useTranslate();
 
   var _usePermissions = usePermissions(),
       loaded = _usePermissions.loaded,
@@ -632,8 +648,16 @@ var useMenu = function useMenu(_ref) {
 
   var resources = useSelector(getResources, shallowEqual);
   var menu = useMemo(function () {
-    return loaded ? createGroups(order, resources, permissions, badgesMap, hasDashboard, items) : [];
-  }, [order, resources, permissions, badgesMap, loaded, hasDashboard, items]);
+    return loaded ? createGroups({
+      order: order,
+      resources: resources,
+      permissions: permissions,
+      badgesMap: badgesMap,
+      hasDashboard: hasDashboard,
+      items: items,
+      translate: translate
+    }) : [];
+  }, [order, resources, permissions, badgesMap, loaded, hasDashboard, items, translate]);
   return menu;
 };
 
@@ -663,7 +687,7 @@ var Menu = function Menu(_ref) {
     badges: badges,
     items: items
   });
-  var translate = useTranslate();
+  var translate = useTranslate$1();
 
   if (loading || !loaded || identity === null || identity.id <= 0) {
     return null;
@@ -723,7 +747,13 @@ Menu.propTypes = {
 
   /** Allows configuration of groups */
   order: PropTypes.object,
-  badges: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.objectOf({
+
+  /** Badges config. */
+  badges: PropTypes.oneOfType([
+  /** Can be the name of dataProvider method used to load badges. */
+  PropTypes.string,
+  /** Can be a list of badges containing targeting resource data. */
+  PropTypes.arrayOf(PropTypes.objectOf({
     show: PropTypes.bool,
     label: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

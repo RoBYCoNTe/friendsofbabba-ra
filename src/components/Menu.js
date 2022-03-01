@@ -25,7 +25,6 @@ const Menu = ({
   const { loading, loaded, identity } = useGetIdentity();
   const { permissions } = usePermissions();
   const menu = useMenu({ order, hasDashboard, badges, items });
-
   const translate = useTranslate();
   if (loading || !loaded || identity === null || identity.id <= 0) {
     return null;
@@ -88,8 +87,11 @@ Menu.propTypes = {
   mode: PropTypes.oneOf(["build", "custom"]),
   /** Allows configuration of groups */
   order: PropTypes.object,
+  /** Badges config. */
   badges: PropTypes.oneOfType([
+    /** Can be the name of dataProvider method used to load badges. */
     PropTypes.string,
+    /** Can be a list of badges containing targeting resource data. */
     PropTypes.arrayOf(
       PropTypes.objectOf({
         show: PropTypes.bool,
