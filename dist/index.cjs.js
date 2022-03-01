@@ -21,10 +21,30 @@ var DashboardIcon = require('@material-ui/icons/Dashboard');
 var get = require('lodash/get');
 var ChevronLeftIcon = require('@material-ui/icons/ChevronLeft');
 var styles$2 = require('@material-ui/styles');
+var ExitIcon = require('@material-ui/icons/PowerSettingsNew');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
+function _interopNamespace(e) {
+  if (e && e.__esModule) return e;
+  var n = Object.create(null);
+  if (e) {
+    Object.keys(e).forEach(function (k) {
+      if (k !== 'default') {
+        var d = Object.getOwnPropertyDescriptor(e, k);
+        Object.defineProperty(n, k, d.get ? d : {
+          enumerable: true,
+          get: function () { return e[k]; }
+        });
+      }
+    });
+  }
+  n["default"] = e;
+  return Object.freeze(n);
+}
+
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
+var React__namespace = /*#__PURE__*/_interopNamespace(React);
 var MenuIcon__default = /*#__PURE__*/_interopDefaultLegacy(MenuIcon);
 var PropTypes__default = /*#__PURE__*/_interopDefaultLegacy(PropTypes);
 var Typography__default = /*#__PURE__*/_interopDefaultLegacy(Typography);
@@ -36,6 +56,7 @@ var CssBaseline__default = /*#__PURE__*/_interopDefaultLegacy(CssBaseline);
 var DashboardIcon__default = /*#__PURE__*/_interopDefaultLegacy(DashboardIcon);
 var get__default = /*#__PURE__*/_interopDefaultLegacy(get);
 var ChevronLeftIcon__default = /*#__PURE__*/_interopDefaultLegacy(ChevronLeftIcon);
+var ExitIcon__default = /*#__PURE__*/_interopDefaultLegacy(ExitIcon);
 
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
@@ -301,7 +322,8 @@ function _nonIterableRest() {
 }
 
 var UserMenu = function UserMenu(_ref) {
-  var logout = _ref.logout;
+  var logout = _ref.logout,
+      children = _ref.children;
 
   var _React$useState = React__default["default"].useState(null),
       _React$useState2 = _slicedToArray(_React$useState, 2),
@@ -335,14 +357,18 @@ var UserMenu = function UserMenu(_ref) {
     },
     open: open,
     onClose: handleClose
-  }, logout));
+  }, !children && logout, React__default["default"].Children.map(children, function (child) {
+    return child !== logout ? /*#__PURE__*/React__default["default"].cloneElement(child, {
+      onClick: handleClose
+    }) : logout;
+  })));
 };
 
 UserMenu.propTypes = {
   logout: PropTypes__default["default"].element.isRequired
 };
 
-var useStyles$2 = styles$1.makeStyles(function (theme) {
+var useStyles$3 = styles$1.makeStyles(function (theme) {
   return {
     title: {
       flexGrow: 1
@@ -388,8 +414,11 @@ var useStyles$2 = styles$1.makeStyles(function (theme) {
 var AppBar = function AppBar(_ref2) {
   var open = _ref2.open,
       logout = _ref2.logout,
-      drawerWidth = _ref2.drawerWidth;
-  var classes = useStyles$2({
+      drawerWidth = _ref2.drawerWidth,
+      location = _ref2.location,
+      _ref2$userMenu = _ref2.userMenu,
+      userMenu = _ref2$userMenu === void 0 ? UserMenu : _ref2$userMenu;
+  var classes = useStyles$3({
     drawerWidth: drawerWidth
   });
   var dispatch = reactRedux.useDispatch();
@@ -423,19 +452,21 @@ var AppBar = function AppBar(_ref2) {
     className: classes.spacer
   }), !isXSmall && /*#__PURE__*/React__default["default"].createElement(Typography__default["default"], {
     variant: "body1"
-  }, translate("app.welcome", identity)), /*#__PURE__*/React__default["default"].createElement(reactAdmin.LoadingIndicator, null), /*#__PURE__*/React__default["default"].createElement(UserMenu, {
-    logout: logout
+  }, translate("app.welcome", identity)), /*#__PURE__*/React__default["default"].createElement(reactAdmin.LoadingIndicator, null), /*#__PURE__*/React__default["default"].createElement(userMenu, {
+    logout: logout,
+    location: location
   })));
 };
 
 AppBar.propTypes = {
   open: PropTypes__default["default"].bool.isRequired,
   logout: PropTypes__default["default"].element.isRequired,
-  drawerWidth: PropTypes__default["default"].number.isRequired
+  drawerWidth: PropTypes__default["default"].number.isRequired,
+  userMenu: PropTypes__default["default"].elementType
 };
 
-var _excluded$3 = ["children", "open", "label"];
-var useStyles$1 = core.makeStyles(function (theme) {
+var _excluded$4 = ["children", "open", "label"];
+var useStyles$2 = core.makeStyles(function (theme) {
   return {
     subHeader: {
       backgroundColor: theme.palette.background.paper,
@@ -450,15 +481,17 @@ var MenuGroup = function MenuGroup(_ref) {
   var children = _ref.children,
       open = _ref.open,
       label = _ref.label,
-      props = _objectWithoutProperties(_ref, _excluded$3);
+      props = _objectWithoutProperties(_ref, _excluded$4);
 
-  var classes = useStyles$1();
+  var classes = useStyles$2();
   return /*#__PURE__*/React__default["default"].createElement(core.List, {
     subheader: open ? /*#__PURE__*/React__default["default"].createElement(core.ListSubheader, {
       className: classes.subHeader
     }, label) : null
   }, React__default["default"].Children.map(children, function (child) {
-    return /*#__PURE__*/React__default["default"].cloneElement(child, _objectSpread2({}, props));
+    return /*#__PURE__*/React__default["default"].isValidElement(child) && /*#__PURE__*/React__default["default"].cloneElement(child, _objectSpread2({
+      open: open
+    }, props));
   }), /*#__PURE__*/React__default["default"].createElement(core.Divider, null));
 };
 
@@ -476,17 +509,17 @@ MenuGroup.propTypes = {
   group: PropTypes__default["default"].string
 };
 
-var _excluded$2 = ["titleAccess", "children"];
+var _excluded$3 = ["titleAccess", "children"];
 
 var Badge = function Badge(_ref) {
   _ref.titleAccess;
       var children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded$2);
+      props = _objectWithoutProperties(_ref, _excluded$3);
 
   return /*#__PURE__*/React__default["default"].createElement(core.Badge, props, children);
 };
 
-var _excluded$1 = ["location", "badge", "to", "icon", "label", "sub", "onMenuClick"];
+var _excluded$2 = ["location", "badge", "to", "icon", "label", "sub", "onMenuClick", "permissions", "open"];
 
 var isSelected = function isSelected(location, to) {
   var selected = location.pathname === to || location.pathname.indexOf("".concat(to, "?")) === 0 || location.pathname.indexOf("".concat(to, "/")) === 0;
@@ -500,8 +533,10 @@ var MenuItem = function MenuItem(_ref) {
       icon = _ref.icon,
       label = _ref.label,
       sub = _ref.sub,
-      onMenuClick = _ref.onMenuClick,
-      props = _objectWithoutProperties(_ref, _excluded$1);
+      onMenuClick = _ref.onMenuClick;
+      _ref.permissions;
+      var open = _ref.open,
+      props = _objectWithoutProperties(_ref, _excluded$2);
 
   return /*#__PURE__*/React__default["default"].createElement(core.ListItem, _extends({}, props, {
     button: true,
@@ -509,30 +544,40 @@ var MenuItem = function MenuItem(_ref) {
     to: to,
     onClick: onMenuClick,
     selected: isSelected(location, to)
-  }), /*#__PURE__*/React__default["default"].createElement(core.ListItemIcon, null, badge && badge.show ? /*#__PURE__*/React__default["default"].createElement(Badge, {
+  }), /*#__PURE__*/React__default["default"].createElement(core.ListItemIcon, null, badge && badge.show !== false ? /*#__PURE__*/React__default["default"].createElement(Badge, {
     color: badge.color,
     variant: badge.variant,
     badgeContent: badge.value
-  }, /*#__PURE__*/React.createElement(icon)) : /*#__PURE__*/React.createElement(icon)), /*#__PURE__*/React__default["default"].createElement(core.ListItemText, {
+  }, /*#__PURE__*/React.createElement(icon)) : /*#__PURE__*/React.createElement(icon)), open && /*#__PURE__*/React__default["default"].createElement(core.ListItemText, {
     primary: label,
-    secondary: sub
+    secondary: sub,
+    primaryTypographyProps: {
+      style: {
+        whiteSpace: "normal"
+      }
+    },
+    secondaryTypographyProps: {
+      style: {
+        whiteSpace: "normal"
+      }
+    }
   }));
 };
 
 MenuItem.propTypes = {
   label: PropTypes__default["default"].string.isRequired,
   icon: PropTypes__default["default"].elementType.isRequired,
-  to: PropTypes__default["default"].string.isRequired,
+  to: PropTypes__default["default"].string,
+  href: PropTypes__default["default"].string,
   badge: PropTypes__default["default"].shape({
     show: PropTypes__default["default"].bool,
     value: PropTypes__default["default"].oneOfType([PropTypes__default["default"].string, PropTypes__default["default"].number]),
     variant: PropTypes__default["default"].oneOf(["standard", "dot", "dot-small"]),
-    color: PropTypes__default["default"].oneOf(["primary", "secondary", "default"])
+    color: PropTypes__default["default"].oneOf(["default", "primary", "secondary", "error"])
   }),
-  localize: PropTypes__default["default"].bool,
-  // location: PropTypes.shape({
-  //   pathname: PropTypes.string.isRequired,
-  // }).isRequired,
+  location: PropTypes__default["default"].shape({
+    pathname: PropTypes__default["default"].string.isRequired
+  }),
   onMenuClick: PropTypes__default["default"].func
 };
 
@@ -620,27 +665,6 @@ var createGroups = function createGroups(_ref) {
   return groups;
 };
 
-var useBadges = function useBadges(badges) {
-  var dataProvider = raCore.useDataProvider();
-
-  var _useState = React.useState({}),
-      _useState2 = _slicedToArray(_useState, 2),
-      badgesData = _useState2[0],
-      setBadgesData = _useState2[1];
-
-  React.useEffect(function () {
-    if (typeof badges === "string") {
-      dataProvider[badges]().then(function (_ref) {
-        var data = _ref.data;
-        return setBadgesData(data);
-      });
-    } else {
-      setBadgesData(badges);
-    }
-  }, [badges, dataProvider]);
-  return badgesData;
-};
-
 var _require = require("ra-core"),
     usePermissions = _require.usePermissions,
     getResources = _require.getResources,
@@ -658,7 +682,6 @@ var useMenu = function useMenu(_ref) {
       badges = _ref.badges,
       _ref$items = _ref.items,
       items = _ref$items === void 0 ? [] : _ref$items;
-  var badgesMap = useBadges(badges);
   var translate = useTranslate();
 
   var _usePermissions = usePermissions(),
@@ -671,12 +694,12 @@ var useMenu = function useMenu(_ref) {
       order: order,
       resources: resources,
       permissions: permissions,
-      badgesMap: badgesMap,
+      badges: badges,
       hasDashboard: hasDashboard,
       items: items,
       translate: translate
     }) : [];
-  }, [order, resources, permissions, badgesMap, loaded, hasDashboard, items, translate]);
+  }, [order, resources, permissions, badges, loaded, hasDashboard, items, translate]);
   return menu;
 };
 
@@ -722,12 +745,13 @@ var Menu = function Menu(_ref) {
     }, group.items.map(function (item, index) {
       return /*#__PURE__*/React__default["default"].createElement(MenuItem, _extends({}, item, {
         key: index,
+        open: open,
         location: location,
         onMenuClick: onMenuClick
       }));
     }));
   }), React__default["default"].Children.map(children, function (child) {
-    return /*#__PURE__*/React__default["default"].cloneElement(child, {
+    return /*#__PURE__*/React__default["default"].isValidElement(child) && /*#__PURE__*/React__default["default"].cloneElement(child, {
       open: open,
       menu: menu,
       location: location,
@@ -768,16 +792,12 @@ Menu.propTypes = {
   order: PropTypes__default["default"].object,
 
   /** Badges config. */
-  badges: PropTypes__default["default"].oneOfType([
-  /** Can be the name of dataProvider method used to load badges. */
-  PropTypes__default["default"].string,
-  /** Can be a list of badges containing targeting resource data. */
-  PropTypes__default["default"].arrayOf(PropTypes__default["default"].objectOf({
+  badges: PropTypes__default["default"].objectOf(PropTypes__default["default"].shape({
     show: PropTypes__default["default"].bool,
     label: PropTypes__default["default"].string,
     value: PropTypes__default["default"].oneOfType([PropTypes__default["default"].string, PropTypes__default["default"].number]),
-    color: PropTypes__default["default"].oneOf(["primary", "secondary", "default"])
-  }))])
+    color: PropTypes__default["default"].oneOf(["primary", "secondary", "default", "error"])
+  }))
 };
 var Menu$1 = compose(reactRouterDom.withRouter, reactRedux.connect(function (state) {
   return {
@@ -786,7 +806,7 @@ var Menu$1 = compose(reactRouterDom.withRouter, reactRedux.connect(function (sta
   };
 }))(Menu);
 
-var useStyles = core.makeStyles(function (theme) {
+var useStyles$1 = core.makeStyles(function (theme) {
   return {
     brand: {
       paddingLeft: theme.spacing(1),
@@ -848,7 +868,7 @@ var Sidebar = function Sidebar(_ref2) {
       appTitle = _ref2.appTitle,
       appSubTitle = _ref2.appSubTitle,
       appVersion = _ref2.appVersion;
-  var classes = useStyles({
+  var classes = useStyles$1({
     drawerWidth: drawerWidth
   });
   var dispatch = reactRedux.useDispatch();
@@ -897,7 +917,7 @@ Sidebar.propTypes = {
   appVersion: PropTypes__default["default"].string
 };
 
-var _excluded = ["theme"];
+var _excluded$1 = ["theme"];
 
 var styles = function styles(theme) {
   return styles$1.createStyles({
@@ -983,7 +1003,8 @@ var LayoutWithoutTheme = /*#__PURE__*/function (_React$Component) {
           appTitle = _this$props.appTitle,
           appSubTitle = _this$props.appSubTitle,
           appVersion = _this$props.appVersion,
-          drawerWidth = _this$props.drawerWidth;
+          drawerWidth = _this$props.drawerWidth,
+          location = _this$props.location;
       var _this$state = this.state,
           hasError = _this$state.hasError,
           errorMessage = _this$state.errorMessage,
@@ -1009,6 +1030,7 @@ var LayoutWithoutTheme = /*#__PURE__*/function (_React$Component) {
         title: title,
         open: open,
         logout: logout,
+        location: location,
         drawerWidth: drawerWidth
       }), /*#__PURE__*/React__default["default"].createElement("div", {
         className: classes.toolbar
@@ -1036,7 +1058,7 @@ var EnhancedLayout = compose(reactRedux.connect(mapStateToProps, {} // Avoid con
 
 var Layout = function Layout(_ref) {
   var themeOverride = _ref.theme,
-      props = _objectWithoutProperties(_ref, _excluded);
+      props = _objectWithoutProperties(_ref, _excluded$1);
 
   var themeProp = React.useRef(themeOverride);
 
@@ -1073,9 +1095,48 @@ Layout.defaultProps = {
   drawerWidth: 240
 };
 
+var _excluded = ["className", "classes", "redirectTo", "icon", "label"];
+var useStyles = styles$1.makeStyles(function (theme) {
+  return {
+    menuItem: {
+      color: theme.palette.text.secondary
+    },
+    icon: {
+      minWidth: theme.spacing(5)
+    }
+  };
+}, {
+  name: "RaUserMenuItem"
+});
+var UserMenuItem = /*#__PURE__*/React__namespace.forwardRef(function UserMenuItem(props, ref) {
+  var className = props.className;
+      props.classes;
+      props.redirectTo;
+      var icon = props.icon,
+      label = props.label,
+      rest = _objectWithoutProperties(props, _excluded);
+
+  var classes = useStyles(props);
+  return /*#__PURE__*/React__namespace.createElement(core.MenuItem, _extends({
+    className: classnames__default["default"]("user-menu-item", classes.menuItem, className),
+    ref: ref,
+    component: props.to ? reactRouterDom.Link : "a"
+  }, rest), /*#__PURE__*/React__namespace.createElement(core.ListItemIcon, {
+    className: classes.icon
+  }, icon ? icon : /*#__PURE__*/React__namespace.createElement(ExitIcon__default["default"], null)), label);
+});
+UserMenuItem.propTypes = {
+  className: PropTypes__default["default"].string,
+  to: PropTypes__default["default"].string,
+  icon: PropTypes__default["default"].element,
+  onClick: PropTypes__default["default"].func
+};
+
 exports.AppBar = AppBar;
 exports.Layout = Layout;
 exports.Menu = Menu$1;
 exports.MenuGroup = MenuGroup;
 exports.MenuItem = MenuItem;
 exports.Sidebar = Sidebar;
+exports.UserMenu = UserMenu;
+exports.UserMenuItem = UserMenuItem;

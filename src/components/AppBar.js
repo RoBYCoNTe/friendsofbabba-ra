@@ -51,7 +51,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AppBar = ({ open, logout, drawerWidth }) => {
+const AppBar = ({
+  open,
+  logout,
+  drawerWidth,
+  location,
+  userMenu = UserMenu,
+}) => {
   const classes = useStyles({ drawerWidth });
   const dispatch = useDispatch();
   const translate = useTranslate();
@@ -97,7 +103,7 @@ const AppBar = ({ open, logout, drawerWidth }) => {
           </Typography>
         )}
         <LoadingIndicator />
-        <UserMenu logout={logout} />
+        {React.createElement(userMenu, { logout, location })}
       </Toolbar>
     </MuiAppBar>
   );
@@ -107,6 +113,7 @@ AppBar.propTypes = {
   open: PropTypes.bool.isRequired,
   logout: PropTypes.element.isRequired,
   drawerWidth: PropTypes.number.isRequired,
+  userMenu: PropTypes.elementType,
 };
 
 export default AppBar;

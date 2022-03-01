@@ -1,6 +1,10 @@
 # react-admin Material UI Mini drawer variant layout
 
-I'm a big fan of [react-admin](https://github.com/marmelab/react-admin) and I've built a simple layout using [Material UI Mini drawer variant](https://v4.mui.com/components/drawers/). The layout has a simple navigation bar and a drawer with a navigation menu and it can be used as a starting point for your own layout. Any component can be overridden by using the `layout` prop.
+I'm a big fan of [react-admin](https://github.com/marmelab/react-admin) and
+I've built a simple layout using [Mini drawer variant](https://v4.mui.com/components/drawers/).
+The layout has a simple navigation bar and a drawer with a navigation menu and
+it can be used as a starting point for your own layout. Any component can be
+overridden by using the `layout` prop.
 
 ![React-Admin Mini Drawer](docs/demo.gif)
 
@@ -125,7 +129,7 @@ The current version of this library doesn't support nested menus or root items.
 
 ### Badges
 
-I'm in love with badges, so I've added a badge to the `MenuItem` component. You can pass a `badge` prop to the `MenuItem` component to show a badge. The badge can be a number or a string. The `Menu` component accept `badges` props that allows you to customize the badges for all menu items, this prop can be a string targeting dataProvider feature that will load badges, for every resource, from your custom api or an object of key/value pairs where the key is the resource name and the value is the badge value.
+You can pass a `badge` prop to the `MenuItem` component to show a badge. The `Menu` component accept `badges` props that allows you to customize the badges for all menu items, this prop can be an object of `key`/`value` pairs where the key is the resource name and the value is the badge config.
 
 For every badge you have to provide these props:
 
@@ -133,6 +137,7 @@ For every badge you have to provide these props:
 - `color`: the badge color
 - `icon`: the badge icon
 - `variant`: the badge variant
+- `show` (_not required_): a boolean to show or hide the badge
 
 For example, an output badges config can be like this:
 
@@ -146,6 +151,10 @@ For example, an output badges config can be like this:
   }
 }
 ```
+
+### UserMenu
+
+The `UserMenu` component allows you to customize the user menu (in the top right corner).
 
 ## How to contribute
 

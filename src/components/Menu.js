@@ -43,20 +43,24 @@ const Menu = ({
               <MenuItem
                 {...item}
                 key={index}
+                open={open}
                 location={location}
                 onMenuClick={onMenuClick}
               />
             ))}
           </MenuGroup>
         ))}
-      {React.Children.map(children, (child) =>
-        React.cloneElement(child, {
-          open,
-          menu,
-          location,
-          permissions,
-          onMenuClick,
-        })
+      {React.Children.map(
+        children,
+        (child) =>
+          React.isValidElement(child) &&
+          React.cloneElement(child, {
+            open,
+            menu,
+            location,
+            permissions,
+            onMenuClick,
+          })
       )}
     </List>
   );
@@ -88,19 +92,14 @@ Menu.propTypes = {
   /** Allows configuration of groups */
   order: PropTypes.object,
   /** Badges config. */
-  badges: PropTypes.oneOfType([
-    /** Can be the name of dataProvider method used to load badges. */
-    PropTypes.string,
-    /** Can be a list of badges containing targeting resource data. */
-    PropTypes.arrayOf(
-      PropTypes.objectOf({
-        show: PropTypes.bool,
-        label: PropTypes.string,
-        value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-        color: PropTypes.oneOf(["primary", "secondary", "default"]),
-      })
-    ),
-  ]),
+  badges: PropTypes.objectOf(
+    PropTypes.shape({
+      show: PropTypes.bool,
+      label: PropTypes.string,
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      color: PropTypes.oneOf(["primary", "secondary", "default", "error"]),
+    })
+  ),
 };
 
 export default compose(

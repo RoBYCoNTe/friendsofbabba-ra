@@ -21,6 +21,8 @@ const MenuItem = ({
   label,
   sub,
   onMenuClick,
+  permissions,
+  open,
   ...props
 }) => {
   return (
@@ -33,7 +35,7 @@ const MenuItem = ({
       selected={isSelected(location, to)}
     >
       <ListItemIcon>
-        {badge && badge.show ? (
+        {badge && badge.show !== false ? (
           <Badge
             color={badge.color}
             variant={badge.variant}
@@ -45,7 +47,18 @@ const MenuItem = ({
           createElement(icon)
         )}
       </ListItemIcon>
-      <ListItemText primary={label} secondary={sub} />
+      {open && (
+        <ListItemText
+          primary={label}
+          secondary={sub}
+          primaryTypographyProps={{
+            style: { whiteSpace: "normal" },
+          }}
+          secondaryTypographyProps={{
+            style: { whiteSpace: "normal" },
+          }}
+        />
+      )}
     </ListItem>
   );
 };
@@ -53,18 +66,17 @@ const MenuItem = ({
 MenuItem.propTypes = {
   label: PropTypes.string.isRequired,
   icon: PropTypes.elementType.isRequired,
-  to: PropTypes.string.isRequired,
+  to: PropTypes.string,
+  href: PropTypes.string,
   badge: PropTypes.shape({
     show: PropTypes.bool,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     variant: PropTypes.oneOf(["standard", "dot", "dot-small"]),
-    color: PropTypes.oneOf(["primary", "secondary", "default"]),
+    color: PropTypes.oneOf(["default", "primary", "secondary", "error"]),
   }),
-  localize: PropTypes.bool,
-
-  // location: PropTypes.shape({
-  //   pathname: PropTypes.string.isRequired,
-  // }).isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }),
   onMenuClick: PropTypes.func,
 };
 

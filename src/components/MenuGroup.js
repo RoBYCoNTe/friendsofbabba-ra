@@ -23,8 +23,11 @@ const MenuGroup = ({ children, open, label, ...props }) => {
         ) : null
       }
     >
-      {React.Children.map(children, (child) =>
-        React.cloneElement(child, { ...props })
+      {React.Children.map(
+        children,
+        (child) =>
+          React.isValidElement(child) &&
+          React.cloneElement(child, { open, ...props })
       )}
       <Divider />
     </List>

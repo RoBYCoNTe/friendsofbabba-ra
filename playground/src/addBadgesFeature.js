@@ -4,8 +4,8 @@ const addBadgesFeature = (dataProvider) => ({
     return Promise.resolve({
       data: {
         users: {
-          value: 1,
-          color: "secondary",
+          value: Math.floor(Math.random() * 99) + 1,
+          color: "error",
           variant: "standard",
           show: true,
         },

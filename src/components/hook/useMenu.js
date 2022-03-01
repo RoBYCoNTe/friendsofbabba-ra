@@ -1,5 +1,4 @@
 import createGroups from "./createGroups";
-import useBadges from "./useBadges";
 import { useSelector } from "react-redux";
 
 const { usePermissions, getResources, useTranslate } = require("ra-core");
@@ -7,7 +6,6 @@ const { useMemo } = require("react");
 const { shallowEqual } = require("react-redux");
 
 const useMenu = ({ order, hasDashboard, badges, items = [] }) => {
-  const badgesMap = useBadges(badges);
   const translate = useTranslate();
   const { loaded, permissions } = usePermissions();
   const resources = useSelector(getResources, shallowEqual);
@@ -18,7 +16,7 @@ const useMenu = ({ order, hasDashboard, badges, items = [] }) => {
             order,
             resources,
             permissions,
-            badgesMap,
+            badges,
             hasDashboard,
             items,
             translate,
@@ -28,7 +26,7 @@ const useMenu = ({ order, hasDashboard, badges, items = [] }) => {
       order,
       resources,
       permissions,
-      badgesMap,
+      badges,
       loaded,
       hasDashboard,
       items,

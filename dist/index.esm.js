@@ -1,7 +1,8 @@
 import { useTranslate as useTranslate$1, useGetIdentity, LoadingIndicator, getResources as getResources$1, defaultTheme, Notification } from 'react-admin';
-import React, { useCallback, createElement, useState, useEffect, useRef } from 'react';
+import * as React from 'react';
+import React__default, { useCallback, createElement, useRef, useState, useEffect } from 'react';
 import { makeStyles, withStyles, createStyles, createMuiTheme } from '@material-ui/core/styles';
-import { useMediaQuery, AppBar as AppBar$1, Toolbar, IconButton as IconButton$1, makeStyles as makeStyles$1, List, ListSubheader, Divider, Badge as Badge$1, ListItem, ListItemIcon, ListItemText, Drawer, Typography as Typography$1 } from '@material-ui/core';
+import { useMediaQuery, AppBar as AppBar$1, Toolbar, IconButton as IconButton$1, makeStyles as makeStyles$1, List, ListSubheader, Divider, Badge as Badge$1, ListItem, ListItemIcon, ListItemText, Drawer, Typography as Typography$1, MenuItem as MenuItem$1 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
@@ -9,7 +10,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import IconButton from '@material-ui/core/IconButton';
 import Menu$2 from '@material-ui/core/Menu';
 import classnames from 'classnames';
-import { toggleSidebar, useDataProvider, usePermissions as usePermissions$1 } from 'ra-core';
+import { toggleSidebar, usePermissions as usePermissions$1 } from 'ra-core';
 import { useDispatch, useSelector, connect } from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Link, withRouter } from 'react-router-dom';
@@ -17,6 +18,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import get from 'lodash/get';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { ThemeProvider } from '@material-ui/styles';
+import ExitIcon from '@material-ui/icons/PowerSettingsNew';
 
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
@@ -282,9 +284,10 @@ function _nonIterableRest() {
 }
 
 var UserMenu = function UserMenu(_ref) {
-  var logout = _ref.logout;
+  var logout = _ref.logout,
+      children = _ref.children;
 
-  var _React$useState = React.useState(null),
+  var _React$useState = React__default.useState(null),
       _React$useState2 = _slicedToArray(_React$useState, 2),
       anchorEl = _React$useState2[0],
       setAnchorEl = _React$useState2[1];
@@ -299,10 +302,10 @@ var UserMenu = function UserMenu(_ref) {
     setAnchorEl(null);
   };
 
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(IconButton, {
+  return /*#__PURE__*/React__default.createElement("div", null, /*#__PURE__*/React__default.createElement(IconButton, {
     onClick: handleMenu,
     color: "inherit"
-  }, /*#__PURE__*/React.createElement(AccountCircle, null)), /*#__PURE__*/React.createElement(Menu$2, {
+  }, /*#__PURE__*/React__default.createElement(AccountCircle, null)), /*#__PURE__*/React__default.createElement(Menu$2, {
     id: "menu-appbar",
     anchorEl: anchorEl,
     anchorOrigin: {
@@ -316,14 +319,18 @@ var UserMenu = function UserMenu(_ref) {
     },
     open: open,
     onClose: handleClose
-  }, logout));
+  }, !children && logout, React__default.Children.map(children, function (child) {
+    return child !== logout ? /*#__PURE__*/React__default.cloneElement(child, {
+      onClick: handleClose
+    }) : logout;
+  })));
 };
 
 UserMenu.propTypes = {
   logout: PropTypes.element.isRequired
 };
 
-var useStyles$2 = makeStyles(function (theme) {
+var useStyles$3 = makeStyles(function (theme) {
   return {
     title: {
       flexGrow: 1
@@ -369,8 +376,11 @@ var useStyles$2 = makeStyles(function (theme) {
 var AppBar = function AppBar(_ref2) {
   var open = _ref2.open,
       logout = _ref2.logout,
-      drawerWidth = _ref2.drawerWidth;
-  var classes = useStyles$2({
+      drawerWidth = _ref2.drawerWidth,
+      location = _ref2.location,
+      _ref2$userMenu = _ref2.userMenu,
+      userMenu = _ref2$userMenu === void 0 ? UserMenu : _ref2$userMenu;
+  var classes = useStyles$3({
     drawerWidth: drawerWidth
   });
   var dispatch = useDispatch();
@@ -385,38 +395,40 @@ var AppBar = function AppBar(_ref2) {
   var handleToggleSidebar = useCallback(function () {
     return dispatch(toggleSidebar());
   }, [dispatch]);
-  return /*#__PURE__*/React.createElement(AppBar$1, {
+  return /*#__PURE__*/React__default.createElement(AppBar$1, {
     position: "fixed",
     color: "secondary",
     className: classnames(classes.appBar, _defineProperty({}, classes.appBarShift, open && !isXSmall))
-  }, /*#__PURE__*/React.createElement(Toolbar, null, /*#__PURE__*/React.createElement(IconButton$1, {
+  }, /*#__PURE__*/React__default.createElement(Toolbar, null, /*#__PURE__*/React__default.createElement(IconButton$1, {
     color: "inherit",
     "aria-label": "open drawer",
     onClick: handleToggleSidebar,
     edge: "start",
     className: classnames(classes.menuButton, _defineProperty({}, classes.hide, open && !isXSmall))
-  }, /*#__PURE__*/React.createElement(MenuIcon, null)), /*#__PURE__*/React.createElement(Typography, {
+  }, /*#__PURE__*/React__default.createElement(MenuIcon, null)), /*#__PURE__*/React__default.createElement(Typography, {
     className: classnames(classes.title, _defineProperty({}, classes.titleSidebarClose, !open)),
     variant: "h6",
     id: "react-admin-title",
     noWrap: true
-  }), !isXSmall && /*#__PURE__*/React.createElement("div", {
+  }), !isXSmall && /*#__PURE__*/React__default.createElement("div", {
     className: classes.spacer
-  }), !isXSmall && /*#__PURE__*/React.createElement(Typography, {
+  }), !isXSmall && /*#__PURE__*/React__default.createElement(Typography, {
     variant: "body1"
-  }, translate("app.welcome", identity)), /*#__PURE__*/React.createElement(LoadingIndicator, null), /*#__PURE__*/React.createElement(UserMenu, {
-    logout: logout
+  }, translate("app.welcome", identity)), /*#__PURE__*/React__default.createElement(LoadingIndicator, null), /*#__PURE__*/React__default.createElement(userMenu, {
+    logout: logout,
+    location: location
   })));
 };
 
 AppBar.propTypes = {
   open: PropTypes.bool.isRequired,
   logout: PropTypes.element.isRequired,
-  drawerWidth: PropTypes.number.isRequired
+  drawerWidth: PropTypes.number.isRequired,
+  userMenu: PropTypes.elementType
 };
 
-var _excluded$3 = ["children", "open", "label"];
-var useStyles$1 = makeStyles$1(function (theme) {
+var _excluded$4 = ["children", "open", "label"];
+var useStyles$2 = makeStyles$1(function (theme) {
   return {
     subHeader: {
       backgroundColor: theme.palette.background.paper,
@@ -431,16 +443,18 @@ var MenuGroup = function MenuGroup(_ref) {
   var children = _ref.children,
       open = _ref.open,
       label = _ref.label,
-      props = _objectWithoutProperties(_ref, _excluded$3);
+      props = _objectWithoutProperties(_ref, _excluded$4);
 
-  var classes = useStyles$1();
-  return /*#__PURE__*/React.createElement(List, {
-    subheader: open ? /*#__PURE__*/React.createElement(ListSubheader, {
+  var classes = useStyles$2();
+  return /*#__PURE__*/React__default.createElement(List, {
+    subheader: open ? /*#__PURE__*/React__default.createElement(ListSubheader, {
       className: classes.subHeader
     }, label) : null
-  }, React.Children.map(children, function (child) {
-    return /*#__PURE__*/React.cloneElement(child, _objectSpread2({}, props));
-  }), /*#__PURE__*/React.createElement(Divider, null));
+  }, React__default.Children.map(children, function (child) {
+    return /*#__PURE__*/React__default.isValidElement(child) && /*#__PURE__*/React__default.cloneElement(child, _objectSpread2({
+      open: open
+    }, props));
+  }), /*#__PURE__*/React__default.createElement(Divider, null));
 };
 
 MenuGroup.propTypes = {
@@ -457,17 +471,17 @@ MenuGroup.propTypes = {
   group: PropTypes.string
 };
 
-var _excluded$2 = ["titleAccess", "children"];
+var _excluded$3 = ["titleAccess", "children"];
 
 var Badge = function Badge(_ref) {
   _ref.titleAccess;
       var children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded$2);
+      props = _objectWithoutProperties(_ref, _excluded$3);
 
-  return /*#__PURE__*/React.createElement(Badge$1, props, children);
+  return /*#__PURE__*/React__default.createElement(Badge$1, props, children);
 };
 
-var _excluded$1 = ["location", "badge", "to", "icon", "label", "sub", "onMenuClick"];
+var _excluded$2 = ["location", "badge", "to", "icon", "label", "sub", "onMenuClick", "permissions", "open"];
 
 var isSelected = function isSelected(location, to) {
   var selected = location.pathname === to || location.pathname.indexOf("".concat(to, "?")) === 0 || location.pathname.indexOf("".concat(to, "/")) === 0;
@@ -481,39 +495,51 @@ var MenuItem = function MenuItem(_ref) {
       icon = _ref.icon,
       label = _ref.label,
       sub = _ref.sub,
-      onMenuClick = _ref.onMenuClick,
-      props = _objectWithoutProperties(_ref, _excluded$1);
+      onMenuClick = _ref.onMenuClick;
+      _ref.permissions;
+      var open = _ref.open,
+      props = _objectWithoutProperties(_ref, _excluded$2);
 
-  return /*#__PURE__*/React.createElement(ListItem, _extends({}, props, {
+  return /*#__PURE__*/React__default.createElement(ListItem, _extends({}, props, {
     button: true,
     component: props.href ? "a" : Link,
     to: to,
     onClick: onMenuClick,
     selected: isSelected(location, to)
-  }), /*#__PURE__*/React.createElement(ListItemIcon, null, badge && badge.show ? /*#__PURE__*/React.createElement(Badge, {
+  }), /*#__PURE__*/React__default.createElement(ListItemIcon, null, badge && badge.show !== false ? /*#__PURE__*/React__default.createElement(Badge, {
     color: badge.color,
     variant: badge.variant,
     badgeContent: badge.value
-  }, /*#__PURE__*/createElement(icon)) : /*#__PURE__*/createElement(icon)), /*#__PURE__*/React.createElement(ListItemText, {
+  }, /*#__PURE__*/createElement(icon)) : /*#__PURE__*/createElement(icon)), open && /*#__PURE__*/React__default.createElement(ListItemText, {
     primary: label,
-    secondary: sub
+    secondary: sub,
+    primaryTypographyProps: {
+      style: {
+        whiteSpace: "normal"
+      }
+    },
+    secondaryTypographyProps: {
+      style: {
+        whiteSpace: "normal"
+      }
+    }
   }));
 };
 
 MenuItem.propTypes = {
   label: PropTypes.string.isRequired,
   icon: PropTypes.elementType.isRequired,
-  to: PropTypes.string.isRequired,
+  to: PropTypes.string,
+  href: PropTypes.string,
   badge: PropTypes.shape({
     show: PropTypes.bool,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     variant: PropTypes.oneOf(["standard", "dot", "dot-small"]),
-    color: PropTypes.oneOf(["primary", "secondary", "default"])
+    color: PropTypes.oneOf(["default", "primary", "secondary", "error"])
   }),
-  localize: PropTypes.bool,
-  // location: PropTypes.shape({
-  //   pathname: PropTypes.string.isRequired,
-  // }).isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired
+  }),
   onMenuClick: PropTypes.func
 };
 
@@ -601,27 +627,6 @@ var createGroups = function createGroups(_ref) {
   return groups;
 };
 
-var useBadges = function useBadges(badges) {
-  var dataProvider = useDataProvider();
-
-  var _useState = useState({}),
-      _useState2 = _slicedToArray(_useState, 2),
-      badgesData = _useState2[0],
-      setBadgesData = _useState2[1];
-
-  useEffect(function () {
-    if (typeof badges === "string") {
-      dataProvider[badges]().then(function (_ref) {
-        var data = _ref.data;
-        return setBadgesData(data);
-      });
-    } else {
-      setBadgesData(badges);
-    }
-  }, [badges, dataProvider]);
-  return badgesData;
-};
-
 var _require = require("ra-core"),
     usePermissions = _require.usePermissions,
     getResources = _require.getResources,
@@ -639,7 +644,6 @@ var useMenu = function useMenu(_ref) {
       badges = _ref.badges,
       _ref$items = _ref.items,
       items = _ref$items === void 0 ? [] : _ref$items;
-  var badgesMap = useBadges(badges);
   var translate = useTranslate();
 
   var _usePermissions = usePermissions(),
@@ -652,12 +656,12 @@ var useMenu = function useMenu(_ref) {
       order: order,
       resources: resources,
       permissions: permissions,
-      badgesMap: badgesMap,
+      badges: badges,
       hasDashboard: hasDashboard,
       items: items,
       translate: translate
     }) : [];
-  }, [order, resources, permissions, badgesMap, loaded, hasDashboard, items, translate]);
+  }, [order, resources, permissions, badges, loaded, hasDashboard, items, translate]);
   return menu;
 };
 
@@ -693,22 +697,23 @@ var Menu = function Menu(_ref) {
     return null;
   }
 
-  return /*#__PURE__*/React.createElement(List, {
+  return /*#__PURE__*/React__default.createElement(List, {
     component: "nav"
   }, mode === "build" && menu.map(function (group, idx) {
-    return /*#__PURE__*/React.createElement(MenuGroup, {
+    return /*#__PURE__*/React__default.createElement(MenuGroup, {
       key: idx,
       open: open,
       label: translate("menu.groups.".concat(group.label))
     }, group.items.map(function (item, index) {
-      return /*#__PURE__*/React.createElement(MenuItem, _extends({}, item, {
+      return /*#__PURE__*/React__default.createElement(MenuItem, _extends({}, item, {
         key: index,
+        open: open,
         location: location,
         onMenuClick: onMenuClick
       }));
     }));
-  }), React.Children.map(children, function (child) {
-    return /*#__PURE__*/React.cloneElement(child, {
+  }), React__default.Children.map(children, function (child) {
+    return /*#__PURE__*/React__default.isValidElement(child) && /*#__PURE__*/React__default.cloneElement(child, {
       open: open,
       menu: menu,
       location: location,
@@ -749,16 +754,12 @@ Menu.propTypes = {
   order: PropTypes.object,
 
   /** Badges config. */
-  badges: PropTypes.oneOfType([
-  /** Can be the name of dataProvider method used to load badges. */
-  PropTypes.string,
-  /** Can be a list of badges containing targeting resource data. */
-  PropTypes.arrayOf(PropTypes.objectOf({
+  badges: PropTypes.objectOf(PropTypes.shape({
     show: PropTypes.bool,
     label: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    color: PropTypes.oneOf(["primary", "secondary", "default"])
-  }))])
+    color: PropTypes.oneOf(["primary", "secondary", "default", "error"])
+  }))
 };
 var Menu$1 = compose(withRouter, connect(function (state) {
   return {
@@ -767,7 +768,7 @@ var Menu$1 = compose(withRouter, connect(function (state) {
   };
 }))(Menu);
 
-var useStyles = makeStyles$1(function (theme) {
+var useStyles$1 = makeStyles$1(function (theme) {
   return {
     brand: {
       paddingLeft: theme.spacing(1),
@@ -829,7 +830,7 @@ var Sidebar = function Sidebar(_ref2) {
       appTitle = _ref2.appTitle,
       appSubTitle = _ref2.appSubTitle,
       appVersion = _ref2.appVersion;
-  var classes = useStyles({
+  var classes = useStyles$1({
     drawerWidth: drawerWidth
   });
   var dispatch = useDispatch();
@@ -839,7 +840,7 @@ var Sidebar = function Sidebar(_ref2) {
   var isXSmall = useMediaQuery(function (theme) {
     return theme.breakpoints.down("xs");
   });
-  return /*#__PURE__*/React.createElement(Drawer, {
+  return /*#__PURE__*/React__default.createElement(Drawer, {
     open: open,
     onClose: handleToggleSidebar,
     variant: isXSmall ? "temporary" : "permanent",
@@ -847,22 +848,22 @@ var Sidebar = function Sidebar(_ref2) {
     classes: {
       paper: classnames((_classnames2 = {}, _defineProperty(_classnames2, classes.drawerOpen, open), _defineProperty(_classnames2, classes.drawerClose, !open), _classnames2))
     }
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React__default.createElement("div", {
     className: classes.toolbar
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React__default.createElement("div", {
     className: classes.brand
-  }, /*#__PURE__*/React.createElement(Typography$1, {
+  }, /*#__PURE__*/React__default.createElement(Typography$1, {
     className: classes.title,
     href: "/",
     variant: "h6",
     color: "inherit"
-  }, appTitle), /*#__PURE__*/React.createElement(Typography$1, {
+  }, appTitle), /*#__PURE__*/React__default.createElement(Typography$1, {
     color: "textSecondary",
     variant: "caption"
-  }, appSubTitle, " (", appVersion, ")")), /*#__PURE__*/React.createElement(IconButton$1, {
+  }, appSubTitle, " (", appVersion, ")")), /*#__PURE__*/React__default.createElement(IconButton$1, {
     onClick: handleToggleSidebar
-  }, /*#__PURE__*/React.createElement(ChevronLeftIcon, null))), React.Children.map(children, function (child) {
-    return /*#__PURE__*/React.cloneElement(child, {
+  }, /*#__PURE__*/React__default.createElement(ChevronLeftIcon, null))), React__default.Children.map(children, function (child) {
+    return /*#__PURE__*/React__default.cloneElement(child, {
       onMenuClick: isXSmall ? handleToggleSidebar : undefined
     });
   }));
@@ -878,7 +879,7 @@ Sidebar.propTypes = {
   appVersion: PropTypes.string
 };
 
-var _excluded = ["theme"];
+var _excluded$1 = ["theme"];
 
 var styles = function styles(theme) {
   return createStyles({
@@ -964,14 +965,15 @@ var LayoutWithoutTheme = /*#__PURE__*/function (_React$Component) {
           appTitle = _this$props.appTitle,
           appSubTitle = _this$props.appSubTitle,
           appVersion = _this$props.appVersion,
-          drawerWidth = _this$props.drawerWidth;
+          drawerWidth = _this$props.drawerWidth,
+          location = _this$props.location;
       var _this$state = this.state,
           hasError = _this$state.hasError,
           errorMessage = _this$state.errorMessage,
           errorInfo = _this$state.errorInfo;
-      return /*#__PURE__*/React.createElement("div", {
+      return /*#__PURE__*/React__default.createElement("div", {
         className: classes.root
-      }, /*#__PURE__*/React.createElement(CssBaseline, null), /*#__PURE__*/createElement(sidebar, {
+      }, /*#__PURE__*/React__default.createElement(CssBaseline, null), /*#__PURE__*/createElement(sidebar, {
         open: open,
         appTitle: appTitle,
         appSubTitle: appSubTitle,
@@ -983,15 +985,16 @@ var LayoutWithoutTheme = /*#__PURE__*/function (_React$Component) {
           hasDashboard: !!dashboard,
           menuConfig: this.props.menu
         })
-      }), /*#__PURE__*/React.createElement("main", {
+      }), /*#__PURE__*/React__default.createElement("main", {
         id: "main-content",
         className: classes.content
       }, /*#__PURE__*/createElement(appBar, {
         title: title,
         open: open,
         logout: logout,
+        location: location,
         drawerWidth: drawerWidth
-      }), /*#__PURE__*/React.createElement("div", {
+      }), /*#__PURE__*/React__default.createElement("div", {
         className: classes.toolbar
       }), hasError ? /*#__PURE__*/createElement(error, {
         error: errorMessage,
@@ -1002,7 +1005,7 @@ var LayoutWithoutTheme = /*#__PURE__*/function (_React$Component) {
   }]);
 
   return LayoutWithoutTheme;
-}(React.Component);
+}(React__default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -1017,7 +1020,7 @@ var EnhancedLayout = compose(connect(mapStateToProps, {} // Avoid connect passin
 
 var Layout = function Layout(_ref) {
   var themeOverride = _ref.theme,
-      props = _objectWithoutProperties(_ref, _excluded);
+      props = _objectWithoutProperties(_ref, _excluded$1);
 
   var themeProp = useRef(themeOverride);
 
@@ -1034,9 +1037,9 @@ var Layout = function Layout(_ref) {
       setTheme(createMuiTheme(themeOverride));
     }
   }, [themeOverride, themeProp, theme, setTheme]);
-  return /*#__PURE__*/React.createElement(ThemeProvider, {
+  return /*#__PURE__*/React__default.createElement(ThemeProvider, {
     theme: theme
-  }, /*#__PURE__*/React.createElement(EnhancedLayout, props));
+  }, /*#__PURE__*/React__default.createElement(EnhancedLayout, props));
 };
 
 Layout.propTypes = {
@@ -1054,4 +1057,41 @@ Layout.defaultProps = {
   drawerWidth: 240
 };
 
-export { AppBar, Layout, Menu$1 as Menu, MenuGroup, MenuItem, Sidebar };
+var _excluded = ["className", "classes", "redirectTo", "icon", "label"];
+var useStyles = makeStyles(function (theme) {
+  return {
+    menuItem: {
+      color: theme.palette.text.secondary
+    },
+    icon: {
+      minWidth: theme.spacing(5)
+    }
+  };
+}, {
+  name: "RaUserMenuItem"
+});
+var UserMenuItem = /*#__PURE__*/React.forwardRef(function UserMenuItem(props, ref) {
+  var className = props.className;
+      props.classes;
+      props.redirectTo;
+      var icon = props.icon,
+      label = props.label,
+      rest = _objectWithoutProperties(props, _excluded);
+
+  var classes = useStyles(props);
+  return /*#__PURE__*/React.createElement(MenuItem$1, _extends({
+    className: classnames("user-menu-item", classes.menuItem, className),
+    ref: ref,
+    component: props.to ? Link : "a"
+  }, rest), /*#__PURE__*/React.createElement(ListItemIcon, {
+    className: classes.icon
+  }, icon ? icon : /*#__PURE__*/React.createElement(ExitIcon, null)), label);
+});
+UserMenuItem.propTypes = {
+  className: PropTypes.string,
+  to: PropTypes.string,
+  icon: PropTypes.element,
+  onClick: PropTypes.func
+};
+
+export { AppBar, Layout, Menu$1 as Menu, MenuGroup, MenuItem, Sidebar, UserMenu, UserMenuItem };

@@ -4,7 +4,7 @@ import Menu from "@material-ui/core/Menu";
 import PropTypes from "prop-types";
 import React from "react";
 
-const UserMenu = ({ logout }) => {
+const UserMenu = ({ logout, children }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const open = Boolean(anchorEl);
@@ -15,6 +15,7 @@ const UserMenu = ({ logout }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   return (
     <div>
       <IconButton onClick={handleMenu} color="inherit">
@@ -35,7 +36,14 @@ const UserMenu = ({ logout }) => {
         open={open}
         onClose={handleClose}
       >
-        {logout}
+        {!children && logout}
+        {React.Children.map(children, (child) =>
+          child !== logout
+            ? React.cloneElement(child, {
+                onClick: handleClose,
+              })
+            : logout
+        )}
       </Menu>
     </div>
   );

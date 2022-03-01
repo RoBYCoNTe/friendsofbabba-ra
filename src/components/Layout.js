@@ -74,6 +74,7 @@ class LayoutWithoutTheme extends React.Component {
       appVersion,
 
       drawerWidth,
+      location,
     } = this.props;
     const { hasError, errorMessage, errorInfo } = this.state;
 
@@ -89,13 +90,20 @@ class LayoutWithoutTheme extends React.Component {
           children: createElement(menu, {
             open,
             logout,
+
             hasDashboard: !!dashboard,
             menuConfig: this.props.menu,
           }),
         })}
 
         <main id="main-content" className={classes.content}>
-          {createElement(appBar, { title, open, logout, drawerWidth })}
+          {createElement(appBar, {
+            title,
+            open,
+            logout,
+            location,
+            drawerWidth,
+          })}
           <div className={classes.toolbar} />
           {hasError
             ? createElement(error, {
