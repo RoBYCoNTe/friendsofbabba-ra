@@ -36,7 +36,7 @@ export default {
 In this example, the resource will be rendered in the drawer under the `Dashboard` group
 and only the user role will be able to see it (`roles` is another option exposed in this layout that can be helpful to customize resources access).
 
-## Props
+## Components
 
 ### Layout
 
