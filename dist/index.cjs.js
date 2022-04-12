@@ -22,6 +22,10 @@ var get = require('lodash/get');
 var ChevronLeftIcon = require('@material-ui/icons/ChevronLeft');
 var styles$2 = require('@material-ui/styles');
 var ExitIcon = require('@material-ui/icons/PowerSettingsNew');
+var queryString = require('query-string');
+var lodash = require('lodash');
+var moment = require('moment');
+var polyglotI18nProvider = require('ra-i18n-polyglot');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -57,6 +61,8 @@ var DashboardIcon__default = /*#__PURE__*/_interopDefaultLegacy(DashboardIcon);
 var get__default = /*#__PURE__*/_interopDefaultLegacy(get);
 var ChevronLeftIcon__default = /*#__PURE__*/_interopDefaultLegacy(ChevronLeftIcon);
 var ExitIcon__default = /*#__PURE__*/_interopDefaultLegacy(ExitIcon);
+var moment__default = /*#__PURE__*/_interopDefaultLegacy(moment);
+var polyglotI18nProvider__default = /*#__PURE__*/_interopDefaultLegacy(polyglotI18nProvider);
 
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
@@ -82,6 +88,42 @@ function _objectSpread2(target) {
   }
 
   return target;
+}
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
+  try {
+    var info = gen[key](arg);
+    var value = info.value;
+  } catch (error) {
+    reject(error);
+    return;
+  }
+
+  if (info.done) {
+    resolve(value);
+  } else {
+    Promise.resolve(value).then(_next, _throw);
+  }
+}
+
+function _asyncToGenerator(fn) {
+  return function () {
+    var self = this,
+        args = arguments;
+    return new Promise(function (resolve, reject) {
+      var gen = fn.apply(self, args);
+
+      function _next(value) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
+      }
+
+      function _throw(err) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
+      }
+
+      _next(undefined);
+    });
+  };
 }
 
 function _classCallCheck(instance, Constructor) {
@@ -465,7 +507,7 @@ AppBar.propTypes = {
   userMenu: PropTypes__default["default"].elementType
 };
 
-var _excluded$4 = ["children", "open", "label"];
+var _excluded$5 = ["children", "open", "label"];
 var useStyles$2 = core.makeStyles(function (theme) {
   return {
     subHeader: {
@@ -481,7 +523,7 @@ var MenuGroup = function MenuGroup(_ref) {
   var children = _ref.children,
       open = _ref.open,
       label = _ref.label,
-      props = _objectWithoutProperties(_ref, _excluded$4);
+      props = _objectWithoutProperties(_ref, _excluded$5);
 
   var classes = useStyles$2();
   return /*#__PURE__*/React__default["default"].createElement(core.List, {
@@ -509,17 +551,17 @@ MenuGroup.propTypes = {
   group: PropTypes__default["default"].string
 };
 
-var _excluded$3 = ["titleAccess", "children"];
+var _excluded$4 = ["titleAccess", "children"];
 
 var Badge = function Badge(_ref) {
   _ref.titleAccess;
       var children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded$3);
+      props = _objectWithoutProperties(_ref, _excluded$4);
 
   return /*#__PURE__*/React__default["default"].createElement(core.Badge, props, children);
 };
 
-var _excluded$2 = ["location", "badge", "to", "icon", "label", "sub", "onMenuClick", "permissions", "open"];
+var _excluded$3 = ["location", "badge", "to", "icon", "label", "sub", "onMenuClick", "permissions", "open"];
 
 var isSelected = function isSelected(location, to) {
   var selected = location.pathname === to || location.pathname.indexOf("".concat(to, "?")) === 0 || location.pathname.indexOf("".concat(to, "/")) === 0;
@@ -536,7 +578,7 @@ var MenuItem = function MenuItem(_ref) {
       onMenuClick = _ref.onMenuClick;
       _ref.permissions;
       var open = _ref.open,
-      props = _objectWithoutProperties(_ref, _excluded$2);
+      props = _objectWithoutProperties(_ref, _excluded$3);
 
   return /*#__PURE__*/React__default["default"].createElement(core.ListItem, _extends({}, props, {
     button: true,
@@ -731,7 +773,7 @@ var Menu = function Menu(_ref) {
   });
   var translate = reactAdmin.useTranslate();
 
-  if (loading || !loaded || identity === null || identity.id <= 0) {
+  if (loading || !loaded || !identity || identity === null || identity.id <= 0) {
     return null;
   }
 
@@ -917,7 +959,7 @@ Sidebar.propTypes = {
   appVersion: PropTypes__default["default"].string
 };
 
-var _excluded$1 = ["theme"];
+var _excluded$2 = ["theme"];
 
 var styles = function styles(theme) {
   return styles$1.createStyles({
@@ -1058,12 +1100,12 @@ var EnhancedLayout = compose(reactRedux.connect(mapStateToProps, {} // Avoid con
 
 var Layout = function Layout(_ref) {
   var themeOverride = _ref.theme,
-      props = _objectWithoutProperties(_ref, _excluded$1);
+      props = _objectWithoutProperties(_ref, _excluded$2);
 
   var themeProp = React.useRef(themeOverride);
 
   var _useState = React.useState(function () {
-    return styles$1.createMuiTheme(themeOverride);
+    return styles$1.createTheme(themeOverride);
   }),
       _useState2 = _slicedToArray(_useState, 2),
       theme = _useState2[0],
@@ -1072,7 +1114,7 @@ var Layout = function Layout(_ref) {
   React.useEffect(function () {
     if (themeProp.current !== themeOverride) {
       themeProp.current = themeOverride;
-      setTheme(styles$1.createMuiTheme(themeOverride));
+      setTheme(styles$1.createTheme(themeOverride));
     }
   }, [themeOverride, themeProp, theme, setTheme]);
   return /*#__PURE__*/React__default["default"].createElement(styles$2.ThemeProvider, {
@@ -1095,7 +1137,7 @@ Layout.defaultProps = {
   drawerWidth: 240
 };
 
-var _excluded = ["className", "classes", "redirectTo", "icon", "label"];
+var _excluded$1 = ["className", "classes", "redirectTo", "icon", "label"];
 var useStyles = styles$1.makeStyles(function (theme) {
   return {
     menuItem: {
@@ -1114,7 +1156,7 @@ var UserMenuItem = /*#__PURE__*/React__namespace.forwardRef(function UserMenuIte
       props.redirectTo;
       var icon = props.icon,
       label = props.label,
-      rest = _objectWithoutProperties(props, _excluded);
+      rest = _objectWithoutProperties(props, _excluded$1);
 
   var classes = useStyles(props);
   return /*#__PURE__*/React__namespace.createElement(core.MenuItem, _extends({
@@ -1132,6 +1174,844 @@ UserMenuItem.propTypes = {
   onClick: PropTypes__default["default"].func
 };
 
+var fetchJson = function fetchJson(url) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  return fetch(url, _objectSpread2({}, options)).then(function (response) {
+    return response.text().then(function (text) {
+      return {
+        status: response.status,
+        statusText: response.statusText,
+        headers: response.headers,
+        body: text
+      };
+    });
+  }).then(function (_ref) {
+    var status = _ref.status,
+        statusText = _ref.statusText,
+        headers = _ref.headers,
+        body = _ref.body;
+    var json;
+
+    try {
+      json = JSON.parse(body);
+    } catch (e) {// not json, no big deal
+    }
+
+    if (status < 200 || status >= 300) {
+      return Promise.reject(new reactAdmin.HttpError((json && json.data && json.data.message ? json.data.message : json.message) || statusText, status, json));
+    }
+
+    return Promise.resolve({
+      status: status,
+      headers: headers,
+      body: body,
+      json: json
+    });
+  });
+};
+
+function getHeaders() {
+  var token = localStorage.getItem("token");
+  var headers = new Headers({
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: "Bearer ".concat(token)
+  });
+  return headers;
+}
+
+// Remove unwanted _joinData props from JSON object before submission to the rest service.
+var createDataFormatter = function createDataFormatter(data) {
+  return Object.keys(data).reduce(function (r, key) {
+    return _objectSpread2(_objectSpread2({}, r), {}, _defineProperty({}, key, Array.isArray(data[key]) ? data[key].map(function (item) {
+      if (item._joinData === null) {
+        return {
+          id: item.id
+        };
+      }
+
+      return item;
+    }) : data[key]));
+  }, {});
+};
+
+var convertFileToBase64 = function convertFileToBase64(file) {
+  return new Promise(function (resolve, reject) {
+    var reader = new FileReader();
+    reader.readAsDataURL(file.rawFile);
+
+    reader.onload = function () {
+      return resolve(reader.result);
+    };
+
+    reader.onerror = reject;
+  });
+};
+
+var convertFile = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(file) {
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            return _context.abrupt("return", file.rawFile ? convertFileToBase64(file).then(function (convertedFile) {
+              return {
+                data: convertedFile,
+                name: file.rawFile.name,
+                size: file.rawFile.size,
+                type: file.rawFile.type
+              };
+            }) : Promise.resolve(file));
+
+          case 1:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+
+  return function convertFile(_x) {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+var createFilesParser = function createFilesParser() {
+  return /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(data, fileFields) {
+      var i, field, value, files, file;
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              i = 0;
+
+            case 1:
+              if (!(i < fileFields.length)) {
+                _context.next = 19;
+                break;
+              }
+
+              field = fileFields[i];
+              value = lodash.get(data, field);
+
+              if (!(value && Array.isArray(value))) {
+                _context.next = 11;
+                break;
+              }
+
+              _context.next = 7;
+              return Promise.all(value.map(function (file) {
+                return convertFile(file);
+              }));
+
+            case 7:
+              files = _context.sent;
+              data = lodash.set(data, field, files);
+              _context.next = 16;
+              break;
+
+            case 11:
+              if (!value) {
+                _context.next = 16;
+                break;
+              }
+
+              _context.next = 14;
+              return convertFile(value);
+
+            case 14:
+              file = _context.sent;
+              data = lodash.set(data, field, file);
+
+            case 16:
+              i++;
+              _context.next = 1;
+              break;
+
+            case 19:
+              return _context.abrupt("return", Promise.resolve(data));
+
+            case 20:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    return function (_x, _x2) {
+      return _ref.apply(this, arguments);
+    };
+  }();
+};
+
+var createDataProvider = function createDataProvider(_ref) {
+  var apiUrl = _ref.apiUrl,
+      _ref$fileFields = _ref.fileFields,
+      fileFields = _ref$fileFields === void 0 ? [] : _ref$fileFields,
+      _ref$filesParser = _ref.filesParser,
+      filesParser = _ref$filesParser === void 0 ? createFilesParser() : _ref$filesParser,
+      _ref$prepareData = _ref.prepareData,
+      prepareData = _ref$prepareData === void 0 ? function (data) {
+    return createDataFormatter(data);
+  } : _ref$prepareData;
+  return {
+    getInfo: function getInfo(resource, params) {
+      var url = "".concat(apiUrl, "/").concat(resource, "/info?").concat(queryString.stringify(params));
+      var options = {
+        headers: getHeaders()
+      };
+      return fetchJson(url, options).then(function (_ref2) {
+        var json = _ref2.json;
+        return {
+          data: json.data
+        };
+      });
+    },
+    getBadges: function getBadges() {
+      var url = "".concat(apiUrl, "/stats/badges");
+      var options = {
+        headers: getHeaders()
+      };
+      return fetchJson(url, options).then(function (_ref3) {
+        var json = _ref3.json;
+        return {
+          data: json
+        };
+      });
+    },
+    getList: function getList(resource, params) {
+      var _params$pagination = params.pagination,
+          page = _params$pagination.page,
+          perPage = _params$pagination.perPage;
+      var _params$sort = params.sort,
+          field = _params$sort.field,
+          order = _params$sort.order;
+      var filter = Object.keys(params.filter || {}).reduce(function (f, filterName) {
+        return _objectSpread2(_objectSpread2({}, f), {}, _defineProperty({}, filterName, params.filter[filterName] instanceof Array ? params.filter[filterName].join(",") : params.filter[filterName]));
+      }, {});
+
+      var query = _objectSpread2({
+        sort: field,
+        direction: order,
+        page: page,
+        limit: perPage
+      }, filter);
+
+      var url = "".concat(apiUrl, "/").concat(resource, "?").concat(queryString.stringify(query));
+      var options = {
+        headers: getHeaders()
+      };
+      return fetchJson(url, options).then(function (_ref4) {
+        var json = _ref4.json;
+        return {
+          data: json.data,
+          total: parseInt(json.pagination.count, 10)
+        };
+      });
+    },
+    getOne: function getOne(resource, params) {
+      var url = "".concat(apiUrl, "/").concat(resource) + (params.id ? "/".concat(params.id) : "");
+      var options = {
+        headers: getHeaders()
+      };
+      return fetchJson(url, options).then(function (_ref5) {
+        var json = _ref5.json;
+        return {
+          data: json.data
+        };
+      });
+    },
+    getMany: function getMany(resource, params) {
+      var query = {
+        ids: params.ids.map(function (id) {
+          return id.id ? id.id : id;
+        }).join(",")
+      };
+      var url = "".concat(apiUrl, "/").concat(resource, "?").concat(queryString.stringify(query));
+      var options = {
+        headers: getHeaders()
+      };
+      return fetchJson(url, options).then(function (_ref6) {
+        var json = _ref6.json;
+        return {
+          data: json.data,
+          total: parseInt(json.pagination.count, 10)
+        };
+      });
+    },
+    getManyReference: function getManyReference(resource, params) {
+      var _params$pagination2 = params.pagination,
+          page = _params$pagination2.page,
+          perPage = _params$pagination2.perPage;
+      var _params$sort2 = params.sort,
+          field = _params$sort2.field,
+          order = _params$sort2.order;
+      var filter = Object.keys(params.filter || {}).reduce(function (f, filterName) {
+        return _objectSpread2(_objectSpread2({}, f), {}, _defineProperty({}, filterName, params.filter[filterName] instanceof Array ? params.filter[filterName].join(",") : params.filter[filterName]));
+      }, {});
+
+      var query = _objectSpread2(_defineProperty({
+        sort: field,
+        direction: order,
+        page: page,
+        limit: perPage
+      }, params.target, params.id), filter);
+
+      var url = "".concat(apiUrl, "/").concat(resource, "?").concat(queryString.stringify(query));
+      var options = {
+        headers: getHeaders()
+      };
+      return fetchJson(url, options).then(function (_ref7) {
+        var json = _ref7.json;
+        return {
+          data: json.data,
+          total: parseInt(json.pagination.count, 10)
+        };
+      });
+    },
+    create: function create(resource, params) {
+      return filesParser(params.data, fileFields).then(function (data) {
+        var url = "".concat(apiUrl, "/").concat(resource);
+        var options = {
+          method: "POST",
+          body: JSON.stringify(prepareData(data, resource, params)),
+          headers: getHeaders()
+        };
+        return fetchJson(url, options).then(function (_ref8) {
+          var json = _ref8.json;
+          return {
+            data: _objectSpread2(_objectSpread2({}, json.data || params.data), {}, {
+              id: json.data.id
+            })
+          };
+        });
+      });
+    },
+    update: function update(resource, params) {
+      return filesParser(params.data, fileFields).then(function (data) {
+        var id = data && data.pk ? data.pk : params.id;
+        var url = "".concat(apiUrl, "/").concat(resource) + (id ? "/".concat(id) : "");
+        var options = {
+          method: "PUT",
+          body: JSON.stringify(prepareData(data)),
+          headers: getHeaders()
+        };
+        return fetchJson(url, options).then(function (_ref9) {
+          var json = _ref9.json;
+          return {
+            data: _objectSpread2({
+              id: data.pk
+            }, json.data)
+          };
+        });
+      });
+    },
+    updateMany: function updateMany(resource, params) {
+      return Promise.all(params.ids.map(function (id) {
+        return fetchJson("".concat(apiUrl, "/").concat(resource, "/").concat(id), {
+          method: "PUT",
+          body: JSON.stringify(params.data),
+          headers: getHeaders()
+        });
+      })).then(function (responses) {
+        return {
+          data: responses.map(function (response) {
+            return response.json;
+          })
+        };
+      });
+    },
+    delete: function _delete(resource, params) {
+      var url = "".concat(apiUrl, "/").concat(resource, "/").concat(params.id);
+      var options = {
+        method: "DELETE",
+        headers: getHeaders()
+      };
+      return fetchJson(url, options).then(function (_ref10) {
+        var json = _ref10.json;
+        return {
+          data: json
+        };
+      });
+    },
+    deleteMany: function deleteMany(resource, params) {
+      return Promise.all(params.ids.map(function (id) {
+        return fetch("".concat(apiUrl, "/").concat(resource, "/").concat(id), {
+          method: "DELETE",
+          headers: getHeaders()
+        }).then(function (response) {
+          return response.json();
+        });
+      })).then(function (responses) {
+        var errors = responses.filter(function (r) {
+          return r.data && r.data.code && (r.data.code === 409 || r.data.code === 403);
+        });
+
+        if (errors.length > 0) {
+          return Promise.reject(errors.map(function (e) {
+            return e.data.message;
+          }).join("\n"));
+        }
+
+        return {
+          data: responses.map(function (_ref11) {
+            var json = _ref11.json;
+            return {
+              data: json
+            };
+          })
+        };
+      });
+    },
+    post: function post(resource, params) {
+      var url = "".concat(apiUrl, "/").concat(resource);
+      var body = params.body;
+      var options = {
+        body: JSON.stringify(body),
+        method: "POST",
+        headers: getHeaders()
+      };
+      return fetchJson(url, options).then(function (_ref12) {
+        var json = _ref12.json;
+        return {
+          data: json
+        };
+      });
+    },
+    get: function get(resource, params) {
+      var query = params.query;
+      var queryString$1 = queryString.stringify(query);
+      var url = "".concat(apiUrl, "/").concat(resource, "?").concat(queryString$1);
+      var options = {
+        method: "GET",
+        headers: getHeaders()
+      };
+      return fetchJson(url, options).then(function (_ref13) {
+        var json = _ref13.json;
+        return {
+          data: json
+        };
+      });
+    },
+    getTransactions: function getTransactions(resource, params) {
+      var url = "".concat(apiUrl, "/workflow/transactions/").concat(resource, "/").concat(params.id);
+      return fetchJson(url, {
+        headers: getHeaders()
+      }).then(function (_ref14) {
+        var json = _ref14.json;
+        return {
+          data: json.data
+        };
+      });
+    }
+  };
+};
+
+var createAuthProvider = function createAuthProvider(_ref) {
+  var apiUrl = _ref.apiUrl;
+  return {
+    login: function login(params) {
+      var username = params.username,
+          password = params.password;
+      var requestURL = "".concat(apiUrl, "/users/login");
+      var request = new Request(requestURL, {
+        method: "POST",
+        body: JSON.stringify({
+          username: username,
+          password: password
+        }),
+        headers: new Headers({
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        })
+      });
+      return fetch(request).then(function (response) {
+        return response.json();
+      }).then(function (_ref2) {
+        var data = _ref2.data,
+            success = _ref2.success;
+
+        if (!success) {
+          throw new Error(data.message);
+        }
+
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("roles", JSON.stringify(data.roles));
+        localStorage.setItem("profile", JSON.stringify(data.profile));
+      });
+    },
+    logout: function logout() {
+      localStorage.removeItem("token");
+      localStorage.removeItem("roles");
+      localStorage.removeItem("profile");
+      return Promise.resolve();
+    },
+    checkAuth: function checkAuth() {
+      return localStorage.getItem("token") ? Promise.resolve() : Promise.reject();
+    },
+    checkError: function checkError(error) {
+      if (error.status === 401 || error.status === 500) {
+        return Promise.reject();
+      }
+
+      return Promise.resolve();
+    },
+    getPermissions: function getPermissions() {
+      var roles = JSON.parse(localStorage.getItem("roles"));
+      return Promise.resolve(function (v) {
+        return roles && roles.some(function (r) {
+          return v.includes(r.code);
+        });
+      });
+    },
+    getIdentity: function getIdentity() {
+      var profile = JSON.parse(localStorage.getItem("profile"));
+      return Promise.resolve(profile);
+    },
+    impersonate: function impersonate(id) {
+      var requestURL = "".concat(apiUrl, "/users/impersonate/?id=").concat(id);
+      var request = new Request(requestURL, {
+        method: "POST",
+        headers: getHeaders()
+      });
+      return fetch(request).then(function (response) {
+        return response.json();
+      }).then(function (_ref3) {
+        var success = _ref3.success,
+            data = _ref3.data;
+
+        if (!success) {
+          throw new Error(data.message);
+        }
+
+        ["token", "roles", "username", "profile"].forEach(function (param) {
+          var toSaveParam = "admin_".concat(param);
+          localStorage.setItem(toSaveParam, localStorage.getItem(param));
+          localStorage.setItem(param, ["profile", "roles"].indexOf(param) !== -1 ? JSON.stringify(data[param]) : data[param]);
+        });
+        localStorage.setItem("impersonate", true);
+      });
+    },
+    stopImpersonate: function stopImpersonate() {
+      ["token", "roles", "username", "profile"].forEach(function (param) {
+        var savedParam = "admin_".concat(param);
+        localStorage.setItem(param, localStorage.getItem(savedParam));
+        localStorage.removeItem(savedParam);
+      });
+      localStorage.setItem("impersonate", false);
+      return Promise.resolve();
+    }
+  };
+};
+
+var createManyFormatter = function createManyFormatter() {
+  return function (many) {
+    var array = many ? many.map(function (p) {
+      return p.id;
+    }) : [];
+    return array;
+  };
+};
+
+var createManyParser = function createManyParser() {
+  return function (many) {
+    var objects = many ? many.map(function (id) {
+      return {
+        id: id
+      };
+    }) : [];
+    return objects;
+  };
+};
+
+var createI18nProvider = function createI18nProvider(_ref) {
+  var _ref$locale = _ref.locale,
+      locale = _ref$locale === void 0 ? "en" : _ref$locale,
+      languages = _ref.languages;
+  return polyglotI18nProvider__default["default"](function () {
+    if (process.env.NODE_ENV !== "production") {
+      localStorage.setItem("locale", locale);
+    }
+
+    moment__default["default"].locale(locale);
+    return lodash.get(languages, locale, {});
+  }, reactAdmin.resolveBrowserLocale());
+};
+
+var mapFieldErrors = function mapFieldErrors(field, errors) {
+  var keys = Object.keys(errors);
+  var messages = keys.filter(function (k) {
+    return typeof errors[k] === "string";
+  });
+
+  if (messages.length > 0) {
+    return _defineProperty({}, field, messages.map(function (m) {
+      return errors[m];
+    }).join("\n"));
+  } else {
+    var out = keys.reduce(function (errorMap, key) {
+      return _objectSpread2(_objectSpread2({}, errorMap), mapFieldErrors(key, errors[key]));
+    }, {});
+    return _defineProperty({}, field, out);
+  }
+};
+
+var cakephpErrorMapper = function cakephpErrorMapper(errors) {
+  var fields = Object.keys(errors);
+  var validationErrors = fields.reduce(function (errorsMap, field) {
+    return _objectSpread2(_objectSpread2({}, errorsMap), mapFieldErrors(field, errors[field]));
+  }, {});
+  return validationErrors;
+};
+
+var createErrorMapper = function createErrorMapper() {
+  return function (error, notify) {
+    var errors = lodash.get(error, "body.data.errors", null);
+    var message = lodash.get(error, "body.data.message", null);
+
+    if (message) {
+      notify(message, {
+        type: "error"
+      });
+    }
+
+    if (errors) {
+      var mappedErrors = cakephpErrorMapper(errors);
+      return mappedErrors;
+    } else {
+      return false;
+    }
+  };
+};
+
+var _excluded = ["type", "resource", "transform", "onSuccess", "errorMapper"];
+
+var useSaveMutation = function useSaveMutation(_ref) {
+  var _ref$type = _ref.type,
+      type = _ref$type === void 0 ? null : _ref$type,
+      resource = _ref.resource,
+      _ref$transform = _ref.transform,
+      transform = _ref$transform === void 0 ? undefined : _ref$transform,
+      _ref$onSuccess = _ref.onSuccess,
+      onSuccess = _ref$onSuccess === void 0 ? undefined : _ref$onSuccess,
+      _ref$errorMapper = _ref.errorMapper,
+      errorMapper = _ref$errorMapper === void 0 ? createErrorMapper() : _ref$errorMapper,
+      props = _objectWithoutProperties(_ref, _excluded);
+
+  var _useMutation = raCore.useMutation(),
+      _useMutation2 = _slicedToArray(_useMutation, 1),
+      mutate = _useMutation2[0];
+
+  var redirect = raCore.useRedirect();
+  var refresh = raCore.useRefresh();
+  var notify = raCore.useNotify();
+  var save = React.useCallback( /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(values) {
+      var response;
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return mutate({
+                type: type === null ? values.id && values.id > 0 ? "update" : "create" : type,
+                resource: resource,
+                payload: {
+                  id: values.id,
+                  data: transform ? transform(values) : values
+                }
+              }, {
+                returnPromise: true
+              });
+
+            case 3:
+              response = _context.sent;
+              _context.next = 9;
+              break;
+
+            case 6:
+              _context.prev = 6;
+              _context.t0 = _context["catch"](0);
+              return _context.abrupt("return", errorMapper(_context.t0, notify));
+
+            case 9:
+              if (!onSuccess) {
+                if (props.refresh === true) {
+                  if (values.id > 0) {
+                    refresh();
+                  } else {
+                    redirect("edit", props.basePath, response.data.id);
+                  }
+                } else {
+                  if (props.redirect !== undefined) {
+                    redirect(props.redirect);
+                  } else {
+                    redirect("list", props.basePath);
+                  }
+                }
+
+                notify("ra.notification." + (values.id > 0 ? "updated" : "created"), {
+                  type: "info",
+                  messageArgs: {
+                    smart_count: 1
+                  }
+                });
+              } else onSuccess(response, values);
+
+            case 10:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, null, [[0, 6]]);
+    }));
+
+    return function (_x) {
+      return _ref2.apply(this, arguments);
+    };
+  }(), [mutate, type, resource, props.redirect, props.refresh, redirect, refresh, notify, props.basePath, onSuccess, transform, errorMapper]);
+  return save;
+};
+
+var useManyFormatter = function useManyFormatter() {
+  var memoizedFn = React.useMemo(function () {
+    return createManyFormatter();
+  }, []);
+  return memoizedFn;
+};
+
+var useManyParser = function useManyParser() {
+  var memoizedFn = React.useMemo(function () {
+    return createManyParser();
+  }, []);
+  return memoizedFn;
+};
+
+var useAuthProvider = function useAuthProvider(_ref) {
+  var apiUrl = _ref.apiUrl;
+  var memoizedFn = React.useMemo(function () {
+    return createAuthProvider({
+      apiUrl: apiUrl
+    });
+  }, [apiUrl]);
+  return memoizedFn;
+};
+
+var useDataProvider = function useDataProvider(_ref) {
+  var apiUrl = _ref.apiUrl,
+      fileFields = _ref.fileFields;
+  var memoizedFn = React.useMemo(function () {
+    return createDataProvider({
+      apiUrl: apiUrl,
+      fileFields: fileFields
+    });
+  }, [apiUrl, fileFields]);
+  return memoizedFn;
+};
+
+var useI18nProvider = function useI18nProvider(_ref) {
+  var apiUrl = _ref.apiUrl,
+      _ref$locale = _ref.locale,
+      locale = _ref$locale === void 0 ? "en" : _ref$locale,
+      _ref$languages = _ref.languages,
+      languages = _ref$languages === void 0 ? {} : _ref$languages;
+  var memoizedFn = React.useMemo(function () {
+    return createI18nProvider({
+      apiUrl: apiUrl,
+      locale: locale,
+      languages: languages
+    });
+  }, [apiUrl, locale, languages]);
+  return memoizedFn;
+};
+
+var useI18nLanguages = function useI18nLanguages(_ref) {
+  var apiUrl = _ref.apiUrl;
+
+  var _useState = React.useState({
+    loading: true,
+    languages: null
+  }),
+      _useState2 = _slicedToArray(_useState, 2),
+      data = _useState2[0],
+      setData = _useState2[1];
+
+  React.useEffect(function () {
+    var headers = new Headers();
+    headers.append("Accept", "application/json");
+    headers.append("Content-Type", "application/json");
+    fetch("".concat(apiUrl, "/languages/load"), {
+      headers: headers
+    }).then(function (response) {
+      return response.json();
+    }).then(function (_ref2) {
+      var data = _ref2.data;
+      return setData({
+        loading: false,
+        languages: data
+      });
+    });
+  }, [apiUrl]);
+  return data;
+};
+
+var queued = [];
+
+var putMessage = function putMessage(apiUrl, locale, message) {
+  return message.indexOf("[") === -1 && message.indexOf("]") === -1 && queued.indexOf("".concat(locale, "-").concat(message)) === -1 && queued.push("".concat(locale, "-").concat(message)) && fetch("".concat(apiUrl, "/languages/put-message"), {
+    method: "PUT",
+    headers: new Headers({
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    }),
+    body: JSON.stringify({
+      code: locale,
+      message: {
+        code: message,
+        text: message
+      }
+    })
+  });
+};
+
+var useI18nCatcher = function useI18nCatcher(_ref) {
+  var apiUrl = _ref.apiUrl,
+      loading = _ref.loading;
+  var locale = reactAdmin.useLocale();
+  React__namespace.useMemo(function () {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
+    if (loading) {
+      return;
+    }
+
+    var consoleError = console.error;
+
+    console.error = function (message) {
+      if (typeof message === "string" && message.indexOf("Missing translation for key: ") >= 0) {
+        message = message.replace("Warning: Missing translation for key: ", "");
+        message = message.split('"').join("").trim();
+
+        if (message.indexOf(" ") !== -1) {
+          return;
+        }
+
+        var lc = localStorage.getItem("locale") || locale;
+        putMessage(apiUrl, lc, message);
+        return;
+      }
+
+      consoleError.apply(console, arguments);
+    };
+  }, [apiUrl, locale]);
+  return true;
+};
+
 exports.AppBar = AppBar;
 exports.Layout = Layout;
 exports.Menu = Menu$1;
@@ -1140,3 +2020,16 @@ exports.MenuItem = MenuItem;
 exports.Sidebar = Sidebar;
 exports.UserMenu = UserMenu;
 exports.UserMenuItem = UserMenuItem;
+exports.createAuthProvider = createAuthProvider;
+exports.createDataProvider = createDataProvider;
+exports.createI18nProvider = createI18nProvider;
+exports.createManyFormatter = createManyFormatter;
+exports.createManyParser = createManyParser;
+exports.useAuthProvider = useAuthProvider;
+exports.useDataProvider = useDataProvider;
+exports.useI18nCatcher = useI18nCatcher;
+exports.useI18nLanguages = useI18nLanguages;
+exports.useI18nProvider = useI18nProvider;
+exports.useManyFormatter = useManyFormatter;
+exports.useManyParser = useManyParser;
+exports.useSaveMutation = useSaveMutation;

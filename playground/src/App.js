@@ -1,6 +1,6 @@
 import * as Icons from "@material-ui/icons";
 
-import { Admin, Resource } from "react-admin";
+import { Admin, Loading, Resource } from "react-admin";
 import {
   AppBar,
   Layout,
@@ -9,13 +9,15 @@ import {
   MenuItem,
   UserMenu,
   UserMenuItem,
-} from "ra-ui-materialui-layout";
+  useDataProvider,
+  useAuthProvider,
+  useI18nLanguages,
+  useI18nCatcher,
+  createI18nProvider,
+} from "friendsofbabba-ra";
 
 import React from "react";
-import authProvider from "./authProvider";
-import dataProvider from "./dataProvider";
-import i18nProvider from "./i18nProvider";
-import { useQueryWithStore } from "ra-core";
+
 import users from "./users";
 
 const MyUserMenu = (props) => {
@@ -37,9 +39,10 @@ const MyUserMenu = (props) => {
 const MyAppBar = (props) => <AppBar {...props} userMenu={MyUserMenu} />;
 
 const MyMenu = (props) => {
-  const { data: badges } = useQueryWithStore({
-    type: "getBadges",
-  });
+  // import { useQueryWithStore } from "ra-core";
+  // const { data: badges } = useQueryWithStore({
+  //   type: "getBadges",
+  // });
   return (
     <Menu
       {...props}
@@ -56,7 +59,7 @@ const MyMenu = (props) => {
           to: "/posts",
         },
       ]}
-      badges={badges}
+      // badges={badges}
     >
       <MenuGroup label="Useful Links">
         <MenuItem
@@ -79,15 +82,30 @@ const MyMenu = (props) => {
 const MyLayout = (props) => (
   <Layout {...props} menu={MyMenu} appBar={MyAppBar} />
 );
-const App = () => (
-  <Admin
-    layout={MyLayout}
-    dataProvider={dataProvider}
-    authProvider={authProvider}
-    i18nProvider={i18nProvider}
-  >
-    <Resource name="users" {...users} />
-  </Admin>
-);
+const App = () => {
+  const apiUrl = "http://babba.local/api";
+  const { languages, loading } = useI18nLanguages({ apiUrl });
 
+  // Allow i18n to intercept and send unlocalized messages to the server.
+  useI18nCatcher({ apiUrl, loading });
+  const dataProvider = useDataProvider({ apiUrl });
+  const authProvider = useAuthProvider({ apiUrl });
+  if (loading) {
+    return (
+      <Loading loadingPrimary="Loading" loadingSecondary="Please wait..." />
+    );
+  }
+
+  return (
+    <Admin
+      layout={MyLayout}
+      dataProvider={dataProvider}
+      authProvider={authProvider}
+      i18nProvider={createI18nProvider({ languages, locale: "it" })}
+    >
+      <Resource name="users" {...users} />
+      <Resource name="roles" />
+    </Admin>
+  );
+};
 export default App;

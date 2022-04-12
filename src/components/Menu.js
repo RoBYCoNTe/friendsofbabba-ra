@@ -26,7 +26,13 @@ const Menu = ({
   const { permissions } = usePermissions();
   const menu = useMenu({ order, hasDashboard, badges, items });
   const translate = useTranslate();
-  if (loading || !loaded || identity === null || identity.id <= 0) {
+  if (
+    loading ||
+    !loaded ||
+    !identity ||
+    identity === null ||
+    identity.id <= 0
+  ) {
     return null;
   }
 

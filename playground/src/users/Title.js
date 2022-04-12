@@ -3,7 +3,7 @@ import * as React from "react";
 
 import { useTranslate } from "react-admin";
 
-const UserTitle = ({ record }) => {
+const Title = ({ record }) => {
   const translate = useTranslate();
   return (
     <span>
@@ -12,4 +12,4 @@ const UserTitle = ({ record }) => {
   );
 };
 
-export default UserTitle;
+export default Title;

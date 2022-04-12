@@ -10,7 +10,7 @@ import Sidebar from "./Sidebar";
 import { ThemeProvider } from "@material-ui/styles";
 import compose from "../compose";
 import { connect } from "react-redux";
-import { createMuiTheme } from "@material-ui/core/styles";
+import { createTheme } from "@material-ui/core/styles";
 import { withRouter } from "react-router-dom";
 
 const styles = (theme) =>
@@ -134,12 +134,12 @@ const EnhancedLayout = compose(
 
 const Layout = ({ theme: themeOverride, ...props }) => {
   const themeProp = useRef(themeOverride);
-  const [theme, setTheme] = useState(() => createMuiTheme(themeOverride));
+  const [theme, setTheme] = useState(() => createTheme(themeOverride));
 
   useEffect(() => {
     if (themeProp.current !== themeOverride) {
       themeProp.current = themeOverride;
-      setTheme(createMuiTheme(themeOverride));
+      setTheme(createTheme(themeOverride));
     }
   }, [themeOverride, themeProp, theme, setTheme]);
 

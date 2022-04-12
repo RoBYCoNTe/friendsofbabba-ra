@@ -1,14 +1,12 @@
 import PeopleIcon from "@material-ui/icons/People";
-import UserCreate from "./UserCreate";
-import UserEdit from "./UserEdit";
-import UserList from "./UserList";
-import UserShow from "./UserShow";
+import Create from "./Create";
+import Edit from "./Edit";
+import List from "./List";
 
 const config = {
-  list: UserList,
-  create: UserCreate,
-  edit: UserEdit,
-  show: UserShow,
+  list: List,
+  create: Create,
+  edit: Edit,
   icon: PeopleIcon,
   options: {
     group: "admin",

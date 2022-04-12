@@ -2,7 +2,7 @@ import englishMessages from "ra-language-english";
 
 export const messages = {
   app: {
-    welcome: "Welcome %{fullName}!",
+    welcome: "Welcome %{full_name}!",
   },
   menu: {
     groups: {

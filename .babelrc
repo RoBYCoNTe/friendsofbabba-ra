@@ -1,3 +1,17 @@
 {
-  "presets": ["@babel/env", "@babel/preset-react"]
+  "presets": ["@babel/env", "@babel/preset-react"],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "root": ["./src"],
+        "alias": {
+          "test": "./test",
+          "underscore": "lodash",
+          "data": "./data",
+          "data/cakephp": "./data/cakephp"
+        }
+      }
+    ]
+  ]
 }

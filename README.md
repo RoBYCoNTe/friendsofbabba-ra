@@ -13,13 +13,13 @@ overridden by using the `layout` prop.
 Install the package:
 
 ```sh
-npm i --save ra-ui-materialui-layout
+npm i --save friendsofbabba-ra
 ```
 
 and then you have to import and use it in you react-admin app:
 
 ```js
-import { Layout } from "ra-ui-materialui-layout";
+import { Layout } from "friendsofbabba-ra";
 import { Admin, Resource } from "react-admin";
 const App = () => (
   <Admin layout={Layout}>
@@ -44,6 +44,20 @@ In this example, the resource will be rendered in the drawer under the `Dashboar
 group and only the user role will be able to see it (`roles` is another option
 exposed in this layout that can be helpful to customize resources access).
 
+## Data
+
+### Configure Data Provider
+
+```js
+import { dataProvider, prepareUpload } from "friendsofbabba-ra";
+// Define list of uploadable fields:
+const UPLOADABLE_FIELDS = ["image", "document", "profile.picture"];
+const dp = dataProvider({
+  apiUrl: "...",
+  prepareUpload: (data) => prepareUpload(data, UPLOADABLE_FIELDS),
+});
+```
+
 ## Components
 
 ### Layout
@@ -65,7 +79,7 @@ the mini drawer):
 If you want to override them you can do it as follow:
 
 ```js
-import { Layout } from "ra-ui-materialui-layout";
+import { Layout } from "friendsofbabba-ra";
 import { Admin, Resource } from "react-admin";
 const MyLayout = (props) => (
   <Layout
@@ -89,7 +103,7 @@ in many ways. Suppose you want to customize everything withouth use default menu
 items and groups:
 
 ```js
-import { Layout, Menu, MenuGroup, MenuItem } from "ra-ui-materialui-layout";
+import { Layout, Menu, MenuGroup, MenuItem } from "friendsofbabba-ra";
 const CustomMenu = (props) => (
   <Menu {...props} mode="custom">
     <MenuGroup label="My Group">
@@ -113,7 +127,7 @@ URL like docs or links or you can publish your own custom routes to specific
 pages like in this example:
 
 ```js
-import { Layout, Menu, MenuGroup, MenuItem } from "ra-ui-materialui-layout";
+import { Layout, Menu, MenuGroup, MenuItem } from "friendsofbabba-ra";
 const CustomMenu = (props) => (
   <Menu {...props}>
     <MenuGroup label="Useful Link">
@@ -158,7 +172,7 @@ The `UserMenu` component allows you to customize the user menu (in the
 top right corner). Please refer to this example:
 
 ```js
-import { UserMenu, UserMenuItem } from "ra-ui-materialui-layout";
+import { UserMenu, UserMenuItem } from "friendsofbabba-ra";
 import * as Icons from "@material-ui/icons";
 const MyUserMenu = (props) => (
   <UserMenu {...props}>
