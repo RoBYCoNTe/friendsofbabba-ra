@@ -13,12 +13,15 @@ import {
   useAuthProvider,
   useI18nLanguages,
   useI18nCatcher,
+  useWorkflows,
   createI18nProvider,
+  workflowReducer,
 } from "friendsofbabba-ra";
 
 import React from "react";
 
 import users from "./users";
+import tickets from "./tickets";
 
 const MyUserMenu = (props) => {
   const { logout } = props;
@@ -85,12 +88,14 @@ const MyLayout = (props) => (
 const App = () => {
   const apiUrl = "http://babba.local/api";
   const { languages, loading } = useI18nLanguages({ apiUrl });
+  const { loaded } = useWorkflows({ apiUrl });
 
   // Allow i18n to intercept and send unlocalized messages to the server.
   useI18nCatcher({ apiUrl, loading });
+
   const dataProvider = useDataProvider({ apiUrl });
   const authProvider = useAuthProvider({ apiUrl });
-  if (loading) {
+  if (loading || !loaded) {
     return (
       <Loading loadingPrimary="Loading" loadingSecondary="Please wait..." />
     );
@@ -102,7 +107,11 @@ const App = () => {
       dataProvider={dataProvider}
       authProvider={authProvider}
       i18nProvider={createI18nProvider({ languages, locale: "it" })}
+      customReducers={{
+        workflow: workflowReducer,
+      }}
     >
+      <Resource name="tickets" {...tickets} />
       <Resource name="users" {...users} />
       <Resource name="roles" />
     </Admin>

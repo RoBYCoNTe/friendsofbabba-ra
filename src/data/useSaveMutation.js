@@ -4,16 +4,19 @@ import { useCallback } from "react";
 import createErrorMapper from "./cakephp/createErrorMapper";
 
 const useSaveMutation = ({
-  type = null,
+  basePath,
+  errorMapper = createErrorMapper(),
+  onSuccess = undefined,
+  redir = null,
+  redirect,
+  refresh,
   resource,
   transform = undefined,
-  onSuccess = undefined,
-  errorMapper = createErrorMapper(),
-  ...props
+  type = null,
 }) => {
   const [mutate] = useMutation();
-  const redirect = useRedirect();
-  const refresh = useRefresh();
+  const doRedirect = useRedirect();
+  const doRefresh = useRefresh();
   const notify = useNotify();
   const save = useCallback(
     async (values) => {
@@ -40,18 +43,22 @@ const useSaveMutation = ({
       }
 
       if (!onSuccess) {
-        if (props.refresh === true) {
+        console.info({
+          redir,
+          refresh,
+          redirect,
+          basePath,
+        });
+        if (redir) {
+          redirect(redir);
+        } else if (refresh === true) {
           if (values.id > 0) {
-            refresh();
+            doRefresh();
           } else {
-            redirect("edit", props.basePath, response.data.id);
+            doRedirect("edit", basePath, response.data.id);
           }
         } else {
-          if (props.redirect !== undefined) {
-            redirect(props.redirect);
-          } else {
-            redirect("list", props.basePath);
-          }
+          doRedirect(redirect, basePath, response.data.id);
         }
         notify("ra.notification." + (values.id > 0 ? "updated" : "created"), {
           type: "info",
@@ -62,18 +69,19 @@ const useSaveMutation = ({
       } else onSuccess(response, values);
     },
     [
+      basePath,
+      doRedirect,
+      doRefresh,
+      errorMapper,
       mutate,
-      type,
-      resource,
-      props.redirect,
-      props.refresh,
+      notify,
+      onSuccess,
+      redir,
       redirect,
       refresh,
-      notify,
-      props.basePath,
-      onSuccess,
+      resource,
       transform,
-      errorMapper,
+      type,
     ]
   );
   return save;

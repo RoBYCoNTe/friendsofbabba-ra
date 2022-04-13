@@ -10,8 +10,8 @@ import {
   SimpleForm,
   TextInput,
 } from "react-admin";
-const Form = (props) => {
-  const save = useSaveMutation({ ...props });
+const Form = ({ refresh, ...props }) => {
+  const save = useSaveMutation({ ...props, refresh });
   const parse = useManyParser();
   const format = useManyFormatter();
 

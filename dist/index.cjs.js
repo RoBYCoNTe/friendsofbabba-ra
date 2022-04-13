@@ -507,7 +507,7 @@ AppBar.propTypes = {
   userMenu: PropTypes__default["default"].elementType
 };
 
-var _excluded$5 = ["children", "open", "label"];
+var _excluded$4 = ["children", "open", "label"];
 var useStyles$2 = core.makeStyles(function (theme) {
   return {
     subHeader: {
@@ -523,7 +523,7 @@ var MenuGroup = function MenuGroup(_ref) {
   var children = _ref.children,
       open = _ref.open,
       label = _ref.label,
-      props = _objectWithoutProperties(_ref, _excluded$5);
+      props = _objectWithoutProperties(_ref, _excluded$4);
 
   var classes = useStyles$2();
   return /*#__PURE__*/React__default["default"].createElement(core.List, {
@@ -551,17 +551,17 @@ MenuGroup.propTypes = {
   group: PropTypes__default["default"].string
 };
 
-var _excluded$4 = ["titleAccess", "children"];
+var _excluded$3 = ["titleAccess", "children"];
 
 var Badge = function Badge(_ref) {
   _ref.titleAccess;
       var children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded$4);
+      props = _objectWithoutProperties(_ref, _excluded$3);
 
   return /*#__PURE__*/React__default["default"].createElement(core.Badge, props, children);
 };
 
-var _excluded$3 = ["location", "badge", "to", "icon", "label", "sub", "onMenuClick", "permissions", "open"];
+var _excluded$2 = ["location", "badge", "to", "icon", "label", "sub", "onMenuClick", "permissions", "open"];
 
 var isSelected = function isSelected(location, to) {
   var selected = location.pathname === to || location.pathname.indexOf("".concat(to, "?")) === 0 || location.pathname.indexOf("".concat(to, "/")) === 0;
@@ -578,7 +578,7 @@ var MenuItem = function MenuItem(_ref) {
       onMenuClick = _ref.onMenuClick;
       _ref.permissions;
       var open = _ref.open,
-      props = _objectWithoutProperties(_ref, _excluded$3);
+      props = _objectWithoutProperties(_ref, _excluded$2);
 
   return /*#__PURE__*/React__default["default"].createElement(core.ListItem, _extends({}, props, {
     button: true,
@@ -959,7 +959,7 @@ Sidebar.propTypes = {
   appVersion: PropTypes__default["default"].string
 };
 
-var _excluded$2 = ["theme"];
+var _excluded$1 = ["theme"];
 
 var styles = function styles(theme) {
   return styles$1.createStyles({
@@ -1100,7 +1100,7 @@ var EnhancedLayout = compose(reactRedux.connect(mapStateToProps, {} // Avoid con
 
 var Layout = function Layout(_ref) {
   var themeOverride = _ref.theme,
-      props = _objectWithoutProperties(_ref, _excluded$2);
+      props = _objectWithoutProperties(_ref, _excluded$1);
 
   var themeProp = React.useRef(themeOverride);
 
@@ -1137,7 +1137,7 @@ Layout.defaultProps = {
   drawerWidth: 240
 };
 
-var _excluded$1 = ["className", "classes", "redirectTo", "icon", "label"];
+var _excluded = ["className", "classes", "redirectTo", "icon", "label"];
 var useStyles = styles$1.makeStyles(function (theme) {
   return {
     menuItem: {
@@ -1156,7 +1156,7 @@ var UserMenuItem = /*#__PURE__*/React__namespace.forwardRef(function UserMenuIte
       props.redirectTo;
       var icon = props.icon,
       label = props.label,
-      rest = _objectWithoutProperties(props, _excluded$1);
+      rest = _objectWithoutProperties(props, _excluded);
 
   var classes = useStyles(props);
   return /*#__PURE__*/React__namespace.createElement(core.MenuItem, _extends({
@@ -1786,26 +1786,28 @@ var createErrorMapper = function createErrorMapper() {
   };
 };
 
-var _excluded = ["type", "resource", "transform", "onSuccess", "errorMapper"];
-
 var useSaveMutation = function useSaveMutation(_ref) {
-  var _ref$type = _ref.type,
-      type = _ref$type === void 0 ? null : _ref$type,
+  var basePath = _ref.basePath,
+      _ref$errorMapper = _ref.errorMapper,
+      errorMapper = _ref$errorMapper === void 0 ? createErrorMapper() : _ref$errorMapper,
+      _ref$onSuccess = _ref.onSuccess,
+      onSuccess = _ref$onSuccess === void 0 ? undefined : _ref$onSuccess,
+      _ref$redir = _ref.redir,
+      redir = _ref$redir === void 0 ? null : _ref$redir,
+      redirect = _ref.redirect,
+      refresh = _ref.refresh,
       resource = _ref.resource,
       _ref$transform = _ref.transform,
       transform = _ref$transform === void 0 ? undefined : _ref$transform,
-      _ref$onSuccess = _ref.onSuccess,
-      onSuccess = _ref$onSuccess === void 0 ? undefined : _ref$onSuccess,
-      _ref$errorMapper = _ref.errorMapper,
-      errorMapper = _ref$errorMapper === void 0 ? createErrorMapper() : _ref$errorMapper,
-      props = _objectWithoutProperties(_ref, _excluded);
+      _ref$type = _ref.type,
+      type = _ref$type === void 0 ? null : _ref$type;
 
   var _useMutation = raCore.useMutation(),
       _useMutation2 = _slicedToArray(_useMutation, 1),
       mutate = _useMutation2[0];
 
-  var redirect = raCore.useRedirect();
-  var refresh = raCore.useRefresh();
+  var doRedirect = raCore.useRedirect();
+  var doRefresh = raCore.useRefresh();
   var notify = raCore.useNotify();
   var save = React.useCallback( /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(values) {
@@ -1839,18 +1841,23 @@ var useSaveMutation = function useSaveMutation(_ref) {
 
             case 9:
               if (!onSuccess) {
-                if (props.refresh === true) {
+                console.info({
+                  redir: redir,
+                  refresh: refresh,
+                  redirect: redirect,
+                  basePath: basePath
+                });
+
+                if (redir) {
+                  redirect(redir);
+                } else if (refresh === true) {
                   if (values.id > 0) {
-                    refresh();
+                    doRefresh();
                   } else {
-                    redirect("edit", props.basePath, response.data.id);
+                    doRedirect("edit", basePath, response.data.id);
                   }
                 } else {
-                  if (props.redirect !== undefined) {
-                    redirect(props.redirect);
-                  } else {
-                    redirect("list", props.basePath);
-                  }
+                  doRedirect(redirect, basePath, response.data.id);
                 }
 
                 notify("ra.notification." + (values.id > 0 ? "updated" : "created"), {
@@ -1872,7 +1879,7 @@ var useSaveMutation = function useSaveMutation(_ref) {
     return function (_x) {
       return _ref2.apply(this, arguments);
     };
-  }(), [mutate, type, resource, props.redirect, props.refresh, redirect, refresh, notify, props.basePath, onSuccess, transform, errorMapper]);
+  }(), [basePath, doRedirect, doRefresh, errorMapper, mutate, notify, onSuccess, redir, redirect, refresh, resource, transform, type]);
   return save;
 };
 
@@ -2012,6 +2019,348 @@ var useI18nCatcher = function useI18nCatcher(_ref) {
   return true;
 };
 
+var Workflow = /*#__PURE__*/function () {
+  function Workflow(data) {
+    _classCallCheck(this, Workflow);
+
+    this.states = data.states;
+  }
+  /**
+   * Controlla se l'utente ha il permesso di creazione sullo stato iniziale
+   * @param {*} roles Ruoli dell'utente
+   */
+
+
+  _createClass(Workflow, [{
+    key: "canCreate",
+    value: function canCreate(roles) {
+      return this.check("create", roles);
+    }
+    /**
+     * Controlla se l'utente ha il permesso di scrittura sullo stato in cui
+     * si trova il record
+     * @param {*} roles Ruoli dell'utente
+     * @param {*} record
+     */
+
+  }, {
+    key: "canEdit",
+    value: function canEdit(roles, record) {
+      return this.check("edit", roles, record);
+    }
+    /**
+     * Controlla se l'utente ha il permesso di lettura sullo stato in cui
+     * si trova il record
+     * @param {*} roles Ruoli dell'utente
+     * @param {*} record
+     */
+
+  }, {
+    key: "canRead",
+    value: function canRead(roles, record) {
+      return this.check("read", roles, record);
+    }
+    /**
+     * Controlla se l'utente ha il permesso specificato nella stato in cui
+     * si trova il record
+     * @param {String} permission
+     * @param {*} roles Ruoli dell'utente
+     * @param {*} record
+     */
+
+  }, {
+    key: "check",
+    value: function check(permission, roles, record) {
+      var perm = "".concat(permission.charAt(0).toUpperCase()).concat(permission.slice(1));
+      var can = "can".concat(perm);
+      var state = record && record.id > 0 && record.transaction ? this.states.find(function (s) {
+        return s.code === record.transaction.state;
+      }) : this.states.find(function (s) {
+        return s.isInitial;
+      });
+      var permissions = state.permissions.filter(function (p) {
+        return p[can];
+      });
+      return permissions.some(function (permission) {
+        return roles.some(function (role) {
+          return permission.role === role.code;
+        });
+      });
+    }
+    /**
+     * Controlla se l'utente ha il permesso di scrittura per il campo specificato,
+     * nello stato in cui si trova il record
+     * @param {String} fieldName
+     * @param {Array} roles Ruoli dell'utente
+     * @param {Object} record
+     */
+
+  }, {
+    key: "canEditField",
+    value: function canEditField(fieldName, roles, record) {
+      return this.checkField("edit", roles, fieldName, record);
+    }
+    /**
+     * Controlla se l'utente ha il permesso di lettura per il campo specificato,
+     * nello stato in cui si trova il record
+     * @param {String} fieldName
+     * @param {Array} roles Ruoli dell'utente
+     * @param {Object} record
+     */
+
+  }, {
+    key: "canReadField",
+    value: function canReadField(fieldName, roles, record) {
+      return this.checkField("read", roles, fieldName, record);
+    }
+    /**
+     * @description
+     *  Controlla se l'utente ha i permessi necessari per leggere uno o più campi tra quelli
+     *  specificati nell'array fields.
+     *
+     * @param {Array} fields
+     *  Elenco dei campi di cui verificare il permesso.
+     * @param {Array} roles
+     *  Elenco dei ruoli associati all'utente
+     * @param {Object} record
+     *  Record principale su cui verificare i permessi di workflow.
+     */
+
+  }, {
+    key: "canReadFields",
+    value: function canReadFields(fields, roles, record) {
+      var _this = this;
+
+      return fields.some(function (field) {
+        return _this.canReadField(field, roles, record);
+      });
+    }
+    /**
+     * Controlla se l'utente ha il permesso per il campo specificato,
+     * per lo stato in cui si trova il record
+     * @param {String} permission
+     * @param {array} roles Ruoli dell'utente
+     * @param {String} fieldName
+     * @param {Object} record
+     */
+
+  }, {
+    key: "checkField",
+    value: function checkField(permission, roles, fieldName, record) {
+      var perm = "".concat(permission.charAt(0).toUpperCase()).concat(permission.slice(1));
+      var can = "can".concat(perm);
+      var state = record && record.transaction ? this.states.find(function (s) {
+        return s.code === record.transaction.state;
+      }) : this.states.find(function (s) {
+        return s.isInitial;
+      });
+      var field = state.fields.find(function (f) {
+        return f.name === fieldName;
+      });
+
+      if (!field) {
+        return false;
+      }
+
+      var permissions = field.permissions.filter(function (p) {
+        return p[can];
+      });
+      return permissions.some(function (permission) {
+        return roles.some(function (role) {
+          return permission.role === role.code;
+        });
+      });
+    }
+    /**
+     * Ottiene gli stati successivi disponibili dell'entità sottoposta a WF.
+     * Se si tratta di una creazione (record.id undefined) viene ritornato lo stato
+     * iniziale (sempre se si hanno i permessi)
+     * @param {*} roles Ruoli dell'utente
+     * @param {*} record
+     */
+
+  }, {
+    key: "getNextStates",
+    value: function getNextStates(roles, record) {
+      var _this2 = this;
+
+      if (!record) {
+        return [];
+      }
+
+      var possibleStates = [];
+
+      if (record.transaction) {
+        var state = this.states.find(function (state) {
+          return state.code === record.transaction.state;
+        });
+        possibleStates = Object.keys(state.routes).map(function (code) {
+          return _this2.states.find(function (s) {
+            return s.code === code;
+          });
+        });
+      } else {
+        var initial = this.states.find(function (state) {
+          return state.isInitial;
+        });
+        possibleStates = [initial];
+      }
+
+      var nextStates = possibleStates.filter(function (state) {
+        return state.permissions.some(function (p) {
+          return roles.some(function (r) {
+            return r.code === p.role && (p.canCreate || p.canMove);
+          });
+        });
+      });
+      return nextStates;
+    }
+    /**
+     * Indica se per il passaggio nello stato specificato è necessario compilare il campo note obbligatoriamente.
+     * @param {Object} record
+     *  Record per il quale si richiede la verifica.
+     * @param {Object} state
+     */
+
+  }, {
+    key: "needsNotes",
+    value: function needsNotes(record, state) {
+      if (!record || !state) {
+        return false;
+      }
+
+      if (record.transaction) {
+        var currentState = this.states.find(function (state) {
+          return state.code === record.transaction.state;
+        });
+
+        if (currentState && currentState.routes[state.code]) {
+          return currentState.routes[state.code].notesRequired;
+        }
+      }
+
+      return false;
+    }
+  }, {
+    key: "getState",
+    value: function getState(record) {
+      var transaction = record.transaction;
+
+      if (!transaction) {
+        return null;
+      }
+
+      return this.states.find(function (s) {
+        return s.code === transaction.state;
+      });
+    }
+  }, {
+    key: "getStateByCode",
+    value: function getStateByCode(code) {
+      return this.states.find(function (s) {
+        return s.code === code;
+      });
+    }
+  }]);
+
+  return Workflow;
+}();
+
+var useWorkflow = function useWorkflow(_ref) {
+  var resource = _ref.resource;
+  var item = reactRedux.useSelector(function (state) {
+    return resource ? lodash.get(state, "workflow.items.".concat(resource)) : undefined;
+  });
+  var workflow = React.useMemo(function () {
+    return item ? new Workflow(item) : undefined;
+  }, [item]);
+  return workflow;
+};
+
+var useWorkflows = function useWorkflows(_ref) {
+  var apiUrl = _ref.apiUrl;
+
+  var _useState = React.useState({
+    loading: false,
+    loaded: false,
+    data: []
+  }),
+      _useState2 = _slicedToArray(_useState, 2),
+      _useState2$ = _useState2[0],
+      loaded = _useState2$.loaded,
+      loading = _useState2$.loading,
+      data = _useState2$.data,
+      setData = _useState2[1];
+
+  var loadAll = function loadAll(_ref2) {
+    var apiUrl = _ref2.apiUrl;
+
+    if (loaded || loading) {
+      return;
+    }
+
+    setData({
+      loading: true
+    });
+    var headers = new Headers();
+    headers.append("Accept", "application/json");
+    headers.append("Content-Type", "application/json");
+    fetch("".concat(apiUrl, "/workflow"), {
+      headers: headers
+    }).then(function (response) {
+      return response.json();
+    }).then(function (_ref3) {
+      var data = _ref3.data;
+      return setData({
+        loaded: true,
+        loading: false,
+        data: data
+      });
+    });
+  };
+
+  React.useEffect(function () {
+    return loadAll({
+      apiUrl: apiUrl
+    });
+  });
+  return {
+    loaded: loaded,
+    loading: loading,
+    data: data
+  };
+};
+
+var REQUEST_LOAD = "REQUEST_WORKFLOW_LOAD";
+var RECEIVE_LOAD = "RECEIVE_WORKFLOW_LOAD";
+
+var workflowReducer = function workflowReducer(data) {
+  return function () {
+    var previousState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+      loading: false,
+      items: data
+    };
+
+    var _ref = arguments.length > 1 ? arguments[1] : undefined,
+        type = _ref.type,
+        payload = _ref.payload;
+
+    if (type === REQUEST_LOAD) {
+      return _objectSpread2(_objectSpread2({}, previousState), {}, {
+        loading: true
+      });
+    } else if (type === RECEIVE_LOAD) {
+      var _data = payload.data;
+      return _objectSpread2(_objectSpread2({}, previousState), {}, {
+        loading: false,
+        items: _data
+      });
+    }
+
+    return previousState;
+  };
+};
+
 exports.AppBar = AppBar;
 exports.Layout = Layout;
 exports.Menu = Menu$1;
@@ -2033,3 +2382,6 @@ exports.useI18nProvider = useI18nProvider;
 exports.useManyFormatter = useManyFormatter;
 exports.useManyParser = useManyParser;
 exports.useSaveMutation = useSaveMutation;
+exports.useWorkflow = useWorkflow;
+exports.useWorkflows = useWorkflows;
+exports.workflowReducer = workflowReducer;

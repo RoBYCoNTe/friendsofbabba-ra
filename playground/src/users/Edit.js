@@ -3,7 +3,7 @@ import { Edit as RaEdit } from "react-admin";
 import Form from "./Form";
 const Edit = (props) => (
   <RaEdit {...props}>
-    <Form />
+    <Form redirect={false} refresh />
   </RaEdit>
 );
 export default Edit;

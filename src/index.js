@@ -19,6 +19,9 @@ import useDataProvider from "./data/useDataProvider";
 import useI18nProvider from "./i18n/useI18nProvider";
 import useI18nLanguages from "./i18n/useI18nLanguages";
 import useI18nCatcher from "./i18n/useI18nCatcher";
+import useWorkflow from "./data/workflow/useWorkflow";
+import useWorkflows from "./data/workflow/useWorkflows";
+import workflowReducer from "./data/workflow/workflowReducer";
 export {
   Layout,
   Menu,
@@ -42,4 +45,7 @@ export {
   useSaveMutation,
   useManyFormatter,
   useManyParser,
+  useWorkflow,
+  useWorkflows,
+  workflowReducer,
 };
