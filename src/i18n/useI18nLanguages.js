@@ -8,7 +8,7 @@ const useI18nLanguages = ({ apiUrl }) => {
     headers.append("Content-Type", "application/json");
     fetch(`${apiUrl}/languages/load`, { headers })
       .then((response) => response.json())
-      .then(({ data }) => setData({ loading: false, languages: data }));
+      .then(({ data }) => setData({ loading: false, data }));
   }, [apiUrl]);
 
   return data;

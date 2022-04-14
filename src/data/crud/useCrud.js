@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import { getToken } from "../authHeaders";
 
-const useWorkflows = ({ apiUrl }) => {
+const useCrud = ({ apiUrl }) => {
   const [{ loaded, loading, data }, setData] = useState({
     loading: false,
     loaded: false,
@@ -14,7 +15,12 @@ const useWorkflows = ({ apiUrl }) => {
     let headers = new Headers();
     headers.append("Accept", "application/json");
     headers.append("Content-Type", "application/json");
-    fetch(`${apiUrl}/workflow/load`, {
+    const token = getToken();
+    if (token !== null) {
+      headers.append("Authentication", `Bearer ${token}`);
+    }
+
+    fetch(`${apiUrl}/crud/load`, {
       headers,
     })
       .then((response) => response.json())
@@ -25,4 +31,4 @@ const useWorkflows = ({ apiUrl }) => {
 
   return { loaded, loading, data };
 };
-export default useWorkflows;
+export default useCrud;

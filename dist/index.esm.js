@@ -1,8 +1,8 @@
-import { useTranslate as useTranslate$1, useGetIdentity, LoadingIndicator, getResources as getResources$1, defaultTheme, Notification, HttpError, resolveBrowserLocale, useLocale } from 'react-admin';
+import { useTranslate as useTranslate$1, useGetIdentity, LoadingIndicator, getResources as getResources$1, defaultTheme, Notification, HttpError, resolveBrowserLocale, List as List$2, useLocale } from 'react-admin';
 import * as React from 'react';
 import React__default, { useCallback, createElement, useRef, useState, useEffect, useMemo as useMemo$1 } from 'react';
 import { makeStyles, withStyles, createStyles, createTheme } from '@material-ui/core/styles';
-import { useMediaQuery, AppBar as AppBar$1, Toolbar, IconButton as IconButton$1, makeStyles as makeStyles$1, List, ListSubheader, Divider, Badge as Badge$1, ListItem, ListItemIcon, ListItemText, Drawer, Typography as Typography$1, MenuItem as MenuItem$1 } from '@material-ui/core';
+import { useMediaQuery, AppBar as AppBar$1, Toolbar, IconButton as IconButton$1, makeStyles as makeStyles$1, List as List$1, ListSubheader, Divider, Badge as Badge$1, ListItem, ListItemIcon, ListItemText, Drawer, Typography as Typography$1, MenuItem as MenuItem$1 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
@@ -486,7 +486,7 @@ var MenuGroup = function MenuGroup(_ref) {
       props = _objectWithoutProperties(_ref, _excluded$4);
 
   var classes = useStyles$2();
-  return /*#__PURE__*/React__default.createElement(List, {
+  return /*#__PURE__*/React__default.createElement(List$1, {
     subheader: open ? /*#__PURE__*/React__default.createElement(ListSubheader, {
       className: classes.subHeader
     }, label) : null
@@ -737,7 +737,7 @@ var Menu = function Menu(_ref) {
     return null;
   }
 
-  return /*#__PURE__*/React__default.createElement(List, {
+  return /*#__PURE__*/React__default.createElement(List$1, {
     component: "nav"
   }, mode === "build" && menu.map(function (group, idx) {
     return /*#__PURE__*/React__default.createElement(MenuGroup, {
@@ -1178,6 +1178,9 @@ function getHeaders() {
     Authorization: "Bearer ".concat(token)
   });
   return headers;
+}
+function getToken() {
+  return localStorage.getItem("token");
 }
 
 // Remove unwanted _joinData props from JSON object before submission to the rest service.
@@ -1700,6 +1703,25 @@ var createI18nProvider = function createI18nProvider(_ref) {
   }, resolveBrowserLocale());
 };
 
+var List = function List(props) {
+  return /*#__PURE__*/React.createElement(List$2, props);
+};
+
+var createCrud = function createCrud(_ref) {
+  var _ref$icon = _ref.icon,
+      icon = _ref$icon === void 0 ? null : _ref$icon,
+      _ref$options = _ref.options,
+      options = _ref$options === void 0 ? {
+    group: "admin",
+    roles: ["admin"]
+  } : _ref$options;
+  return {
+    icon: icon,
+    options: options,
+    list: List
+  };
+};
+
 var mapFieldErrors = function mapFieldErrors(field, errors) {
   var keys = Object.keys(errors);
   var messages = keys.filter(function (k) {
@@ -1918,7 +1940,7 @@ var useI18nLanguages = function useI18nLanguages(_ref) {
       var data = _ref2.data;
       return setData({
         loading: false,
-        languages: data
+        data: data
       });
     });
   }, [apiUrl]);
@@ -2265,7 +2287,7 @@ var useWorkflows = function useWorkflows(_ref) {
     var headers = new Headers();
     headers.append("Accept", "application/json");
     headers.append("Content-Type", "application/json");
-    fetch("".concat(apiUrl, "/workflow"), {
+    fetch("".concat(apiUrl, "/workflow/load"), {
       headers: headers
     }).then(function (response) {
       return response.json();
@@ -2287,6 +2309,73 @@ var useWorkflows = function useWorkflows(_ref) {
   return {
     loaded: loaded,
     loading: loading,
+    data: data
+  };
+};
+
+var useCrud = function useCrud(_ref) {
+  var apiUrl = _ref.apiUrl;
+
+  var _useState = useState({
+    loading: false,
+    loaded: false,
+    data: []
+  }),
+      _useState2 = _slicedToArray(_useState, 2),
+      _useState2$ = _useState2[0],
+      loaded = _useState2$.loaded,
+      loading = _useState2$.loading,
+      data = _useState2$.data,
+      setData = _useState2[1];
+
+  var loadAll = function loadAll(_ref2) {
+    var apiUrl = _ref2.apiUrl;
+
+    if (loaded || loading) {
+      return;
+    }
+
+    setData({
+      loading: true
+    });
+    var headers = new Headers();
+    headers.append("Accept", "application/json");
+    headers.append("Content-Type", "application/json");
+    var token = getToken();
+
+    if (token !== null) {
+      headers.append("Authentication", "Bearer ".concat(token));
+    }
+
+    fetch("".concat(apiUrl, "/crud/load"), {
+      headers: headers
+    }).then(function (response) {
+      return response.json();
+    }).then(function (_ref3) {
+      var data = _ref3.data;
+      return setData({
+        loaded: true,
+        loading: false,
+        data: data
+      });
+    });
+  };
+
+  useEffect(function () {
+    return loadAll({
+      apiUrl: apiUrl
+    });
+  });
+  return {
+    loaded: loaded,
+    loading: loading,
+    data: data
+  };
+};
+
+var crudReducer = function crudReducer(data) {
+  console.info("data:", data);
+  return {
     data: data
   };
 };
@@ -2321,4 +2410,4 @@ var workflowReducer = function workflowReducer(data) {
   };
 };
 
-export { AppBar, Layout, Menu$1 as Menu, MenuGroup, MenuItem, Sidebar, UserMenu, UserMenuItem, createAuthProvider, createDataProvider, createI18nProvider, createManyFormatter, createManyParser, useAuthProvider, useDataProvider, useI18nCatcher, useI18nLanguages, useI18nProvider, useManyFormatter, useManyParser, useSaveMutation, useWorkflow, useWorkflows, workflowReducer };
+export { AppBar, Layout, Menu$1 as Menu, MenuGroup, MenuItem, Sidebar, UserMenu, UserMenuItem, createAuthProvider, createCrud, createDataProvider, createI18nProvider, createManyFormatter, createManyParser, crudReducer, useAuthProvider, useCrud, useDataProvider, useI18nCatcher, useI18nLanguages, useI18nProvider, useManyFormatter, useManyParser, useSaveMutation, useWorkflow, useWorkflows, workflowReducer };

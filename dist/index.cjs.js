@@ -1219,6 +1219,9 @@ function getHeaders() {
   });
   return headers;
 }
+function getToken() {
+  return localStorage.getItem("token");
+}
 
 // Remove unwanted _joinData props from JSON object before submission to the rest service.
 var createDataFormatter = function createDataFormatter(data) {
@@ -1740,6 +1743,25 @@ var createI18nProvider = function createI18nProvider(_ref) {
   }, reactAdmin.resolveBrowserLocale());
 };
 
+var List = function List(props) {
+  return /*#__PURE__*/React__namespace.createElement(reactAdmin.List, props);
+};
+
+var createCrud = function createCrud(_ref) {
+  var _ref$icon = _ref.icon,
+      icon = _ref$icon === void 0 ? null : _ref$icon,
+      _ref$options = _ref.options,
+      options = _ref$options === void 0 ? {
+    group: "admin",
+    roles: ["admin"]
+  } : _ref$options;
+  return {
+    icon: icon,
+    options: options,
+    list: List
+  };
+};
+
 var mapFieldErrors = function mapFieldErrors(field, errors) {
   var keys = Object.keys(errors);
   var messages = keys.filter(function (k) {
@@ -1958,7 +1980,7 @@ var useI18nLanguages = function useI18nLanguages(_ref) {
       var data = _ref2.data;
       return setData({
         loading: false,
-        languages: data
+        data: data
       });
     });
   }, [apiUrl]);
@@ -2305,7 +2327,7 @@ var useWorkflows = function useWorkflows(_ref) {
     var headers = new Headers();
     headers.append("Accept", "application/json");
     headers.append("Content-Type", "application/json");
-    fetch("".concat(apiUrl, "/workflow"), {
+    fetch("".concat(apiUrl, "/workflow/load"), {
       headers: headers
     }).then(function (response) {
       return response.json();
@@ -2327,6 +2349,73 @@ var useWorkflows = function useWorkflows(_ref) {
   return {
     loaded: loaded,
     loading: loading,
+    data: data
+  };
+};
+
+var useCrud = function useCrud(_ref) {
+  var apiUrl = _ref.apiUrl;
+
+  var _useState = React.useState({
+    loading: false,
+    loaded: false,
+    data: []
+  }),
+      _useState2 = _slicedToArray(_useState, 2),
+      _useState2$ = _useState2[0],
+      loaded = _useState2$.loaded,
+      loading = _useState2$.loading,
+      data = _useState2$.data,
+      setData = _useState2[1];
+
+  var loadAll = function loadAll(_ref2) {
+    var apiUrl = _ref2.apiUrl;
+
+    if (loaded || loading) {
+      return;
+    }
+
+    setData({
+      loading: true
+    });
+    var headers = new Headers();
+    headers.append("Accept", "application/json");
+    headers.append("Content-Type", "application/json");
+    var token = getToken();
+
+    if (token !== null) {
+      headers.append("Authentication", "Bearer ".concat(token));
+    }
+
+    fetch("".concat(apiUrl, "/crud/load"), {
+      headers: headers
+    }).then(function (response) {
+      return response.json();
+    }).then(function (_ref3) {
+      var data = _ref3.data;
+      return setData({
+        loaded: true,
+        loading: false,
+        data: data
+      });
+    });
+  };
+
+  React.useEffect(function () {
+    return loadAll({
+      apiUrl: apiUrl
+    });
+  });
+  return {
+    loaded: loaded,
+    loading: loading,
+    data: data
+  };
+};
+
+var crudReducer = function crudReducer(data) {
+  console.info("data:", data);
+  return {
     data: data
   };
 };
@@ -2370,11 +2459,14 @@ exports.Sidebar = Sidebar;
 exports.UserMenu = UserMenu;
 exports.UserMenuItem = UserMenuItem;
 exports.createAuthProvider = createAuthProvider;
+exports.createCrud = createCrud;
 exports.createDataProvider = createDataProvider;
 exports.createI18nProvider = createI18nProvider;
 exports.createManyFormatter = createManyFormatter;
 exports.createManyParser = createManyParser;
+exports.crudReducer = crudReducer;
 exports.useAuthProvider = useAuthProvider;
+exports.useCrud = useCrud;
 exports.useDataProvider = useDataProvider;
 exports.useI18nCatcher = useI18nCatcher;
 exports.useI18nLanguages = useI18nLanguages;

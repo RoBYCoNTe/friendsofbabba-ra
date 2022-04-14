@@ -11,6 +11,7 @@ import createAuthProvider from "./data/createAuthProvider";
 import createManyFormatter from "./data/cakephp/createManyFormatter";
 import createManyParser from "./data/cakephp/createManyParser";
 import createI18nProvider from "./i18n/createI18nProvider";
+import createCrud from "./components/crud/createCrud";
 import useSaveMutation from "./data/useSaveMutation";
 import useManyFormatter from "./data/cakephp/useManyFormatter";
 import useManyParser from "./data/cakephp/useManyParser";
@@ -21,6 +22,8 @@ import useI18nLanguages from "./i18n/useI18nLanguages";
 import useI18nCatcher from "./i18n/useI18nCatcher";
 import useWorkflow from "./data/workflow/useWorkflow";
 import useWorkflows from "./data/workflow/useWorkflows";
+import useCrud from "./data/crud/useCrud";
+import crudReducer from "./data/crud/crudReducer";
 import workflowReducer from "./data/workflow/workflowReducer";
 export {
   Layout,
@@ -37,6 +40,7 @@ export {
   createManyParser,
   createManyFormatter,
   createI18nProvider,
+  createCrud,
   useDataProvider,
   useAuthProvider,
   useI18nProvider,
@@ -47,5 +51,7 @@ export {
   useManyParser,
   useWorkflow,
   useWorkflows,
+  useCrud,
   workflowReducer,
+  crudReducer,
 };

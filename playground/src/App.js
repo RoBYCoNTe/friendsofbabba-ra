@@ -14,13 +14,15 @@ import {
   useI18nLanguages,
   useI18nCatcher,
   useWorkflows,
+  useCrud,
   createI18nProvider,
   workflowReducer,
+  createCrud,
+  crudReducer,
 } from "friendsofbabba-ra";
 
 import React from "react";
-
-import users from "./users";
+import PeopleIcon from "@material-ui/icons/People";
 import tickets from "./tickets";
 
 const MyUserMenu = (props) => {
@@ -87,15 +89,16 @@ const MyLayout = (props) => (
 );
 const App = () => {
   const apiUrl = "http://babba.local/api";
-  const { languages, loading } = useI18nLanguages({ apiUrl });
-  const { loaded } = useWorkflows({ apiUrl });
+  const languages = useI18nLanguages({ apiUrl });
+  const workflows = useWorkflows({ apiUrl });
+  const crud = useCrud({ apiUrl });
 
   // Allow i18n to intercept and send unlocalized messages to the server.
-  useI18nCatcher({ apiUrl, loading });
+  useI18nCatcher({ apiUrl, loading: languages?.loading });
 
   const dataProvider = useDataProvider({ apiUrl });
   const authProvider = useAuthProvider({ apiUrl });
-  if (loading || !loaded) {
+  if (languages?.loading || workflows?.loading || crud?.loading) {
     return (
       <Loading loadingPrimary="Loading" loadingSecondary="Please wait..." />
     );
@@ -106,13 +109,18 @@ const App = () => {
       layout={MyLayout}
       dataProvider={dataProvider}
       authProvider={authProvider}
-      i18nProvider={createI18nProvider({ languages, locale: "it" })}
+      i18nProvider={createI18nProvider({
+        languages: languages.data,
+        locale: "it",
+      })}
       customReducers={{
         workflow: workflowReducer,
+        crud: crudReducer(crud.data),
       }}
     >
       <Resource name="tickets" {...tickets} />
-      <Resource name="users" {...users} />
+      <Resource name="posts" {...tickets} />
+      <Resource name="users" {...createCrud({ icon: PeopleIcon })} />
       <Resource name="roles" />
     </Admin>
   );
