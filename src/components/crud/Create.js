@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { Create as RaCreate } from "react-admin";
 import Form from "./Form";
 

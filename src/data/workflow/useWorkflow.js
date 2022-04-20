@@ -1,17 +1,28 @@
-import Workflow from "./Workflow";
-import { get } from "lodash";
-import { useMemo } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
-const useWorkflow = ({ resource }) => {
-  const item = useSelector((state) =>
-    resource ? get(state, `workflow.items.${resource}`) : undefined
-  );
-  const workflow = useMemo(
-    () => (item ? new Workflow(item) : undefined),
-    [item]
-  );
-  return workflow;
+const useWorkflow = ({ apiUrl }) => {
+  const [{ loaded, loading, data }, setData] = useState({
+    loading: false,
+    loaded: false,
+    data: [],
+  });
+  const loadAll = ({ apiUrl }) => {
+    if (loaded || loading) {
+      return;
+    }
+    setData({ loading: true });
+    let headers = new Headers();
+    headers.append("Accept", "application/json");
+    headers.append("Content-Type", "application/json");
+    fetch(`${apiUrl}/workflow/load`, {
+      headers,
+    })
+      .then((response) => response.json())
+      .then(({ data }) => setData({ loaded: true, loading: false, data }));
+  };
+
+  useEffect(() => loadAll({ apiUrl }));
+
+  return { loaded, loading, data };
 };
-
 export default useWorkflow;

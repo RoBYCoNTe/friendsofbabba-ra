@@ -1,5 +1,4 @@
 import * as Icons from "@material-ui/icons";
-
 import { Admin, Loading, Resource } from "react-admin";
 import {
   AppBar,
@@ -13,17 +12,13 @@ import {
   useAuthProvider,
   useI18nLanguages,
   useI18nCatcher,
-  useWorkflows,
-  useCrud,
   createI18nProvider,
-  workflowReducer,
   createCrud,
-  crudReducer,
+  CrudProvider,
+  WorkflowProvider,
 } from "friendsofbabba-ra";
 
 import React from "react";
-import PeopleIcon from "@material-ui/icons/People";
-import tickets from "./tickets";
 
 const MyUserMenu = (props) => {
   const { logout } = props;
@@ -90,39 +85,41 @@ const MyLayout = (props) => (
 const App = () => {
   const apiUrl = "http://babba.local/api";
   const languages = useI18nLanguages({ apiUrl });
-  const workflows = useWorkflows({ apiUrl });
-  const crud = useCrud({ apiUrl });
 
   // Allow i18n to intercept and send unlocalized messages to the server.
   useI18nCatcher({ apiUrl, loading: languages?.loading });
 
   const dataProvider = useDataProvider({ apiUrl });
   const authProvider = useAuthProvider({ apiUrl });
-  if (languages?.loading || workflows?.loading || crud?.loading) {
+  if (languages?.loading) {
     return (
       <Loading loadingPrimary="Loading" loadingSecondary="Please wait..." />
     );
   }
 
   return (
-    <Admin
-      layout={MyLayout}
-      dataProvider={dataProvider}
-      authProvider={authProvider}
-      i18nProvider={createI18nProvider({
-        languages: languages.data,
-        locale: "it",
-      })}
-      customReducers={{
-        workflow: workflowReducer,
-        crud: crudReducer(crud.data),
-      }}
-    >
-      <Resource name="tickets" {...tickets} />
-      <Resource name="posts" {...tickets} />
-      <Resource name="users" {...createCrud({ icon: PeopleIcon })} />
-      <Resource name="roles" />
-    </Admin>
+    <WorkflowProvider apiUrl={apiUrl}>
+      <CrudProvider apiUrl={apiUrl}>
+        <Admin
+          layout={MyLayout}
+          dataProvider={dataProvider}
+          authProvider={authProvider}
+          i18nProvider={createI18nProvider({
+            languages: languages.data,
+            locale: "it",
+          })}
+        >
+          <Resource name="tickets" {...createCrud({ icon: Icons.List })} />
+          <Resource
+            name="users"
+            {...createCrud({
+              icon: Icons.SupervisedUserCircle,
+            })}
+          />
+          <Resource name="roles" />
+        </Admin>
+      </CrudProvider>
+    </WorkflowProvider>
   );
 };
 export default App;

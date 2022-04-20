@@ -18,7 +18,7 @@ var reactRedux = require('react-redux');
 var CssBaseline = require('@material-ui/core/CssBaseline');
 var reactRouterDom = require('react-router-dom');
 var DashboardIcon = require('@material-ui/icons/Dashboard');
-var get = require('lodash/get');
+var get$1 = require('lodash/get');
 var ChevronLeftIcon = require('@material-ui/icons/ChevronLeft');
 var styles$2 = require('@material-ui/styles');
 var ExitIcon = require('@material-ui/icons/PowerSettingsNew');
@@ -26,6 +26,7 @@ var queryString = require('query-string');
 var lodash = require('lodash');
 var moment = require('moment');
 var polyglotI18nProvider = require('ra-i18n-polyglot');
+var friendsofbabbaRa = require('friendsofbabba-ra');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -58,7 +59,7 @@ var Menu__default = /*#__PURE__*/_interopDefaultLegacy(Menu$2);
 var classnames__default = /*#__PURE__*/_interopDefaultLegacy(classnames);
 var CssBaseline__default = /*#__PURE__*/_interopDefaultLegacy(CssBaseline);
 var DashboardIcon__default = /*#__PURE__*/_interopDefaultLegacy(DashboardIcon);
-var get__default = /*#__PURE__*/_interopDefaultLegacy(get);
+var get__default = /*#__PURE__*/_interopDefaultLegacy(get$1);
 var ChevronLeftIcon__default = /*#__PURE__*/_interopDefaultLegacy(ChevronLeftIcon);
 var ExitIcon__default = /*#__PURE__*/_interopDefaultLegacy(ExitIcon);
 var moment__default = /*#__PURE__*/_interopDefaultLegacy(moment);
@@ -507,7 +508,7 @@ AppBar.propTypes = {
   userMenu: PropTypes__default["default"].elementType
 };
 
-var _excluded$4 = ["children", "open", "label"];
+var _excluded$c = ["children", "open", "label"];
 var useStyles$2 = core.makeStyles(function (theme) {
   return {
     subHeader: {
@@ -523,7 +524,7 @@ var MenuGroup = function MenuGroup(_ref) {
   var children = _ref.children,
       open = _ref.open,
       label = _ref.label,
-      props = _objectWithoutProperties(_ref, _excluded$4);
+      props = _objectWithoutProperties(_ref, _excluded$c);
 
   var classes = useStyles$2();
   return /*#__PURE__*/React__default["default"].createElement(core.List, {
@@ -551,17 +552,17 @@ MenuGroup.propTypes = {
   group: PropTypes__default["default"].string
 };
 
-var _excluded$3 = ["titleAccess", "children"];
+var _excluded$b = ["titleAccess", "children"];
 
 var Badge = function Badge(_ref) {
   _ref.titleAccess;
       var children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded$3);
+      props = _objectWithoutProperties(_ref, _excluded$b);
 
   return /*#__PURE__*/React__default["default"].createElement(core.Badge, props, children);
 };
 
-var _excluded$2 = ["location", "badge", "to", "icon", "label", "sub", "onMenuClick", "permissions", "open"];
+var _excluded$a = ["location", "badge", "to", "icon", "label", "sub", "onMenuClick", "permissions", "open"];
 
 var isSelected = function isSelected(location, to) {
   var selected = location.pathname === to || location.pathname.indexOf("".concat(to, "?")) === 0 || location.pathname.indexOf("".concat(to, "/")) === 0;
@@ -578,7 +579,7 @@ var MenuItem = function MenuItem(_ref) {
       onMenuClick = _ref.onMenuClick;
       _ref.permissions;
       var open = _ref.open,
-      props = _objectWithoutProperties(_ref, _excluded$2);
+      props = _objectWithoutProperties(_ref, _excluded$a);
 
   return /*#__PURE__*/React__default["default"].createElement(core.ListItem, _extends({}, props, {
     button: true,
@@ -707,16 +708,16 @@ var createGroups = function createGroups(_ref) {
   return groups;
 };
 
-var _require = require("ra-core"),
-    usePermissions = _require.usePermissions,
-    getResources = _require.getResources,
-    useTranslate = _require.useTranslate;
+var _require$1 = require("ra-core"),
+    usePermissions = _require$1.usePermissions,
+    getResources$1 = _require$1.getResources,
+    useTranslate = _require$1.useTranslate;
 
-var _require2 = require("react"),
-    useMemo = _require2.useMemo;
+var _require2$1 = require("react"),
+    useMemo = _require2$1.useMemo;
 
-var _require3 = require("react-redux"),
-    shallowEqual = _require3.shallowEqual;
+var _require3$1 = require("react-redux"),
+    shallowEqual$1 = _require3$1.shallowEqual;
 
 var useMenu = function useMenu(_ref) {
   var order = _ref.order,
@@ -730,7 +731,7 @@ var useMenu = function useMenu(_ref) {
       loaded = _usePermissions.loaded,
       permissions = _usePermissions.permissions;
 
-  var resources = reactRedux.useSelector(getResources, shallowEqual);
+  var resources = reactRedux.useSelector(getResources$1, shallowEqual$1);
   var menu = useMemo(function () {
     return loaded ? createGroups({
       order: order,
@@ -868,7 +869,7 @@ var useStyles$1 = core.makeStyles(function (theme) {
       }
     },
     drawer: {
-      zIndex: 1,
+      zIndex: 10,
       flexShrink: 0,
       whiteSpace: "nowrap"
     },
@@ -959,7 +960,7 @@ Sidebar.propTypes = {
   appVersion: PropTypes__default["default"].string
 };
 
-var _excluded$1 = ["theme"];
+var _excluded$9 = ["theme"];
 
 var styles = function styles(theme) {
   return styles$1.createStyles({
@@ -1100,7 +1101,7 @@ var EnhancedLayout = compose(reactRedux.connect(mapStateToProps, {} // Avoid con
 
 var Layout = function Layout(_ref) {
   var themeOverride = _ref.theme,
-      props = _objectWithoutProperties(_ref, _excluded$1);
+      props = _objectWithoutProperties(_ref, _excluded$9);
 
   var themeProp = React.useRef(themeOverride);
 
@@ -1137,7 +1138,7 @@ Layout.defaultProps = {
   drawerWidth: 240
 };
 
-var _excluded = ["className", "classes", "redirectTo", "icon", "label"];
+var _excluded$8 = ["className", "classes", "redirectTo", "icon", "label"];
 var useStyles = styles$1.makeStyles(function (theme) {
   return {
     menuItem: {
@@ -1156,7 +1157,7 @@ var UserMenuItem = /*#__PURE__*/React__namespace.forwardRef(function UserMenuIte
       props.redirectTo;
       var icon = props.icon,
       label = props.label,
-      rest = _objectWithoutProperties(props, _excluded);
+      rest = _objectWithoutProperties(props, _excluded$8);
 
   var classes = useStyles(props);
   return /*#__PURE__*/React__namespace.createElement(core.MenuItem, _extends({
@@ -1743,302 +1744,114 @@ var createI18nProvider = function createI18nProvider(_ref) {
   }, reactAdmin.resolveBrowserLocale());
 };
 
-var List = function List(props) {
-  return /*#__PURE__*/React__namespace.createElement(reactAdmin.List, props);
-};
+var _excluded$7 = ["component", "componentProps", "components", "addLabel"];
 
-var createCrud = function createCrud(_ref) {
-  var _ref$icon = _ref.icon,
-      icon = _ref$icon === void 0 ? null : _ref$icon,
-      _ref$options = _ref.options,
-      options = _ref$options === void 0 ? {
-    group: "admin",
-    roles: ["admin"]
-  } : _ref$options;
-  return {
-    icon: icon,
-    options: options,
-    list: List
-  };
-};
+var Componentable = function Componentable(_ref) {
+  var component = _ref.component,
+      componentProps = _ref.componentProps,
+      components = _ref.components,
+      _ref$addLabel = _ref.addLabel,
+      addLabel = _ref$addLabel === void 0 ? true : _ref$addLabel,
+      props = _objectWithoutProperties(_ref, _excluded$7);
 
-var mapFieldErrors = function mapFieldErrors(field, errors) {
-  var keys = Object.keys(errors);
-  var messages = keys.filter(function (k) {
-    return typeof errors[k] === "string";
-  });
+  var Component = lodash.get(components, component);
 
-  if (messages.length > 0) {
-    return _defineProperty({}, field, messages.map(function (m) {
-      return errors[m];
-    }).join("\n"));
-  } else {
-    var out = keys.reduce(function (errorMap, key) {
-      return _objectSpread2(_objectSpread2({}, errorMap), mapFieldErrors(key, errors[key]));
-    }, {});
-    return _defineProperty({}, field, out);
+  if (!Component) {
+    return addLabel ? /*#__PURE__*/React__default["default"].createElement(reactAdmin.Labeled, {
+      label: props.label,
+      source: props.source,
+      fullWidth: true
+    }, /*#__PURE__*/React__default["default"].createElement(core.Typography, {
+      variant: "body2"
+    }, "No component found for ", /*#__PURE__*/React__default["default"].createElement("code", null, component), ".")) : /*#__PURE__*/React__default["default"].createElement(core.Typography, {
+      variant: "body2"
+    }, "No component found for ", /*#__PURE__*/React__default["default"].createElement("code", null, component), ".");
   }
+
+  return /*#__PURE__*/React__default["default"].createElement(Component, _extends({}, props, componentProps));
 };
 
-var cakephpErrorMapper = function cakephpErrorMapper(errors) {
-  var fields = Object.keys(errors);
-  var validationErrors = fields.reduce(function (errorsMap, field) {
-    return _objectSpread2(_objectSpread2({}, errorsMap), mapFieldErrors(field, errors[field]));
-  }, {});
-  return validationErrors;
+var _require = require("ra-core"),
+    getResources = _require.getResources;
+
+var _require2 = require("react-redux"),
+    shallowEqual = _require2.shallowEqual,
+    useSelector = _require2.useSelector;
+
+var _require3 = require("lodash"),
+    get = _require3.get;
+
+var useCustomComponents = function useCustomComponents(resource) {
+  var resources = useSelector(getResources, shallowEqual);
+  var r = resources.find(function (r) {
+    return r.name === resource;
+  });
+  return get(r, "options.components");
 };
 
-var createErrorMapper = function createErrorMapper() {
-  return function (error, notify) {
-    var errors = lodash.get(error, "body.data.errors", null);
-    var message = lodash.get(error, "body.data.message", null);
+var _excluded$6 = ["chipSource"];
 
-    if (message) {
-      notify(message, {
-        type: "error"
-      });
-    }
+var ArrayOfChipField = function ArrayOfChipField(_ref) {
+  var chipSource = _ref.chipSource,
+      props = _objectWithoutProperties(_ref, _excluded$6);
 
-    if (errors) {
-      var mappedErrors = cakephpErrorMapper(errors);
-      return mappedErrors;
-    } else {
-      return false;
-    }
-  };
+  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.ArrayField, props, /*#__PURE__*/React__default["default"].createElement(reactAdmin.SingleFieldList, null, /*#__PURE__*/React__default["default"].createElement(reactAdmin.ChipField, {
+    source: chipSource
+  })));
 };
 
-var useSaveMutation = function useSaveMutation(_ref) {
-  var basePath = _ref.basePath,
-      _ref$errorMapper = _ref.errorMapper,
-      errorMapper = _ref$errorMapper === void 0 ? createErrorMapper() : _ref$errorMapper,
-      _ref$onSuccess = _ref.onSuccess,
-      onSuccess = _ref$onSuccess === void 0 ? undefined : _ref$onSuccess,
-      _ref$redir = _ref.redir,
-      redir = _ref$redir === void 0 ? null : _ref$redir,
-      redirect = _ref.redirect,
-      refresh = _ref.refresh,
-      resource = _ref.resource,
-      _ref$transform = _ref.transform,
-      transform = _ref$transform === void 0 ? undefined : _ref$transform,
-      _ref$type = _ref.type,
-      type = _ref$type === void 0 ? null : _ref$type;
-
-  var _useMutation = raCore.useMutation(),
-      _useMutation2 = _slicedToArray(_useMutation, 1),
-      mutate = _useMutation2[0];
-
-  var doRedirect = raCore.useRedirect();
-  var doRefresh = raCore.useRefresh();
-  var notify = raCore.useNotify();
-  var save = React.useCallback( /*#__PURE__*/function () {
-    var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(values) {
-      var response;
-      return regeneratorRuntime.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              _context.prev = 0;
-              _context.next = 3;
-              return mutate({
-                type: type === null ? values.id && values.id > 0 ? "update" : "create" : type,
-                resource: resource,
-                payload: {
-                  id: values.id,
-                  data: transform ? transform(values) : values
-                }
-              }, {
-                returnPromise: true
-              });
-
-            case 3:
-              response = _context.sent;
-              _context.next = 9;
-              break;
-
-            case 6:
-              _context.prev = 6;
-              _context.t0 = _context["catch"](0);
-              return _context.abrupt("return", errorMapper(_context.t0, notify));
-
-            case 9:
-              if (!onSuccess) {
-                console.info({
-                  redir: redir,
-                  refresh: refresh,
-                  redirect: redirect,
-                  basePath: basePath
-                });
-
-                if (redir) {
-                  redirect(redir);
-                } else if (refresh === true) {
-                  if (values.id > 0) {
-                    doRefresh();
-                  } else {
-                    doRedirect("edit", basePath, response.data.id);
-                  }
-                } else {
-                  doRedirect(redirect, basePath, response.data.id);
-                }
-
-                notify("ra.notification." + (values.id > 0 ? "updated" : "created"), {
-                  type: "info",
-                  messageArgs: {
-                    smart_count: 1
-                  }
-                });
-              } else onSuccess(response, values);
-
-            case 10:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee, null, [[0, 6]]);
-    }));
-
-    return function (_x) {
-      return _ref2.apply(this, arguments);
-    };
-  }(), [basePath, doRedirect, doRefresh, errorMapper, mutate, notify, onSuccess, redir, redirect, refresh, resource, transform, type]);
-  return save;
-};
-
-var useManyFormatter = function useManyFormatter() {
-  var memoizedFn = React.useMemo(function () {
-    return createManyFormatter();
-  }, []);
-  return memoizedFn;
-};
-
-var useManyParser = function useManyParser() {
-  var memoizedFn = React.useMemo(function () {
-    return createManyParser();
-  }, []);
-  return memoizedFn;
-};
-
-var useAuthProvider = function useAuthProvider(_ref) {
-  var apiUrl = _ref.apiUrl;
-  var memoizedFn = React.useMemo(function () {
-    return createAuthProvider({
-      apiUrl: apiUrl
-    });
-  }, [apiUrl]);
-  return memoizedFn;
-};
-
-var useDataProvider = function useDataProvider(_ref) {
-  var apiUrl = _ref.apiUrl,
-      fileFields = _ref.fileFields;
-  var memoizedFn = React.useMemo(function () {
-    return createDataProvider({
-      apiUrl: apiUrl,
-      fileFields: fileFields
-    });
-  }, [apiUrl, fileFields]);
-  return memoizedFn;
-};
-
-var useI18nProvider = function useI18nProvider(_ref) {
-  var apiUrl = _ref.apiUrl,
-      _ref$locale = _ref.locale,
-      locale = _ref$locale === void 0 ? "en" : _ref$locale,
-      _ref$languages = _ref.languages,
-      languages = _ref$languages === void 0 ? {} : _ref$languages;
-  var memoizedFn = React.useMemo(function () {
-    return createI18nProvider({
-      apiUrl: apiUrl,
-      locale: locale,
-      languages: languages
-    });
-  }, [apiUrl, locale, languages]);
-  return memoizedFn;
-};
-
-var useI18nLanguages = function useI18nLanguages(_ref) {
+var useWorkflow = function useWorkflow(_ref) {
   var apiUrl = _ref.apiUrl;
 
   var _useState = React.useState({
-    loading: true,
-    languages: null
+    loading: false,
+    loaded: false,
+    data: []
   }),
       _useState2 = _slicedToArray(_useState, 2),
-      data = _useState2[0],
+      _useState2$ = _useState2[0],
+      loaded = _useState2$.loaded,
+      loading = _useState2$.loading,
+      data = _useState2$.data,
       setData = _useState2[1];
 
-  React.useEffect(function () {
+  var loadAll = function loadAll(_ref2) {
+    var apiUrl = _ref2.apiUrl;
+
+    if (loaded || loading) {
+      return;
+    }
+
+    setData({
+      loading: true
+    });
     var headers = new Headers();
     headers.append("Accept", "application/json");
     headers.append("Content-Type", "application/json");
-    fetch("".concat(apiUrl, "/languages/load"), {
+    fetch("".concat(apiUrl, "/workflow/load"), {
       headers: headers
     }).then(function (response) {
       return response.json();
-    }).then(function (_ref2) {
-      var data = _ref2.data;
+    }).then(function (_ref3) {
+      var data = _ref3.data;
       return setData({
+        loaded: true,
         loading: false,
         data: data
       });
     });
-  }, [apiUrl]);
-  return data;
-};
+  };
 
-var queued = [];
-
-var putMessage = function putMessage(apiUrl, locale, message) {
-  return message.indexOf("[") === -1 && message.indexOf("]") === -1 && queued.indexOf("".concat(locale, "-").concat(message)) === -1 && queued.push("".concat(locale, "-").concat(message)) && fetch("".concat(apiUrl, "/languages/put-message"), {
-    method: "PUT",
-    headers: new Headers({
-      Accept: "application/json",
-      "Content-Type": "application/json"
-    }),
-    body: JSON.stringify({
-      code: locale,
-      message: {
-        code: message,
-        text: message
-      }
-    })
+  React.useEffect(function () {
+    return loadAll({
+      apiUrl: apiUrl
+    });
   });
-};
-
-var useI18nCatcher = function useI18nCatcher(_ref) {
-  var apiUrl = _ref.apiUrl,
-      loading = _ref.loading;
-  var locale = reactAdmin.useLocale();
-  React__namespace.useMemo(function () {
-    if (process.env.NODE_ENV === "production") {
-      return;
-    }
-
-    if (loading) {
-      return;
-    }
-
-    var consoleError = console.error;
-
-    console.error = function (message) {
-      if (typeof message === "string" && message.indexOf("Missing translation for key: ") >= 0) {
-        message = message.replace("Warning: Missing translation for key: ", "");
-        message = message.split('"').join("").trim();
-
-        if (message.indexOf(" ") !== -1) {
-          return;
-        }
-
-        var lc = localStorage.getItem("locale") || locale;
-        putMessage(apiUrl, lc, message);
-        return;
-      }
-
-      consoleError.apply(console, arguments);
-    };
-  }, [apiUrl, locale]);
-  return true;
+  return {
+    loaded: loaded,
+    loading: loading,
+    data: data
+  };
 };
 
 var Workflow = /*#__PURE__*/function () {
@@ -2288,69 +2101,234 @@ var Workflow = /*#__PURE__*/function () {
   return Workflow;
 }();
 
-var useWorkflow = function useWorkflow(_ref) {
-  var resource = _ref.resource;
-  var item = reactRedux.useSelector(function (state) {
-    return resource ? lodash.get(state, "workflow.items.".concat(resource)) : undefined;
-  });
-  var workflow = React.useMemo(function () {
-    return item ? new Workflow(item) : undefined;
-  }, [item]);
-  return workflow;
-};
+var WorkflowContext = /*#__PURE__*/React.createContext({});
+var WorkflowProvider = function WorkflowProvider(_ref) {
+  var children = _ref.children,
+      apiUrl = _ref.apiUrl;
 
-var useWorkflows = function useWorkflows(_ref) {
-  var apiUrl = _ref.apiUrl;
-
-  var _useState = React.useState({
-    loading: false,
-    loaded: false,
-    data: []
-  }),
+  var _useState = React.useState({}),
       _useState2 = _slicedToArray(_useState, 2),
-      _useState2$ = _useState2[0],
-      loaded = _useState2$.loaded,
-      loading = _useState2$.loading,
-      data = _useState2$.data,
-      setData = _useState2[1];
+      workflow = _useState2[0],
+      setWorkflow = _useState2[1];
 
-  var loadAll = function loadAll(_ref2) {
-    var apiUrl = _ref2.apiUrl;
+  var _useWorkflow = useWorkflow({
+    apiUrl: apiUrl
+  }),
+      data = _useWorkflow.data;
 
-    if (loaded || loading) {
+  var getWorkflow = React.useCallback(function (resource) {
+    return lodash.get(workflow, resource);
+  }, [workflow]);
+  React.useEffect(function () {
+    if (!data) {
       return;
     }
 
-    setData({
-      loading: true
-    });
-    var headers = new Headers();
-    headers.append("Accept", "application/json");
-    headers.append("Content-Type", "application/json");
-    fetch("".concat(apiUrl, "/workflow/load"), {
-      headers: headers
-    }).then(function (response) {
-      return response.json();
-    }).then(function (_ref3) {
-      var data = _ref3.data;
-      return setData({
-        loaded: true,
-        loading: false,
-        data: data
-      });
-    });
-  };
+    var resources = Object.keys(data).reduce(function (workflows, name) {
+      return _objectSpread2(_objectSpread2({}, workflows), {}, _defineProperty({}, name, new Workflow(data[name])));
+    }, {});
+    setWorkflow(resources);
+  }, [data]);
+  return /*#__PURE__*/React__default["default"].createElement(WorkflowContext.Provider, {
+    value: {
+      workflows: data,
+      getWorkflow: getWorkflow
+    }
+  }, children);
+};
 
-  React.useEffect(function () {
-    return loadAll({
-      apiUrl: apiUrl
-    });
+var _excluded$5 = ["label", "record", "resource"];
+
+var StateField = function StateField(_ref) {
+  var _ref$label = _ref.label,
+      label = _ref$label === void 0 ? "app.label.workflow.state" : _ref$label,
+      record = _ref.record,
+      toResolve = _ref.resource,
+      props = _objectWithoutProperties(_ref, _excluded$5);
+
+  var _useContext = React.useContext(WorkflowContext),
+      getWorkflow = _useContext.getWorkflow;
+
+  var resource = React.useMemo(function () {
+    return toResolve.replace("workflow/transactions/", "");
+  }, [toResolve]);
+  var workflow = React.useMemo(function () {
+    return getWorkflow(resource);
+  }, [resource, getWorkflow]);
+  var state = React.useMemo(function () {
+    return workflow && workflow.getState(_objectSpread2(_objectSpread2({}, record), {}, {
+      transaction: lodash.get(record, "transaction", record)
+    })) || undefined;
+  }, [record, workflow]);
+  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.ChipField, _extends({}, props, {
+    label: label,
+    source: "name",
+    record: state,
+    color: "primary"
+  }));
+};
+
+var fields = {
+  ArrayOfChipField: ArrayOfChipField,
+  TextField: reactAdmin.TextField,
+  DateField: reactAdmin.DateField,
+  ChipField: reactAdmin.ChipField,
+  BooleanField: reactAdmin.BooleanField,
+  StateField: StateField
+};
+
+var useManyFormatter = function useManyFormatter() {
+  var memoizedFn = React.useMemo(function () {
+    return createManyFormatter();
+  }, []);
+  return memoizedFn;
+};
+
+var useManyParser = function useManyParser() {
+  var memoizedFn = React.useMemo(function () {
+    return createManyParser();
+  }, []);
+  return memoizedFn;
+};
+
+var _excluded$4 = ["optionText"];
+
+var ReferenceCheckboxGroupInput = function ReferenceCheckboxGroupInput(_ref) {
+  var optionText = _ref.optionText,
+      props = _objectWithoutProperties(_ref, _excluded$4);
+
+  var parse = useManyParser();
+  var format = useManyFormatter();
+  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.ReferenceArrayInput, _extends({}, props, {
+    parse: parse,
+    format: format
+  }), /*#__PURE__*/React__default["default"].createElement(reactAdmin.CheckboxGroupInput, {
+    optionText: optionText
+  }));
+};
+
+var _excluded$3 = ["optionText"];
+
+var ReferenceAutocompleteInput = function ReferenceAutocompleteInput(_ref) {
+  var optionText = _ref.optionText,
+      props = _objectWithoutProperties(_ref, _excluded$3);
+
+  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.ReferenceInput, props, /*#__PURE__*/React__default["default"].createElement(reactAdmin.AutocompleteInput, {
+    optionText: optionText
+  }));
+};
+
+var _excluded$2 = ["filter"];
+
+var StateInput = function StateInput(_ref) {
+  var _ref$filter = _ref.filter,
+      filter = _ref$filter === void 0 ? undefined : _ref$filter,
+      props = _objectWithoutProperties(_ref, _excluded$2);
+
+  var _useContext = React.useContext(WorkflowContext),
+      getWorkflow = _useContext.getWorkflow;
+
+  var workflow = React.useMemo(function () {
+    return getWorkflow(props.resource);
+  }, [props.resource, getWorkflow]);
+  var states = React.useMemo(function () {
+    return workflow ? workflow.states.filter(function (s) {
+      return !s.isLoop && (filter === undefined || filter(s));
+    }) : [];
+  }, [workflow, filter]);
+  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.SelectInput, _extends({}, props, {
+    choices: states,
+    optionText: "name",
+    optionValue: "code"
+  }));
+};
+
+var inputs = {
+  ReferenceCheckboxGroupInput: ReferenceCheckboxGroupInput,
+  ReferenceAutocompleteInput: ReferenceAutocompleteInput,
+  SearchInput: reactAdmin.SearchInput,
+  TextInput: reactAdmin.TextInput,
+  SelectInput: reactAdmin.SelectInput,
+  BooleanInput: reactAdmin.BooleanInput,
+  DateInput: reactAdmin.DateInput,
+  StateInput: StateInput
+};
+
+var _excluded$1 = ["source", "label", "component", "componentProps"];
+
+var List = function List(props) {
+  var _grid$filters, _grid$columns;
+
+  var _React$useContext = React__namespace.useContext(friendsofbabbaRa.CrudContext),
+      getGrid = _React$useContext.getGrid,
+      loading = _React$useContext.loading;
+
+  var grid = getGrid(props.resource);
+  var customComponents = useCustomComponents(props.resource);
+  var isSmall = core.useMediaQuery(function (theme) {
+    var _grid$mobileBreakpoin;
+
+    return theme.breakpoints.down((_grid$mobileBreakpoin = grid === null || grid === void 0 ? void 0 : grid.mobileBreakpoint) !== null && _grid$mobileBreakpoin !== void 0 ? _grid$mobileBreakpoin : "sm");
   });
-  return {
-    loaded: loaded,
-    loading: loading,
-    data: data
-  };
+
+  if (loading) {
+    return /*#__PURE__*/React__namespace.createElement(reactAdmin.Loading, null);
+  }
+
+  if (grid === false || grid === null) {
+    return null;
+  }
+
+  return /*#__PURE__*/React__namespace.createElement(reactAdmin.List, _extends({}, props, {
+    title: grid.title,
+    filter: grid.filter || {},
+    filterDefaultValues: grid.filterDefaultValues || {},
+    sort: grid === null || grid === void 0 ? void 0 : grid.sort,
+    perPage: grid === null || grid === void 0 ? void 0 : grid.perPage,
+    filters: grid === null || grid === void 0 ? void 0 : (_grid$filters = grid.filters) === null || _grid$filters === void 0 ? void 0 : _grid$filters.map(function (_ref) {
+      var source = _ref.source;
+          _ref.label;
+          var component = _ref.component,
+          componentProps = _ref.componentProps,
+          props = _objectWithoutProperties(_ref, _excluded$1);
+
+      return /*#__PURE__*/React__namespace.createElement(Componentable, _extends({}, props, {
+        key: source,
+        source: source,
+        component: component,
+        componentProps: componentProps,
+        components: _objectSpread2(_objectSpread2({}, inputs), customComponents.inputs),
+        alwaysOn: componentProps === null || componentProps === void 0 ? void 0 : componentProps.alwaysOn
+      }));
+    })
+  }), isSmall ? /*#__PURE__*/React__namespace.createElement(reactAdmin.SimpleList, {
+    primaryText: function primaryText(record) {
+      return lodash.get(record, grid === null || grid === void 0 ? void 0 : grid.mobilePrimaryText);
+    },
+    secondaryText: function secondaryText(record) {
+      return lodash.get(record, grid === null || grid === void 0 ? void 0 : grid.mobileSecondaryText);
+    },
+    tertiaryText: function tertiaryText(record) {
+      return lodash.get(record, grid === null || grid === void 0 ? void 0 : grid.mobileTertiaryText);
+    },
+    linkType: grid === null || grid === void 0 ? void 0 : grid.mobileLinkType
+  }) : /*#__PURE__*/React__namespace.createElement(reactAdmin.Datagrid, null, grid === null || grid === void 0 ? void 0 : (_grid$columns = grid.columns) === null || _grid$columns === void 0 ? void 0 : _grid$columns.map(function (_ref2) {
+    var source = _ref2.source,
+        label = _ref2.label,
+        sortable = _ref2.sortable,
+        component = _ref2.component,
+        componentProps = _ref2.componentProps;
+    return /*#__PURE__*/React__namespace.createElement(Componentable, {
+      key: source,
+      source: source,
+      label: label,
+      sortable: sortable,
+      component: component,
+      componentProps: componentProps,
+      components: _objectSpread2(_objectSpread2({}, fields), customComponents.columns),
+      addLabel: false
+    });
+  }), /*#__PURE__*/React__namespace.createElement(reactAdmin.EditButton, null), /*#__PURE__*/React__namespace.createElement(reactAdmin.DeleteButton, null)));
 };
 
 var useCrud = function useCrud(_ref) {
@@ -2413,44 +2391,396 @@ var useCrud = function useCrud(_ref) {
   };
 };
 
-var crudReducer = function crudReducer(data) {
-  console.info("data:", data);
-  return {
-    data: data
+var CrudContext = /*#__PURE__*/React.createContext({});
+var CrudProvider = function CrudProvider(_ref) {
+  var children = _ref.children,
+      apiUrl = _ref.apiUrl;
+
+  var _useState = React.useState({}),
+      _useState2 = _slicedToArray(_useState, 2),
+      entities = _useState2[0],
+      setEntities = _useState2[1];
+
+  var _useCrud = useCrud({
+    apiUrl: apiUrl
+  }),
+      loading = _useCrud.loading,
+      data = _useCrud.data;
+
+  var getGrid = function getGrid(entity) {
+    return lodash.get(entities, "".concat(entity, ".grid"), false);
   };
+
+  var getForm = function getForm(entity) {
+    return lodash.get(entities, "".concat(entity, ".form"), false);
+  };
+
+  React.useEffect(function () {
+    return setEntities(data);
+  }, [data]);
+  return /*#__PURE__*/React__default["default"].createElement(CrudContext.Provider, {
+    value: {
+      loading: loading,
+      data: data,
+      getGrid: getGrid,
+      getForm: getForm
+    }
+  }, children);
 };
 
-var REQUEST_LOAD = "REQUEST_WORKFLOW_LOAD";
-var RECEIVE_LOAD = "RECEIVE_WORKFLOW_LOAD";
+var mapFieldErrors = function mapFieldErrors(field, errors) {
+  var keys = Object.keys(errors);
+  var messages = keys.filter(function (k) {
+    return typeof errors[k] === "string";
+  });
 
-var workflowReducer = function workflowReducer(data) {
-  return function () {
-    var previousState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
-      loading: false,
-      items: data
-    };
+  if (messages.length > 0) {
+    return _defineProperty({}, field, messages.map(function (m) {
+      return errors[m];
+    }).join("\n"));
+  } else {
+    var out = keys.reduce(function (errorMap, key) {
+      return _objectSpread2(_objectSpread2({}, errorMap), mapFieldErrors(key, errors[key]));
+    }, {});
+    return _defineProperty({}, field, out);
+  }
+};
 
-    var _ref = arguments.length > 1 ? arguments[1] : undefined,
-        type = _ref.type,
-        payload = _ref.payload;
+var cakephpErrorMapper = function cakephpErrorMapper(errors) {
+  var fields = Object.keys(errors);
+  var validationErrors = fields.reduce(function (errorsMap, field) {
+    return _objectSpread2(_objectSpread2({}, errorsMap), mapFieldErrors(field, errors[field]));
+  }, {});
+  return validationErrors;
+};
 
-    if (type === REQUEST_LOAD) {
-      return _objectSpread2(_objectSpread2({}, previousState), {}, {
-        loading: true
-      });
-    } else if (type === RECEIVE_LOAD) {
-      var _data = payload.data;
-      return _objectSpread2(_objectSpread2({}, previousState), {}, {
-        loading: false,
-        items: _data
+var createErrorMapper = function createErrorMapper() {
+  return function (error, notify) {
+    var errors = lodash.get(error, "body.data.errors", null);
+    var message = lodash.get(error, "body.data.message", null);
+
+    if (message) {
+      notify(message, {
+        type: "error"
       });
     }
 
-    return previousState;
+    if (errors) {
+      var mappedErrors = cakephpErrorMapper(errors);
+      return mappedErrors;
+    } else {
+      return false;
+    }
   };
 };
 
+var useSaveMutation = function useSaveMutation(_ref) {
+  var basePath = _ref.basePath,
+      _ref$errorMapper = _ref.errorMapper,
+      errorMapper = _ref$errorMapper === void 0 ? createErrorMapper() : _ref$errorMapper,
+      _ref$onSuccess = _ref.onSuccess,
+      onSuccess = _ref$onSuccess === void 0 ? undefined : _ref$onSuccess,
+      _ref$redir = _ref.redir,
+      redir = _ref$redir === void 0 ? null : _ref$redir,
+      redirect = _ref.redirect,
+      refresh = _ref.refresh,
+      resource = _ref.resource,
+      _ref$transform = _ref.transform,
+      transform = _ref$transform === void 0 ? undefined : _ref$transform,
+      _ref$type = _ref.type,
+      type = _ref$type === void 0 ? null : _ref$type;
+
+  var _useMutation = raCore.useMutation(),
+      _useMutation2 = _slicedToArray(_useMutation, 1),
+      mutate = _useMutation2[0];
+
+  var doRedirect = raCore.useRedirect();
+  var doRefresh = raCore.useRefresh();
+  var notify = raCore.useNotify();
+  var save = React.useCallback( /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(values) {
+      var response;
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return mutate({
+                type: type === null ? values.id && values.id > 0 ? "update" : "create" : type,
+                resource: resource,
+                payload: {
+                  id: values.id,
+                  data: transform ? transform(values) : values
+                }
+              }, {
+                returnPromise: true
+              });
+
+            case 3:
+              response = _context.sent;
+              _context.next = 9;
+              break;
+
+            case 6:
+              _context.prev = 6;
+              _context.t0 = _context["catch"](0);
+              return _context.abrupt("return", errorMapper(_context.t0, notify));
+
+            case 9:
+              if (!onSuccess) {
+                console.info({
+                  redir: redir,
+                  refresh: refresh,
+                  redirect: redirect,
+                  basePath: basePath
+                });
+
+                if (redir) {
+                  redirect(redir);
+                } else if (refresh === true) {
+                  if (values.id > 0) {
+                    doRefresh();
+                  } else {
+                    doRedirect("edit", basePath, response.data.id);
+                  }
+                } else {
+                  doRedirect(redirect, basePath, response.data.id);
+                }
+
+                notify("ra.notification." + (values.id > 0 ? "updated" : "created"), {
+                  type: "info",
+                  messageArgs: {
+                    smart_count: 1
+                  }
+                });
+              } else onSuccess(response, values);
+
+            case 10:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, null, [[0, 6]]);
+    }));
+
+    return function (_x) {
+      return _ref2.apply(this, arguments);
+    };
+  }(), [basePath, doRedirect, doRefresh, errorMapper, mutate, notify, onSuccess, redir, redirect, refresh, resource, transform, type]);
+  return save;
+};
+
+var _excluded = ["fullWidth"];
+
+var Form = function Form(_ref) {
+  var _form$inputs;
+
+  var props = _extends({}, _ref);
+
+  var _useContext = React.useContext(CrudContext),
+      getForm = _useContext.getForm,
+      loading = _useContext.loading;
+
+  var form = getForm(props.resource);
+  var customComponents = useCustomComponents(props.resource);
+  var save = useSaveMutation(_objectSpread2({}, props));
+
+  if (loading) {
+    return /*#__PURE__*/React__default["default"].createElement(reactAdmin.Loading, null);
+  }
+
+  if (form === false || form === null) {
+    return null;
+  }
+
+  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.SimpleForm, _extends({}, props, {
+    save: save,
+    initialValues: form === null || form === void 0 ? void 0 : form.initialValues,
+    sanitizeEmptyValues: form === null || form === void 0 ? void 0 : form.sanitizeEmptyValues,
+    warnWhenUnsavedChanges: form === null || form === void 0 ? void 0 : form.warnWhenUnsavedChanges,
+    redirect: form === null || form === void 0 ? void 0 : form.redirect
+  }), form === null || form === void 0 ? void 0 : (_form$inputs = form.inputs) === null || _form$inputs === void 0 ? void 0 : _form$inputs.map(function (_ref2) {
+    var source = _ref2.source,
+        label = _ref2.label,
+        component = _ref2.component,
+        _ref2$componentProps = _ref2.componentProps,
+        fullWidth = _ref2$componentProps.fullWidth,
+        restComponentProps = _objectWithoutProperties(_ref2$componentProps, _excluded);
+
+    return /*#__PURE__*/React__default["default"].createElement(Componentable, {
+      key: source,
+      source: source,
+      label: label,
+      fullWidth: fullWidth,
+      component: component,
+      componentProps: _objectSpread2({
+        fullWidth: fullWidth
+      }, restComponentProps),
+      components: _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), customComponents.inputs), customComponents.columns)
+    });
+  }));
+};
+
+var Create$1 = function Create(props) {
+  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.Create, props, /*#__PURE__*/React__default["default"].createElement(Form, null));
+};
+
+var Create = function Create(props) {
+  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.Edit, props, /*#__PURE__*/React__default["default"].createElement(Form, null));
+};
+
+var createCrud = function createCrud(_ref) {
+  var _ref$icon = _ref.icon,
+      icon = _ref$icon === void 0 ? null : _ref$icon,
+      _ref$options = _ref.options,
+      options = _ref$options === void 0 ? {
+    group: "admin",
+    roles: ["admin"]
+  } : _ref$options,
+      _ref$components = _ref.components,
+      components = _ref$components === void 0 ? {
+    grids: {},
+    columns: {},
+    forms: {},
+    inputs: {}
+  } : _ref$components;
+  return {
+    icon: icon,
+    options: _objectSpread2(_objectSpread2({}, options), {}, {
+      components: components
+    }),
+    list: List,
+    edit: Create,
+    create: Create$1
+  };
+};
+
+var useAuthProvider = function useAuthProvider(_ref) {
+  var apiUrl = _ref.apiUrl;
+  var memoizedFn = React.useMemo(function () {
+    return createAuthProvider({
+      apiUrl: apiUrl
+    });
+  }, [apiUrl]);
+  return memoizedFn;
+};
+
+var useDataProvider = function useDataProvider(_ref) {
+  var apiUrl = _ref.apiUrl,
+      fileFields = _ref.fileFields;
+  var memoizedFn = React.useMemo(function () {
+    return createDataProvider({
+      apiUrl: apiUrl,
+      fileFields: fileFields
+    });
+  }, [apiUrl, fileFields]);
+  return memoizedFn;
+};
+
+var useI18nProvider = function useI18nProvider(_ref) {
+  var apiUrl = _ref.apiUrl,
+      _ref$locale = _ref.locale,
+      locale = _ref$locale === void 0 ? "en" : _ref$locale,
+      _ref$languages = _ref.languages,
+      languages = _ref$languages === void 0 ? {} : _ref$languages;
+  var memoizedFn = React.useMemo(function () {
+    return createI18nProvider({
+      apiUrl: apiUrl,
+      locale: locale,
+      languages: languages
+    });
+  }, [apiUrl, locale, languages]);
+  return memoizedFn;
+};
+
+var useI18nLanguages = function useI18nLanguages(_ref) {
+  var apiUrl = _ref.apiUrl;
+
+  var _useState = React.useState({
+    loading: true,
+    languages: null
+  }),
+      _useState2 = _slicedToArray(_useState, 2),
+      data = _useState2[0],
+      setData = _useState2[1];
+
+  React.useEffect(function () {
+    var headers = new Headers();
+    headers.append("Accept", "application/json");
+    headers.append("Content-Type", "application/json");
+    fetch("".concat(apiUrl, "/languages/load"), {
+      headers: headers
+    }).then(function (response) {
+      return response.json();
+    }).then(function (_ref2) {
+      var data = _ref2.data;
+      return setData({
+        loading: false,
+        data: data
+      });
+    });
+  }, [apiUrl]);
+  return data;
+};
+
+var queued = [];
+
+var putMessage = function putMessage(apiUrl, locale, message) {
+  return message.indexOf("[") === -1 && message.indexOf("]") === -1 && queued.indexOf("".concat(locale, "-").concat(message)) === -1 && queued.push("".concat(locale, "-").concat(message)) && fetch("".concat(apiUrl, "/languages/put-message"), {
+    method: "PUT",
+    headers: new Headers({
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    }),
+    body: JSON.stringify({
+      code: locale,
+      message: {
+        code: message,
+        text: message
+      }
+    })
+  });
+};
+
+var useI18nCatcher = function useI18nCatcher(_ref) {
+  var apiUrl = _ref.apiUrl,
+      loading = _ref.loading;
+  var locale = reactAdmin.useLocale();
+  React__namespace.useMemo(function () {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
+    if (loading) {
+      return;
+    }
+
+    var consoleError = console.error;
+
+    console.error = function (message) {
+      if (typeof message === "string" && message.indexOf("Missing translation for key: ") >= 0) {
+        message = message.replace("Warning: Missing translation for key: ", "");
+        message = message.split('"').join("").trim();
+
+        if (message.indexOf(" ") !== -1) {
+          return;
+        }
+
+        var lc = localStorage.getItem("locale") || locale;
+        putMessage(apiUrl, lc, message);
+        return;
+      }
+
+      consoleError.apply(console, arguments);
+    };
+  }, [apiUrl, locale]);
+  return true;
+};
+
 exports.AppBar = AppBar;
+exports.CrudContext = CrudContext;
+exports.CrudProvider = CrudProvider;
 exports.Layout = Layout;
 exports.Menu = Menu$1;
 exports.MenuGroup = MenuGroup;
@@ -2458,13 +2788,14 @@ exports.MenuItem = MenuItem;
 exports.Sidebar = Sidebar;
 exports.UserMenu = UserMenu;
 exports.UserMenuItem = UserMenuItem;
+exports.WorkflowContext = WorkflowContext;
+exports.WorkflowProvider = WorkflowProvider;
 exports.createAuthProvider = createAuthProvider;
 exports.createCrud = createCrud;
 exports.createDataProvider = createDataProvider;
 exports.createI18nProvider = createI18nProvider;
 exports.createManyFormatter = createManyFormatter;
 exports.createManyParser = createManyParser;
-exports.crudReducer = crudReducer;
 exports.useAuthProvider = useAuthProvider;
 exports.useCrud = useCrud;
 exports.useDataProvider = useDataProvider;
@@ -2475,5 +2806,3 @@ exports.useManyFormatter = useManyFormatter;
 exports.useManyParser = useManyParser;
 exports.useSaveMutation = useSaveMutation;
 exports.useWorkflow = useWorkflow;
-exports.useWorkflows = useWorkflows;
-exports.workflowReducer = workflowReducer;
