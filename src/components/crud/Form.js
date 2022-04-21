@@ -2,10 +2,11 @@ import React, { useContext } from "react";
 import { Loading, SimpleForm } from "react-admin";
 import { CrudContext } from "../../data/cakephp/crud/CrudContext";
 import useCustomComponents from "./useCustomComponents";
-import fields from "./fields/index.js";
-import inputs from "./inputs/index.js";
-import Componentable from "./Componentable";
+import fields from "../fields/index.js";
+import inputs from "../inputs/index.js";
+import Component from "./Component";
 import useSaveMutation from "../../data/useSaveMutation";
+
 const Form = ({ ...props }) => {
   const { getForm, loading } = useContext(CrudContext);
   const form = getForm(props.resource);
@@ -33,7 +34,7 @@ const Form = ({ ...props }) => {
           component,
           componentProps: { fullWidth, ...restComponentProps },
         }) => (
-          <Componentable
+          <Component
             key={source}
             source={source}
             label={label}
@@ -44,7 +45,7 @@ const Form = ({ ...props }) => {
               ...fields,
               ...inputs,
               ...customComponents.inputs,
-              ...customComponents.columns,
+              ...customComponents.fields,
             }}
           />
         )

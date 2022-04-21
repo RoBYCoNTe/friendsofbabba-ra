@@ -130,7 +130,7 @@ class Workflow {
       const state = this.states.find(
         (state) => state.code === record.transaction.state
       );
-      possibleStates = Object.keys(state.routes).map((code) =>
+      possibleStates = Object.keys(state.transitions).map((code) =>
         this.states.find((s) => s.code === code)
       );
     } else {
@@ -160,8 +160,8 @@ class Workflow {
       const currentState = this.states.find(
         (state) => state.code === record.transaction.state
       );
-      if (currentState && currentState.routes[state.code]) {
-        return currentState.routes[state.code].notesRequired;
+      if (currentState && currentState.transitions[state.code]) {
+        return currentState.transitions[state.code].notesRequired;
       }
     }
     return false;

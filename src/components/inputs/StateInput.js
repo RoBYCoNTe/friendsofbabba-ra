@@ -1,7 +1,7 @@
 import React, { useContext, useMemo } from "react";
 
 import { SelectInput } from "react-admin";
-import { WorkflowContext } from "../../../data/workflow/WorkflowContext";
+import { WorkflowContext } from "../../data/workflow/WorkflowContext";
 
 const StateInput = ({ filter = undefined, ...props }) => {
   const { getWorkflow } = useContext(WorkflowContext);

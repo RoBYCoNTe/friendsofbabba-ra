@@ -34,6 +34,7 @@ const useI18nCatcher = ({ apiUrl, loading }) => {
     }
 
     const consoleError = console.error;
+
     console.error = function (message) {
       if (
         typeof message === "string" &&
@@ -51,7 +52,7 @@ const useI18nCatcher = ({ apiUrl, loading }) => {
 
       consoleError.apply(console, arguments);
     };
-  }, [apiUrl, locale]);
+  }, [apiUrl, locale, loading]);
   return true;
 };
 

@@ -1,20 +1,14 @@
 import * as React from "react";
 import { CrudContext } from "friendsofbabba-ra";
-import {
-  Datagrid,
-  DeleteButton,
-  EditButton,
-  SimpleList,
-  List as RaList,
-  Loading,
-} from "react-admin";
-import Componentable from "./Componentable";
+import { Datagrid, SimpleList, List as RaList, Loading } from "react-admin";
+import Component from "./Component";
 import { useMediaQuery } from "@material-ui/core";
 import { get } from "lodash";
 import useCustomComponents from "./useCustomComponents";
 
-import fields from "./fields/index.js";
-import inputs from "./inputs/index.js";
+import fields from "../fields/index.js";
+import inputs from "../inputs/index.js";
+import buttons from "../buttons/index.js";
 
 const List = (props) => {
   const { getGrid, loading } = React.useContext(CrudContext);
@@ -40,7 +34,7 @@ const List = (props) => {
       perPage={grid?.perPage}
       filters={grid?.filters?.map(
         ({ source, label, component, componentProps, ...props }) => (
-          <Componentable
+          <Component
             {...props}
             key={source}
             source={source}
@@ -63,7 +57,7 @@ const List = (props) => {
         <Datagrid>
           {grid?.columns?.map(
             ({ source, label, sortable, component, componentProps }) => (
-              <Componentable
+              <Component
                 key={source}
                 source={source}
                 label={label}
@@ -72,14 +66,16 @@ const List = (props) => {
                 componentProps={componentProps}
                 components={{
                   ...fields,
-                  ...customComponents.columns,
+                  ...inputs,
+                  ...buttons,
+                  ...customComponents.inputs,
+                  ...customComponents.fields,
+                  ...customComponents.buttons,
                 }}
                 addLabel={false}
               />
             )
           )}
-          <EditButton />
-          <DeleteButton />
         </Datagrid>
       )}
     </RaList>

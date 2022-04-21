@@ -3,7 +3,7 @@ import { get } from "lodash";
 import { Labeled } from "react-admin";
 import { Typography } from "@material-ui/core";
 
-const Componentable = ({
+const Component = ({
   component,
   componentProps,
   components,
@@ -28,4 +28,4 @@ const Componentable = ({
   return <Component {...props} {...componentProps} />;
 };
 
-export default Componentable;
+export default Component;

@@ -110,6 +110,7 @@ const App = () => {
           })}
         >
           <Resource name="tickets" {...createCrud({ icon: Icons.List })} />
+          <Resource name="workflow/transactions/tickets" />
           <Resource
             name="users"
             {...createCrud({

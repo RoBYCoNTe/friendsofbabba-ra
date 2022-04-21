@@ -27,6 +27,12 @@ var lodash = require('lodash');
 var moment = require('moment');
 var polyglotI18nProvider = require('ra-i18n-polyglot');
 var friendsofbabbaRa = require('friendsofbabba-ra');
+var ArrowDropDownIcon = require('@material-ui/icons/ArrowDropDown');
+var raUiMaterialui = require('ra-ui-materialui');
+var TextField = require('@material-ui/core/TextField');
+var reactFinalForm = require('react-final-form');
+var ContentCreate = require('@material-ui/icons/Create');
+var ContentView = require('@material-ui/icons/Visibility');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -64,6 +70,10 @@ var ChevronLeftIcon__default = /*#__PURE__*/_interopDefaultLegacy(ChevronLeftIco
 var ExitIcon__default = /*#__PURE__*/_interopDefaultLegacy(ExitIcon);
 var moment__default = /*#__PURE__*/_interopDefaultLegacy(moment);
 var polyglotI18nProvider__default = /*#__PURE__*/_interopDefaultLegacy(polyglotI18nProvider);
+var ArrowDropDownIcon__default = /*#__PURE__*/_interopDefaultLegacy(ArrowDropDownIcon);
+var TextField__default = /*#__PURE__*/_interopDefaultLegacy(TextField);
+var ContentCreate__default = /*#__PURE__*/_interopDefaultLegacy(ContentCreate);
+var ContentView__default = /*#__PURE__*/_interopDefaultLegacy(ContentView);
 
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
@@ -411,7 +421,7 @@ UserMenu.propTypes = {
   logout: PropTypes__default["default"].element.isRequired
 };
 
-var useStyles$3 = styles$1.makeStyles(function (theme) {
+var useStyles$6 = styles$1.makeStyles(function (theme) {
   return {
     title: {
       flexGrow: 1
@@ -461,7 +471,7 @@ var AppBar = function AppBar(_ref2) {
       location = _ref2.location,
       _ref2$userMenu = _ref2.userMenu,
       userMenu = _ref2$userMenu === void 0 ? UserMenu : _ref2$userMenu;
-  var classes = useStyles$3({
+  var classes = useStyles$6({
     drawerWidth: drawerWidth
   });
   var dispatch = reactRedux.useDispatch();
@@ -508,8 +518,8 @@ AppBar.propTypes = {
   userMenu: PropTypes__default["default"].elementType
 };
 
-var _excluded$c = ["children", "open", "label"];
-var useStyles$2 = core.makeStyles(function (theme) {
+var _excluded$h = ["children", "open", "label"];
+var useStyles$5 = core.makeStyles(function (theme) {
   return {
     subHeader: {
       backgroundColor: theme.palette.background.paper,
@@ -524,9 +534,9 @@ var MenuGroup = function MenuGroup(_ref) {
   var children = _ref.children,
       open = _ref.open,
       label = _ref.label,
-      props = _objectWithoutProperties(_ref, _excluded$c);
+      props = _objectWithoutProperties(_ref, _excluded$h);
 
-  var classes = useStyles$2();
+  var classes = useStyles$5();
   return /*#__PURE__*/React__default["default"].createElement(core.List, {
     subheader: open ? /*#__PURE__*/React__default["default"].createElement(core.ListSubheader, {
       className: classes.subHeader
@@ -552,17 +562,17 @@ MenuGroup.propTypes = {
   group: PropTypes__default["default"].string
 };
 
-var _excluded$b = ["titleAccess", "children"];
+var _excluded$g = ["titleAccess", "children"];
 
 var Badge = function Badge(_ref) {
   _ref.titleAccess;
       var children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded$b);
+      props = _objectWithoutProperties(_ref, _excluded$g);
 
   return /*#__PURE__*/React__default["default"].createElement(core.Badge, props, children);
 };
 
-var _excluded$a = ["location", "badge", "to", "icon", "label", "sub", "onMenuClick", "permissions", "open"];
+var _excluded$f = ["location", "badge", "to", "icon", "label", "sub", "onMenuClick", "permissions", "open"];
 
 var isSelected = function isSelected(location, to) {
   var selected = location.pathname === to || location.pathname.indexOf("".concat(to, "?")) === 0 || location.pathname.indexOf("".concat(to, "/")) === 0;
@@ -579,7 +589,7 @@ var MenuItem = function MenuItem(_ref) {
       onMenuClick = _ref.onMenuClick;
       _ref.permissions;
       var open = _ref.open,
-      props = _objectWithoutProperties(_ref, _excluded$a);
+      props = _objectWithoutProperties(_ref, _excluded$f);
 
   return /*#__PURE__*/React__default["default"].createElement(core.ListItem, _extends({}, props, {
     button: true,
@@ -849,7 +859,7 @@ var Menu$1 = compose(reactRouterDom.withRouter, reactRedux.connect(function (sta
   };
 }))(Menu);
 
-var useStyles$1 = core.makeStyles(function (theme) {
+var useStyles$4 = core.makeStyles(function (theme) {
   return {
     brand: {
       paddingLeft: theme.spacing(1),
@@ -911,7 +921,7 @@ var Sidebar = function Sidebar(_ref2) {
       appTitle = _ref2.appTitle,
       appSubTitle = _ref2.appSubTitle,
       appVersion = _ref2.appVersion;
-  var classes = useStyles$1({
+  var classes = useStyles$4({
     drawerWidth: drawerWidth
   });
   var dispatch = reactRedux.useDispatch();
@@ -960,7 +970,7 @@ Sidebar.propTypes = {
   appVersion: PropTypes__default["default"].string
 };
 
-var _excluded$9 = ["theme"];
+var _excluded$e = ["theme"];
 
 var styles = function styles(theme) {
   return styles$1.createStyles({
@@ -1101,7 +1111,7 @@ var EnhancedLayout = compose(reactRedux.connect(mapStateToProps, {} // Avoid con
 
 var Layout = function Layout(_ref) {
   var themeOverride = _ref.theme,
-      props = _objectWithoutProperties(_ref, _excluded$9);
+      props = _objectWithoutProperties(_ref, _excluded$e);
 
   var themeProp = React.useRef(themeOverride);
 
@@ -1138,8 +1148,8 @@ Layout.defaultProps = {
   drawerWidth: 240
 };
 
-var _excluded$8 = ["className", "classes", "redirectTo", "icon", "label"];
-var useStyles = styles$1.makeStyles(function (theme) {
+var _excluded$d = ["className", "classes", "redirectTo", "icon", "label"];
+var useStyles$3 = styles$1.makeStyles(function (theme) {
   return {
     menuItem: {
       color: theme.palette.text.secondary
@@ -1157,9 +1167,9 @@ var UserMenuItem = /*#__PURE__*/React__namespace.forwardRef(function UserMenuIte
       props.redirectTo;
       var icon = props.icon,
       label = props.label,
-      rest = _objectWithoutProperties(props, _excluded$8);
+      rest = _objectWithoutProperties(props, _excluded$d);
 
-  var classes = useStyles(props);
+  var classes = useStyles$3(props);
   return /*#__PURE__*/React__namespace.createElement(core.MenuItem, _extends({
     className: classnames__default["default"]("user-menu-item", classes.menuItem, className),
     ref: ref,
@@ -1222,6 +1232,17 @@ function getHeaders() {
 }
 function getToken() {
   return localStorage.getItem("token");
+}
+function useToken() {
+  var token = getToken();
+  var headers = getHeaders();
+  var headersMemo = React.useMemo(function () {
+    return headers;
+  }, [headers]);
+  return {
+    token: token,
+    headers: headersMemo
+  };
 }
 
 // Remove unwanted _joinData props from JSON object before submission to the rest service.
@@ -1644,6 +1665,10 @@ var createAuthProvider = function createAuthProvider(_ref) {
         localStorage.setItem("token", data.token);
         localStorage.setItem("roles", JSON.stringify(data.roles));
         localStorage.setItem("profile", JSON.stringify(data.profile));
+        var event = new Event("login");
+        event.key = "token";
+        event.value = data.token;
+        document.dispatchEvent(event);
       });
     },
     logout: function logout() {
@@ -1672,7 +1697,10 @@ var createAuthProvider = function createAuthProvider(_ref) {
     },
     getIdentity: function getIdentity() {
       var profile = JSON.parse(localStorage.getItem("profile"));
-      return Promise.resolve(profile);
+      var roles = JSON.parse(localStorage.getItem("roles"));
+      return Promise.resolve(_objectSpread2(_objectSpread2({}, profile), {}, {
+        roles: roles
+      }));
     },
     impersonate: function impersonate(id) {
       var requestURL = "".concat(apiUrl, "/users/impersonate/?id=").concat(id);
@@ -1744,15 +1772,15 @@ var createI18nProvider = function createI18nProvider(_ref) {
   }, reactAdmin.resolveBrowserLocale());
 };
 
-var _excluded$7 = ["component", "componentProps", "components", "addLabel"];
+var _excluded$c = ["component", "componentProps", "components", "addLabel"];
 
-var Componentable = function Componentable(_ref) {
+var Component = function Component(_ref) {
   var component = _ref.component,
       componentProps = _ref.componentProps,
       components = _ref.components,
       _ref$addLabel = _ref.addLabel,
       addLabel = _ref$addLabel === void 0 ? true : _ref$addLabel,
-      props = _objectWithoutProperties(_ref, _excluded$7);
+      props = _objectWithoutProperties(_ref, _excluded$c);
 
   var Component = lodash.get(components, component);
 
@@ -1789,15 +1817,65 @@ var useCustomComponents = function useCustomComponents(resource) {
   return get(r, "options.components");
 };
 
-var _excluded$6 = ["chipSource"];
+var _excluded$b = ["chipSource"];
 
-var ArrayOfChipField = function ArrayOfChipField(_ref) {
+var ChipArrayField = function ChipArrayField(_ref) {
   var chipSource = _ref.chipSource,
-      props = _objectWithoutProperties(_ref, _excluded$6);
+      props = _objectWithoutProperties(_ref, _excluded$b);
 
   return /*#__PURE__*/React__default["default"].createElement(reactAdmin.ArrayField, props, /*#__PURE__*/React__default["default"].createElement(reactAdmin.SingleFieldList, null, /*#__PURE__*/React__default["default"].createElement(reactAdmin.ChipField, {
     source: chipSource
   })));
+};
+
+var _excluded$a = ["record", "source", "width", "minWidth", "maxWidth", "maxRows", "sortable", "basePath", "sortBy"];
+var useStyles$2 = core.makeStyles(function (theme) {
+  return {
+    root: {
+      overflow: "hidden",
+      "text-overflow": "ellipsis",
+      display: "-webkit-box",
+      WebkitBoxOrient: "vertical",
+      whiteSpace: "break-spaces"
+    }
+  };
+});
+
+var LongTextField = function LongTextField(_ref) {
+  var record = _ref.record,
+      source = _ref.source,
+      _ref$width = _ref.width,
+      width = _ref$width === void 0 ? undefined : _ref$width,
+      _ref$minWidth = _ref.minWidth,
+      minWidth = _ref$minWidth === void 0 ? undefined : _ref$minWidth,
+      _ref$maxWidth = _ref.maxWidth,
+      maxWidth = _ref$maxWidth === void 0 ? undefined : _ref$maxWidth,
+      _ref$maxRows = _ref.maxRows,
+      maxRows = _ref$maxRows === void 0 ? 3 : _ref$maxRows;
+      _ref.sortable;
+      _ref.basePath;
+      _ref.sortBy;
+      var props = _objectWithoutProperties(_ref, _excluded$a);
+
+  var classes = useStyles$2();
+  return /*#__PURE__*/React__default["default"].createElement(core.Typography, _extends({}, props, {
+    variant: "body2",
+    title: lodash.get(record, source),
+    className: classes.root,
+    style: {
+      width: width,
+      minWidth: minWidth,
+      maxWidth: maxWidth,
+      WebkitLineClamp: maxRows
+    }
+  }), lodash.get(record, source));
+};
+
+LongTextField.propTypes = {
+  minWidth: PropTypes__default["default"].number,
+  maxWidth: PropTypes__default["default"].number,
+  width: PropTypes__default["default"].number,
+  maxRows: PropTypes__default["default"].number
 };
 
 var useWorkflow = function useWorkflow(_ref) {
@@ -2029,7 +2107,7 @@ var Workflow = /*#__PURE__*/function () {
         var state = this.states.find(function (state) {
           return state.code === record.transaction.state;
         });
-        possibleStates = Object.keys(state.routes).map(function (code) {
+        possibleStates = Object.keys(state.transitions).map(function (code) {
           return _this2.states.find(function (s) {
             return s.code === code;
           });
@@ -2069,8 +2147,8 @@ var Workflow = /*#__PURE__*/function () {
           return state.code === record.transaction.state;
         });
 
-        if (currentState && currentState.routes[state.code]) {
-          return currentState.routes[state.code].notesRequired;
+        if (currentState && currentState.transitions[state.code]) {
+          return currentState.transitions[state.code].notesRequired;
         }
       }
 
@@ -2137,14 +2215,14 @@ var WorkflowProvider = function WorkflowProvider(_ref) {
   }, children);
 };
 
-var _excluded$5 = ["label", "record", "resource"];
+var _excluded$9 = ["label", "record", "resource"];
 
 var StateField = function StateField(_ref) {
   var _ref$label = _ref.label,
       label = _ref$label === void 0 ? "app.label.workflow.state" : _ref$label,
       record = _ref.record,
       toResolve = _ref.resource,
-      props = _objectWithoutProperties(_ref, _excluded$5);
+      props = _objectWithoutProperties(_ref, _excluded$9);
 
   var _useContext = React.useContext(WorkflowContext),
       getWorkflow = _useContext.getWorkflow;
@@ -2168,13 +2246,175 @@ var StateField = function StateField(_ref) {
   }));
 };
 
+var useFieldLabel = function useFieldLabel(_ref) {
+  var resource = _ref.resource;
+  var t = reactAdmin.useTranslate();
+  return function (field) {
+    var translate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+    var label = "resources.".concat(resource, ".fields.").concat(field);
+    return translate ? t(label) : label;
+  };
+};
+
+var useStyles$1 = core.makeStyles(function (theme) {
+  return {
+    root: {
+      display: "-webkit-box",
+      WebkitBoxOrient: "vertical",
+      whiteSpace: "break-spaces"
+    },
+    link: {
+      cursor: "pointer",
+      fontWeight: "bold"
+    },
+    visibility: {
+      display: "block",
+      clear: "both"
+    }
+  };
+});
+
+var TransactionNotesField = function TransactionNotesField(_ref) {
+  var _ref$admin = _ref.admin,
+      admin = _ref$admin === void 0 ? false : _ref$admin,
+      record = _ref.record,
+      source = _ref.source,
+      _ref$minWidth = _ref.minWidth,
+      minWidth = _ref$minWidth === void 0 ? 150 : _ref$minWidth,
+      _ref$maxRows = _ref.maxRows,
+      maxRows = _ref$maxRows === void 0 ? 3 : _ref$maxRows;
+  var classes = useStyles$1();
+  var fieldLabel = useFieldLabel({
+    resource: "transactions"
+  });
+
+  var _useMemo = React.useMemo(function () {
+    var isPrivate = lodash.get(record, "is_private", true);
+    var value = isPrivate && !admin ? null : lodash.get(record, source, "");
+    var tooLong = value !== null && value.length > 200;
+    return {
+      isPrivate: isPrivate,
+      value: value,
+      tooLong: tooLong
+    };
+  }, [record, admin, source]),
+      isPrivate = _useMemo.isPrivate,
+      value = _useMemo.value,
+      tooLong = _useMemo.tooLong;
+
+  var _useState = React.useState(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      showMore = _useState2[0],
+      setShowMore = _useState2[1];
+
+  var handleToggle = function handleToggle() {
+    return setShowMore(!showMore);
+  };
+
+  return /*#__PURE__*/React__default["default"].createElement(React.Fragment, null, /*#__PURE__*/React__default["default"].createElement(core.Typography, {
+    className: classes.root,
+    style: {
+      minWidth: minWidth,
+      WebkitLineClamp: showMore ? null : maxRows
+    },
+    variant: "body2",
+    color: value === null ? "textSecondary" : "textPrimary",
+    display: "inline"
+  }, tooLong === false ? value !== null ? value : fieldLabel("notes.empty") : null, tooLong && (showMore ? value : value.substring(0, 200) + "...")), admin && value !== null && /*#__PURE__*/React__default["default"].createElement(core.Typography, {
+    color: isPrivate ? "error" : "textSecondary",
+    className: classes.visibility,
+    variant: "caption"
+  }, fieldLabel("notes.".concat(isPrivate ? "private" : "public"))), tooLong && /*#__PURE__*/React__default["default"].createElement(core.Link, {
+    underline: "hover",
+    className: classes.link,
+    onClick: handleToggle
+  }, fieldLabel("notes.".concat(showMore ? "show_less" : "show_more"))));
+};
+
+TransactionNotesField.propTypes = {
+  minWidth: PropTypes__default["default"].number,
+  maxRows: PropTypes__default["default"].number
+};
+
+var _excluded$8 = ["fullWidth", "addLabel"],
+    _excluded2$1 = ["admin", "label"];
+
+var PaginationWrapper = function PaginationWrapper(_ref) {
+  _ref.fullWidth;
+      _ref.addLabel;
+      var props = _objectWithoutProperties(_ref, _excluded$8);
+
+  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.Pagination, props);
+};
+
+var TransactionLogsField = function TransactionLogsField(_ref2) {
+  var _ref2$admin = _ref2.admin,
+      admin = _ref2$admin === void 0 ? false : _ref2$admin,
+      label = _ref2.label,
+      props = _objectWithoutProperties(_ref2, _excluded2$1);
+
+  var _useContext = React.useContext(WorkflowContext),
+      getWorkflow = _useContext.getWorkflow;
+
+  var fieldLabel = useFieldLabel({
+    resource: "transactions"
+  });
+  var workflow = React.useMemo(function () {
+    return getWorkflow(props.resource);
+  }, [getWorkflow, props.resource]);
+
+  if (!workflow || !props.record) {
+    return null;
+  }
+
+  return /*#__PURE__*/React__default["default"].createElement(React.Fragment, null, /*#__PURE__*/React__default["default"].createElement("br", null), label && /*#__PURE__*/React__default["default"].createElement(core.Typography, {
+    variant: "subtitle1",
+    gutterBottom: true
+  }, label), label && /*#__PURE__*/React__default["default"].createElement(core.Divider, null), /*#__PURE__*/React__default["default"].createElement(reactAdmin.ReferenceManyField, _extends({
+    perPage: 5,
+    pagination: /*#__PURE__*/React__default["default"].createElement(PaginationWrapper, null),
+    reference: "workflow/transactions/".concat(props.resource),
+    sort: {
+      field: "Transactions.created",
+      order: "desc"
+    }
+  }, props, {
+    source: "id",
+    target: "id"
+  }), /*#__PURE__*/React__default["default"].createElement(reactAdmin.Datagrid, null, admin && /*#__PURE__*/React__default["default"].createElement(reactAdmin.TextField, {
+    label: fieldLabel("id"),
+    source: "id"
+  }), /*#__PURE__*/React__default["default"].createElement(reactAdmin.DateField, {
+    label: fieldLabel("created"),
+    source: "created",
+    showTime: true,
+    sortBy: "Transactions.created"
+  }), /*#__PURE__*/React__default["default"].createElement(reactAdmin.TextField, {
+    label: fieldLabel("user"),
+    source: "user.name",
+    sortBy: "Users.username"
+  }), /*#__PURE__*/React__default["default"].createElement(TransactionNotesField, {
+    label: fieldLabel("notes"),
+    source: "notes",
+    admin: admin,
+    sortable: false
+  }), /*#__PURE__*/React__default["default"].createElement(StateField, {
+    label: fieldLabel("state"),
+    sortBy: "Transactions.state"
+  }))), /*#__PURE__*/React__default["default"].createElement("br", null));
+};
+
 var fields = {
-  ArrayOfChipField: ArrayOfChipField,
   TextField: reactAdmin.TextField,
   DateField: reactAdmin.DateField,
   ChipField: reactAdmin.ChipField,
   BooleanField: reactAdmin.BooleanField,
-  StateField: StateField
+  // Custom
+  ChipArrayField: ChipArrayField,
+  LongTextField: LongTextField,
+  // Workflow
+  StateField: StateField,
+  TransactionLogsField: TransactionLogsField
 };
 
 var useManyFormatter = function useManyFormatter() {
@@ -2191,11 +2431,11 @@ var useManyParser = function useManyParser() {
   return memoizedFn;
 };
 
-var _excluded$4 = ["optionText"];
+var _excluded$7 = ["optionText"];
 
 var ReferenceCheckboxGroupInput = function ReferenceCheckboxGroupInput(_ref) {
   var optionText = _ref.optionText,
-      props = _objectWithoutProperties(_ref, _excluded$4);
+      props = _objectWithoutProperties(_ref, _excluded$7);
 
   var parse = useManyParser();
   var format = useManyFormatter();
@@ -2207,23 +2447,23 @@ var ReferenceCheckboxGroupInput = function ReferenceCheckboxGroupInput(_ref) {
   }));
 };
 
-var _excluded$3 = ["optionText"];
+var _excluded$6 = ["optionText"];
 
 var ReferenceAutocompleteInput = function ReferenceAutocompleteInput(_ref) {
   var optionText = _ref.optionText,
-      props = _objectWithoutProperties(_ref, _excluded$3);
+      props = _objectWithoutProperties(_ref, _excluded$6);
 
   return /*#__PURE__*/React__default["default"].createElement(reactAdmin.ReferenceInput, props, /*#__PURE__*/React__default["default"].createElement(reactAdmin.AutocompleteInput, {
     optionText: optionText
   }));
 };
 
-var _excluded$2 = ["filter"];
+var _excluded$5 = ["filter"];
 
 var StateInput = function StateInput(_ref) {
   var _ref$filter = _ref.filter,
       filter = _ref$filter === void 0 ? undefined : _ref$filter,
-      props = _objectWithoutProperties(_ref, _excluded$2);
+      props = _objectWithoutProperties(_ref, _excluded$5);
 
   var _useContext = React.useContext(WorkflowContext),
       getWorkflow = _useContext.getWorkflow;
@@ -2243,6 +2483,480 @@ var StateInput = function StateInput(_ref) {
   }));
 };
 
+var useStyles = core.makeStyles(function (theme) {
+  return {
+    required: {}
+  };
+});
+
+var ConfirmMove = function ConfirmMove(_ref) {
+  var _ref$admin = _ref.admin,
+      admin = _ref$admin === void 0 ? false : _ref$admin,
+      _ref$open = _ref.open,
+      open = _ref$open === void 0 ? false : _ref$open,
+      resource = _ref.resource,
+      record = _ref.record,
+      state = _ref.state,
+      onCancel = _ref.onCancel;
+  var classes = useStyles();
+  var refresh = reactAdmin.useRefresh();
+  var notify = reactAdmin.useNotify();
+
+  var _useState = React.useState(""),
+      _useState2 = _slicedToArray(_useState, 2),
+      notes = _useState2[0],
+      setNotes = _useState2[1];
+
+  var _useState3 = React.useState(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      isPrivate = _useState4[0],
+      setPrivate = _useState4[1];
+
+  var _useContext = React.useContext(WorkflowContext),
+      getWorkflow = _useContext.getWorkflow;
+
+  var workflow = React.useMemo(function () {
+    return getWorkflow(resource);
+  }, [getWorkflow, resource]);
+  var translate = reactAdmin.useTranslate();
+  var handleChange = React.useCallback(function (e) {
+    return setNotes(e.target.value);
+  }, [setNotes]);
+  var handlePrivate = React.useCallback(function (e) {
+    return setPrivate(e.target.checked);
+  }, [setPrivate]);
+  var needsNotes = React.useMemo(function () {
+    return workflow && workflow.needsNotes(record, state);
+  }, [workflow, record, state]);
+
+  var _useUpdate = reactAdmin.useUpdate(resource, record.id, _objectSpread2(_objectSpread2({}, record), {}, {
+    state: lodash.get(state, "code"),
+    notes: notes,
+    is_private: isPrivate
+  }), record, {
+    onSuccess: function onSuccess() {
+      notify("resources.workflow.move.success");
+      refresh();
+    },
+    onFailure: function onFailure(_ref2) {
+      var message = _ref2.message,
+          body = _ref2.body,
+          status = _ref2.status;
+      onCancel();
+      notify("resources.workflow.move.error", "error", {
+        reason: message,
+        message: message,
+        body: body,
+        status: status
+      });
+    }
+  }),
+      _useUpdate2 = _slicedToArray(_useUpdate, 2),
+      handleUpdate = _useUpdate2[0],
+      loading = _useUpdate2[1].loading;
+
+  return /*#__PURE__*/React__default["default"].createElement(core.Dialog, {
+    open: open
+  }, /*#__PURE__*/React__default["default"].createElement(core.DialogTitle, null, translate("resources.workflow.move.title")), /*#__PURE__*/React__default["default"].createElement(core.DialogContent, null, /*#__PURE__*/React__default["default"].createElement(core.DialogContentText, {
+    className: classnames__default["default"](needsNotes && classes.required)
+  }, translate("resources.workflow.move.message" + (needsNotes ? ".required" : ""))), /*#__PURE__*/React__default["default"].createElement(core.TextField, {
+    autoFocus: true,
+    onChange: handleChange,
+    margin: "dense",
+    id: "notes",
+    label: translate("resources.workflow.fields.notes"),
+    type: "text",
+    multiline: true,
+    fullWidth: true
+  }), admin && /*#__PURE__*/React__default["default"].createElement(React.Fragment, null, /*#__PURE__*/React__default["default"].createElement(core.FormControlLabel, {
+    control: /*#__PURE__*/React__default["default"].createElement(core.Switch, {
+      checked: isPrivate,
+      onChange: handlePrivate,
+      name: "is_private",
+      color: "primary"
+    }),
+    label: translate("resources.workflow.fields.is_private")
+  }), /*#__PURE__*/React__default["default"].createElement(core.FormHelperText, null, translate("resources.workflow.fields.is_private.help")))), /*#__PURE__*/React__default["default"].createElement(core.DialogActions, null, /*#__PURE__*/React__default["default"].createElement(core.Button, {
+    onClick: onCancel
+  }, translate("ra.action.cancel")), /*#__PURE__*/React__default["default"].createElement(core.Button, {
+    onClick: handleUpdate,
+    color: "primary",
+    disabled: needsNotes && notes.length === 0 || loading
+  }, translate("ra.action.confirm"))));
+};
+
+ConfirmMove.propTypes = {
+  state: PropTypes__default["default"].shape({
+    code: PropTypes__default["default"].string,
+    name: PropTypes__default["default"].string,
+    label: PropTypes__default["default"].string
+  }),
+  resource: PropTypes__default["default"].string.isRequired,
+  record: PropTypes__default["default"].object.isRequired,
+  open: PropTypes__default["default"].bool.isRequired,
+  onCancel: PropTypes__default["default"].func.isRequired
+};
+
+var _this = undefined;
+
+var StateCollectionInput = function StateCollectionInput(_ref) {
+  var _ref$readonly = _ref.readonly,
+      readonly = _ref$readonly === void 0 ? false : _ref$readonly,
+      _ref$admin = _ref.admin,
+      admin = _ref$admin === void 0 ? false : _ref$admin,
+      record = _ref.record,
+      toResolve = _ref.resource;
+
+  var _useState = React.useState(null),
+      _useState2 = _slicedToArray(_useState, 2),
+      state = _useState2[0],
+      setState = _useState2[1];
+
+  var _useGetIdentity = raCore.useGetIdentity(),
+      loading = _useGetIdentity.loading,
+      loaded = _useGetIdentity.loaded,
+      identity = _useGetIdentity.identity;
+
+  var roles = React.useMemo(function () {
+    return !loading && loaded ? identity === null || identity === void 0 ? void 0 : identity.roles : [];
+  }, [loading, loaded, identity]);
+  var resource = React.useMemo(function () {
+    return toResolve.replace("workflow/transactions/", "");
+  }, [toResolve]);
+
+  var _useContext = React.useContext(WorkflowContext),
+      getWorkflow = _useContext.getWorkflow;
+
+  var workflow = React.useMemo(function () {
+    return getWorkflow(resource);
+  }, [getWorkflow, resource]);
+
+  var _useMemo = React.useMemo(function () {
+    var currentState = workflow && workflow.getState(_objectSpread2(_objectSpread2({}, record), {}, {
+      // If component is used inside TransactionLogsField the transaction is referencing
+      // current record. I have to get it to make workflow work.
+      transaction: lodash.get(record, "transaction", record)
+    })) || undefined;
+    var nextStates = workflow.getNextStates(roles, record);
+    return {
+      currentState: currentState,
+      nextStates: nextStates
+    };
+  }, [roles, record, workflow]),
+      currentState = _useMemo.currentState,
+      nextStates = _useMemo.nextStates;
+
+  var _React$useState = React__default["default"].useState(null),
+      _React$useState2 = _slicedToArray(_React$useState, 2),
+      anchorEl = _React$useState2[0],
+      setAnchorEl = _React$useState2[1];
+
+  var handleClick = function handleClick(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    setAnchorEl(event.currentTarget);
+  };
+
+  var handleClose = function handleClose() {
+    setAnchorEl(null);
+    setState(null);
+  };
+
+  var handleChange = function handleChange(state) {
+    setAnchorEl(null);
+    setState(state);
+  };
+
+  if (readonly || nextStates.length === 0) {
+    // If user is not admin and there are no next states, show current state
+    return /*#__PURE__*/React__default["default"].createElement(StateField, {
+      record: record,
+      resource: toResolve
+    });
+  }
+
+  return /*#__PURE__*/React__default["default"].createElement("div", null, /*#__PURE__*/React__default["default"].createElement(core.Button, {
+    disableElevation: true,
+    endIcon: /*#__PURE__*/React__default["default"].createElement(ArrowDropDownIcon__default["default"], null),
+    color: "primary",
+    variant: "contained",
+    "aria-controls": "simple-menu",
+    "aria-haspopup": "true",
+    style: {
+      textAlign: "left"
+    },
+    size: "small",
+    onClick: handleClick
+  }, /*#__PURE__*/React__default["default"].createElement(LongTextField, {
+    record: currentState,
+    source: "name",
+    variant: "body2"
+  })), /*#__PURE__*/React__default["default"].createElement(core.Menu, {
+    anchorEl: anchorEl,
+    keepMounted: true,
+    open: Boolean(anchorEl),
+    onClose: handleClose
+  }, nextStates.map(function (state) {
+    return /*#__PURE__*/React__default["default"].createElement(core.MenuItem, {
+      key: lodash.get(state, "code"),
+      onClick: handleChange.bind(_this, state)
+    }, lodash.get(state, "label"));
+  })), /*#__PURE__*/React__default["default"].createElement(ConfirmMove, {
+    admin: admin,
+    open: state !== null,
+    resource: resource,
+    record: record,
+    state: state,
+    onCancel: handleClose
+  }));
+};
+
+var _excluded$4 = ["label", "helperText", "admin"];
+
+var TransactionNotesIsPrivateInput = function TransactionNotesIsPrivateInput(_ref) {
+  var label = _ref.label,
+      helperText = _ref.helperText,
+      _ref$admin = _ref.admin,
+      admin = _ref$admin === void 0 ? false : _ref$admin,
+      props = _objectWithoutProperties(_ref, _excluded$4);
+
+  var fieldLabel = useFieldLabel({
+    resource: "transactions"
+  });
+
+  if (!admin) {
+    return null;
+  }
+
+  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.BooleanInput, _extends({
+    label: label || fieldLabel("is_private", false),
+    helperText: helperText || fieldLabel("is_private.helper_text"),
+    source: "is_private"
+  }, props));
+};
+
+function useDebounce(value, delay) {
+  // State and setters for debounced value
+  var _useState = React.useState(value),
+      _useState2 = _slicedToArray(_useState, 2),
+      debouncedValue = _useState2[0],
+      setDebouncedValue = _useState2[1];
+
+  React.useEffect(function () {
+    // Update debounced value after delay
+    var handler = setTimeout(function () {
+      setDebouncedValue(value);
+    }, delay); // Cancel the timeout if value changes (also on delay change or unmount)
+    // This is how we prevent debounced value from updating if value is changed ...
+    // .. within the delay period. Timeout gets cleared and restarted.
+
+    return function () {
+      clearTimeout(handler);
+    };
+  }, [value, delay] // Only re-call effect if value or delay changes
+  );
+  return debouncedValue;
+}
+
+var _excluded$3 = ["margin", "variant", "fullWidth", "maxLength", "multiline", "format", "rows", "disabled", "InputLabelProps"],
+    _excluded2 = ["name", "onChange"];
+
+var DebouncedTextInput = function DebouncedTextInput(_ref) {
+  var _ref$margin = _ref.margin,
+      margin = _ref$margin === void 0 ? "dense" : _ref$margin,
+      _ref$variant = _ref.variant,
+      variant = _ref$variant === void 0 ? "filled" : _ref$variant,
+      fullWidth = _ref.fullWidth,
+      maxLength = _ref.maxLength,
+      multiline = _ref.multiline,
+      format = _ref.format,
+      rows = _ref.rows,
+      disabled = _ref.disabled,
+      InputLabelProps = _ref.InputLabelProps,
+      props = _objectWithoutProperties(_ref, _excluded$3);
+
+  var className = props.className,
+      source = props.source,
+      resource = props.resource,
+      label = props.label;
+  var validationFn = raCore.maxLength(maxLength);
+  var helperText = props.helperText;
+  var validate = props.validate;
+
+  if (!validate) {
+    validate = [validationFn];
+  } else if (Array.isArray(validate)) {
+    if (validate.indexOf(validationFn) === -1) {
+      validate.push(validationFn);
+    }
+  }
+
+  var _useInput = reactAdmin.useInput(_objectSpread2({
+    validate: validate
+  }, props)),
+      _useInput$input = _useInput.input,
+      name = _useInput$input.name,
+      onChange = _useInput$input.onChange,
+      rest = _objectWithoutProperties(_useInput$input, _excluded2),
+      _useInput$meta = _useInput.meta,
+      touched = _useInput$meta.touched,
+      error = _useInput$meta.error,
+      submitError = _useInput$meta.submitError,
+      isRequired = _useInput.isRequired;
+
+  var translate = raCore.useTranslate();
+  var defaultValue = props.type === "number" ? 0 : "";
+
+  var _React$useState = React__default["default"].useState(rest.value !== undefined ? rest.value : defaultValue),
+      _React$useState2 = _slicedToArray(_React$useState, 2),
+      value = _React$useState2[0],
+      setValue = _React$useState2[1];
+
+  var formState = reactFinalForm.useFormState();
+  var formValue = lodash.get(formState.values, source, defaultValue);
+  var didMountEffect = React.useRef(false);
+  React.useEffect(function () {
+    if (didMountEffect.current === false) {
+      didMountEffect.current = true;
+      return;
+    }
+
+    if (formValue && formValue !== null) {
+      setValue(formValue);
+    }
+  }, [formValue]);
+  var handleChange = React.useCallback(function (evt) {
+    return setValue(evt.target.value);
+  }, []);
+  var debouncedValue = useDebounce(value, 500);
+  var didMountChange = React.useRef(false);
+  React.useEffect(function () {
+    if (didMountChange.current === false) {
+      didMountChange.current = true;
+      return;
+    }
+
+    if (debouncedValue !== (formValue !== null ? formValue : defaultValue) && debouncedValue !== defaultValue) {
+      onChange(debouncedValue);
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
+
+  }, [debouncedValue, onChange]);
+  var usedCharsInfo = translate("app.input.max_length_info", {
+    count: lodash.get(value, "length", 0),
+    max: maxLength
+  });
+
+  if (maxLength) {
+    helperText = helperText && helperText.length > 0 ? "".concat(usedCharsInfo, " - ").concat(translate(helperText)) : usedCharsInfo;
+  }
+
+  return /*#__PURE__*/React__default["default"].createElement(TextField__default["default"], _extends({}, rest, {
+    disabled: disabled,
+    name: name,
+    className: className,
+    fullWidth: fullWidth,
+    multiline: multiline,
+    rows: rows,
+    variant: variant,
+    margin: margin,
+    value: format ? format(value) : value,
+    label: label !== "" && label !== false && /*#__PURE__*/React__default["default"].createElement(raCore.FieldTitle, {
+      label: label,
+      source: source,
+      resource: resource,
+      isRequired: isRequired
+    }),
+    onChange: handleChange,
+    error: !!(touched && (error || submitError)),
+    helperText: /*#__PURE__*/React__default["default"].createElement(raUiMaterialui.InputHelperText, {
+      touched: touched,
+      error: error || submitError,
+      helperText: helperText
+    }),
+    InputLabelProps: InputLabelProps,
+    required: isRequired
+  }));
+};
+
+var TransactionNotesInput = function TransactionNotesInput(props) {
+  var translate = reactAdmin.useTranslate();
+  var fieldLabel = useFieldLabel({
+    resource: "transactions"
+  });
+  var label = React.useMemo(function () {
+    return props.label || fieldLabel("notes");
+  }, [props.label, fieldLabel]);
+  var helperText = React.useMemo(function () {
+    return translate(props.helperText);
+  }, [props.helperText, translate]);
+  return /*#__PURE__*/React__default["default"].createElement(DebouncedTextInput, _extends({}, props, {
+    label: label,
+    helperText: helperText,
+    maxLength: 1500,
+    multiline: true
+  }));
+};
+
+/**
+ * Convert Date object to String
+ *
+ * @param {Date} value value to convert
+ * @returns {String} A standardized date (yyyy-MM-dd), to be passed to an <input type="date" />
+ */
+
+var convertDateToString = function convertDateToString(value) {
+  if (!(value instanceof Date) || isNaN(value.getDate())) return "";
+  var pad = "00";
+  var yyyy = value.getFullYear().toString();
+  var MM = (value.getMonth() + 1).toString();
+  var dd = value.getDate().toString();
+  return "".concat(yyyy, "-").concat((pad + MM).slice(-2), "-").concat((pad + dd).slice(-2));
+};
+
+var dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+var defaultInputLabelProps = {
+  shrink: true
+};
+
+var getStringFromDate = function getStringFromDate(value) {
+  // null, undefined and empty string values should not go through dateFormatter
+  // otherwise, it returns undefined and will make the input an uncontrolled one.
+  if (value == null || value === "") {
+    return "";
+  }
+
+  if (value instanceof Date) {
+    return convertDateToString(value);
+  } // valid dates should not be converted
+
+
+  if (dateRegex.test(value)) {
+    return value;
+  }
+
+  return convertDateToString(new Date(value));
+};
+
+var DebouncedDateInput = function DebouncedDateInput(props) {
+  return /*#__PURE__*/React__default["default"].createElement(DebouncedTextInput, _extends({}, props, {
+    type: "date",
+    format: getStringFromDate,
+    InputLabelProps: defaultInputLabelProps
+  }));
+};
+
+var convertStringToNumber = function convertStringToNumber(value) {
+  var float = parseFloat(value);
+  return isNaN(float) ? null : float;
+};
+
+var DebouncedNumberInput = function DebouncedNumberInput(props) {
+  return /*#__PURE__*/React__default["default"].createElement(DebouncedTextInput, _extends({}, props, {
+    type: "number",
+    parse: convertStringToNumber
+  }));
+};
+
 var inputs = {
   ReferenceCheckboxGroupInput: ReferenceCheckboxGroupInput,
   ReferenceAutocompleteInput: ReferenceAutocompleteInput,
@@ -2251,7 +2965,58 @@ var inputs = {
   SelectInput: reactAdmin.SelectInput,
   BooleanInput: reactAdmin.BooleanInput,
   DateInput: reactAdmin.DateInput,
-  StateInput: StateInput
+  StateInput: StateInput,
+  StateCollectionInput: StateCollectionInput,
+  TransactionNotesIsPrivateInput: TransactionNotesIsPrivateInput,
+  TransactionNotesInput: TransactionNotesInput,
+  DebouncedDateInput: DebouncedDateInput,
+  DebouncedNumberInput: DebouncedNumberInput,
+  DebouncedTextInput: DebouncedTextInput
+};
+
+var _excluded$2 = ["record", "resource"];
+
+var EditButton = function EditButton(_ref) {
+  var record = _ref.record,
+      resource = _ref.resource,
+      props = _objectWithoutProperties(_ref, _excluded$2);
+
+  var _useContext = React.useContext(WorkflowContext),
+      getWorkflow = _useContext.getWorkflow;
+
+  var _useGetIdentity = reactAdmin.useGetIdentity(),
+      loaded = _useGetIdentity.loaded,
+      loading = _useGetIdentity.loading,
+      identity = _useGetIdentity.identity;
+
+  var roles = React.useMemo(function () {
+    return !loading && loaded ? identity === null || identity === void 0 ? void 0 : identity.roles : [];
+  }, [loaded, identity, loading]);
+  var workflow = React.useMemo(function () {
+    return getWorkflow(resource);
+  }, [getWorkflow, resource]);
+
+  if (!workflow) {
+    return /*#__PURE__*/React__default["default"].createElement(reactAdmin.EditButton, {
+      disabled: true
+    });
+  }
+
+  var canEdit = workflow.canEdit(roles, record);
+  var label = canEdit ? "ra.action.edit" : "ra.action.view";
+  var icon = canEdit ? /*#__PURE__*/React__default["default"].createElement(ContentCreate__default["default"], null) : /*#__PURE__*/React__default["default"].createElement(ContentView__default["default"], null);
+  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.EditButton, _extends({
+    icon: icon,
+    label: label,
+    record: record
+  }, props));
+};
+
+var buttons = {
+  RaEditButton: reactAdmin.EditButton,
+  RaDeleteButton: reactAdmin.DeleteButton,
+  // Workflow smart buttons
+  EditButton: EditButton
 };
 
 var _excluded$1 = ["source", "label", "component", "componentProps"];
@@ -2292,7 +3057,7 @@ var List = function List(props) {
           componentProps = _ref.componentProps,
           props = _objectWithoutProperties(_ref, _excluded$1);
 
-      return /*#__PURE__*/React__namespace.createElement(Componentable, _extends({}, props, {
+      return /*#__PURE__*/React__namespace.createElement(Component, _extends({}, props, {
         key: source,
         source: source,
         component: component,
@@ -2318,72 +3083,113 @@ var List = function List(props) {
         sortable = _ref2.sortable,
         component = _ref2.component,
         componentProps = _ref2.componentProps;
-    return /*#__PURE__*/React__namespace.createElement(Componentable, {
+    return /*#__PURE__*/React__namespace.createElement(Component, {
       key: source,
       source: source,
       label: label,
       sortable: sortable,
       component: component,
       componentProps: componentProps,
-      components: _objectSpread2(_objectSpread2({}, fields), customComponents.columns),
+      components: _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), buttons), customComponents.inputs), customComponents.fields), customComponents.buttons),
       addLabel: false
     });
-  }), /*#__PURE__*/React__namespace.createElement(reactAdmin.EditButton, null), /*#__PURE__*/React__namespace.createElement(reactAdmin.DeleteButton, null)));
+  })));
 };
+
+var load = /*#__PURE__*/function () {
+  var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(_ref) {
+    var apiUrl, token, headers;
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            apiUrl = _ref.apiUrl, token = _ref.token;
+            headers = new Headers();
+            headers.append("Accept", "application/json");
+            headers.append("Content-Type", "application/json");
+            headers.append("Authorization", "Bearer ".concat(token));
+            return _context.abrupt("return", fetch("".concat(apiUrl, "/crud/load"), {
+              headers: headers
+            }).then(function (response) {
+              return response.json();
+            }).then(function (_ref3) {
+              var data = _ref3.data;
+              return data;
+            }));
+
+          case 6:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+
+  return function load(_x) {
+    return _ref2.apply(this, arguments);
+  };
+}();
 
 var useCrud = function useCrud(_ref) {
   var apiUrl = _ref.apiUrl;
 
-  var _useState = React.useState({
+  var _useSafeSetState = raCore.useSafeSetState({
     loading: false,
     loaded: false,
-    data: []
+    data: [],
+    token: getToken()
   }),
-      _useState2 = _slicedToArray(_useState, 2),
-      _useState2$ = _useState2[0],
-      loaded = _useState2$.loaded,
-      loading = _useState2$.loading,
-      data = _useState2$.data,
-      setData = _useState2[1];
+      _useSafeSetState2 = _slicedToArray(_useSafeSetState, 2),
+      _useSafeSetState2$ = _useSafeSetState2[0],
+      loaded = _useSafeSetState2$.loaded,
+      loading = _useSafeSetState2$.loading,
+      data = _useSafeSetState2$.data,
+      token = _useSafeSetState2$.token,
+      setData = _useSafeSetState2[1];
 
-  var loadAll = function loadAll(_ref2) {
-    var apiUrl = _ref2.apiUrl;
-
-    if (loaded || loading) {
-      return;
-    }
-
-    setData({
-      loading: true
-    });
-    var headers = new Headers();
-    headers.append("Accept", "application/json");
-    headers.append("Content-Type", "application/json");
-    var token = getToken();
-
-    if (token !== null) {
-      headers.append("Authentication", "Bearer ".concat(token));
-    }
-
-    fetch("".concat(apiUrl, "/crud/load"), {
-      headers: headers
-    }).then(function (response) {
-      return response.json();
-    }).then(function (_ref3) {
-      var data = _ref3.data;
-      return setData({
-        loaded: true,
-        loading: false,
-        data: data
+  var handleLogin = React.useCallback(function (e) {
+    if (token !== e.value) {
+      setData(function (d) {
+        return _objectSpread2(_objectSpread2({}, d), {}, {
+          token: e.value,
+          loaded: false
+        });
       });
-    });
-  };
-
+    }
+  }, [setData, token]);
   React.useEffect(function () {
-    return loadAll({
-      apiUrl: apiUrl
-    });
-  });
+    return document.addEventListener("login", handleLogin);
+  }, [handleLogin]);
+  React.useEffect(function () {
+    var loadAll = function loadAll(_ref2) {
+      var apiUrl = _ref2.apiUrl,
+          token = _ref2.token;
+
+      if (loaded || loading || token === null) {
+        return;
+      }
+
+      setData({
+        loading: true
+      });
+      load({
+        apiUrl: apiUrl,
+        token: token
+      }).then(function (data) {
+        return setData({
+          loaded: true,
+          loading: false,
+          data: data
+        });
+      });
+    };
+
+    var token = getToken();
+    loadAll({
+      apiUrl: apiUrl,
+      token: token
+    }); // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [apiUrl, token]);
   return {
     loaded: loaded,
     loading: loading,
@@ -2529,13 +3335,6 @@ var useSaveMutation = function useSaveMutation(_ref) {
 
             case 9:
               if (!onSuccess) {
-                console.info({
-                  redir: redir,
-                  refresh: refresh,
-                  redirect: redirect,
-                  basePath: basePath
-                });
-
                 if (redir) {
                   redirect(redir);
                 } else if (refresh === true) {
@@ -2608,7 +3407,7 @@ var Form = function Form(_ref) {
         fullWidth = _ref2$componentProps.fullWidth,
         restComponentProps = _objectWithoutProperties(_ref2$componentProps, _excluded);
 
-    return /*#__PURE__*/React__default["default"].createElement(Componentable, {
+    return /*#__PURE__*/React__default["default"].createElement(Component, {
       key: source,
       source: source,
       label: label,
@@ -2617,7 +3416,7 @@ var Form = function Form(_ref) {
       componentProps: _objectSpread2({
         fullWidth: fullWidth
       }, restComponentProps),
-      components: _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), customComponents.inputs), customComponents.columns)
+      components: _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), customComponents.inputs), customComponents.fields)
     });
   }));
 };
@@ -2641,7 +3440,7 @@ var createCrud = function createCrud(_ref) {
       _ref$components = _ref.components,
       components = _ref$components === void 0 ? {
     grids: {},
-    columns: {},
+    fields: {},
     forms: {},
     inputs: {}
   } : _ref$components;
@@ -2774,7 +3573,7 @@ var useI18nCatcher = function useI18nCatcher(_ref) {
 
       consoleError.apply(console, arguments);
     };
-  }, [apiUrl, locale]);
+  }, [apiUrl, locale, loading]);
   return true;
 };
 
@@ -2796,6 +3595,8 @@ exports.createDataProvider = createDataProvider;
 exports.createI18nProvider = createI18nProvider;
 exports.createManyFormatter = createManyFormatter;
 exports.createManyParser = createManyParser;
+exports.getHeaders = getHeaders;
+exports.getToken = getToken;
 exports.useAuthProvider = useAuthProvider;
 exports.useCrud = useCrud;
 exports.useDataProvider = useDataProvider;
@@ -2805,4 +3606,5 @@ exports.useI18nProvider = useI18nProvider;
 exports.useManyFormatter = useManyFormatter;
 exports.useManyParser = useManyParser;
 exports.useSaveMutation = useSaveMutation;
+exports.useToken = useToken;
 exports.useWorkflow = useWorkflow;

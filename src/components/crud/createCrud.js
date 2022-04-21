@@ -9,7 +9,7 @@ const createCrud = ({
   },
   components = {
     grids: {},
-    columns: {},
+    fields: {},
     forms: {},
     inputs: {},
   },

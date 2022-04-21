@@ -6,6 +6,7 @@ import Sidebar from "./components/Sidebar";
 import AppBar from "./components/AppBar";
 import UserMenu from "./components/UserMenu";
 import UserMenuItem from "./components/UserMenuItem";
+
 import createDataProvider from "./data/createDataProvider";
 import createAuthProvider from "./data/createAuthProvider";
 import createManyFormatter from "./data/cakephp/createManyFormatter";
@@ -25,10 +26,17 @@ import useWorkflow from "./data/workflow/useWorkflow";
 import useCrud from "./data/cakephp/crud/useCrud";
 
 import { CrudProvider, CrudContext } from "./data/cakephp/crud/CrudContext";
+
 import {
   WorkflowProvider,
   WorkflowContext,
 } from "./data/workflow/WorkflowContext";
+
+export * from "./components/fields/index.js";
+export * from "./components/inputs/index.js";
+export * from "./components/buttons/index.js";
+export * from "./data/authHeaders";
+
 export {
   Layout,
   Menu,

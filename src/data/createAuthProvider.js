@@ -21,6 +21,10 @@ const createAuthProvider = ({ apiUrl }) => ({
         localStorage.setItem("token", data.token);
         localStorage.setItem("roles", JSON.stringify(data.roles));
         localStorage.setItem("profile", JSON.stringify(data.profile));
+        var event = new Event("login");
+        event.key = "token";
+        event.value = data.token;
+        document.dispatchEvent(event);
       });
   },
   logout: () => {
@@ -46,7 +50,11 @@ const createAuthProvider = ({ apiUrl }) => ({
 
   getIdentity: () => {
     const profile = JSON.parse(localStorage.getItem("profile"));
-    return Promise.resolve(profile);
+    const roles = JSON.parse(localStorage.getItem("roles"));
+    return Promise.resolve({
+      ...profile,
+      roles,
+    });
   },
 
   impersonate: (id) => {

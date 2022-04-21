@@ -1,33 +1,42 @@
-import { useEffect, useState } from "react";
+import { useSafeSetState } from "ra-core";
+import { useCallback, useEffect } from "react";
 import { getToken } from "../../authHeaders";
-
+import load from "./load";
 const useCrud = ({ apiUrl }) => {
-  const [{ loaded, loading, data }, setData] = useState({
+  const [{ loaded, loading, data, token }, setData] = useSafeSetState({
     loading: false,
     loaded: false,
     data: [],
+    token: getToken(),
   });
-  const loadAll = ({ apiUrl }) => {
-    if (loaded || loading) {
-      return;
-    }
-    setData({ loading: true });
-    let headers = new Headers();
-    headers.append("Accept", "application/json");
-    headers.append("Content-Type", "application/json");
+  const handleLogin = useCallback(
+    (e) => {
+      if (token !== e.value) {
+        setData((d) => ({ ...d, token: e.value, loaded: false }));
+      }
+    },
+    [setData, token]
+  );
+  useEffect(
+    () => document.addEventListener("login", handleLogin),
+    [handleLogin]
+  );
+
+  useEffect(() => {
+    const loadAll = ({ apiUrl, token }) => {
+      if (loaded || loading || token === null) {
+        return;
+      }
+
+      setData({ loading: true });
+      load({ apiUrl, token }).then((data) =>
+        setData({ loaded: true, loading: false, data })
+      );
+    };
     const token = getToken();
-    if (token !== null) {
-      headers.append("Authentication", `Bearer ${token}`);
-    }
-
-    fetch(`${apiUrl}/crud/load`, {
-      headers,
-    })
-      .then((response) => response.json())
-      .then(({ data }) => setData({ loaded: true, loading: false, data }));
-  };
-
-  useEffect(() => loadAll({ apiUrl }));
+    loadAll({ apiUrl, token });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [apiUrl, token]);
 
   return { loaded, loading, data };
 };

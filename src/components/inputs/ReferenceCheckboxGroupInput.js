@@ -1,7 +1,7 @@
 import React from "react";
 import { CheckboxGroupInput, ReferenceArrayInput } from "react-admin";
-import useManyFormatter from "../../../data/cakephp/useManyFormatter";
-import useManyParser from "../../../data/cakephp/useManyParser";
+import useManyFormatter from "../../data/cakephp/useManyFormatter";
+import useManyParser from "../../data/cakephp/useManyParser";
 const ReferenceCheckboxGroupInput = ({ optionText, ...props }) => {
   const parse = useManyParser();
   const format = useManyFormatter();

@@ -1,7 +1,7 @@
 import React from "react";
 import { ArrayField, ChipField, SingleFieldList } from "react-admin";
 
-const ArrayOfChipField = ({ chipSource, ...props }) => {
+const ChipArrayField = ({ chipSource, ...props }) => {
   return (
     <ArrayField {...props}>
       <SingleFieldList>
@@ -10,4 +10,4 @@ const ArrayOfChipField = ({ chipSource, ...props }) => {
     </ArrayField>
   );
 };
-export default ArrayOfChipField;
+export default ChipArrayField;

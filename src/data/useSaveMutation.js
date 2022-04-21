@@ -43,12 +43,6 @@ const useSaveMutation = ({
       }
 
       if (!onSuccess) {
-        console.info({
-          redir,
-          refresh,
-          redirect,
-          basePath,
-        });
         if (redir) {
           redirect(redir);
         } else if (refresh === true) {

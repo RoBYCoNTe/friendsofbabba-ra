@@ -2,7 +2,7 @@ import { ChipField } from "react-admin";
 import React, { useContext, useMemo } from "react";
 
 import { get } from "lodash";
-import { WorkflowContext } from "../../../data/workflow/WorkflowContext";
+import { WorkflowContext } from "../../data/workflow/WorkflowContext";
 
 const StateField = ({
   label = "app.label.workflow.state",
