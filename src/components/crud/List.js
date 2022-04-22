@@ -59,9 +59,9 @@ const List = (props) => {
             ({ source, label, sortable, component, componentProps }) => (
               <Component
                 key={source}
-                source={source}
-                label={label}
-                sortable={sortable}
+                {...(component.indexOf("Button") === -1
+                  ? { source, label, sortable }
+                  : {})}
                 component={component}
                 componentProps={componentProps}
                 components={{
@@ -72,7 +72,6 @@ const List = (props) => {
                   ...customComponents.fields,
                   ...customComponents.buttons,
                 }}
-                addLabel={false}
               />
             )
           )}

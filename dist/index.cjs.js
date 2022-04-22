@@ -2318,9 +2318,9 @@ var TransactionNotesField = function TransactionNotesField(_ref) {
       WebkitLineClamp: showMore ? null : maxRows
     },
     variant: "body2",
-    color: value === null ? "textSecondary" : "textPrimary",
+    color: value === null || value.length === 0 ? "textSecondary" : "textPrimary",
     display: "inline"
-  }, tooLong === false ? value !== null ? value : fieldLabel("notes.empty") : null, tooLong && (showMore ? value : value.substring(0, 200) + "...")), admin && value !== null && /*#__PURE__*/React__default["default"].createElement(core.Typography, {
+  }, tooLong === false ? value !== null && value.length > 0 ? value : fieldLabel("notes.empty") : null, tooLong && (showMore ? value : value.substring(0, 200) + "...")), admin && value !== null && value.length > 0 && /*#__PURE__*/React__default["default"].createElement(core.Typography, {
     color: isPrivate ? "error" : "textSecondary",
     className: classes.visibility,
     variant: "caption"
@@ -3083,16 +3083,17 @@ var List = function List(props) {
         sortable = _ref2.sortable,
         component = _ref2.component,
         componentProps = _ref2.componentProps;
-    return /*#__PURE__*/React__namespace.createElement(Component, {
-      key: source,
+    return /*#__PURE__*/React__namespace.createElement(Component, _extends({
+      key: source
+    }, component.indexOf("Button") === -1 ? {
       source: source,
       label: label,
-      sortable: sortable,
+      sortable: sortable
+    } : {}, {
       component: component,
       componentProps: componentProps,
-      components: _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), buttons), customComponents.inputs), customComponents.fields), customComponents.buttons),
-      addLabel: false
-    });
+      components: _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), buttons), customComponents.inputs), customComponents.fields), customComponents.buttons)
+    }));
   })));
 };
 

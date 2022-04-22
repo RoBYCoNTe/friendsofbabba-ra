@@ -44,17 +44,19 @@ const TransactionNotesField = ({
         className={classes.root}
         style={{ minWidth, WebkitLineClamp: showMore ? null : maxRows }}
         variant="body2"
-        color={value === null ? "textSecondary" : "textPrimary"}
+        color={
+          value === null || value.length === 0 ? "textSecondary" : "textPrimary"
+        }
         display="inline"
       >
         {tooLong === false
-          ? value !== null
+          ? value !== null && value.length > 0
             ? value
             : fieldLabel("notes.empty")
           : null}
         {tooLong && (showMore ? value : value.substring(0, 200) + "...")}
       </Typography>
-      {admin && value !== null && (
+      {admin && value !== null && value.length > 0 && (
         <Typography
           color={isPrivate ? "error" : "textSecondary"}
           className={classes.visibility}
