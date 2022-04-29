@@ -4,6 +4,7 @@ import { CrudContext } from "../../data/cakephp/crud/CrudContext";
 import useCustomComponents from "./useCustomComponents";
 import fields from "../fields/index.js";
 import inputs from "../inputs/index.js";
+import Toolbar from "../workflow/forms/Toolbar";
 import Component from "./Component";
 import useSaveMutation from "../../data/useSaveMutation";
 
@@ -18,10 +19,12 @@ const Form = ({ ...props }) => {
   if (form === false || form === null) {
     return null;
   }
+
   return (
     <SimpleForm
       {...props}
       save={save}
+      toolbar={form?.hasWorkflow ? <Toolbar /> : undefined}
       initialValues={form?.initialValues}
       sanitizeEmptyValues={form?.sanitizeEmptyValues}
       warnWhenUnsavedChanges={form?.warnWhenUnsavedChanges}

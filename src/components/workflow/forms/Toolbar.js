@@ -1,13 +1,19 @@
 import { Toolbar as RaToolbar, SaveButton, useGetIdentity } from "react-admin";
 import React, { useCallback, useContext, useMemo } from "react";
-
+import { makeStyles } from "@material-ui/core/styles";
 import BackButton from "../buttons/BackButton";
 import ButtonListMenu from "./ButtonListMenu";
 import StateButton from "../buttons/StateButton";
 import { get } from "lodash";
 import { useForm } from "react-final-form";
 import { WorkflowContext } from "../../../data/workflow/WorkflowContext";
-
+const useStyles = makeStyles((theme) => ({
+  toolbar: {
+    "& .MuiButton-root": {
+      marginRight: theme.spacing(1),
+    },
+  },
+}));
 const Toolbar = ({
   children,
   mutationMode,
@@ -16,6 +22,7 @@ const Toolbar = ({
   ...props
 }) => {
   const form = useForm();
+  const classes = useStyles();
   const { handleSubmitWithRedirect, record } = props;
   const { loading, loaded, identity } = useGetIdentity();
   const roles = useMemo(
@@ -45,13 +52,12 @@ const Toolbar = ({
     return null;
   }
   return (
-    <RaToolbar {...props}>
+    <RaToolbar {...props} classes={classes}>
       {save && (
         <SaveButton
-          color="primary"
           {...props}
+          color="primary"
           handleSubmitWithRedirect={handleClick}
-          disableElevation
         />
       )}
       {states.length > maxButtonsToDisplay && (

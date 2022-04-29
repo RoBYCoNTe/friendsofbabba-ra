@@ -1,8 +1,8 @@
-import { useTranslate as useTranslate$1, useGetIdentity, LoadingIndicator, getResources as getResources$2, defaultTheme, Notification, HttpError, resolveBrowserLocale, Labeled, ArrayField, SingleFieldList, ChipField, ReferenceManyField, Datagrid, TextField, DateField, Pagination, BooleanField, ReferenceArrayInput, CheckboxGroupInput, ReferenceInput, AutocompleteInput, SelectInput, useRefresh, useNotify, useUpdate, BooleanInput, useInput, SearchInput, TextInput, DateInput, EditButton as EditButton$1, DeleteButton, Loading, List as List$2, SimpleList, SimpleForm, Create as Create$2, Edit, useLocale } from 'react-admin';
+import { useTranslate as useTranslate$1, useGetIdentity, LoadingIndicator, getResources as getResources$2, defaultTheme, Notification, HttpError, resolveBrowserLocale, Labeled, ArrayField, SingleFieldList, ChipField, ReferenceManyField, Datagrid, TextField, DateField, Pagination, BooleanField, ReferenceArrayInput, CheckboxGroupInput, ReferenceInput, AutocompleteInput, SelectInput, useRefresh, useNotify, useUpdate, BooleanInput, useInput, SearchInput, TextInput, DateInput, EditButton as EditButton$1, DeleteButton, Loading, List as List$2, SimpleList, Button as Button$1, SaveButton, Toolbar as Toolbar$2, SimpleForm, Create as Create$2, Edit, useLocale } from 'react-admin';
 import * as React from 'react';
 import React__default, { useCallback, createElement, useRef, useState, useEffect, useMemo as useMemo$1, createContext, useContext, Fragment } from 'react';
 import { makeStyles, withStyles, createStyles, createTheme } from '@material-ui/core/styles';
-import { useMediaQuery, AppBar as AppBar$1, Toolbar, IconButton as IconButton$1, makeStyles as makeStyles$1, List as List$1, ListSubheader, Divider, Badge as Badge$1, ListItem, ListItemIcon, ListItemText, Drawer, Typography as Typography$1, MenuItem as MenuItem$1, Link as Link$1, Dialog, DialogTitle, DialogContent, DialogContentText, TextField as TextField$1, FormControlLabel, Switch, FormHelperText, DialogActions, Button, Menu as Menu$3 } from '@material-ui/core';
+import { useMediaQuery, AppBar as AppBar$1, Toolbar as Toolbar$1, IconButton as IconButton$1, makeStyles as makeStyles$1, List as List$1, ListSubheader, Divider, Badge as Badge$1, ListItem, ListItemIcon, ListItemText, Drawer, Typography as Typography$1, MenuItem as MenuItem$1, Link as Link$1, Dialog, DialogTitle, DialogContent, DialogContentText, TextField as TextField$1, FormControlLabel, Switch, FormHelperText, DialogActions, Button, Menu as Menu$3 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
@@ -27,9 +27,14 @@ import { CrudContext as CrudContext$1 } from 'friendsofbabba-ra';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { InputHelperText } from 'ra-ui-materialui';
 import TextField$2 from '@material-ui/core/TextField';
-import { useFormState } from 'react-final-form';
+import { useFormState, useForm } from 'react-final-form';
 import ContentCreate from '@material-ui/icons/Create';
 import ContentView from '@material-ui/icons/Visibility';
+import BackIcon from '@material-ui/icons/ArrowBack';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import Button$2 from '@material-ui/core/Button';
+import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
+import MenuItem$2 from '@material-ui/core/MenuItem';
 
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
@@ -377,7 +382,7 @@ UserMenu.propTypes = {
   logout: PropTypes.element.isRequired
 };
 
-var useStyles$6 = makeStyles(function (theme) {
+var useStyles$9 = makeStyles(function (theme) {
   return {
     title: {
       flexGrow: 1
@@ -427,7 +432,7 @@ var AppBar = function AppBar(_ref2) {
       location = _ref2.location,
       _ref2$userMenu = _ref2.userMenu,
       userMenu = _ref2$userMenu === void 0 ? UserMenu : _ref2$userMenu;
-  var classes = useStyles$6({
+  var classes = useStyles$9({
     drawerWidth: drawerWidth
   });
   var dispatch = useDispatch();
@@ -446,7 +451,7 @@ var AppBar = function AppBar(_ref2) {
     position: "fixed",
     color: "secondary",
     className: classnames(classes.appBar, _defineProperty({}, classes.appBarShift, open && !isXSmall))
-  }, /*#__PURE__*/React__default.createElement(Toolbar, null, /*#__PURE__*/React__default.createElement(IconButton$1, {
+  }, /*#__PURE__*/React__default.createElement(Toolbar$1, null, /*#__PURE__*/React__default.createElement(IconButton$1, {
     color: "inherit",
     "aria-label": "open drawer",
     onClick: handleToggleSidebar,
@@ -474,8 +479,8 @@ AppBar.propTypes = {
   userMenu: PropTypes.elementType
 };
 
-var _excluded$h = ["children", "open", "label"];
-var useStyles$5 = makeStyles$1(function (theme) {
+var _excluded$l = ["children", "open", "label"];
+var useStyles$8 = makeStyles$1(function (theme) {
   return {
     subHeader: {
       backgroundColor: theme.palette.background.paper,
@@ -490,9 +495,9 @@ var MenuGroup = function MenuGroup(_ref) {
   var children = _ref.children,
       open = _ref.open,
       label = _ref.label,
-      props = _objectWithoutProperties(_ref, _excluded$h);
+      props = _objectWithoutProperties(_ref, _excluded$l);
 
-  var classes = useStyles$5();
+  var classes = useStyles$8();
   return /*#__PURE__*/React__default.createElement(List$1, {
     subheader: open ? /*#__PURE__*/React__default.createElement(ListSubheader, {
       className: classes.subHeader
@@ -518,17 +523,17 @@ MenuGroup.propTypes = {
   group: PropTypes.string
 };
 
-var _excluded$g = ["titleAccess", "children"];
+var _excluded$k = ["titleAccess", "children"];
 
 var Badge = function Badge(_ref) {
   _ref.titleAccess;
       var children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded$g);
+      props = _objectWithoutProperties(_ref, _excluded$k);
 
   return /*#__PURE__*/React__default.createElement(Badge$1, props, children);
 };
 
-var _excluded$f = ["location", "badge", "to", "icon", "label", "sub", "onMenuClick", "permissions", "open"];
+var _excluded$j = ["location", "badge", "to", "icon", "label", "sub", "onMenuClick", "permissions", "open"];
 
 var isSelected = function isSelected(location, to) {
   var selected = location.pathname === to || location.pathname.indexOf("".concat(to, "?")) === 0 || location.pathname.indexOf("".concat(to, "/")) === 0;
@@ -545,7 +550,7 @@ var MenuItem = function MenuItem(_ref) {
       onMenuClick = _ref.onMenuClick;
       _ref.permissions;
       var open = _ref.open,
-      props = _objectWithoutProperties(_ref, _excluded$f);
+      props = _objectWithoutProperties(_ref, _excluded$j);
 
   return /*#__PURE__*/React__default.createElement(ListItem, _extends({}, props, {
     button: true,
@@ -815,7 +820,7 @@ var Menu$1 = compose(withRouter, connect(function (state) {
   };
 }))(Menu);
 
-var useStyles$4 = makeStyles$1(function (theme) {
+var useStyles$7 = makeStyles$1(function (theme) {
   return {
     brand: {
       paddingLeft: theme.spacing(1),
@@ -877,7 +882,7 @@ var Sidebar = function Sidebar(_ref2) {
       appTitle = _ref2.appTitle,
       appSubTitle = _ref2.appSubTitle,
       appVersion = _ref2.appVersion;
-  var classes = useStyles$4({
+  var classes = useStyles$7({
     drawerWidth: drawerWidth
   });
   var dispatch = useDispatch();
@@ -926,7 +931,7 @@ Sidebar.propTypes = {
   appVersion: PropTypes.string
 };
 
-var _excluded$e = ["theme"];
+var _excluded$i = ["theme"];
 
 var styles = function styles(theme) {
   return createStyles({
@@ -1067,7 +1072,7 @@ var EnhancedLayout = compose(connect(mapStateToProps, {} // Avoid connect passin
 
 var Layout = function Layout(_ref) {
   var themeOverride = _ref.theme,
-      props = _objectWithoutProperties(_ref, _excluded$e);
+      props = _objectWithoutProperties(_ref, _excluded$i);
 
   var themeProp = useRef(themeOverride);
 
@@ -1104,8 +1109,8 @@ Layout.defaultProps = {
   drawerWidth: 240
 };
 
-var _excluded$d = ["className", "classes", "redirectTo", "icon", "label"];
-var useStyles$3 = makeStyles(function (theme) {
+var _excluded$h = ["className", "classes", "redirectTo", "icon", "label"];
+var useStyles$6 = makeStyles(function (theme) {
   return {
     menuItem: {
       color: theme.palette.text.secondary
@@ -1123,9 +1128,9 @@ var UserMenuItem = /*#__PURE__*/React.forwardRef(function UserMenuItem(props, re
       props.redirectTo;
       var icon = props.icon,
       label = props.label,
-      rest = _objectWithoutProperties(props, _excluded$d);
+      rest = _objectWithoutProperties(props, _excluded$h);
 
-  var classes = useStyles$3(props);
+  var classes = useStyles$6(props);
   return /*#__PURE__*/React.createElement(MenuItem$1, _extends({
     className: classnames("user-menu-item", classes.menuItem, className),
     ref: ref,
@@ -1728,7 +1733,7 @@ var createI18nProvider = function createI18nProvider(_ref) {
   }, resolveBrowserLocale());
 };
 
-var _excluded$c = ["component", "componentProps", "components", "addLabel"];
+var _excluded$g = ["component", "componentProps", "components", "addLabel"];
 
 var Component = function Component(_ref) {
   var component = _ref.component,
@@ -1736,7 +1741,7 @@ var Component = function Component(_ref) {
       components = _ref.components,
       _ref$addLabel = _ref.addLabel,
       addLabel = _ref$addLabel === void 0 ? true : _ref$addLabel,
-      props = _objectWithoutProperties(_ref, _excluded$c);
+      props = _objectWithoutProperties(_ref, _excluded$g);
 
   var Component = get$2(components, component);
 
@@ -1773,19 +1778,19 @@ var useCustomComponents = function useCustomComponents(resource) {
   return get(r, "options.components");
 };
 
-var _excluded$b = ["chipSource"];
+var _excluded$f = ["chipSource"];
 
 var ChipArrayField = function ChipArrayField(_ref) {
   var chipSource = _ref.chipSource,
-      props = _objectWithoutProperties(_ref, _excluded$b);
+      props = _objectWithoutProperties(_ref, _excluded$f);
 
   return /*#__PURE__*/React__default.createElement(ArrayField, props, /*#__PURE__*/React__default.createElement(SingleFieldList, null, /*#__PURE__*/React__default.createElement(ChipField, {
     source: chipSource
   })));
 };
 
-var _excluded$a = ["record", "source", "width", "minWidth", "maxWidth", "maxRows", "sortable", "basePath", "sortBy"];
-var useStyles$2 = makeStyles$1(function (theme) {
+var _excluded$e = ["record", "source", "width", "minWidth", "maxWidth", "maxRows", "sortable", "basePath", "sortBy"];
+var useStyles$5 = makeStyles$1(function (theme) {
   return {
     root: {
       overflow: "hidden",
@@ -1811,9 +1816,9 @@ var LongTextField = function LongTextField(_ref) {
       _ref.sortable;
       _ref.basePath;
       _ref.sortBy;
-      var props = _objectWithoutProperties(_ref, _excluded$a);
+      var props = _objectWithoutProperties(_ref, _excluded$e);
 
-  var classes = useStyles$2();
+  var classes = useStyles$5();
   return /*#__PURE__*/React__default.createElement(Typography$1, _extends({}, props, {
     variant: "body2",
     title: get$2(record, source),
@@ -2171,14 +2176,14 @@ var WorkflowProvider = function WorkflowProvider(_ref) {
   }, children);
 };
 
-var _excluded$9 = ["label", "record", "resource"];
+var _excluded$d = ["label", "record", "resource"];
 
 var StateField = function StateField(_ref) {
   var _ref$label = _ref.label,
       label = _ref$label === void 0 ? "app.label.workflow.state" : _ref$label,
       record = _ref.record,
       toResolve = _ref.resource,
-      props = _objectWithoutProperties(_ref, _excluded$9);
+      props = _objectWithoutProperties(_ref, _excluded$d);
 
   var _useContext = useContext(WorkflowContext),
       getWorkflow = _useContext.getWorkflow;
@@ -2212,7 +2217,7 @@ var useFieldLabel = function useFieldLabel(_ref) {
   };
 };
 
-var useStyles$1 = makeStyles$1(function (theme) {
+var useStyles$4 = makeStyles$1(function (theme) {
   return {
     root: {
       display: "-webkit-box",
@@ -2239,7 +2244,7 @@ var TransactionNotesField = function TransactionNotesField(_ref) {
       minWidth = _ref$minWidth === void 0 ? 150 : _ref$minWidth,
       _ref$maxRows = _ref.maxRows,
       maxRows = _ref$maxRows === void 0 ? 3 : _ref$maxRows;
-  var classes = useStyles$1();
+  var classes = useStyles$4();
   var fieldLabel = useFieldLabel({
     resource: "transactions"
   });
@@ -2292,13 +2297,13 @@ TransactionNotesField.propTypes = {
   maxRows: PropTypes.number
 };
 
-var _excluded$8 = ["fullWidth", "addLabel"],
+var _excluded$c = ["fullWidth", "addLabel"],
     _excluded2$1 = ["admin", "label"];
 
 var PaginationWrapper = function PaginationWrapper(_ref) {
   _ref.fullWidth;
       _ref.addLabel;
-      var props = _objectWithoutProperties(_ref, _excluded$8);
+      var props = _objectWithoutProperties(_ref, _excluded$c);
 
   return /*#__PURE__*/React__default.createElement(Pagination, props);
 };
@@ -2387,11 +2392,11 @@ var useManyParser = function useManyParser() {
   return memoizedFn;
 };
 
-var _excluded$7 = ["optionText"];
+var _excluded$b = ["optionText"];
 
 var ReferenceCheckboxGroupInput = function ReferenceCheckboxGroupInput(_ref) {
   var optionText = _ref.optionText,
-      props = _objectWithoutProperties(_ref, _excluded$7);
+      props = _objectWithoutProperties(_ref, _excluded$b);
 
   var parse = useManyParser();
   var format = useManyFormatter();
@@ -2403,23 +2408,23 @@ var ReferenceCheckboxGroupInput = function ReferenceCheckboxGroupInput(_ref) {
   }));
 };
 
-var _excluded$6 = ["optionText"];
+var _excluded$a = ["optionText"];
 
 var ReferenceAutocompleteInput = function ReferenceAutocompleteInput(_ref) {
   var optionText = _ref.optionText,
-      props = _objectWithoutProperties(_ref, _excluded$6);
+      props = _objectWithoutProperties(_ref, _excluded$a);
 
   return /*#__PURE__*/React__default.createElement(ReferenceInput, props, /*#__PURE__*/React__default.createElement(AutocompleteInput, {
     optionText: optionText
   }));
 };
 
-var _excluded$5 = ["filter"];
+var _excluded$9 = ["filter"];
 
 var StateInput = function StateInput(_ref) {
   var _ref$filter = _ref.filter,
       filter = _ref$filter === void 0 ? undefined : _ref$filter,
-      props = _objectWithoutProperties(_ref, _excluded$5);
+      props = _objectWithoutProperties(_ref, _excluded$9);
 
   var _useContext = useContext(WorkflowContext),
       getWorkflow = _useContext.getWorkflow;
@@ -2435,11 +2440,13 @@ var StateInput = function StateInput(_ref) {
   return /*#__PURE__*/React__default.createElement(SelectInput, _extends({}, props, {
     choices: states,
     optionText: "name",
-    optionValue: "code"
+    optionValue: "code",
+    allowEmpty: true,
+    emptyText: "ra.action.all"
   }));
 };
 
-var useStyles = makeStyles$1(function (theme) {
+var useStyles$3 = makeStyles$1(function (theme) {
   return {
     required: {}
   };
@@ -2454,7 +2461,7 @@ var ConfirmMove = function ConfirmMove(_ref) {
       record = _ref.record,
       state = _ref.state,
       onCancel = _ref.onCancel;
-  var classes = useStyles();
+  var classes = useStyles$3();
   var refresh = useRefresh();
   var notify = useNotify();
 
@@ -2486,6 +2493,7 @@ var ConfirmMove = function ConfirmMove(_ref) {
   }, [workflow, record, state]);
 
   var _useUpdate = useUpdate(resource, record.id, _objectSpread2(_objectSpread2({}, record), {}, {
+    user: null,
     state: get$2(state, "code"),
     notes: notes,
     is_private: isPrivate
@@ -2553,7 +2561,7 @@ ConfirmMove.propTypes = {
   onCancel: PropTypes.func.isRequired
 };
 
-var _this = undefined;
+var _this$1 = undefined;
 
 var StateCollectionInput = function StateCollectionInput(_ref) {
   var _ref$readonly = _ref.readonly,
@@ -2655,7 +2663,7 @@ var StateCollectionInput = function StateCollectionInput(_ref) {
   }, nextStates.map(function (state) {
     return /*#__PURE__*/React__default.createElement(MenuItem$1, {
       key: get$2(state, "code"),
-      onClick: handleChange.bind(_this, state)
+      onClick: handleChange.bind(_this$1, state)
     }, get$2(state, "label"));
   })), /*#__PURE__*/React__default.createElement(ConfirmMove, {
     admin: admin,
@@ -2667,14 +2675,14 @@ var StateCollectionInput = function StateCollectionInput(_ref) {
   }));
 };
 
-var _excluded$4 = ["label", "helperText", "admin"];
+var _excluded$8 = ["label", "helperText", "admin"];
 
 var TransactionNotesIsPrivateInput = function TransactionNotesIsPrivateInput(_ref) {
   var label = _ref.label,
       helperText = _ref.helperText,
       _ref$admin = _ref.admin,
       admin = _ref$admin === void 0 ? false : _ref$admin,
-      props = _objectWithoutProperties(_ref, _excluded$4);
+      props = _objectWithoutProperties(_ref, _excluded$8);
 
   var fieldLabel = useFieldLabel({
     resource: "transactions"
@@ -2714,7 +2722,7 @@ function useDebounce(value, delay) {
   return debouncedValue;
 }
 
-var _excluded$3 = ["margin", "variant", "fullWidth", "maxLength", "multiline", "format", "rows", "disabled", "InputLabelProps"],
+var _excluded$7 = ["margin", "variant", "fullWidth", "maxLength", "multiline", "format", "rows", "disabled", "InputLabelProps"],
     _excluded2 = ["name", "onChange"];
 
 var DebouncedTextInput = function DebouncedTextInput(_ref) {
@@ -2729,7 +2737,7 @@ var DebouncedTextInput = function DebouncedTextInput(_ref) {
       rows = _ref.rows,
       disabled = _ref.disabled,
       InputLabelProps = _ref.InputLabelProps,
-      props = _objectWithoutProperties(_ref, _excluded$3);
+      props = _objectWithoutProperties(_ref, _excluded$7);
 
   var className = props.className,
       source = props.source,
@@ -2930,12 +2938,12 @@ var inputs = {
   DebouncedTextInput: DebouncedTextInput
 };
 
-var _excluded$2 = ["record", "resource"];
+var _excluded$6 = ["record", "resource"];
 
 var EditButton = function EditButton(_ref) {
   var record = _ref.record,
       resource = _ref.resource,
-      props = _objectWithoutProperties(_ref, _excluded$2);
+      props = _objectWithoutProperties(_ref, _excluded$6);
 
   var _useContext = useContext(WorkflowContext),
       getWorkflow = _useContext.getWorkflow;
@@ -2975,7 +2983,7 @@ var buttons = {
   EditButton: EditButton
 };
 
-var _excluded$1 = ["source", "label", "component", "componentProps"];
+var _excluded$5 = ["source", "label", "component", "componentProps"];
 
 var List = function List(props) {
   var _grid$filters, _grid$columns;
@@ -3011,7 +3019,7 @@ var List = function List(props) {
           _ref.label;
           var component = _ref.component,
           componentProps = _ref.componentProps,
-          props = _objectWithoutProperties(_ref, _excluded$1);
+          props = _objectWithoutProperties(_ref, _excluded$5);
 
       return /*#__PURE__*/React.createElement(Component, _extends({}, props, {
         key: source,
@@ -3191,6 +3199,204 @@ var CrudProvider = function CrudProvider(_ref) {
   }, children);
 };
 
+var _excluded$4 = ["resource", "baseRecord"];
+
+var BackButton = function BackButton(_ref) {
+  var resource = _ref.resource;
+      _ref.baseRecord;
+      var props = _objectWithoutProperties(_ref, _excluded$4);
+
+  return /*#__PURE__*/React__default.createElement(Button$1, _extends({}, props, {
+    component: Link,
+    to: {
+      pathname: "/".concat(resource)
+    },
+    label: "ra.action.back"
+  }), /*#__PURE__*/React__default.createElement(BackIcon, null));
+};
+
+var _excluded$3 = ["handleSubmitWithRedirect", "small", "state", "pristine"];
+var useStyles$2 = makeStyles(function (theme) {
+  var _theme$props, _theme$props$MuiButto;
+
+  return {
+    button: {
+      disableElevation: ((_theme$props = theme.props) === null || _theme$props === void 0 ? void 0 : (_theme$props$MuiButto = _theme$props.MuiButton) === null || _theme$props$MuiButto === void 0 ? void 0 : _theme$props$MuiButto.disableElevation) === true
+    }
+  };
+});
+
+var StateButton = function StateButton(_ref, ref) {
+  var handleSubmitWithRedirect = _ref.handleSubmitWithRedirect;
+      _ref.small;
+      var state = _ref.state;
+      _ref.pristine;
+      var props = _objectWithoutProperties(_ref, _excluded$3);
+
+  var classes = useStyles$2();
+  var form = useForm();
+  var handleClick = useCallback(function () {
+    form.change("state", state.code);
+    handleSubmitWithRedirect("list");
+  }, [state, form, handleSubmitWithRedirect]);
+  return /*#__PURE__*/React__default.createElement(SaveButton, _extends({}, props, {
+    className: classes.button,
+    redirect: "list",
+    color: "primary",
+    handleSubmitWithRedirect: handleClick,
+    label: get$2(state, "label")
+  }));
+};
+
+var StateButton$1 = /*#__PURE__*/React__default.forwardRef(StateButton);
+
+var _excluded$2 = ["states"];
+
+var _this = undefined;
+var useStyles$1 = makeStyles(function (theme) {
+  var _theme$props, _theme$props$MuiButto;
+
+  return {
+    button: {
+      disableElevation: ((_theme$props = theme.props) === null || _theme$props === void 0 ? void 0 : (_theme$props$MuiButto = _theme$props.MuiButton) === null || _theme$props$MuiButto === void 0 ? void 0 : _theme$props$MuiButto.disableElevation) === true
+    }
+  };
+});
+
+var ButtonListMenu = function ButtonListMenu(_ref) {
+  var states = _ref.states,
+      props = _objectWithoutProperties(_ref, _excluded$2);
+
+  var classes = useStyles$1();
+  var translate = useTranslate$1();
+
+  var _React$useState = React__default.useState(null),
+      _React$useState2 = _slicedToArray(_React$useState, 2),
+      anchorEl = _React$useState2[0],
+      setAnchorEl = _React$useState2[1];
+
+  var _React$useState3 = React__default.useState(null),
+      _React$useState4 = _slicedToArray(_React$useState3, 2),
+      state = _React$useState4[0],
+      setState = _React$useState4[1];
+
+  var handleClick = function handleClick(event) {
+    setAnchorEl(event.currentTarget);
+  };
+
+  var handleClose = function handleClose() {
+    setAnchorEl(null);
+  };
+
+  var handleState = function handleState(state) {
+    setState(state.label);
+    setAnchorEl(null);
+  };
+
+  return /*#__PURE__*/React__default.createElement("div", null, /*#__PURE__*/React__default.createElement(Button$2, {
+    "aria-controls": "workflow-menu",
+    "aria-haspopup": "true",
+    variant: "contained",
+    color: "primary",
+    className: classes.button,
+    onClick: handleClick
+  }, /*#__PURE__*/React__default.createElement(DoubleArrowIcon, null), props.saving ? "".concat(state, "...") : translate("ra.workflow.do_action")), /*#__PURE__*/React__default.createElement(Menu$2, {
+    anchorEl: anchorEl,
+    keepMounted: true,
+    open: Boolean(anchorEl),
+    onClose: handleClose
+  }, states.map(function (state) {
+    return /*#__PURE__*/React__default.createElement(StateButton$1, _extends({}, props, {
+      key: state.code,
+      component: MenuItem$2,
+      state: state,
+      color: "default",
+      variant: "text",
+      icon: /*#__PURE__*/React__default.createElement(ArrowForwardIosIcon, null),
+      onClick: handleState.bind(_this, state)
+    }));
+  })));
+};
+
+var _excluded$1 = ["children", "mutationMode", "validating", "maxButtonsToDisplay"];
+var useStyles = makeStyles(function (theme) {
+  return {
+    toolbar: {
+      "& .MuiButton-root": {
+        marginRight: theme.spacing(1)
+      }
+    }
+  };
+});
+
+var Toolbar = function Toolbar(_ref) {
+  var children = _ref.children;
+      _ref.mutationMode;
+      _ref.validating;
+      var _ref$maxButtonsToDisp = _ref.maxButtonsToDisplay,
+      maxButtonsToDisplay = _ref$maxButtonsToDisp === void 0 ? 1 : _ref$maxButtonsToDisp,
+      props = _objectWithoutProperties(_ref, _excluded$1);
+
+  var form = useForm();
+  var classes = useStyles();
+  var handleSubmitWithRedirect = props.handleSubmitWithRedirect,
+      record = props.record;
+
+  var _useGetIdentity = useGetIdentity(),
+      loading = _useGetIdentity.loading,
+      loaded = _useGetIdentity.loaded,
+      identity = _useGetIdentity.identity;
+
+  var roles = useMemo$1(function () {
+    return !loading && loaded ? identity === null || identity === void 0 ? void 0 : identity.roles : [];
+  }, [loading, loaded, identity]);
+
+  var _useContext = useContext(WorkflowContext),
+      getWorkflow = _useContext.getWorkflow;
+
+  var workflow = useMemo$1(function () {
+    return getWorkflow(props.resource);
+  }, [getWorkflow, props.resource]);
+
+  var _useMemo = useMemo$1(function () {
+    var save = workflow && workflow.canEdit(roles, record) && get$2(record, "id", 0) > 0;
+    var states = workflow && workflow.getNextStates(roles, record) || [];
+    return {
+      states: states,
+      save: save
+    };
+  }, [workflow, record, roles]),
+      states = _useMemo.states,
+      save = _useMemo.save;
+
+  var handleClick = useCallback(function () {
+    form.change("state", get$2(record, "transaction.state", get$2(record, "state")));
+    handleSubmitWithRedirect("list");
+  }, [form, record, handleSubmitWithRedirect]);
+
+  if (!record) {
+    return null;
+  }
+
+  return /*#__PURE__*/React__default.createElement(Toolbar$2, _extends({}, props, {
+    classes: classes
+  }), save && /*#__PURE__*/React__default.createElement(SaveButton, _extends({}, props, {
+    color: "primary",
+    handleSubmitWithRedirect: handleClick
+  })), states.length > maxButtonsToDisplay && /*#__PURE__*/React__default.createElement(ButtonListMenu, _extends({
+    states: states
+  }, props)), states.length <= maxButtonsToDisplay && states.map(function (state) {
+    return /*#__PURE__*/React__default.createElement(StateButton$1, _extends({
+      key: get$2(state, "code"),
+      state: state
+    }, props));
+  }), React__default.Children.count(children) > 0 && React__default.Children.map(children, function (child, key) {
+    return /*#__PURE__*/React__default.cloneElement(child, _objectSpread2(_objectSpread2({}, props), {}, {
+      key: key
+    }));
+  }), /*#__PURE__*/React__default.createElement(BackButton, null));
+};
+
 var mapFieldErrors = function mapFieldErrors(field, errors) {
   var keys = Object.keys(errors);
   var messages = keys.filter(function (k) {
@@ -3352,6 +3558,7 @@ var Form = function Form(_ref) {
 
   return /*#__PURE__*/React__default.createElement(SimpleForm, _extends({}, props, {
     save: save,
+    toolbar: form !== null && form !== void 0 && form.hasWorkflow ? /*#__PURE__*/React__default.createElement(Toolbar, null) : undefined,
     initialValues: form === null || form === void 0 ? void 0 : form.initialValues,
     sanitizeEmptyValues: form === null || form === void 0 ? void 0 : form.sanitizeEmptyValues,
     warnWhenUnsavedChanges: form === null || form === void 0 ? void 0 : form.warnWhenUnsavedChanges,

@@ -33,6 +33,11 @@ var TextField = require('@material-ui/core/TextField');
 var reactFinalForm = require('react-final-form');
 var ContentCreate = require('@material-ui/icons/Create');
 var ContentView = require('@material-ui/icons/Visibility');
+var BackIcon = require('@material-ui/icons/ArrowBack');
+var ArrowForwardIosIcon = require('@material-ui/icons/ArrowForwardIos');
+var Button = require('@material-ui/core/Button');
+var DoubleArrowIcon = require('@material-ui/icons/DoubleArrow');
+var MenuItem$1 = require('@material-ui/core/MenuItem');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -74,6 +79,11 @@ var ArrowDropDownIcon__default = /*#__PURE__*/_interopDefaultLegacy(ArrowDropDow
 var TextField__default = /*#__PURE__*/_interopDefaultLegacy(TextField);
 var ContentCreate__default = /*#__PURE__*/_interopDefaultLegacy(ContentCreate);
 var ContentView__default = /*#__PURE__*/_interopDefaultLegacy(ContentView);
+var BackIcon__default = /*#__PURE__*/_interopDefaultLegacy(BackIcon);
+var ArrowForwardIosIcon__default = /*#__PURE__*/_interopDefaultLegacy(ArrowForwardIosIcon);
+var Button__default = /*#__PURE__*/_interopDefaultLegacy(Button);
+var DoubleArrowIcon__default = /*#__PURE__*/_interopDefaultLegacy(DoubleArrowIcon);
+var MenuItem__default = /*#__PURE__*/_interopDefaultLegacy(MenuItem$1);
 
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
@@ -421,7 +431,7 @@ UserMenu.propTypes = {
   logout: PropTypes__default["default"].element.isRequired
 };
 
-var useStyles$6 = styles$1.makeStyles(function (theme) {
+var useStyles$9 = styles$1.makeStyles(function (theme) {
   return {
     title: {
       flexGrow: 1
@@ -471,7 +481,7 @@ var AppBar = function AppBar(_ref2) {
       location = _ref2.location,
       _ref2$userMenu = _ref2.userMenu,
       userMenu = _ref2$userMenu === void 0 ? UserMenu : _ref2$userMenu;
-  var classes = useStyles$6({
+  var classes = useStyles$9({
     drawerWidth: drawerWidth
   });
   var dispatch = reactRedux.useDispatch();
@@ -518,8 +528,8 @@ AppBar.propTypes = {
   userMenu: PropTypes__default["default"].elementType
 };
 
-var _excluded$h = ["children", "open", "label"];
-var useStyles$5 = core.makeStyles(function (theme) {
+var _excluded$l = ["children", "open", "label"];
+var useStyles$8 = core.makeStyles(function (theme) {
   return {
     subHeader: {
       backgroundColor: theme.palette.background.paper,
@@ -534,9 +544,9 @@ var MenuGroup = function MenuGroup(_ref) {
   var children = _ref.children,
       open = _ref.open,
       label = _ref.label,
-      props = _objectWithoutProperties(_ref, _excluded$h);
+      props = _objectWithoutProperties(_ref, _excluded$l);
 
-  var classes = useStyles$5();
+  var classes = useStyles$8();
   return /*#__PURE__*/React__default["default"].createElement(core.List, {
     subheader: open ? /*#__PURE__*/React__default["default"].createElement(core.ListSubheader, {
       className: classes.subHeader
@@ -562,17 +572,17 @@ MenuGroup.propTypes = {
   group: PropTypes__default["default"].string
 };
 
-var _excluded$g = ["titleAccess", "children"];
+var _excluded$k = ["titleAccess", "children"];
 
 var Badge = function Badge(_ref) {
   _ref.titleAccess;
       var children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded$g);
+      props = _objectWithoutProperties(_ref, _excluded$k);
 
   return /*#__PURE__*/React__default["default"].createElement(core.Badge, props, children);
 };
 
-var _excluded$f = ["location", "badge", "to", "icon", "label", "sub", "onMenuClick", "permissions", "open"];
+var _excluded$j = ["location", "badge", "to", "icon", "label", "sub", "onMenuClick", "permissions", "open"];
 
 var isSelected = function isSelected(location, to) {
   var selected = location.pathname === to || location.pathname.indexOf("".concat(to, "?")) === 0 || location.pathname.indexOf("".concat(to, "/")) === 0;
@@ -589,7 +599,7 @@ var MenuItem = function MenuItem(_ref) {
       onMenuClick = _ref.onMenuClick;
       _ref.permissions;
       var open = _ref.open,
-      props = _objectWithoutProperties(_ref, _excluded$f);
+      props = _objectWithoutProperties(_ref, _excluded$j);
 
   return /*#__PURE__*/React__default["default"].createElement(core.ListItem, _extends({}, props, {
     button: true,
@@ -859,7 +869,7 @@ var Menu$1 = compose(reactRouterDom.withRouter, reactRedux.connect(function (sta
   };
 }))(Menu);
 
-var useStyles$4 = core.makeStyles(function (theme) {
+var useStyles$7 = core.makeStyles(function (theme) {
   return {
     brand: {
       paddingLeft: theme.spacing(1),
@@ -921,7 +931,7 @@ var Sidebar = function Sidebar(_ref2) {
       appTitle = _ref2.appTitle,
       appSubTitle = _ref2.appSubTitle,
       appVersion = _ref2.appVersion;
-  var classes = useStyles$4({
+  var classes = useStyles$7({
     drawerWidth: drawerWidth
   });
   var dispatch = reactRedux.useDispatch();
@@ -970,7 +980,7 @@ Sidebar.propTypes = {
   appVersion: PropTypes__default["default"].string
 };
 
-var _excluded$e = ["theme"];
+var _excluded$i = ["theme"];
 
 var styles = function styles(theme) {
   return styles$1.createStyles({
@@ -1111,7 +1121,7 @@ var EnhancedLayout = compose(reactRedux.connect(mapStateToProps, {} // Avoid con
 
 var Layout = function Layout(_ref) {
   var themeOverride = _ref.theme,
-      props = _objectWithoutProperties(_ref, _excluded$e);
+      props = _objectWithoutProperties(_ref, _excluded$i);
 
   var themeProp = React.useRef(themeOverride);
 
@@ -1148,8 +1158,8 @@ Layout.defaultProps = {
   drawerWidth: 240
 };
 
-var _excluded$d = ["className", "classes", "redirectTo", "icon", "label"];
-var useStyles$3 = styles$1.makeStyles(function (theme) {
+var _excluded$h = ["className", "classes", "redirectTo", "icon", "label"];
+var useStyles$6 = styles$1.makeStyles(function (theme) {
   return {
     menuItem: {
       color: theme.palette.text.secondary
@@ -1167,9 +1177,9 @@ var UserMenuItem = /*#__PURE__*/React__namespace.forwardRef(function UserMenuIte
       props.redirectTo;
       var icon = props.icon,
       label = props.label,
-      rest = _objectWithoutProperties(props, _excluded$d);
+      rest = _objectWithoutProperties(props, _excluded$h);
 
-  var classes = useStyles$3(props);
+  var classes = useStyles$6(props);
   return /*#__PURE__*/React__namespace.createElement(core.MenuItem, _extends({
     className: classnames__default["default"]("user-menu-item", classes.menuItem, className),
     ref: ref,
@@ -1772,7 +1782,7 @@ var createI18nProvider = function createI18nProvider(_ref) {
   }, reactAdmin.resolveBrowserLocale());
 };
 
-var _excluded$c = ["component", "componentProps", "components", "addLabel"];
+var _excluded$g = ["component", "componentProps", "components", "addLabel"];
 
 var Component = function Component(_ref) {
   var component = _ref.component,
@@ -1780,7 +1790,7 @@ var Component = function Component(_ref) {
       components = _ref.components,
       _ref$addLabel = _ref.addLabel,
       addLabel = _ref$addLabel === void 0 ? true : _ref$addLabel,
-      props = _objectWithoutProperties(_ref, _excluded$c);
+      props = _objectWithoutProperties(_ref, _excluded$g);
 
   var Component = lodash.get(components, component);
 
@@ -1817,19 +1827,19 @@ var useCustomComponents = function useCustomComponents(resource) {
   return get(r, "options.components");
 };
 
-var _excluded$b = ["chipSource"];
+var _excluded$f = ["chipSource"];
 
 var ChipArrayField = function ChipArrayField(_ref) {
   var chipSource = _ref.chipSource,
-      props = _objectWithoutProperties(_ref, _excluded$b);
+      props = _objectWithoutProperties(_ref, _excluded$f);
 
   return /*#__PURE__*/React__default["default"].createElement(reactAdmin.ArrayField, props, /*#__PURE__*/React__default["default"].createElement(reactAdmin.SingleFieldList, null, /*#__PURE__*/React__default["default"].createElement(reactAdmin.ChipField, {
     source: chipSource
   })));
 };
 
-var _excluded$a = ["record", "source", "width", "minWidth", "maxWidth", "maxRows", "sortable", "basePath", "sortBy"];
-var useStyles$2 = core.makeStyles(function (theme) {
+var _excluded$e = ["record", "source", "width", "minWidth", "maxWidth", "maxRows", "sortable", "basePath", "sortBy"];
+var useStyles$5 = core.makeStyles(function (theme) {
   return {
     root: {
       overflow: "hidden",
@@ -1855,9 +1865,9 @@ var LongTextField = function LongTextField(_ref) {
       _ref.sortable;
       _ref.basePath;
       _ref.sortBy;
-      var props = _objectWithoutProperties(_ref, _excluded$a);
+      var props = _objectWithoutProperties(_ref, _excluded$e);
 
-  var classes = useStyles$2();
+  var classes = useStyles$5();
   return /*#__PURE__*/React__default["default"].createElement(core.Typography, _extends({}, props, {
     variant: "body2",
     title: lodash.get(record, source),
@@ -2215,14 +2225,14 @@ var WorkflowProvider = function WorkflowProvider(_ref) {
   }, children);
 };
 
-var _excluded$9 = ["label", "record", "resource"];
+var _excluded$d = ["label", "record", "resource"];
 
 var StateField = function StateField(_ref) {
   var _ref$label = _ref.label,
       label = _ref$label === void 0 ? "app.label.workflow.state" : _ref$label,
       record = _ref.record,
       toResolve = _ref.resource,
-      props = _objectWithoutProperties(_ref, _excluded$9);
+      props = _objectWithoutProperties(_ref, _excluded$d);
 
   var _useContext = React.useContext(WorkflowContext),
       getWorkflow = _useContext.getWorkflow;
@@ -2256,7 +2266,7 @@ var useFieldLabel = function useFieldLabel(_ref) {
   };
 };
 
-var useStyles$1 = core.makeStyles(function (theme) {
+var useStyles$4 = core.makeStyles(function (theme) {
   return {
     root: {
       display: "-webkit-box",
@@ -2283,7 +2293,7 @@ var TransactionNotesField = function TransactionNotesField(_ref) {
       minWidth = _ref$minWidth === void 0 ? 150 : _ref$minWidth,
       _ref$maxRows = _ref.maxRows,
       maxRows = _ref$maxRows === void 0 ? 3 : _ref$maxRows;
-  var classes = useStyles$1();
+  var classes = useStyles$4();
   var fieldLabel = useFieldLabel({
     resource: "transactions"
   });
@@ -2336,13 +2346,13 @@ TransactionNotesField.propTypes = {
   maxRows: PropTypes__default["default"].number
 };
 
-var _excluded$8 = ["fullWidth", "addLabel"],
+var _excluded$c = ["fullWidth", "addLabel"],
     _excluded2$1 = ["admin", "label"];
 
 var PaginationWrapper = function PaginationWrapper(_ref) {
   _ref.fullWidth;
       _ref.addLabel;
-      var props = _objectWithoutProperties(_ref, _excluded$8);
+      var props = _objectWithoutProperties(_ref, _excluded$c);
 
   return /*#__PURE__*/React__default["default"].createElement(reactAdmin.Pagination, props);
 };
@@ -2431,11 +2441,11 @@ var useManyParser = function useManyParser() {
   return memoizedFn;
 };
 
-var _excluded$7 = ["optionText"];
+var _excluded$b = ["optionText"];
 
 var ReferenceCheckboxGroupInput = function ReferenceCheckboxGroupInput(_ref) {
   var optionText = _ref.optionText,
-      props = _objectWithoutProperties(_ref, _excluded$7);
+      props = _objectWithoutProperties(_ref, _excluded$b);
 
   var parse = useManyParser();
   var format = useManyFormatter();
@@ -2447,23 +2457,23 @@ var ReferenceCheckboxGroupInput = function ReferenceCheckboxGroupInput(_ref) {
   }));
 };
 
-var _excluded$6 = ["optionText"];
+var _excluded$a = ["optionText"];
 
 var ReferenceAutocompleteInput = function ReferenceAutocompleteInput(_ref) {
   var optionText = _ref.optionText,
-      props = _objectWithoutProperties(_ref, _excluded$6);
+      props = _objectWithoutProperties(_ref, _excluded$a);
 
   return /*#__PURE__*/React__default["default"].createElement(reactAdmin.ReferenceInput, props, /*#__PURE__*/React__default["default"].createElement(reactAdmin.AutocompleteInput, {
     optionText: optionText
   }));
 };
 
-var _excluded$5 = ["filter"];
+var _excluded$9 = ["filter"];
 
 var StateInput = function StateInput(_ref) {
   var _ref$filter = _ref.filter,
       filter = _ref$filter === void 0 ? undefined : _ref$filter,
-      props = _objectWithoutProperties(_ref, _excluded$5);
+      props = _objectWithoutProperties(_ref, _excluded$9);
 
   var _useContext = React.useContext(WorkflowContext),
       getWorkflow = _useContext.getWorkflow;
@@ -2479,11 +2489,13 @@ var StateInput = function StateInput(_ref) {
   return /*#__PURE__*/React__default["default"].createElement(reactAdmin.SelectInput, _extends({}, props, {
     choices: states,
     optionText: "name",
-    optionValue: "code"
+    optionValue: "code",
+    allowEmpty: true,
+    emptyText: "ra.action.all"
   }));
 };
 
-var useStyles = core.makeStyles(function (theme) {
+var useStyles$3 = core.makeStyles(function (theme) {
   return {
     required: {}
   };
@@ -2498,7 +2510,7 @@ var ConfirmMove = function ConfirmMove(_ref) {
       record = _ref.record,
       state = _ref.state,
       onCancel = _ref.onCancel;
-  var classes = useStyles();
+  var classes = useStyles$3();
   var refresh = reactAdmin.useRefresh();
   var notify = reactAdmin.useNotify();
 
@@ -2530,6 +2542,7 @@ var ConfirmMove = function ConfirmMove(_ref) {
   }, [workflow, record, state]);
 
   var _useUpdate = reactAdmin.useUpdate(resource, record.id, _objectSpread2(_objectSpread2({}, record), {}, {
+    user: null,
     state: lodash.get(state, "code"),
     notes: notes,
     is_private: isPrivate
@@ -2597,7 +2610,7 @@ ConfirmMove.propTypes = {
   onCancel: PropTypes__default["default"].func.isRequired
 };
 
-var _this = undefined;
+var _this$1 = undefined;
 
 var StateCollectionInput = function StateCollectionInput(_ref) {
   var _ref$readonly = _ref.readonly,
@@ -2699,7 +2712,7 @@ var StateCollectionInput = function StateCollectionInput(_ref) {
   }, nextStates.map(function (state) {
     return /*#__PURE__*/React__default["default"].createElement(core.MenuItem, {
       key: lodash.get(state, "code"),
-      onClick: handleChange.bind(_this, state)
+      onClick: handleChange.bind(_this$1, state)
     }, lodash.get(state, "label"));
   })), /*#__PURE__*/React__default["default"].createElement(ConfirmMove, {
     admin: admin,
@@ -2711,14 +2724,14 @@ var StateCollectionInput = function StateCollectionInput(_ref) {
   }));
 };
 
-var _excluded$4 = ["label", "helperText", "admin"];
+var _excluded$8 = ["label", "helperText", "admin"];
 
 var TransactionNotesIsPrivateInput = function TransactionNotesIsPrivateInput(_ref) {
   var label = _ref.label,
       helperText = _ref.helperText,
       _ref$admin = _ref.admin,
       admin = _ref$admin === void 0 ? false : _ref$admin,
-      props = _objectWithoutProperties(_ref, _excluded$4);
+      props = _objectWithoutProperties(_ref, _excluded$8);
 
   var fieldLabel = useFieldLabel({
     resource: "transactions"
@@ -2758,7 +2771,7 @@ function useDebounce(value, delay) {
   return debouncedValue;
 }
 
-var _excluded$3 = ["margin", "variant", "fullWidth", "maxLength", "multiline", "format", "rows", "disabled", "InputLabelProps"],
+var _excluded$7 = ["margin", "variant", "fullWidth", "maxLength", "multiline", "format", "rows", "disabled", "InputLabelProps"],
     _excluded2 = ["name", "onChange"];
 
 var DebouncedTextInput = function DebouncedTextInput(_ref) {
@@ -2773,7 +2786,7 @@ var DebouncedTextInput = function DebouncedTextInput(_ref) {
       rows = _ref.rows,
       disabled = _ref.disabled,
       InputLabelProps = _ref.InputLabelProps,
-      props = _objectWithoutProperties(_ref, _excluded$3);
+      props = _objectWithoutProperties(_ref, _excluded$7);
 
   var className = props.className,
       source = props.source,
@@ -2974,12 +2987,12 @@ var inputs = {
   DebouncedTextInput: DebouncedTextInput
 };
 
-var _excluded$2 = ["record", "resource"];
+var _excluded$6 = ["record", "resource"];
 
 var EditButton = function EditButton(_ref) {
   var record = _ref.record,
       resource = _ref.resource,
-      props = _objectWithoutProperties(_ref, _excluded$2);
+      props = _objectWithoutProperties(_ref, _excluded$6);
 
   var _useContext = React.useContext(WorkflowContext),
       getWorkflow = _useContext.getWorkflow;
@@ -3019,7 +3032,7 @@ var buttons = {
   EditButton: EditButton
 };
 
-var _excluded$1 = ["source", "label", "component", "componentProps"];
+var _excluded$5 = ["source", "label", "component", "componentProps"];
 
 var List = function List(props) {
   var _grid$filters, _grid$columns;
@@ -3055,7 +3068,7 @@ var List = function List(props) {
           _ref.label;
           var component = _ref.component,
           componentProps = _ref.componentProps,
-          props = _objectWithoutProperties(_ref, _excluded$1);
+          props = _objectWithoutProperties(_ref, _excluded$5);
 
       return /*#__PURE__*/React__namespace.createElement(Component, _extends({}, props, {
         key: source,
@@ -3235,6 +3248,204 @@ var CrudProvider = function CrudProvider(_ref) {
   }, children);
 };
 
+var _excluded$4 = ["resource", "baseRecord"];
+
+var BackButton = function BackButton(_ref) {
+  var resource = _ref.resource;
+      _ref.baseRecord;
+      var props = _objectWithoutProperties(_ref, _excluded$4);
+
+  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.Button, _extends({}, props, {
+    component: reactRouterDom.Link,
+    to: {
+      pathname: "/".concat(resource)
+    },
+    label: "ra.action.back"
+  }), /*#__PURE__*/React__default["default"].createElement(BackIcon__default["default"], null));
+};
+
+var _excluded$3 = ["handleSubmitWithRedirect", "small", "state", "pristine"];
+var useStyles$2 = styles$1.makeStyles(function (theme) {
+  var _theme$props, _theme$props$MuiButto;
+
+  return {
+    button: {
+      disableElevation: ((_theme$props = theme.props) === null || _theme$props === void 0 ? void 0 : (_theme$props$MuiButto = _theme$props.MuiButton) === null || _theme$props$MuiButto === void 0 ? void 0 : _theme$props$MuiButto.disableElevation) === true
+    }
+  };
+});
+
+var StateButton = function StateButton(_ref, ref) {
+  var handleSubmitWithRedirect = _ref.handleSubmitWithRedirect;
+      _ref.small;
+      var state = _ref.state;
+      _ref.pristine;
+      var props = _objectWithoutProperties(_ref, _excluded$3);
+
+  var classes = useStyles$2();
+  var form = reactFinalForm.useForm();
+  var handleClick = React.useCallback(function () {
+    form.change("state", state.code);
+    handleSubmitWithRedirect("list");
+  }, [state, form, handleSubmitWithRedirect]);
+  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.SaveButton, _extends({}, props, {
+    className: classes.button,
+    redirect: "list",
+    color: "primary",
+    handleSubmitWithRedirect: handleClick,
+    label: lodash.get(state, "label")
+  }));
+};
+
+var StateButton$1 = /*#__PURE__*/React__default["default"].forwardRef(StateButton);
+
+var _excluded$2 = ["states"];
+
+var _this = undefined;
+var useStyles$1 = styles$1.makeStyles(function (theme) {
+  var _theme$props, _theme$props$MuiButto;
+
+  return {
+    button: {
+      disableElevation: ((_theme$props = theme.props) === null || _theme$props === void 0 ? void 0 : (_theme$props$MuiButto = _theme$props.MuiButton) === null || _theme$props$MuiButto === void 0 ? void 0 : _theme$props$MuiButto.disableElevation) === true
+    }
+  };
+});
+
+var ButtonListMenu = function ButtonListMenu(_ref) {
+  var states = _ref.states,
+      props = _objectWithoutProperties(_ref, _excluded$2);
+
+  var classes = useStyles$1();
+  var translate = reactAdmin.useTranslate();
+
+  var _React$useState = React__default["default"].useState(null),
+      _React$useState2 = _slicedToArray(_React$useState, 2),
+      anchorEl = _React$useState2[0],
+      setAnchorEl = _React$useState2[1];
+
+  var _React$useState3 = React__default["default"].useState(null),
+      _React$useState4 = _slicedToArray(_React$useState3, 2),
+      state = _React$useState4[0],
+      setState = _React$useState4[1];
+
+  var handleClick = function handleClick(event) {
+    setAnchorEl(event.currentTarget);
+  };
+
+  var handleClose = function handleClose() {
+    setAnchorEl(null);
+  };
+
+  var handleState = function handleState(state) {
+    setState(state.label);
+    setAnchorEl(null);
+  };
+
+  return /*#__PURE__*/React__default["default"].createElement("div", null, /*#__PURE__*/React__default["default"].createElement(Button__default["default"], {
+    "aria-controls": "workflow-menu",
+    "aria-haspopup": "true",
+    variant: "contained",
+    color: "primary",
+    className: classes.button,
+    onClick: handleClick
+  }, /*#__PURE__*/React__default["default"].createElement(DoubleArrowIcon__default["default"], null), props.saving ? "".concat(state, "...") : translate("ra.workflow.do_action")), /*#__PURE__*/React__default["default"].createElement(Menu__default["default"], {
+    anchorEl: anchorEl,
+    keepMounted: true,
+    open: Boolean(anchorEl),
+    onClose: handleClose
+  }, states.map(function (state) {
+    return /*#__PURE__*/React__default["default"].createElement(StateButton$1, _extends({}, props, {
+      key: state.code,
+      component: MenuItem__default["default"],
+      state: state,
+      color: "default",
+      variant: "text",
+      icon: /*#__PURE__*/React__default["default"].createElement(ArrowForwardIosIcon__default["default"], null),
+      onClick: handleState.bind(_this, state)
+    }));
+  })));
+};
+
+var _excluded$1 = ["children", "mutationMode", "validating", "maxButtonsToDisplay"];
+var useStyles = styles$1.makeStyles(function (theme) {
+  return {
+    toolbar: {
+      "& .MuiButton-root": {
+        marginRight: theme.spacing(1)
+      }
+    }
+  };
+});
+
+var Toolbar = function Toolbar(_ref) {
+  var children = _ref.children;
+      _ref.mutationMode;
+      _ref.validating;
+      var _ref$maxButtonsToDisp = _ref.maxButtonsToDisplay,
+      maxButtonsToDisplay = _ref$maxButtonsToDisp === void 0 ? 1 : _ref$maxButtonsToDisp,
+      props = _objectWithoutProperties(_ref, _excluded$1);
+
+  var form = reactFinalForm.useForm();
+  var classes = useStyles();
+  var handleSubmitWithRedirect = props.handleSubmitWithRedirect,
+      record = props.record;
+
+  var _useGetIdentity = reactAdmin.useGetIdentity(),
+      loading = _useGetIdentity.loading,
+      loaded = _useGetIdentity.loaded,
+      identity = _useGetIdentity.identity;
+
+  var roles = React.useMemo(function () {
+    return !loading && loaded ? identity === null || identity === void 0 ? void 0 : identity.roles : [];
+  }, [loading, loaded, identity]);
+
+  var _useContext = React.useContext(WorkflowContext),
+      getWorkflow = _useContext.getWorkflow;
+
+  var workflow = React.useMemo(function () {
+    return getWorkflow(props.resource);
+  }, [getWorkflow, props.resource]);
+
+  var _useMemo = React.useMemo(function () {
+    var save = workflow && workflow.canEdit(roles, record) && lodash.get(record, "id", 0) > 0;
+    var states = workflow && workflow.getNextStates(roles, record) || [];
+    return {
+      states: states,
+      save: save
+    };
+  }, [workflow, record, roles]),
+      states = _useMemo.states,
+      save = _useMemo.save;
+
+  var handleClick = React.useCallback(function () {
+    form.change("state", lodash.get(record, "transaction.state", lodash.get(record, "state")));
+    handleSubmitWithRedirect("list");
+  }, [form, record, handleSubmitWithRedirect]);
+
+  if (!record) {
+    return null;
+  }
+
+  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.Toolbar, _extends({}, props, {
+    classes: classes
+  }), save && /*#__PURE__*/React__default["default"].createElement(reactAdmin.SaveButton, _extends({}, props, {
+    color: "primary",
+    handleSubmitWithRedirect: handleClick
+  })), states.length > maxButtonsToDisplay && /*#__PURE__*/React__default["default"].createElement(ButtonListMenu, _extends({
+    states: states
+  }, props)), states.length <= maxButtonsToDisplay && states.map(function (state) {
+    return /*#__PURE__*/React__default["default"].createElement(StateButton$1, _extends({
+      key: lodash.get(state, "code"),
+      state: state
+    }, props));
+  }), React__default["default"].Children.count(children) > 0 && React__default["default"].Children.map(children, function (child, key) {
+    return /*#__PURE__*/React__default["default"].cloneElement(child, _objectSpread2(_objectSpread2({}, props), {}, {
+      key: key
+    }));
+  }), /*#__PURE__*/React__default["default"].createElement(BackButton, null));
+};
+
 var mapFieldErrors = function mapFieldErrors(field, errors) {
   var keys = Object.keys(errors);
   var messages = keys.filter(function (k) {
@@ -3396,6 +3607,7 @@ var Form = function Form(_ref) {
 
   return /*#__PURE__*/React__default["default"].createElement(reactAdmin.SimpleForm, _extends({}, props, {
     save: save,
+    toolbar: form !== null && form !== void 0 && form.hasWorkflow ? /*#__PURE__*/React__default["default"].createElement(Toolbar, null) : undefined,
     initialValues: form === null || form === void 0 ? void 0 : form.initialValues,
     sanitizeEmptyValues: form === null || form === void 0 ? void 0 : form.sanitizeEmptyValues,
     warnWhenUnsavedChanges: form === null || form === void 0 ? void 0 : form.warnWhenUnsavedChanges,

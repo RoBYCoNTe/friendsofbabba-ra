@@ -62,6 +62,7 @@ const ConfirmMove = ({
     record.id,
     {
       ...record,
+      user: null,
       state: get(state, "code"),
       notes: notes,
       is_private: isPrivate,

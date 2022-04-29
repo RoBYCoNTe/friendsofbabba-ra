@@ -25,6 +25,8 @@ const StateInput = ({ filter = undefined, ...props }) => {
       choices={states}
       optionText="name"
       optionValue="code"
+      allowEmpty
+      emptyText="ra.action.all"
     />
   );
 };

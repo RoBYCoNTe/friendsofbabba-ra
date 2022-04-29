@@ -3,16 +3,18 @@ import React, { useCallback } from "react";
 import { SaveButton } from "react-admin";
 import { get } from "lodash";
 import { useForm } from "react-final-form";
-
-const StateButton = ({
-  handleSubmitWithRedirect,
-  small,
-  state,
-  pristine,
-  ...props
-}) => {
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  button: {
+    disableElevation: theme.props?.MuiButton?.disableElevation === true,
+  },
+}));
+const StateButton = (
+  { handleSubmitWithRedirect, small, state, pristine, ...props },
+  ref
+) => {
+  const classes = useStyles();
   const form = useForm();
-
   const handleClick = useCallback(() => {
     form.change("state", state.code);
     handleSubmitWithRedirect("list");
@@ -21,6 +23,7 @@ const StateButton = ({
   return (
     <SaveButton
       {...props}
+      className={classes.button}
       redirect="list"
       color="primary"
       handleSubmitWithRedirect={handleClick}
@@ -29,4 +32,4 @@ const StateButton = ({
   );
 };
 
-export default StateButton;
+export default React.forwardRef(StateButton);
