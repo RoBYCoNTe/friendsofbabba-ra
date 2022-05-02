@@ -13,10 +13,6 @@ const exporter = (grid, data, translate) => {
     });
     return row;
   });
-  console.info({
-    headers,
-    csvData,
-  });
   jsonExport(
     csvData,
     {
