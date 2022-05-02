@@ -1,4 +1,4 @@
-import { useTranslate as useTranslate$1, useGetIdentity, LoadingIndicator, getResources as getResources$2, defaultTheme, Notification, HttpError, resolveBrowserLocale, Labeled, ArrayField, SingleFieldList, ChipField, ReferenceManyField, SimpleList, DateField, Datagrid as Datagrid$1, TextField, Pagination, BooleanField, ReferenceArrayInput, CheckboxGroupInput, ReferenceInput, AutocompleteInput, SelectInput, useRefresh, useNotify, useUpdate, BooleanInput, useInput, FileInput, SearchInput, TextInput, DateInput, EditButton as EditButton$1, DeleteButton, Filter, Loading, List as List$2, Button as Button$1, SaveButton, Toolbar as Toolbar$2, SimpleForm, Create as Create$2, Edit, useLocale } from 'react-admin';
+import { useTranslate as useTranslate$1, useGetIdentity, LoadingIndicator, getResources as getResources$2, defaultTheme, Notification, HttpError, resolveBrowserLocale, Labeled, ArrayField, SingleFieldList, ChipField, ReferenceManyField, SimpleList, DateField, Datagrid as Datagrid$1, TextField, Pagination, BooleanField, ReferenceArrayInput, CheckboxGroupInput, ReferenceInput, AutocompleteInput, SelectInput, useRefresh, useNotify, useUpdate, BooleanInput, useInput, FileInput, SearchInput, TextInput, DateInput, EditButton as EditButton$1, DeleteButton, Filter, downloadCSV, Loading, List as List$2, Button as Button$1, SaveButton, Toolbar as Toolbar$2, SimpleForm, Create as Create$2, Edit, useLocale } from 'react-admin';
 import * as React from 'react';
 import React__default, { useCallback, createElement, useRef, useState, useEffect, useMemo as useMemo$1, createContext, useContext, Fragment } from 'react';
 import { makeStyles, withStyles, createStyles, createTheme } from '@material-ui/core/styles';
@@ -30,6 +30,7 @@ import TextField$2 from '@material-ui/core/TextField';
 import { useFormState, useForm } from 'react-final-form';
 import ContentCreate from '@material-ui/icons/Create';
 import ContentView from '@material-ui/icons/Visibility';
+import jsonExport from 'jsonexport/dist';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import Button$2 from '@material-ui/core/Button';
@@ -3196,12 +3197,40 @@ var useListStyles = makeStyles(function (theme) {
   name: "RaMobileList"
 });
 
+var exporter = function exporter(grid, data, translate) {
+  var columns = ((grid === null || grid === void 0 ? void 0 : grid.columns) || []).filter(function (c) {
+    return c.exportable === true;
+  });
+  var headers = columns.map(function (c) {
+    return get$2(c, "label", c.source);
+  });
+  var csvData = data.map(function (record) {
+    var row = {};
+    columns.forEach(function (column) {
+      var value = get$2(record, column.source);
+      row[column.label] = value;
+    });
+    return row;
+  });
+  console.info({
+    headers: headers,
+    csvData: csvData
+  });
+  jsonExport(csvData, {
+    rowDelimiter: ";",
+    headers: headers
+  }, function (err, csv) {
+    return downloadCSV("\uFEFF" + csv, translate(grid === null || grid === void 0 ? void 0 : grid.title));
+  });
+};
+
 var _excluded$5 = ["source", "label", "component", "componentProps"];
 
 var List = function List(props) {
   var _grid$filters, _grid$columns;
 
   var classes = useListStyles();
+  var translate = useTranslate$1();
 
   var _React$useContext = React.useContext(CrudContext$1),
       getGrid = _React$useContext.getGrid,
@@ -3227,6 +3256,9 @@ var List = function List(props) {
     classes: classes,
     title: grid.title,
     filter: grid.filter || {},
+    exporter: function exporter$1(data) {
+      return exporter(grid, data, translate);
+    },
     filterDefaultValues: grid.filterDefaultValues || {},
     sort: grid === null || grid === void 0 ? void 0 : grid.sort,
     perPage: grid === null || grid === void 0 ? void 0 : grid.perPage,

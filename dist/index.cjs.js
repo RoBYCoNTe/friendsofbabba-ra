@@ -33,6 +33,7 @@ var TextField = require('@material-ui/core/TextField');
 var reactFinalForm = require('react-final-form');
 var ContentCreate = require('@material-ui/icons/Create');
 var ContentView = require('@material-ui/icons/Visibility');
+var jsonExport = require('jsonexport/dist');
 var BackIcon = require('@material-ui/icons/ArrowBack');
 var ArrowForwardIosIcon = require('@material-ui/icons/ArrowForwardIos');
 var Button = require('@material-ui/core/Button');
@@ -79,6 +80,7 @@ var ArrowDropDownIcon__default = /*#__PURE__*/_interopDefaultLegacy(ArrowDropDow
 var TextField__default = /*#__PURE__*/_interopDefaultLegacy(TextField);
 var ContentCreate__default = /*#__PURE__*/_interopDefaultLegacy(ContentCreate);
 var ContentView__default = /*#__PURE__*/_interopDefaultLegacy(ContentView);
+var jsonExport__default = /*#__PURE__*/_interopDefaultLegacy(jsonExport);
 var BackIcon__default = /*#__PURE__*/_interopDefaultLegacy(BackIcon);
 var ArrowForwardIosIcon__default = /*#__PURE__*/_interopDefaultLegacy(ArrowForwardIosIcon);
 var Button__default = /*#__PURE__*/_interopDefaultLegacy(Button);
@@ -3245,12 +3247,40 @@ var useListStyles = styles$1.makeStyles(function (theme) {
   name: "RaMobileList"
 });
 
+var exporter = function exporter(grid, data, translate) {
+  var columns = ((grid === null || grid === void 0 ? void 0 : grid.columns) || []).filter(function (c) {
+    return c.exportable === true;
+  });
+  var headers = columns.map(function (c) {
+    return lodash.get(c, "label", c.source);
+  });
+  var csvData = data.map(function (record) {
+    var row = {};
+    columns.forEach(function (column) {
+      var value = lodash.get(record, column.source);
+      row[column.label] = value;
+    });
+    return row;
+  });
+  console.info({
+    headers: headers,
+    csvData: csvData
+  });
+  jsonExport__default["default"](csvData, {
+    rowDelimiter: ";",
+    headers: headers
+  }, function (err, csv) {
+    return reactAdmin.downloadCSV("\uFEFF" + csv, translate(grid === null || grid === void 0 ? void 0 : grid.title));
+  });
+};
+
 var _excluded$5 = ["source", "label", "component", "componentProps"];
 
 var List = function List(props) {
   var _grid$filters, _grid$columns;
 
   var classes = useListStyles();
+  var translate = reactAdmin.useTranslate();
 
   var _React$useContext = React__namespace.useContext(friendsofbabbaRa.CrudContext),
       getGrid = _React$useContext.getGrid,
@@ -3276,6 +3306,9 @@ var List = function List(props) {
     classes: classes,
     title: grid.title,
     filter: grid.filter || {},
+    exporter: function exporter$1(data) {
+      return exporter(grid, data, translate);
+    },
     filterDefaultValues: grid.filterDefaultValues || {},
     sort: grid === null || grid === void 0 ? void 0 : grid.sort,
     perPage: grid === null || grid === void 0 ? void 0 : grid.perPage,

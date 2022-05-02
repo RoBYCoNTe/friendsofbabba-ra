@@ -1,6 +1,6 @@
 import * as React from "react";
 import { CrudContext } from "friendsofbabba-ra";
-import { SimpleList, List as RaList, Loading } from "react-admin";
+import { SimpleList, List as RaList, Loading, useTranslate } from "react-admin";
 import Component from "./Component";
 import { useMediaQuery } from "@material-ui/core";
 import { get } from "lodash";
@@ -12,9 +12,11 @@ import buttons from "../buttons/index.js";
 import Datagrid from "../lists/Datagrid";
 import Filters from "../lists/Filters";
 import useListStyles from "./useListStyles";
+import exporter from "./exporter";
 
 const List = (props) => {
   const classes = useListStyles();
+  const translate = useTranslate();
   const { getGrid, loading } = React.useContext(CrudContext);
   const grid = getGrid(props.resource);
   const customComponents = useCustomComponents(props.resource);
@@ -35,6 +37,7 @@ const List = (props) => {
       classes={classes}
       title={grid.title}
       filter={grid.filter || {}}
+      exporter={(data) => exporter(grid, data, translate)}
       filterDefaultValues={grid.filterDefaultValues || {}}
       sort={grid?.sort}
       perPage={grid?.perPage}
