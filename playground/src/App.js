@@ -89,7 +89,10 @@ const App = () => {
   // Allow i18n to intercept and send unlocalized messages to the server.
   useI18nCatcher({ apiUrl, loading: languages?.loading });
 
-  const dataProvider = useDataProvider({ apiUrl });
+  const dataProvider = useDataProvider({
+    apiUrl,
+    fileFields: ["media", "media_collection"],
+  });
   const authProvider = useAuthProvider({ apiUrl });
   if (languages?.loading) {
     return (

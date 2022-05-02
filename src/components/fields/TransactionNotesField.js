@@ -25,6 +25,7 @@ const TransactionNotesField = ({
   source,
   minWidth = 150,
   maxRows = 3,
+  component,
 }) => {
   const classes = useStyles();
   const fieldLabel = useFieldLabel({ resource: "transactions" });
@@ -41,6 +42,7 @@ const TransactionNotesField = ({
   return (
     <Fragment>
       <Typography
+        component={component}
         className={classes.root}
         style={{ minWidth, WebkitLineClamp: showMore ? null : maxRows }}
         variant="body2"
@@ -58,6 +60,7 @@ const TransactionNotesField = ({
       </Typography>
       {admin && value !== null && value.length > 0 && (
         <Typography
+          component={component}
           color={isPrivate ? "error" : "textSecondary"}
           className={classes.visibility}
           variant="caption"

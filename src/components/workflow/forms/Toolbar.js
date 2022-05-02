@@ -51,6 +51,7 @@ const Toolbar = ({
   if (!record) {
     return null;
   }
+
   return (
     <RaToolbar {...props} classes={classes}>
       {save && (
@@ -58,14 +59,20 @@ const Toolbar = ({
           {...props}
           color="primary"
           handleSubmitWithRedirect={handleClick}
+          disabled={props.saving}
         />
       )}
       {states.length > maxButtonsToDisplay && (
-        <ButtonListMenu states={states} {...props} />
+        <ButtonListMenu states={states} {...props} disabled={props.saving} />
       )}
       {states.length <= maxButtonsToDisplay &&
         states.map((state) => (
-          <StateButton key={get(state, "code")} state={state} {...props} />
+          <StateButton
+            key={get(state, "code")}
+            state={state}
+            {...props}
+            disabled={props.saving}
+          />
         ))}
       {React.Children.count(children) > 0 &&
         React.Children.map(children, (child, key) =>

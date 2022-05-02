@@ -13,6 +13,15 @@ import { connect } from "react-redux";
 import { createTheme } from "@material-ui/core/styles";
 import { withRouter } from "react-router-dom";
 
+export const LayoutContext = React.createContext({ drawerWidth: 0 });
+const LayoutProvider = ({ children, drawerWidth }) => {
+  return (
+    <LayoutContext.Provider value={{ drawerWidth }}>
+      {children}
+    </LayoutContext.Provider>
+  );
+};
+
 const styles = (theme) =>
   createStyles({
     root: {
@@ -79,42 +88,45 @@ class LayoutWithoutTheme extends React.Component {
     const { hasError, errorMessage, errorInfo } = this.state;
 
     return (
-      <div className={classes.root}>
-        <CssBaseline />
-        {createElement(sidebar, {
-          open,
-          appTitle,
-          appSubTitle,
-          appVersion,
-          drawerWidth,
-          children: createElement(menu, {
+      <LayoutProvider drawerWidth={drawerWidth}>
+        <div className={classes.root}>
+          <CssBaseline />
+          {createElement(sidebar, {
             open,
-            logout,
-
-            hasDashboard: !!dashboard,
-            menuConfig: this.props.menu,
-          }),
-        })}
-
-        <main id="main-content" className={classes.content}>
-          {createElement(appBar, {
-            title,
-            open,
-            logout,
-            location,
+            appTitle,
+            appSubTitle,
+            appVersion,
             drawerWidth,
+            children: createElement(menu, {
+              open,
+              logout,
+
+              hasDashboard: !!dashboard,
+              menuConfig: this.props.menu,
+            }),
           })}
-          <div className={classes.toolbar} />
-          {hasError
-            ? createElement(error, {
-                error: errorMessage,
-                errorInfo,
-                title,
-              })
-            : children}
-        </main>
-        {createElement(notification)}
-      </div>
+
+          <main id="main-content" className={classes.content}>
+            {createElement(appBar, {
+              title,
+              open,
+              logout,
+              location,
+              drawerWidth,
+            })}
+            <div className={classes.toolbar} />
+
+            {hasError
+              ? createElement(error, {
+                  error: errorMessage,
+                  errorInfo,
+                  title,
+                })
+              : children}
+          </main>
+          {createElement(notification)}
+        </div>
+      </LayoutProvider>
     );
   }
 }

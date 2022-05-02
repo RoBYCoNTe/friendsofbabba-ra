@@ -32,6 +32,7 @@ import {
   WorkflowContext,
 } from "./data/workflow/WorkflowContext";
 
+export * from "./components/lists/index.js";
 export * from "./components/fields/index.js";
 export * from "./components/inputs/index.js";
 export * from "./components/buttons/index.js";
