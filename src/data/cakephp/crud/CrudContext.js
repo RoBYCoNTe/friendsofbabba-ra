@@ -14,7 +14,7 @@ export const CrudProvider = ({ children, apiUrl }) => {
   useEffect(() => setEntities(data), [data]);
 
   return (
-    <CrudContext.Provider value={{ loading, data, getGrid, getForm }}>
+    <CrudContext.Provider value={{ apiUrl, loading, data, getGrid, getForm }}>
       {children}
     </CrudContext.Provider>
   );

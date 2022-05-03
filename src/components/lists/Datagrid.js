@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
     }px)`,
     borderRadius: theme.shape.borderRadius,
     overflowX: "auto",
+    overflowY: "hidden",
   }),
   rowEven: { backgroundColor: theme.palette.background.default },
 }));

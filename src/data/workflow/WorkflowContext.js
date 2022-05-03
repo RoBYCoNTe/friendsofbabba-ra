@@ -26,7 +26,7 @@ export const WorkflowProvider = ({ children, apiUrl }) => {
     setWorkflow(resources);
   }, [data]);
   return (
-    <WorkflowContext.Provider value={{ workflows: data, getWorkflow }}>
+    <WorkflowContext.Provider value={{ apiUrl, workflows: data, getWorkflow }}>
       {children}
     </WorkflowContext.Provider>
   );

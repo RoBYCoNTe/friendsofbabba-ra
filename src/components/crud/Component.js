@@ -8,6 +8,7 @@ const Component = ({
   componentProps,
   components,
   addLabel = true,
+  sortBy,
   ...props
 }) => {
   const Component = get(components, component);

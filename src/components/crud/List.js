@@ -13,6 +13,7 @@ import Datagrid from "../lists/Datagrid";
 import Filters from "../lists/Filters";
 import useListStyles from "./useListStyles";
 import exporter from "./exporter";
+import ListActions from "./ListActions";
 
 const List = (props) => {
   const classes = useListStyles();
@@ -37,6 +38,7 @@ const List = (props) => {
       classes={classes}
       title={grid.title}
       filter={grid.filter || {}}
+      actions={<ListActions grid={grid} />}
       exporter={(data) => exporter(grid, data, translate)}
       filterDefaultValues={grid.filterDefaultValues || {}}
       sort={grid?.sort}
@@ -125,11 +127,18 @@ const List = (props) => {
       ) : (
         <Datagrid>
           {grid?.columns?.map(
-            ({ source, label, sortable, component, componentProps }) => (
+            ({
+              source,
+              label,
+              sortable,
+              component,
+              sortBy,
+              componentProps,
+            }) => (
               <Component
                 key={source}
                 {...(component.indexOf("Button") === -1
-                  ? { source, label, sortable }
+                  ? { source, label, sortable, sortBy }
                   : {})}
                 component={component}
                 componentProps={componentProps}

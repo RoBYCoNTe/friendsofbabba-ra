@@ -1,6 +1,6 @@
-import { useTranslate as useTranslate$1, useGetIdentity, LoadingIndicator, getResources as getResources$2, defaultTheme, Notification, HttpError, resolveBrowserLocale, Labeled, ArrayField, SingleFieldList, ChipField, ReferenceManyField, SimpleList, DateField, Datagrid as Datagrid$1, TextField, Pagination, BooleanField, ReferenceArrayInput, CheckboxGroupInput, ReferenceInput, AutocompleteInput, SelectInput, useRefresh, useNotify, useUpdate, BooleanInput, useInput, FileInput, SearchInput, TextInput, DateInput, EditButton as EditButton$1, DeleteButton, Filter, downloadCSV, Loading, List as List$2, Button as Button$1, SaveButton, Toolbar as Toolbar$2, SimpleForm, Create as Create$2, Edit, useLocale } from 'react-admin';
+import { useTranslate as useTranslate$1, useGetIdentity, LoadingIndicator, getResources as getResources$2, defaultTheme, Notification, HttpError, resolveBrowserLocale, Labeled, ArrayField, SingleFieldList, ChipField, ReferenceManyField, SimpleList, DateField, Datagrid as Datagrid$1, TextField, Pagination, BooleanField, ReferenceArrayInput, CheckboxGroupInput, ReferenceInput, AutocompleteInput, SelectInput, useRefresh, useNotify, useUpdate, BooleanInput, useInput, FileInput, SearchInput, TextInput, DateInput, EditButton as EditButton$1, Button as Button$1, DeleteButton, Filter, downloadCSV, FilterContext, TopToolbar, FilterButton, CreateButton, ExportButton as ExportButton$1, Loading, List as List$2, SaveButton, Toolbar as Toolbar$2, SimpleForm, Create as Create$2, Edit, useLocale } from 'react-admin';
 import * as React from 'react';
-import React__default, { useCallback, createElement, useRef, useState, useEffect, useMemo as useMemo$1, createContext, useContext, Fragment } from 'react';
+import React__default, { useCallback, createElement, useRef, useState, useEffect, useMemo as useMemo$1, createContext, useContext, Fragment, cloneElement } from 'react';
 import { makeStyles, withStyles, createStyles, createTheme } from '@material-ui/core/styles';
 import { useMediaQuery, AppBar as AppBar$1, Toolbar as Toolbar$1, IconButton as IconButton$1, makeStyles as makeStyles$1, List as List$1, ListSubheader, Divider, Badge as Badge$1, ListItem, ListItemIcon, ListItemText, Drawer, Typography as Typography$1, MenuItem as MenuItem$1, Link as Link$1, Dialog, DialogTitle, DialogContent, DialogContentText, TextField as TextField$1, FormControlLabel, Switch, FormHelperText, DialogActions, Button, Menu as Menu$3 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -10,7 +10,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import IconButton from '@material-ui/core/IconButton';
 import Menu$2 from '@material-ui/core/Menu';
 import classnames from 'classnames';
-import { toggleSidebar, usePermissions as usePermissions$1, useGetIdentity as useGetIdentity$1, maxLength, useTranslate as useTranslate$2, FieldTitle, useSafeSetState, useMutation, useRedirect, useRefresh as useRefresh$1, useNotify as useNotify$1 } from 'ra-core';
+import { toggleSidebar, usePermissions as usePermissions$1, useGetIdentity as useGetIdentity$1, maxLength, useTranslate as useTranslate$2, FieldTitle, useSafeSetState, useListContext, useResourceContext, useResourceDefinition, sanitizeListRestProps, useMutation, useRedirect, useRefresh as useRefresh$1, useNotify as useNotify$1 } from 'ra-core';
 import { useDispatch, useSelector as useSelector$1, connect } from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Link, withRouter } from 'react-router-dom';
@@ -30,6 +30,7 @@ import TextField$2 from '@material-ui/core/TextField';
 import { useFormState, useForm } from 'react-final-form';
 import ContentCreate from '@material-ui/icons/Create';
 import ContentView from '@material-ui/icons/Visibility';
+import GetAppIcon from '@material-ui/icons/GetApp';
 import jsonExport from 'jsonexport/dist';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
@@ -480,7 +481,7 @@ AppBar.propTypes = {
   userMenu: PropTypes.elementType
 };
 
-var _excluded$q = ["children", "open", "label"];
+var _excluded$s = ["children", "open", "label"];
 var useStyles$9 = makeStyles$1(function (theme) {
   return {
     subHeader: {
@@ -496,7 +497,7 @@ var MenuGroup = function MenuGroup(_ref) {
   var children = _ref.children,
       open = _ref.open,
       label = _ref.label,
-      props = _objectWithoutProperties(_ref, _excluded$q);
+      props = _objectWithoutProperties(_ref, _excluded$s);
 
   var classes = useStyles$9();
   return /*#__PURE__*/React__default.createElement(List$1, {
@@ -524,17 +525,17 @@ MenuGroup.propTypes = {
   group: PropTypes.string
 };
 
-var _excluded$p = ["titleAccess", "children"];
+var _excluded$r = ["titleAccess", "children"];
 
 var Badge = function Badge(_ref) {
   _ref.titleAccess;
       var children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded$p);
+      props = _objectWithoutProperties(_ref, _excluded$r);
 
   return /*#__PURE__*/React__default.createElement(Badge$1, props, children);
 };
 
-var _excluded$o = ["location", "badge", "to", "icon", "label", "sub", "onMenuClick", "permissions", "open"];
+var _excluded$q = ["location", "badge", "to", "icon", "label", "sub", "onMenuClick", "permissions", "open"];
 
 var isSelected = function isSelected(location, to) {
   var selected = location.pathname === to || location.pathname.indexOf("".concat(to, "?")) === 0 || location.pathname.indexOf("".concat(to, "/")) === 0;
@@ -551,7 +552,7 @@ var MenuItem = function MenuItem(_ref) {
       onMenuClick = _ref.onMenuClick;
       _ref.permissions;
       var open = _ref.open,
-      props = _objectWithoutProperties(_ref, _excluded$o);
+      props = _objectWithoutProperties(_ref, _excluded$q);
 
   return /*#__PURE__*/React__default.createElement(ListItem, _extends({}, props, {
     button: true,
@@ -932,7 +933,7 @@ Sidebar.propTypes = {
   appVersion: PropTypes.string
 };
 
-var _excluded$n = ["theme"];
+var _excluded$p = ["theme"];
 var LayoutContext = /*#__PURE__*/React__default.createContext({
   drawerWidth: 0
 });
@@ -1088,7 +1089,7 @@ var EnhancedLayout = compose(connect(mapStateToProps, {} // Avoid connect passin
 
 var Layout = function Layout(_ref2) {
   var themeOverride = _ref2.theme,
-      props = _objectWithoutProperties(_ref2, _excluded$n);
+      props = _objectWithoutProperties(_ref2, _excluded$p);
 
   var themeProp = useRef(themeOverride);
 
@@ -1125,7 +1126,7 @@ Layout.defaultProps = {
   drawerWidth: 240
 };
 
-var _excluded$m = ["className", "classes", "redirectTo", "icon", "label"];
+var _excluded$o = ["className", "classes", "redirectTo", "icon", "label"];
 var useStyles$7 = makeStyles(function (theme) {
   return {
     menuItem: {
@@ -1144,7 +1145,7 @@ var UserMenuItem = /*#__PURE__*/React.forwardRef(function UserMenuItem(props, re
       props.redirectTo;
       var icon = props.icon,
       label = props.label,
-      rest = _objectWithoutProperties(props, _excluded$m);
+      rest = _objectWithoutProperties(props, _excluded$o);
 
   var classes = useStyles$7(props);
   return /*#__PURE__*/React.createElement(MenuItem$1, _extends({
@@ -1749,15 +1750,16 @@ var createI18nProvider = function createI18nProvider(_ref) {
   }, resolveBrowserLocale());
 };
 
-var _excluded$l = ["component", "componentProps", "components", "addLabel"];
+var _excluded$n = ["component", "componentProps", "components", "addLabel", "sortBy"];
 
 var Component = function Component(_ref) {
   var component = _ref.component,
       componentProps = _ref.componentProps,
       components = _ref.components,
       _ref$addLabel = _ref.addLabel,
-      addLabel = _ref$addLabel === void 0 ? true : _ref$addLabel,
-      props = _objectWithoutProperties(_ref, _excluded$l);
+      addLabel = _ref$addLabel === void 0 ? true : _ref$addLabel;
+      _ref.sortBy;
+      var props = _objectWithoutProperties(_ref, _excluded$n);
 
   var Component = get$2(components, component);
 
@@ -1794,18 +1796,18 @@ var useCustomComponents = function useCustomComponents(resource) {
   return get(r, "options.components");
 };
 
-var _excluded$k = ["chipSource"];
+var _excluded$m = ["chipSource"];
 
 var ChipArrayField = function ChipArrayField(_ref) {
   var chipSource = _ref.chipSource,
-      props = _objectWithoutProperties(_ref, _excluded$k);
+      props = _objectWithoutProperties(_ref, _excluded$m);
 
   return /*#__PURE__*/React__default.createElement(ArrayField, props, /*#__PURE__*/React__default.createElement(SingleFieldList, null, /*#__PURE__*/React__default.createElement(ChipField, {
     source: chipSource
   })));
 };
 
-var _excluded$j = ["record", "source", "width", "minWidth", "maxWidth", "maxRows", "sortable", "basePath", "sortBy"];
+var _excluded$l = ["record", "source", "width", "minWidth", "maxWidth", "maxRows", "sortable", "basePath", "sortBy"];
 var useStyles$6 = makeStyles$1(function (theme) {
   return {
     root: {
@@ -1832,7 +1834,7 @@ var LongTextField = function LongTextField(_ref) {
       _ref.sortable;
       _ref.basePath;
       _ref.sortBy;
-      var props = _objectWithoutProperties(_ref, _excluded$j);
+      var props = _objectWithoutProperties(_ref, _excluded$l);
 
   var classes = useStyles$6();
   return /*#__PURE__*/React__default.createElement(Typography$1, _extends({}, props, {
@@ -2186,20 +2188,21 @@ var WorkflowProvider = function WorkflowProvider(_ref) {
   }, [data]);
   return /*#__PURE__*/React__default.createElement(WorkflowContext.Provider, {
     value: {
+      apiUrl: apiUrl,
       workflows: data,
       getWorkflow: getWorkflow
     }
   }, children);
 };
 
-var _excluded$i = ["label", "record", "resource"];
+var _excluded$k = ["label", "record", "resource"];
 
 var StateField = function StateField(_ref) {
   var _ref$label = _ref.label,
       label = _ref$label === void 0 ? "app.label.workflow.state" : _ref$label,
       record = _ref.record,
       toResolve = _ref.resource,
-      props = _objectWithoutProperties(_ref, _excluded$i);
+      props = _objectWithoutProperties(_ref, _excluded$k);
 
   var _useContext = useContext(WorkflowContext),
       getWorkflow = _useContext.getWorkflow;
@@ -2326,13 +2329,13 @@ TransactionNotesField.propTypes = {
   maxRows: PropTypes.number
 };
 
-var _excluded$h = ["fullWidth", "addLabel"],
-    _excluded2$1 = ["admin", "label"];
+var _excluded$j = ["fullWidth", "addLabel"],
+    _excluded2$2 = ["admin", "label"];
 
 var PaginationWrapper = function PaginationWrapper(_ref) {
   _ref.fullWidth;
       _ref.addLabel;
-      var props = _objectWithoutProperties(_ref, _excluded$h);
+      var props = _objectWithoutProperties(_ref, _excluded$j);
 
   return /*#__PURE__*/React__default.createElement(Pagination, props);
 };
@@ -2341,7 +2344,7 @@ var TransactionLogsField = function TransactionLogsField(_ref2) {
   var _ref2$admin = _ref2.admin,
       admin = _ref2$admin === void 0 ? false : _ref2$admin,
       label = _ref2.label,
-      props = _objectWithoutProperties(_ref2, _excluded2$1);
+      props = _objectWithoutProperties(_ref2, _excluded2$2);
 
   var _useContext = useContext(WorkflowContext),
       getWorkflow = _useContext.getWorkflow;
@@ -2449,11 +2452,11 @@ var useManyParser = function useManyParser() {
   return memoizedFn;
 };
 
-var _excluded$g = ["optionText"];
+var _excluded$i = ["optionText"];
 
 var ReferenceCheckboxGroupInput = function ReferenceCheckboxGroupInput(_ref) {
   var optionText = _ref.optionText,
-      props = _objectWithoutProperties(_ref, _excluded$g);
+      props = _objectWithoutProperties(_ref, _excluded$i);
 
   var parse = useManyParser();
   var format = useManyFormatter();
@@ -2465,34 +2468,34 @@ var ReferenceCheckboxGroupInput = function ReferenceCheckboxGroupInput(_ref) {
   }));
 };
 
-var _excluded$f = ["optionText"];
+var _excluded$h = ["optionText"];
 
 var ReferenceAutocompleteInput$1 = function ReferenceAutocompleteInput(_ref) {
   var optionText = _ref.optionText,
-      props = _objectWithoutProperties(_ref, _excluded$f);
+      props = _objectWithoutProperties(_ref, _excluded$h);
 
   return /*#__PURE__*/React__default.createElement(ReferenceInput, props, /*#__PURE__*/React__default.createElement(AutocompleteInput, {
     optionText: optionText
   }));
 };
 
-var _excluded$e = ["optionText"];
+var _excluded$g = ["optionText"];
 
 var ReferenceAutocompleteInput = function ReferenceAutocompleteInput(_ref) {
   var optionText = _ref.optionText,
-      props = _objectWithoutProperties(_ref, _excluded$e);
+      props = _objectWithoutProperties(_ref, _excluded$g);
 
   return /*#__PURE__*/React__default.createElement(ReferenceInput, props, /*#__PURE__*/React__default.createElement(SelectInput, {
     optionText: optionText
   }));
 };
 
-var _excluded$d = ["filter"];
+var _excluded$f = ["filter"];
 
 var StateInput = function StateInput(_ref) {
   var _ref$filter = _ref.filter,
       filter = _ref$filter === void 0 ? undefined : _ref$filter,
-      props = _objectWithoutProperties(_ref, _excluded$d);
+      props = _objectWithoutProperties(_ref, _excluded$f);
 
   var _useContext = useContext(WorkflowContext),
       getWorkflow = _useContext.getWorkflow;
@@ -2743,14 +2746,14 @@ var StateCollectionInput = function StateCollectionInput(_ref) {
   }));
 };
 
-var _excluded$c = ["label", "helperText", "admin"];
+var _excluded$e = ["label", "helperText", "admin"];
 
 var TransactionNotesIsPrivateInput = function TransactionNotesIsPrivateInput(_ref) {
   var label = _ref.label,
       helperText = _ref.helperText,
       _ref$admin = _ref.admin,
       admin = _ref$admin === void 0 ? false : _ref$admin,
-      props = _objectWithoutProperties(_ref, _excluded$c);
+      props = _objectWithoutProperties(_ref, _excluded$e);
 
   var fieldLabel = useFieldLabel({
     resource: "transactions"
@@ -2790,8 +2793,8 @@ function useDebounce(value, delay) {
   return debouncedValue;
 }
 
-var _excluded$b = ["margin", "variant", "fullWidth", "maxLength", "multiline", "format", "rows", "disabled", "InputLabelProps"],
-    _excluded2 = ["name", "onChange"];
+var _excluded$d = ["margin", "variant", "fullWidth", "maxLength", "multiline", "format", "rows", "disabled", "InputLabelProps"],
+    _excluded2$1 = ["name", "onChange"];
 
 var DebouncedTextInput = function DebouncedTextInput(_ref) {
   var _ref$margin = _ref.margin,
@@ -2805,7 +2808,7 @@ var DebouncedTextInput = function DebouncedTextInput(_ref) {
       rows = _ref.rows,
       disabled = _ref.disabled,
       InputLabelProps = _ref.InputLabelProps,
-      props = _objectWithoutProperties(_ref, _excluded$b);
+      props = _objectWithoutProperties(_ref, _excluded$d);
 
   var className = props.className,
       source = props.source,
@@ -2829,7 +2832,7 @@ var DebouncedTextInput = function DebouncedTextInput(_ref) {
       _useInput$input = _useInput.input,
       name = _useInput$input.name,
       onChange = _useInput$input.onChange,
-      rest = _objectWithoutProperties(_useInput$input, _excluded2),
+      rest = _objectWithoutProperties(_useInput$input, _excluded2$1),
       _useInput$meta = _useInput.meta,
       touched = _useInput$meta.touched,
       error = _useInput$meta.error,
@@ -2989,11 +2992,11 @@ var DebouncedNumberInput = function DebouncedNumberInput(props) {
   }));
 };
 
-var _excluded$a = ["title"];
+var _excluded$c = ["title"];
 
 var MediaInput = function MediaInput(_ref) {
   var title = _ref.title,
-      props = _objectWithoutProperties(_ref, _excluded$a);
+      props = _objectWithoutProperties(_ref, _excluded$c);
 
   return /*#__PURE__*/React__default.createElement(FileInput, props, /*#__PURE__*/React__default.createElement(MediaField, {
     source: "filepath",
@@ -3020,12 +3023,12 @@ var inputs = {
   DebouncedTextInput: DebouncedTextInput
 };
 
-var _excluded$9 = ["record", "resource"];
+var _excluded$b = ["record", "resource"];
 
 var EditButton = function EditButton(_ref) {
   var record = _ref.record,
       resource = _ref.resource,
-      props = _objectWithoutProperties(_ref, _excluded$9);
+      props = _objectWithoutProperties(_ref, _excluded$b);
 
   var _useContext = useContext(WorkflowContext),
       getWorkflow = _useContext.getWorkflow;
@@ -3057,281 +3060,6 @@ var EditButton = function EditButton(_ref) {
     record: record
   }, props));
 };
-
-var buttons = {
-  RaEditButton: EditButton$1,
-  RaDeleteButton: DeleteButton,
-  // Workflow smart buttons
-  EditButton: EditButton
-};
-
-var _excluded$8 = ["children"];
-
-var getWidthToSubtract = function getWidthToSubtract(w) {
-  return w + (window.innerWidth - document.documentElement.clientWidth);
-};
-
-var useStyles$3 = makeStyles$1(function (theme) {
-  return {
-    container: function container(_ref) {
-      var sidebarOpen = _ref.sidebarOpen,
-          drawerWidth = _ref.drawerWidth;
-      return {
-        maxWidth: "calc(100vw - ".concat(sidebarOpen ? getWidthToSubtract(drawerWidth + theme.spacing(6) - 1) : getWidthToSubtract(58 + theme.spacing(6) - 1), "px)"),
-        borderRadius: theme.shape.borderRadius,
-        overflowX: "auto"
-      };
-    },
-    rowEven: {
-      backgroundColor: theme.palette.background.default
-    }
-  };
-});
-
-var Datagrid = function Datagrid(_ref2) {
-  var children = _ref2.children,
-      props = _objectWithoutProperties(_ref2, _excluded$8);
-
-  var _useContext = useContext(LayoutContext),
-      drawerWidth = _useContext.drawerWidth;
-
-  var sidebarOpen = useSelector$1(function (state) {
-    return state.admin.ui.sidebarOpen;
-  });
-  var classes = useStyles$3({
-    sidebarOpen: sidebarOpen,
-    drawerWidth: drawerWidth
-  });
-  return /*#__PURE__*/React__default.createElement("div", {
-    className: classes.container
-  }, /*#__PURE__*/React__default.createElement(Datagrid$1, _extends({
-    classes: {
-      rowEven: classes.rowEven
-    }
-  }, props), children));
-};
-
-var useFiltersStyles = makeStyles$1(function (theme) {
-  return _defineProperty({
-    form: {
-      flexWrap: "nowrap",
-      "& .filter-field > div:last-child": {
-        width: theme.spacing(1)
-      }
-    }
-  }, theme.breakpoints.down("md"), {
-    button: {
-      display: "none"
-    }
-  });
-}, {
-  name: "RaFilters"
-});
-
-var _excluded$7 = ["children"];
-
-var Filters = function Filters(_ref) {
-  var children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded$7);
-
-  var classes = useFiltersStyles();
-  return /*#__PURE__*/React__default.createElement(Filter, _extends({
-    classes: classes
-  }, props), React__default.Children.map(children, function (child, i) {
-    return /*#__PURE__*/React__default.cloneElement(child ? child : /*#__PURE__*/React__default.createElement(Fragment, null), {
-      key: i,
-      fullWidth: true
-    });
-  }));
-};
-
-var useListStyles = makeStyles(function (theme) {
-  var _ref;
-
-  return _ref = {}, _defineProperty(_ref, theme.breakpoints.up("lg"), {
-    main: {
-      "& table td, table th": {
-        whiteSpace: "nowrap"
-      }
-    }
-  }), _defineProperty(_ref, theme.breakpoints.down("md"), {//   main: {
-    //     background: theme.palette.background.default,
-    //     marginTop: theme.spacing(2),
-    //     display: "block",
-    //   },
-    //   content: {
-    //     boxShadow: "none",
-    //   },
-    //   root: {
-    //     padding: theme.spacing(2),
-    //   },
-  }), _defineProperty(_ref, theme.breakpoints.down("sm"), {
-    bulkActionsDisplayed: {
-      "& .MuiToolbar-regular:first-child": {
-        display: "flex",
-        flexDirection: "column",
-        flexBasis: "auto",
-        height: "auto",
-        "& .MuiToolbar-root": {
-          background: "inherit",
-          padding: 0,
-          flexWrap: "wrap",
-          justifyContent: "flex-start",
-          paddingBottom: theme.spacing(1),
-          width: "100%"
-        },
-        "& div:nth-child(1)": {
-          paddingTop: theme.spacing(1),
-          paddingBottom: theme.spacing(1)
-        }
-      }
-    }
-  }), _defineProperty(_ref, "bulkActionsDisplayed", {
-    "& .MuiToolbar-regular:first-child": {
-      "& .MuiToolbar-root": {
-        flexWrap: "wrap"
-      }
-    }
-  }), _ref;
-}, {
-  name: "RaMobileList"
-});
-
-var exporter = function exporter(grid, data, translate) {
-  var columns = ((grid === null || grid === void 0 ? void 0 : grid.columns) || []).filter(function (c) {
-    return c.exportable === true;
-  });
-  var headers = columns.map(function (c) {
-    return get$2(c, "label", c.source);
-  });
-  var csvData = data.map(function (record) {
-    var row = {};
-    columns.forEach(function (column) {
-      var value = get$2(record, column.source);
-      row[column.label] = value;
-    });
-    return row;
-  });
-  jsonExport(csvData, {
-    rowDelimiter: ";",
-    headers: headers
-  }, function (err, csv) {
-    return downloadCSV("\uFEFF" + csv, translate(grid === null || grid === void 0 ? void 0 : grid.title));
-  });
-};
-
-var _excluded$6 = ["source", "label", "component", "componentProps"];
-
-var List = function List(props) {
-  var _grid$filters, _grid$columns;
-
-  var classes = useListStyles();
-  var translate = useTranslate$1();
-
-  var _React$useContext = React.useContext(CrudContext$1),
-      getGrid = _React$useContext.getGrid,
-      loading = _React$useContext.loading;
-
-  var grid = getGrid(props.resource);
-  var customComponents = useCustomComponents(props.resource);
-  var isMobile = useMediaQuery(function (theme) {
-    var _grid$mobileBreakpoin;
-
-    return theme.breakpoints.down((_grid$mobileBreakpoin = grid === null || grid === void 0 ? void 0 : grid.mobileBreakpoint) !== null && _grid$mobileBreakpoin !== void 0 ? _grid$mobileBreakpoin : "sm");
-  });
-
-  if (loading) {
-    return /*#__PURE__*/React.createElement(Loading, null);
-  }
-
-  if (grid === false || grid === null) {
-    return null;
-  }
-
-  return /*#__PURE__*/React.createElement(List$2, _extends({}, props, {
-    classes: classes,
-    title: grid.title,
-    filter: grid.filter || {},
-    exporter: function exporter$1(data) {
-      return exporter(grid, data, translate);
-    },
-    filterDefaultValues: grid.filterDefaultValues || {},
-    sort: grid === null || grid === void 0 ? void 0 : grid.sort,
-    perPage: grid === null || grid === void 0 ? void 0 : grid.perPage,
-    filters: grid !== null && grid !== void 0 && grid.filters ? /*#__PURE__*/React.createElement(Filters, null, grid === null || grid === void 0 ? void 0 : (_grid$filters = grid.filters) === null || _grid$filters === void 0 ? void 0 : _grid$filters.map(function (_ref) {
-      var source = _ref.source;
-          _ref.label;
-          var component = _ref.component,
-          componentProps = _ref.componentProps,
-          props = _objectWithoutProperties(_ref, _excluded$6);
-
-      return /*#__PURE__*/React.createElement(Component, _extends({}, props, {
-        key: source,
-        source: source,
-        component: component,
-        componentProps: componentProps,
-        components: _objectSpread2(_objectSpread2({}, inputs), customComponents.inputs),
-        alwaysOn: componentProps === null || componentProps === void 0 ? void 0 : componentProps.alwaysOn
-      }));
-    })) : null
-  }), isMobile ? /*#__PURE__*/React.createElement(SimpleList, {
-    primaryText: function primaryText(record) {
-      return grid !== null && grid !== void 0 && grid.mobilePrimaryComponent ? /*#__PURE__*/React.createElement(Component, _extends({}, grid.mobilePrimaryComponent, {
-        record: record,
-        source: grid === null || grid === void 0 ? void 0 : grid.mobilePrimaryText,
-        components: _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), buttons), customComponents.inputs), customComponents.fields), customComponents.buttons)
-      })) : get$2(record, grid === null || grid === void 0 ? void 0 : grid.mobilePrimaryText);
-    },
-    secondaryText: function secondaryText(record) {
-      return grid !== null && grid !== void 0 && grid.mobileSecondaryComponent ? /*#__PURE__*/React.createElement(Component, _extends({}, grid.mobileSecondaryComponent, {
-        record: record,
-        source: grid === null || grid === void 0 ? void 0 : grid.mobileSecondaryText,
-        components: _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), buttons), customComponents.inputs), customComponents.fields), customComponents.buttons)
-      })) : get$2(record, grid === null || grid === void 0 ? void 0 : grid.mobileSecondaryText);
-    },
-    tertiaryText: function tertiaryText(record) {
-      return grid !== null && grid !== void 0 && grid.mobileTertiaryComponent ? /*#__PURE__*/React.createElement(Component, _extends({}, grid.mobileTertiaryComponent, {
-        record: record,
-        source: grid === null || grid === void 0 ? void 0 : grid.mobileTertiaryText,
-        components: _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), buttons), customComponents.inputs), customComponents.fields), customComponents.buttons)
-      })) : get$2(record, grid === null || grid === void 0 ? void 0 : grid.mobileTertiaryText);
-    },
-    linkType: grid === null || grid === void 0 ? void 0 : grid.mobileLinkType
-  }) : /*#__PURE__*/React.createElement(Datagrid, null, grid === null || grid === void 0 ? void 0 : (_grid$columns = grid.columns) === null || _grid$columns === void 0 ? void 0 : _grid$columns.map(function (_ref2) {
-    var source = _ref2.source,
-        label = _ref2.label,
-        sortable = _ref2.sortable,
-        component = _ref2.component,
-        componentProps = _ref2.componentProps;
-    return /*#__PURE__*/React.createElement(Component, _extends({
-      key: source
-    }, component.indexOf("Button") === -1 ? {
-      source: source,
-      label: label,
-      sortable: sortable
-    } : {}, {
-      component: component,
-      componentProps: componentProps,
-      components: _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), buttons), customComponents.inputs), customComponents.fields), customComponents.buttons)
-    }));
-  })));
-};
-
-var useFormStyles = makeStyles$1(function (theme) {
-  var _ref;
-
-  return _ref = {}, _defineProperty(_ref, theme.breakpoints.up("md"), {
-    main: {
-      width: "70%",
-      minWidth: "960px",
-      margin: "1em auto"
-    }
-  }), _defineProperty(_ref, theme.breakpoints.down("md"), {
-    main: {
-      minWidth: "100%"
-    }
-  }), _ref;
-});
 
 var load = /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(_ref) {
@@ -3463,6 +3191,7 @@ var CrudProvider = function CrudProvider(_ref) {
   }, [data]);
   return /*#__PURE__*/React__default.createElement(CrudContext.Provider, {
     value: {
+      apiUrl: apiUrl,
       loading: loading,
       data: data,
       getGrid: getGrid,
@@ -3470,6 +3199,457 @@ var CrudProvider = function CrudProvider(_ref) {
     }
   }, children);
 };
+
+var ExportToXlsxButton = function ExportToXlsxButton(_ref, ref) {
+  var currentSort = _ref.currentSort,
+      filterValues = _ref.filterValues,
+      baseUrl = _ref.baseUrl,
+      onClick = _ref.onClick,
+      _ref$label = _ref.label,
+      label = _ref$label === void 0 ? "ra.action.export" : _ref$label,
+      _ref$menu = _ref.menu,
+      menu = _ref$menu === void 0 ? false : _ref$menu,
+      resource = _ref.resource,
+      _ref$extension = _ref.extension,
+      extension = _ref$extension === void 0 ? "xlsx" : _ref$extension,
+      sort = _ref.sort;
+
+  var _useContext = useContext(CrudContext),
+      apiUrl = _useContext.apiUrl;
+
+  var url = useMemo$1(function () {
+    return baseUrl == null ? "".concat(apiUrl, "/crud/").concat(resource, "/export.").concat(extension) : baseUrl;
+  }, [baseUrl, apiUrl, resource, extension]);
+  var href = useMemo$1(function () {
+    var filters = Object.keys(filterValues).filter(function (name) {
+      return filterValues[name] !== undefined && filterValues[name] !== null;
+    }).map(function (name) {
+      return "".concat(name, "=").concat(filterValues[name]);
+    }).join("&");
+    var order = currentSort ? "&sort=".concat(currentSort.field, "&direction=").concat(currentSort.order) : "&sort=".concat(sort === null || sort === void 0 ? void 0 : sort.field, "&direction=").concat(sort === null || sort === void 0 ? void 0 : sort.order);
+    return "".concat(url, "?token=").concat(getToken(), "&").concat(filters).concat(order);
+  }, [filterValues, currentSort, url, sort]);
+  return menu ? /*#__PURE__*/React__default.createElement(MenuItem$1, {
+    ref: ref,
+    component: Link$1,
+    onClick: onClick,
+    href: href
+  }, extension === null || extension === void 0 ? void 0 : extension.toUpperCase()) : /*#__PURE__*/React__default.createElement(Button$1, {
+    component: Link$1,
+    href: href,
+    label: label
+  });
+};
+
+var ExportButton = /*#__PURE__*/React__default.forwardRef(ExportToXlsxButton);
+
+var _excluded$a = ["exportTo", "label"];
+
+var ExportToButton = function ExportToButton(_ref) {
+  var _ref$exportTo = _ref.exportTo,
+      exportTo = _ref$exportTo === void 0 ? ["csv", "xlsx"] : _ref$exportTo,
+      _ref$label = _ref.label,
+      label = _ref$label === void 0 ? "ra.action.export" : _ref$label,
+      props = _objectWithoutProperties(_ref, _excluded$a);
+
+  var _React$useState = React__default.useState(null),
+      _React$useState2 = _slicedToArray(_React$useState, 2),
+      anchorEl = _React$useState2[0],
+      setAnchorEl = _React$useState2[1];
+
+  var handleClick = function handleClick(event) {
+    setAnchorEl(event.currentTarget);
+  };
+
+  var handleClose = function handleClose() {
+    setAnchorEl(null);
+  };
+
+  if (exportTo.length === 0) {
+    return null;
+  }
+
+  return (exportTo === null || exportTo === void 0 ? void 0 : exportTo.length) > 1 ? /*#__PURE__*/React__default.createElement(Fragment, null, /*#__PURE__*/React__default.createElement(Button$1, {
+    label: label,
+    onClick: handleClick,
+    startIcon: /*#__PURE__*/React__default.createElement(GetAppIcon, null)
+  }), /*#__PURE__*/React__default.createElement(Menu$2, {
+    id: "export-menu",
+    anchorEl: anchorEl,
+    keepMounted: true,
+    open: Boolean(anchorEl),
+    onClose: handleClose
+  }, exportTo.map(function (extension) {
+    return /*#__PURE__*/React__default.createElement(ExportButton, _extends({
+      key: extension
+    }, props, {
+      extension: extension,
+      menu: true
+    }));
+  }))) : /*#__PURE__*/React__default.createElement(ExportButton, _extends({}, props, {
+    extension: exportTo[0]
+  }));
+};
+
+var buttons = {
+  RaEditButton: EditButton$1,
+  RaDeleteButton: DeleteButton,
+  // Workflow smart buttons
+  EditButton: EditButton,
+  ExportToButton: ExportToButton
+};
+
+var _excluded$9 = ["children"];
+
+var getWidthToSubtract = function getWidthToSubtract(w) {
+  return w + (window.innerWidth - document.documentElement.clientWidth);
+};
+
+var useStyles$3 = makeStyles$1(function (theme) {
+  return {
+    container: function container(_ref) {
+      var sidebarOpen = _ref.sidebarOpen,
+          drawerWidth = _ref.drawerWidth;
+      return {
+        maxWidth: "calc(100vw - ".concat(sidebarOpen ? getWidthToSubtract(drawerWidth + theme.spacing(6) - 1) : getWidthToSubtract(58 + theme.spacing(6) - 1), "px)"),
+        borderRadius: theme.shape.borderRadius,
+        overflowX: "auto",
+        overflowY: "hidden"
+      };
+    },
+    rowEven: {
+      backgroundColor: theme.palette.background.default
+    }
+  };
+});
+
+var Datagrid = function Datagrid(_ref2) {
+  var children = _ref2.children,
+      props = _objectWithoutProperties(_ref2, _excluded$9);
+
+  var _useContext = useContext(LayoutContext),
+      drawerWidth = _useContext.drawerWidth;
+
+  var sidebarOpen = useSelector$1(function (state) {
+    return state.admin.ui.sidebarOpen;
+  });
+  var classes = useStyles$3({
+    sidebarOpen: sidebarOpen,
+    drawerWidth: drawerWidth
+  });
+  return /*#__PURE__*/React__default.createElement("div", {
+    className: classes.container
+  }, /*#__PURE__*/React__default.createElement(Datagrid$1, _extends({
+    classes: {
+      rowEven: classes.rowEven
+    }
+  }, props), children));
+};
+
+var useFiltersStyles = makeStyles$1(function (theme) {
+  return _defineProperty({
+    form: {
+      flexWrap: "nowrap",
+      "& .filter-field > div:last-child": {
+        width: theme.spacing(1)
+      }
+    }
+  }, theme.breakpoints.down("md"), {
+    button: {
+      display: "none"
+    }
+  });
+}, {
+  name: "RaFilters"
+});
+
+var _excluded$8 = ["children"];
+
+var Filters = function Filters(_ref) {
+  var children = _ref.children,
+      props = _objectWithoutProperties(_ref, _excluded$8);
+
+  var classes = useFiltersStyles();
+  return /*#__PURE__*/React__default.createElement(Filter, _extends({
+    classes: classes
+  }, props), React__default.Children.map(children, function (child, i) {
+    return /*#__PURE__*/React__default.cloneElement(child ? child : /*#__PURE__*/React__default.createElement(Fragment, null), {
+      key: i,
+      fullWidth: true
+    });
+  }));
+};
+
+var useListStyles = makeStyles(function (theme) {
+  var _ref;
+
+  return _ref = {}, _defineProperty(_ref, theme.breakpoints.up("lg"), {
+    main: {
+      "& table td, table th": {
+        whiteSpace: "nowrap"
+      }
+    }
+  }), _defineProperty(_ref, theme.breakpoints.down("md"), {//   main: {
+    //     background: theme.palette.background.default,
+    //     marginTop: theme.spacing(2),
+    //     display: "block",
+    //   },
+    //   content: {
+    //     boxShadow: "none",
+    //   },
+    //   root: {
+    //     padding: theme.spacing(2),
+    //   },
+  }), _defineProperty(_ref, theme.breakpoints.down("sm"), {
+    bulkActionsDisplayed: {
+      "& .MuiToolbar-regular:first-child": {
+        display: "flex",
+        flexDirection: "column",
+        flexBasis: "auto",
+        height: "auto",
+        "& .MuiToolbar-root": {
+          background: "inherit",
+          padding: 0,
+          flexWrap: "wrap",
+          justifyContent: "flex-start",
+          paddingBottom: theme.spacing(1),
+          width: "100%"
+        },
+        "& div:nth-child(1)": {
+          paddingTop: theme.spacing(1),
+          paddingBottom: theme.spacing(1)
+        }
+      }
+    }
+  }), _defineProperty(_ref, "bulkActionsDisplayed", {
+    "& .MuiToolbar-regular:first-child": {
+      "& .MuiToolbar-root": {
+        flexWrap: "wrap"
+      }
+    }
+  }), _ref;
+}, {
+  name: "RaMobileList"
+});
+
+var exporter = function exporter(grid, data, translate) {
+  var columns = ((grid === null || grid === void 0 ? void 0 : grid.columns) || []).filter(function (c) {
+    return c.exportable === true;
+  });
+  var headers = columns.map(function (c) {
+    return get$2(c, "label", c.source);
+  });
+  var csvData = data.map(function (record) {
+    var row = {};
+    columns.forEach(function (column) {
+      var value = get$2(record, column.source);
+      row[column.label] = value;
+    });
+    return row;
+  });
+  jsonExport(csvData, {
+    rowDelimiter: ";",
+    headers: headers
+  }, function (err, csv) {
+    return downloadCSV("\uFEFF" + csv, translate(grid === null || grid === void 0 ? void 0 : grid.title));
+  });
+};
+
+var _excluded$7 = ["grid"],
+    _excluded2 = ["className", "exporter", "filters"];
+
+var ListActions = function ListActions(_ref) {
+  var grid = _ref.grid,
+      props = _objectWithoutProperties(_ref, _excluded$7);
+
+  var className = props.className,
+      exporter = props.exporter,
+      filtersProp = props.filters,
+      rest = _objectWithoutProperties(props, _excluded2);
+
+  var _useListContext = useListContext(props),
+      currentSort = _useListContext.currentSort,
+      displayedFilters = _useListContext.displayedFilters,
+      filterValues = _useListContext.filterValues,
+      basePath = _useListContext.basePath,
+      showFilter = _useListContext.showFilter,
+      total = _useListContext.total;
+
+  var resource = useResourceContext(rest);
+
+  var _useResourceDefinitio = useResourceDefinition(rest),
+      hasCreate = _useResourceDefinitio.hasCreate;
+
+  var filters = useContext(FilterContext) || filtersProp;
+  return useMemo$1(function () {
+    var _grid$exportTo;
+
+    return /*#__PURE__*/React.createElement(TopToolbar, _extends({
+      className: className
+    }, sanitizeListRestProps(rest)), filtersProp ? /*#__PURE__*/cloneElement(filtersProp, {
+      resource: resource,
+      showFilter: showFilter,
+      displayedFilters: displayedFilters,
+      filterValues: filterValues,
+      context: "button"
+    }) : filters && /*#__PURE__*/React.createElement(FilterButton, null), hasCreate && /*#__PURE__*/React.createElement(CreateButton, {
+      basePath: basePath
+    }), (grid === null || grid === void 0 ? void 0 : (_grid$exportTo = grid.exportTo) === null || _grid$exportTo === void 0 ? void 0 : _grid$exportTo.length) > 0 ? /*#__PURE__*/React.createElement(ExportToButton, {
+      exportTo: grid === null || grid === void 0 ? void 0 : grid.exportTo,
+      disabled: total === 0,
+      resource: resource,
+      sort: currentSort,
+      filterValues: filterValues
+    }) : exporter !== false && /*#__PURE__*/React.createElement(ExportButton$1, {
+      disabled: total === 0,
+      resource: resource,
+      sort: currentSort,
+      filterValues: filterValues
+    }));
+  },
+  /* eslint-disable react-hooks/exhaustive-deps */
+  [resource, displayedFilters, filterValues, showFilter, filters, total, basePath, className, currentSort, exporter, hasCreate]);
+};
+
+ListActions.propTypes = {
+  basePath: PropTypes.string,
+  className: PropTypes.string,
+  currentSort: PropTypes.any,
+  displayedFilters: PropTypes.object,
+  exporter: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
+  filters: PropTypes.element,
+  filterValues: PropTypes.object,
+  hasCreate: PropTypes.bool,
+  resource: PropTypes.string,
+  onUnselectItems: PropTypes.func.isRequired,
+  selectedIds: PropTypes.arrayOf(PropTypes.any),
+  showFilter: PropTypes.func,
+  total: PropTypes.number
+};
+ListActions.defaultProps = {
+  selectedIds: [],
+  onUnselectItems: function onUnselectItems() {
+    return null;
+  }
+};
+
+var _excluded$6 = ["source", "label", "component", "componentProps"];
+
+var List = function List(props) {
+  var _grid$filters, _grid$columns;
+
+  var classes = useListStyles();
+  var translate = useTranslate$1();
+
+  var _React$useContext = React.useContext(CrudContext$1),
+      getGrid = _React$useContext.getGrid,
+      loading = _React$useContext.loading;
+
+  var grid = getGrid(props.resource);
+  var customComponents = useCustomComponents(props.resource);
+  var isMobile = useMediaQuery(function (theme) {
+    var _grid$mobileBreakpoin;
+
+    return theme.breakpoints.down((_grid$mobileBreakpoin = grid === null || grid === void 0 ? void 0 : grid.mobileBreakpoint) !== null && _grid$mobileBreakpoin !== void 0 ? _grid$mobileBreakpoin : "sm");
+  });
+
+  if (loading) {
+    return /*#__PURE__*/React.createElement(Loading, null);
+  }
+
+  if (grid === false || grid === null) {
+    return null;
+  }
+
+  return /*#__PURE__*/React.createElement(List$2, _extends({}, props, {
+    classes: classes,
+    title: grid.title,
+    filter: grid.filter || {},
+    actions: /*#__PURE__*/React.createElement(ListActions, {
+      grid: grid
+    }),
+    exporter: function exporter$1(data) {
+      return exporter(grid, data, translate);
+    },
+    filterDefaultValues: grid.filterDefaultValues || {},
+    sort: grid === null || grid === void 0 ? void 0 : grid.sort,
+    perPage: grid === null || grid === void 0 ? void 0 : grid.perPage,
+    filters: grid !== null && grid !== void 0 && grid.filters ? /*#__PURE__*/React.createElement(Filters, null, grid === null || grid === void 0 ? void 0 : (_grid$filters = grid.filters) === null || _grid$filters === void 0 ? void 0 : _grid$filters.map(function (_ref) {
+      var source = _ref.source;
+          _ref.label;
+          var component = _ref.component,
+          componentProps = _ref.componentProps,
+          props = _objectWithoutProperties(_ref, _excluded$6);
+
+      return /*#__PURE__*/React.createElement(Component, _extends({}, props, {
+        key: source,
+        source: source,
+        component: component,
+        componentProps: componentProps,
+        components: _objectSpread2(_objectSpread2({}, inputs), customComponents.inputs),
+        alwaysOn: componentProps === null || componentProps === void 0 ? void 0 : componentProps.alwaysOn
+      }));
+    })) : null
+  }), isMobile ? /*#__PURE__*/React.createElement(SimpleList, {
+    primaryText: function primaryText(record) {
+      return grid !== null && grid !== void 0 && grid.mobilePrimaryComponent ? /*#__PURE__*/React.createElement(Component, _extends({}, grid.mobilePrimaryComponent, {
+        record: record,
+        source: grid === null || grid === void 0 ? void 0 : grid.mobilePrimaryText,
+        components: _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), buttons), customComponents.inputs), customComponents.fields), customComponents.buttons)
+      })) : get$2(record, grid === null || grid === void 0 ? void 0 : grid.mobilePrimaryText);
+    },
+    secondaryText: function secondaryText(record) {
+      return grid !== null && grid !== void 0 && grid.mobileSecondaryComponent ? /*#__PURE__*/React.createElement(Component, _extends({}, grid.mobileSecondaryComponent, {
+        record: record,
+        source: grid === null || grid === void 0 ? void 0 : grid.mobileSecondaryText,
+        components: _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), buttons), customComponents.inputs), customComponents.fields), customComponents.buttons)
+      })) : get$2(record, grid === null || grid === void 0 ? void 0 : grid.mobileSecondaryText);
+    },
+    tertiaryText: function tertiaryText(record) {
+      return grid !== null && grid !== void 0 && grid.mobileTertiaryComponent ? /*#__PURE__*/React.createElement(Component, _extends({}, grid.mobileTertiaryComponent, {
+        record: record,
+        source: grid === null || grid === void 0 ? void 0 : grid.mobileTertiaryText,
+        components: _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), buttons), customComponents.inputs), customComponents.fields), customComponents.buttons)
+      })) : get$2(record, grid === null || grid === void 0 ? void 0 : grid.mobileTertiaryText);
+    },
+    linkType: grid === null || grid === void 0 ? void 0 : grid.mobileLinkType
+  }) : /*#__PURE__*/React.createElement(Datagrid, null, grid === null || grid === void 0 ? void 0 : (_grid$columns = grid.columns) === null || _grid$columns === void 0 ? void 0 : _grid$columns.map(function (_ref2) {
+    var source = _ref2.source,
+        label = _ref2.label,
+        sortable = _ref2.sortable,
+        component = _ref2.component,
+        sortBy = _ref2.sortBy,
+        componentProps = _ref2.componentProps;
+    return /*#__PURE__*/React.createElement(Component, _extends({
+      key: source
+    }, component.indexOf("Button") === -1 ? {
+      source: source,
+      label: label,
+      sortable: sortable,
+      sortBy: sortBy
+    } : {}, {
+      component: component,
+      componentProps: componentProps,
+      components: _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), buttons), customComponents.inputs), customComponents.fields), customComponents.buttons)
+    }));
+  })));
+};
+
+var useFormStyles = makeStyles$1(function (theme) {
+  var _ref;
+
+  return _ref = {}, _defineProperty(_ref, theme.breakpoints.up("md"), {
+    main: {
+      width: "70%",
+      minWidth: "960px",
+      margin: "1em auto"
+    }
+  }), _defineProperty(_ref, theme.breakpoints.down("md"), {
+    main: {
+      minWidth: "100%"
+    }
+  }), _ref;
+});
 
 var _excluded$5 = ["resource", "baseRecord"];
 
