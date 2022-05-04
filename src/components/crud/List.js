@@ -1,19 +1,20 @@
 import * as React from "react";
-import { CrudContext } from "friendsofbabba-ra";
-import { SimpleList, List as RaList, Loading, useTranslate } from "react-admin";
-import Component from "./Component";
-import { useMediaQuery } from "@material-ui/core";
-import { get } from "lodash";
-import useCustomComponents from "./useCustomComponents";
+import * as buttons from "../buttons/index.js";
+import * as fields from "../fields/index.js";
+import * as inputs from "../inputs/index.js";
 
-import fields from "../fields/index.js";
-import inputs from "../inputs/index.js";
-import buttons from "../buttons/index.js";
+import { Loading, List as RaList, SimpleList, useTranslate } from "react-admin";
+
+import Component from "./Component";
+import { CrudContext } from "friendsofbabba-ra";
 import Datagrid from "../lists/Datagrid";
 import Filters from "../lists/Filters";
-import useListStyles from "./useListStyles";
-import exporter from "./exporter";
 import ListActions from "./ListActions";
+import exporter from "./exporter";
+import { get } from "lodash";
+import useCustomComponents from "./useCustomComponents";
+import useListStyles from "./useListStyles";
+import { useMediaQuery } from "@material-ui/core";
 
 const List = (props) => {
   const classes = useListStyles();
@@ -40,6 +41,7 @@ const List = (props) => {
       title={grid.title}
       filter={grid.filter || {}}
       actions={<ListActions grid={grid} />}
+      pagination={grid?.pagination}
       exporter={(data) => exporter(grid, data, translate)}
       filterDefaultValues={grid.filterDefaultValues || {}}
       sort={grid?.sort}
@@ -55,7 +57,7 @@ const List = (props) => {
                   source={source}
                   component={component}
                   componentProps={componentProps}
-                  components={{ ...inputs, ...customComponents.inputs }}
+                  components={{ ...inputs, ...customComponents }}
                   alwaysOn={componentProps?.alwaysOn}
                 />
               )
@@ -64,7 +66,17 @@ const List = (props) => {
         ) : null
       }
     >
-      {isMobile ? (
+      {grid?.component && grid?.component !== "Datagrid" ? (
+        <Component
+          component={grid.component}
+          componentProps={grid.componentProps}
+          components={{
+            Datagrid,
+            SimpleList,
+            ...customComponents,
+          }}
+        />
+      ) : isMobile ? (
         <SimpleList
           primaryText={(record) =>
             grid?.mobilePrimaryComponent ? (
@@ -76,9 +88,7 @@ const List = (props) => {
                   ...fields,
                   ...inputs,
                   ...buttons,
-                  ...customComponents.inputs,
-                  ...customComponents.fields,
-                  ...customComponents.buttons,
+                  ...customComponents,
                 }}
               />
             ) : (
@@ -95,9 +105,7 @@ const List = (props) => {
                   ...fields,
                   ...inputs,
                   ...buttons,
-                  ...customComponents.inputs,
-                  ...customComponents.fields,
-                  ...customComponents.buttons,
+                  ...customComponents,
                 }}
               />
             ) : (
@@ -114,9 +122,7 @@ const List = (props) => {
                   ...fields,
                   ...inputs,
                   ...buttons,
-                  ...customComponents.inputs,
-                  ...customComponents.fields,
-                  ...customComponents.buttons,
+                  ...customComponents,
                 }}
               />
             ) : (
@@ -139,7 +145,7 @@ const List = (props) => {
               <Component
                 key={source}
                 {...(component.indexOf("Button") === -1
-                  ? { source, label, sortable, sortBy }
+                  ? { source, label, sortable, sortBy, addLabel: false }
                   : {})}
                 component={component}
                 componentProps={componentProps}
@@ -147,9 +153,7 @@ const List = (props) => {
                   ...fields,
                   ...inputs,
                   ...buttons,
-                  ...customComponents.inputs,
-                  ...customComponents.fields,
-                  ...customComponents.buttons,
+                  ...customComponents,
                 }}
               />
             )

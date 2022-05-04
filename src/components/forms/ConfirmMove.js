@@ -21,9 +21,9 @@ import React, {
 import { useNotify, useRefresh, useTranslate, useUpdate } from "react-admin";
 
 import PropTypes from "prop-types";
+import { WorkflowContext } from "../../data/workflow/WorkflowContext";
 import classnames from "classnames";
 import { get } from "lodash";
-import { WorkflowContext } from "../../../data/workflow/WorkflowContext";
 
 const useStyles = makeStyles((theme) => ({
   required: {},

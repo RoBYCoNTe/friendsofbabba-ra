@@ -1,6 +1,7 @@
-import List from "./List";
 import Create from "./Create";
 import Edit from "./Edit";
+import List from "./List";
+
 const createCrud = ({
   icon = null,
   list = List,
@@ -10,12 +11,7 @@ const createCrud = ({
     group: "admin",
     roles: ["admin"],
   },
-  components = {
-    grids: {},
-    fields: {},
-    forms: {},
-    inputs: {},
-  },
+  components = {},
 }) => ({
   icon,
   options: { ...options, components },

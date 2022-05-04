@@ -2,10 +2,9 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var core = require('@material-ui/core');
 var reactAdmin = require('react-admin');
 var React = require('react');
-var styles$1 = require('@material-ui/core/styles');
-var core = require('@material-ui/core');
 var MenuIcon = require('@material-ui/icons/Menu');
 var PropTypes = require('prop-types');
 var Typography = require('@material-ui/core/Typography');
@@ -13,6 +12,7 @@ var AccountCircle = require('@material-ui/icons/AccountCircle');
 var IconButton = require('@material-ui/core/IconButton');
 var Menu$2 = require('@material-ui/core/Menu');
 var classnames = require('classnames');
+var styles$1 = require('@material-ui/core/styles');
 var raCore = require('ra-core');
 var reactRedux = require('react-redux');
 var CssBaseline = require('@material-ui/core/CssBaseline');
@@ -22,24 +22,25 @@ var get$1 = require('lodash/get');
 var ChevronLeftIcon = require('@material-ui/icons/ChevronLeft');
 var styles$2 = require('@material-ui/styles');
 var ExitIcon = require('@material-ui/icons/PowerSettingsNew');
-var queryString = require('query-string');
-var lodash = require('lodash');
-var moment = require('moment');
-var polyglotI18nProvider = require('ra-i18n-polyglot');
-var friendsofbabbaRa = require('friendsofbabba-ra');
-var raUiMaterialui = require('ra-ui-materialui');
-var ArrowDropDownIcon = require('@material-ui/icons/ArrowDropDown');
-var TextField = require('@material-ui/core/TextField');
-var reactFinalForm = require('react-final-form');
+var BackIcon = require('@material-ui/icons/ArrowBack');
 var ContentCreate = require('@material-ui/icons/Create');
 var ContentView = require('@material-ui/icons/Visibility');
+var lodash = require('lodash');
 var GetAppIcon = require('@material-ui/icons/GetApp');
-var jsonExport = require('jsonexport/dist');
-var BackIcon = require('@material-ui/icons/ArrowBack');
+var reactFinalForm = require('react-final-form');
 var ArrowForwardIosIcon = require('@material-ui/icons/ArrowForwardIos');
 var Button = require('@material-ui/core/Button');
 var DoubleArrowIcon = require('@material-ui/icons/DoubleArrow');
 var MenuItem$1 = require('@material-ui/core/MenuItem');
+var raUiMaterialui = require('ra-ui-materialui');
+var TextField = require('@material-ui/core/TextField');
+var ArrowDropDownIcon = require('@material-ui/icons/ArrowDropDown');
+var TableChart = require('@material-ui/icons/TableChart');
+var friendsofbabbaRa = require('friendsofbabba-ra');
+var jsonExport = require('jsonexport/dist');
+var moment = require('moment');
+var polyglotI18nProvider = require('ra-i18n-polyglot');
+var queryString = require('query-string');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -75,19 +76,20 @@ var DashboardIcon__default = /*#__PURE__*/_interopDefaultLegacy(DashboardIcon);
 var get__default = /*#__PURE__*/_interopDefaultLegacy(get$1);
 var ChevronLeftIcon__default = /*#__PURE__*/_interopDefaultLegacy(ChevronLeftIcon);
 var ExitIcon__default = /*#__PURE__*/_interopDefaultLegacy(ExitIcon);
-var moment__default = /*#__PURE__*/_interopDefaultLegacy(moment);
-var polyglotI18nProvider__default = /*#__PURE__*/_interopDefaultLegacy(polyglotI18nProvider);
-var ArrowDropDownIcon__default = /*#__PURE__*/_interopDefaultLegacy(ArrowDropDownIcon);
-var TextField__default = /*#__PURE__*/_interopDefaultLegacy(TextField);
+var BackIcon__default = /*#__PURE__*/_interopDefaultLegacy(BackIcon);
 var ContentCreate__default = /*#__PURE__*/_interopDefaultLegacy(ContentCreate);
 var ContentView__default = /*#__PURE__*/_interopDefaultLegacy(ContentView);
 var GetAppIcon__default = /*#__PURE__*/_interopDefaultLegacy(GetAppIcon);
-var jsonExport__default = /*#__PURE__*/_interopDefaultLegacy(jsonExport);
-var BackIcon__default = /*#__PURE__*/_interopDefaultLegacy(BackIcon);
 var ArrowForwardIosIcon__default = /*#__PURE__*/_interopDefaultLegacy(ArrowForwardIosIcon);
 var Button__default = /*#__PURE__*/_interopDefaultLegacy(Button);
 var DoubleArrowIcon__default = /*#__PURE__*/_interopDefaultLegacy(DoubleArrowIcon);
 var MenuItem__default = /*#__PURE__*/_interopDefaultLegacy(MenuItem$1);
+var TextField__default = /*#__PURE__*/_interopDefaultLegacy(TextField);
+var ArrowDropDownIcon__default = /*#__PURE__*/_interopDefaultLegacy(ArrowDropDownIcon);
+var TableChart__default = /*#__PURE__*/_interopDefaultLegacy(TableChart);
+var jsonExport__default = /*#__PURE__*/_interopDefaultLegacy(jsonExport);
+var moment__default = /*#__PURE__*/_interopDefaultLegacy(moment);
+var polyglotI18nProvider__default = /*#__PURE__*/_interopDefaultLegacy(polyglotI18nProvider);
 
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
@@ -532,6 +534,16 @@ AppBar.propTypes = {
   userMenu: PropTypes__default["default"].elementType
 };
 
+var _excluded$w = ["titleAccess", "children"];
+
+var Badge = function Badge(_ref) {
+  _ref.titleAccess;
+      var children = _ref.children,
+      props = _objectWithoutProperties(_ref, _excluded$w);
+
+  return /*#__PURE__*/React__default["default"].createElement(core.Badge, props, children);
+};
+
 var _excluded$v = ["children", "open", "label"];
 var useStyles$9 = core.makeStyles(function (theme) {
   return {
@@ -576,17 +588,7 @@ MenuGroup.propTypes = {
   group: PropTypes__default["default"].string
 };
 
-var _excluded$u = ["titleAccess", "children"];
-
-var Badge = function Badge(_ref) {
-  _ref.titleAccess;
-      var children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded$u);
-
-  return /*#__PURE__*/React__default["default"].createElement(core.Badge, props, children);
-};
-
-var _excluded$t = ["location", "badge", "to", "icon", "label", "sub", "onMenuClick", "permissions", "open"];
+var _excluded$u = ["location", "badge", "to", "icon", "label", "sub", "onMenuClick", "permissions", "open"];
 
 var isSelected = function isSelected(location, to) {
   var selected = location.pathname === to || location.pathname.indexOf("".concat(to, "?")) === 0 || location.pathname.indexOf("".concat(to, "/")) === 0;
@@ -603,7 +605,7 @@ var MenuItem = function MenuItem(_ref) {
       onMenuClick = _ref.onMenuClick;
       _ref.permissions;
       var open = _ref.open,
-      props = _objectWithoutProperties(_ref, _excluded$t);
+      props = _objectWithoutProperties(_ref, _excluded$u);
 
   return /*#__PURE__*/React__default["default"].createElement(core.ListItem, _extends({}, props, {
     button: true,
@@ -614,7 +616,8 @@ var MenuItem = function MenuItem(_ref) {
   }), /*#__PURE__*/React__default["default"].createElement(core.ListItemIcon, null, badge && badge.show !== false ? /*#__PURE__*/React__default["default"].createElement(Badge, {
     color: badge.color,
     variant: badge.variant,
-    badgeContent: badge.value
+    badgeContent: badge.value,
+    overlap: "rectangular"
   }, /*#__PURE__*/React.createElement(icon)) : /*#__PURE__*/React.createElement(icon)), open && /*#__PURE__*/React__default["default"].createElement(core.ListItemText, {
     primary: label,
     secondary: sub,
@@ -984,7 +987,7 @@ Sidebar.propTypes = {
   appVersion: PropTypes__default["default"].string
 };
 
-var _excluded$s = ["theme"];
+var _excluded$t = ["theme"];
 var LayoutContext = /*#__PURE__*/React__default["default"].createContext({
   drawerWidth: 0
 });
@@ -1140,7 +1143,7 @@ var EnhancedLayout = compose(reactRedux.connect(mapStateToProps, {} // Avoid con
 
 var Layout = function Layout(_ref2) {
   var themeOverride = _ref2.theme,
-      props = _objectWithoutProperties(_ref2, _excluded$s);
+      props = _objectWithoutProperties(_ref2, _excluded$t);
 
   var themeProp = React.useRef(themeOverride);
 
@@ -1177,7 +1180,7 @@ Layout.defaultProps = {
   drawerWidth: 240
 };
 
-var _excluded$r = ["className", "classes", "redirectTo", "icon", "label"];
+var _excluded$s = ["className", "classes", "redirectTo", "icon", "label"];
 var useStyles$7 = styles$1.makeStyles(function (theme) {
   return {
     menuItem: {
@@ -1196,7 +1199,7 @@ var UserMenuItem = /*#__PURE__*/React__namespace.forwardRef(function UserMenuIte
       props.redirectTo;
       var icon = props.icon,
       label = props.label,
-      rest = _objectWithoutProperties(props, _excluded$r);
+      rest = _objectWithoutProperties(props, _excluded$s);
 
   var classes = useStyles$7(props);
   return /*#__PURE__*/React__namespace.createElement(core.MenuItem, _extends({
@@ -1214,737 +1217,20 @@ UserMenuItem.propTypes = {
   onClick: PropTypes__default["default"].func
 };
 
-var _excluded$q = ["children"];
+var _excluded$r = ["resource", "baseRecord"];
 
-var getWidthToSubtract = function getWidthToSubtract(w) {
-  return w + (window.innerWidth - document.documentElement.clientWidth);
-};
+var BackButton = function BackButton(_ref) {
+  var resource = _ref.resource;
+      _ref.baseRecord;
+      var props = _objectWithoutProperties(_ref, _excluded$r);
 
-var useStyles$6 = core.makeStyles(function (theme) {
-  return {
-    container: function container(_ref) {
-      var sidebarOpen = _ref.sidebarOpen,
-          drawerWidth = _ref.drawerWidth;
-      return _defineProperty({
-        maxWidth: "calc(100vw - ".concat(sidebarOpen ? getWidthToSubtract(drawerWidth + theme.spacing(6) - 1) : getWidthToSubtract(58 + theme.spacing(6) - 1), "px)"),
-        borderRadius: theme.shape.borderRadius,
-        overflowX: "auto",
-        overflowY: "hidden"
-      }, theme.breakpoints.down("xs"), {
-        width: "100vw",
-        maxWidth: "100vw"
-      });
+  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.Button, _extends({}, props, {
+    component: reactRouterDom.Link,
+    to: {
+      pathname: "/".concat(resource)
     },
-    rowEven: {
-      backgroundColor: theme.palette.background.default
-    }
-  };
-});
-
-var Datagrid = function Datagrid(_ref3) {
-  var children = _ref3.children,
-      props = _objectWithoutProperties(_ref3, _excluded$q);
-
-  var _useContext = React.useContext(LayoutContext),
-      drawerWidth = _useContext.drawerWidth;
-
-  var sidebarOpen = reactRedux.useSelector(function (state) {
-    return state.admin.ui.sidebarOpen;
-  });
-  var classes = useStyles$6({
-    sidebarOpen: sidebarOpen,
-    drawerWidth: drawerWidth
-  });
-  return /*#__PURE__*/React__default["default"].createElement("div", {
-    className: classes.container
-  }, /*#__PURE__*/React__default["default"].createElement(reactAdmin.Datagrid, _extends({
-    classes: {
-      rowEven: classes.rowEven
-    }
-  }, props), children));
-};
-
-var fetchJson = function fetchJson(url) {
-  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  return fetch(url, _objectSpread2({}, options)).then(function (response) {
-    return response.text().then(function (text) {
-      return {
-        status: response.status,
-        statusText: response.statusText,
-        headers: response.headers,
-        body: text
-      };
-    });
-  }).then(function (_ref) {
-    var status = _ref.status,
-        statusText = _ref.statusText,
-        headers = _ref.headers,
-        body = _ref.body;
-    var json;
-
-    try {
-      json = JSON.parse(body);
-    } catch (e) {// not json, no big deal
-    }
-
-    if (status < 200 || status >= 300) {
-      return Promise.reject(new reactAdmin.HttpError((json && json.data && json.data.message ? json.data.message : json.message) || statusText, status, json));
-    }
-
-    return Promise.resolve({
-      status: status,
-      headers: headers,
-      body: body,
-      json: json
-    });
-  });
-};
-
-function getHeaders() {
-  var token = localStorage.getItem("token");
-  var headers = new Headers({
-    "Content-Type": "application/json",
-    Accept: "application/json",
-    Authorization: "Bearer ".concat(token)
-  });
-  return headers;
-}
-function getToken() {
-  return localStorage.getItem("token");
-}
-
-// Remove unwanted _joinData props from JSON object before submission to the rest service.
-var createDataFormatter = function createDataFormatter(data) {
-  return Object.keys(data).reduce(function (r, key) {
-    return _objectSpread2(_objectSpread2({}, r), {}, _defineProperty({}, key, Array.isArray(data[key]) ? data[key].map(function (item) {
-      if (item._joinData === null) {
-        return {
-          id: item.id
-        };
-      }
-
-      return item;
-    }) : data[key]));
-  }, {});
-};
-
-var convertFileToBase64 = function convertFileToBase64(file) {
-  return new Promise(function (resolve, reject) {
-    var reader = new FileReader();
-    reader.readAsDataURL(file.rawFile);
-
-    reader.onload = function () {
-      return resolve(reader.result);
-    };
-
-    reader.onerror = reject;
-  });
-};
-
-var convertFile = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(file) {
-    return regeneratorRuntime.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            return _context.abrupt("return", file.rawFile ? convertFileToBase64(file).then(function (convertedFile) {
-              return {
-                data: convertedFile,
-                name: file.rawFile.name,
-                size: file.rawFile.size,
-                type: file.rawFile.type
-              };
-            }) : Promise.resolve(file));
-
-          case 1:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee);
-  }));
-
-  return function convertFile(_x) {
-    return _ref.apply(this, arguments);
-  };
-}();
-
-var createFilesParser = function createFilesParser() {
-  return /*#__PURE__*/function () {
-    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(data, fileFields) {
-      var i, field, value, files, file;
-      return regeneratorRuntime.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              i = 0;
-
-            case 1:
-              if (!(i < fileFields.length)) {
-                _context.next = 19;
-                break;
-              }
-
-              field = fileFields[i];
-              value = lodash.get(data, field);
-
-              if (!(value && Array.isArray(value))) {
-                _context.next = 11;
-                break;
-              }
-
-              _context.next = 7;
-              return Promise.all(value.map(function (file) {
-                return convertFile(file);
-              }));
-
-            case 7:
-              files = _context.sent;
-              data = lodash.set(data, field, files);
-              _context.next = 16;
-              break;
-
-            case 11:
-              if (!value) {
-                _context.next = 16;
-                break;
-              }
-
-              _context.next = 14;
-              return convertFile(value);
-
-            case 14:
-              file = _context.sent;
-              data = lodash.set(data, field, file);
-
-            case 16:
-              i++;
-              _context.next = 1;
-              break;
-
-            case 19:
-              return _context.abrupt("return", Promise.resolve(data));
-
-            case 20:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    }));
-
-    return function (_x, _x2) {
-      return _ref.apply(this, arguments);
-    };
-  }();
-};
-
-var createDataProvider = function createDataProvider(_ref) {
-  var apiUrl = _ref.apiUrl,
-      _ref$fileFields = _ref.fileFields,
-      fileFields = _ref$fileFields === void 0 ? [] : _ref$fileFields,
-      _ref$filesParser = _ref.filesParser,
-      filesParser = _ref$filesParser === void 0 ? createFilesParser() : _ref$filesParser,
-      _ref$prepareData = _ref.prepareData,
-      prepareData = _ref$prepareData === void 0 ? function (data) {
-    return createDataFormatter(data);
-  } : _ref$prepareData;
-  return {
-    getInfo: function getInfo(resource, params) {
-      var url = "".concat(apiUrl, "/").concat(resource, "/info?").concat(queryString.stringify(params));
-      var options = {
-        headers: getHeaders()
-      };
-      return fetchJson(url, options).then(function (_ref2) {
-        var json = _ref2.json;
-        return {
-          data: json.data
-        };
-      });
-    },
-    getBadges: function getBadges() {
-      var url = "".concat(apiUrl, "/stats/badges");
-      var options = {
-        headers: getHeaders()
-      };
-      return fetchJson(url, options).then(function (_ref3) {
-        var json = _ref3.json;
-        return {
-          data: json
-        };
-      });
-    },
-    getList: function getList(resource, params) {
-      var _params$pagination = params.pagination,
-          page = _params$pagination.page,
-          perPage = _params$pagination.perPage;
-      var _params$sort = params.sort,
-          field = _params$sort.field,
-          order = _params$sort.order;
-      var filter = Object.keys(params.filter || {}).reduce(function (f, filterName) {
-        return _objectSpread2(_objectSpread2({}, f), {}, _defineProperty({}, filterName, params.filter[filterName] instanceof Array ? params.filter[filterName].join(",") : params.filter[filterName]));
-      }, {});
-
-      var query = _objectSpread2({
-        sort: field,
-        direction: order,
-        page: page,
-        limit: perPage
-      }, filter);
-
-      var url = "".concat(apiUrl, "/").concat(resource, "?").concat(queryString.stringify(query));
-      var options = {
-        headers: getHeaders()
-      };
-      return fetchJson(url, options).then(function (_ref4) {
-        var json = _ref4.json;
-        return {
-          data: json.data,
-          total: parseInt(json.pagination.count, 10)
-        };
-      });
-    },
-    getOne: function getOne(resource, params) {
-      var url = "".concat(apiUrl, "/").concat(resource) + (params.id ? "/".concat(params.id) : "");
-      var options = {
-        headers: getHeaders()
-      };
-      return fetchJson(url, options).then(function (_ref5) {
-        var json = _ref5.json;
-        return {
-          data: json.data
-        };
-      });
-    },
-    getMany: function getMany(resource, params) {
-      var query = {
-        ids: params.ids.map(function (id) {
-          return id.id ? id.id : id;
-        }).join(",")
-      };
-      var url = "".concat(apiUrl, "/").concat(resource, "?").concat(queryString.stringify(query));
-      var options = {
-        headers: getHeaders()
-      };
-      return fetchJson(url, options).then(function (_ref6) {
-        var json = _ref6.json;
-        return {
-          data: json.data,
-          total: parseInt(json.pagination.count, 10)
-        };
-      });
-    },
-    getManyReference: function getManyReference(resource, params) {
-      var _params$pagination2 = params.pagination,
-          page = _params$pagination2.page,
-          perPage = _params$pagination2.perPage;
-      var _params$sort2 = params.sort,
-          field = _params$sort2.field,
-          order = _params$sort2.order;
-      var filter = Object.keys(params.filter || {}).reduce(function (f, filterName) {
-        return _objectSpread2(_objectSpread2({}, f), {}, _defineProperty({}, filterName, params.filter[filterName] instanceof Array ? params.filter[filterName].join(",") : params.filter[filterName]));
-      }, {});
-
-      var query = _objectSpread2(_defineProperty({
-        sort: field,
-        direction: order,
-        page: page,
-        limit: perPage
-      }, params.target, params.id), filter);
-
-      var url = "".concat(apiUrl, "/").concat(resource, "?").concat(queryString.stringify(query));
-      var options = {
-        headers: getHeaders()
-      };
-      return fetchJson(url, options).then(function (_ref7) {
-        var json = _ref7.json;
-        return {
-          data: json.data,
-          total: parseInt(json.pagination.count, 10)
-        };
-      });
-    },
-    create: function create(resource, params) {
-      return filesParser(params.data, fileFields).then(function (data) {
-        var url = "".concat(apiUrl, "/").concat(resource);
-        var options = {
-          method: "POST",
-          body: JSON.stringify(prepareData(data, resource, params)),
-          headers: getHeaders()
-        };
-        return fetchJson(url, options).then(function (_ref8) {
-          var json = _ref8.json;
-          return {
-            data: _objectSpread2(_objectSpread2({}, json.data || params.data), {}, {
-              id: json.data.id
-            })
-          };
-        });
-      });
-    },
-    update: function update(resource, params) {
-      return filesParser(params.data, fileFields).then(function (data) {
-        var id = data && data.pk ? data.pk : params.id;
-        var url = "".concat(apiUrl, "/").concat(resource) + (id ? "/".concat(id) : "");
-        var options = {
-          method: "PUT",
-          body: JSON.stringify(prepareData(data)),
-          headers: getHeaders()
-        };
-        return fetchJson(url, options).then(function (_ref9) {
-          var json = _ref9.json;
-          return {
-            data: _objectSpread2({
-              id: data.pk
-            }, json.data)
-          };
-        });
-      });
-    },
-    updateMany: function updateMany(resource, params) {
-      return Promise.all(params.ids.map(function (id) {
-        return fetchJson("".concat(apiUrl, "/").concat(resource, "/").concat(id), {
-          method: "PUT",
-          body: JSON.stringify(params.data),
-          headers: getHeaders()
-        });
-      })).then(function (responses) {
-        return {
-          data: responses.map(function (response) {
-            return response.json;
-          })
-        };
-      });
-    },
-    delete: function _delete(resource, params) {
-      var url = "".concat(apiUrl, "/").concat(resource, "/").concat(params.id);
-      var options = {
-        method: "DELETE",
-        headers: getHeaders()
-      };
-      return fetchJson(url, options).then(function (_ref10) {
-        var json = _ref10.json;
-        return {
-          data: json
-        };
-      });
-    },
-    deleteMany: function deleteMany(resource, params) {
-      return Promise.all(params.ids.map(function (id) {
-        return fetch("".concat(apiUrl, "/").concat(resource, "/").concat(id), {
-          method: "DELETE",
-          headers: getHeaders()
-        }).then(function (response) {
-          return response.json();
-        });
-      })).then(function (responses) {
-        var errors = responses.filter(function (r) {
-          return r.data && r.data.code && (r.data.code === 409 || r.data.code === 403);
-        });
-
-        if (errors.length > 0) {
-          return Promise.reject(errors.map(function (e) {
-            return e.data.message;
-          }).join("\n"));
-        }
-
-        return {
-          data: responses.map(function (_ref11) {
-            var json = _ref11.json;
-            return {
-              data: json
-            };
-          })
-        };
-      });
-    },
-    post: function post(resource, params) {
-      var url = "".concat(apiUrl, "/").concat(resource);
-      var body = params.body;
-      var options = {
-        body: JSON.stringify(body),
-        method: "POST",
-        headers: getHeaders()
-      };
-      return fetchJson(url, options).then(function (_ref12) {
-        var json = _ref12.json;
-        return {
-          data: json
-        };
-      });
-    },
-    get: function get(resource, params) {
-      var query = params.query;
-      var queryString$1 = queryString.stringify(query);
-      var url = "".concat(apiUrl, "/").concat(resource, "?").concat(queryString$1);
-      var options = {
-        method: "GET",
-        headers: getHeaders()
-      };
-      return fetchJson(url, options).then(function (_ref13) {
-        var json = _ref13.json;
-        return {
-          data: json
-        };
-      });
-    },
-    getTransactions: function getTransactions(resource, params) {
-      var url = "".concat(apiUrl, "/workflow/transactions/").concat(resource, "/").concat(params.id);
-      return fetchJson(url, {
-        headers: getHeaders()
-      }).then(function (_ref14) {
-        var json = _ref14.json;
-        return {
-          data: json.data
-        };
-      });
-    }
-  };
-};
-
-var createAuthProvider = function createAuthProvider(_ref) {
-  var apiUrl = _ref.apiUrl;
-  return {
-    login: function login(params) {
-      var username = params.username,
-          password = params.password;
-      var requestURL = "".concat(apiUrl, "/users/login");
-      var request = new Request(requestURL, {
-        method: "POST",
-        body: JSON.stringify({
-          username: username,
-          password: password
-        }),
-        headers: new Headers({
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        })
-      });
-      return fetch(request).then(function (response) {
-        return response.json();
-      }).then(function (_ref2) {
-        var data = _ref2.data,
-            success = _ref2.success;
-
-        if (!success) {
-          throw new Error(data.message);
-        }
-
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("roles", JSON.stringify(data.roles));
-        localStorage.setItem("profile", JSON.stringify(data.profile));
-        var event = new Event("login");
-        event.key = "token";
-        event.value = data.token;
-        document.dispatchEvent(event);
-      });
-    },
-    logout: function logout() {
-      localStorage.removeItem("token");
-      localStorage.removeItem("roles");
-      localStorage.removeItem("profile");
-      return Promise.resolve();
-    },
-    checkAuth: function checkAuth() {
-      return localStorage.getItem("token") ? Promise.resolve() : Promise.reject();
-    },
-    checkError: function checkError(error) {
-      if (error.status === 401 || error.status === 500) {
-        return Promise.reject();
-      }
-
-      return Promise.resolve();
-    },
-    getPermissions: function getPermissions() {
-      var roles = JSON.parse(localStorage.getItem("roles"));
-      return Promise.resolve(function (v) {
-        return roles && roles.some(function (r) {
-          return v.includes(r.code);
-        });
-      });
-    },
-    getIdentity: function getIdentity() {
-      var profile = JSON.parse(localStorage.getItem("profile"));
-      var roles = JSON.parse(localStorage.getItem("roles"));
-      return Promise.resolve(_objectSpread2(_objectSpread2({}, profile), {}, {
-        roles: roles
-      }));
-    },
-    impersonate: function impersonate(id) {
-      var requestURL = "".concat(apiUrl, "/users/impersonate/?id=").concat(id);
-      var request = new Request(requestURL, {
-        method: "POST",
-        headers: getHeaders()
-      });
-      return fetch(request).then(function (response) {
-        return response.json();
-      }).then(function (_ref3) {
-        var success = _ref3.success,
-            data = _ref3.data;
-
-        if (!success) {
-          throw new Error(data.message);
-        }
-
-        ["token", "roles", "username", "profile"].forEach(function (param) {
-          var toSaveParam = "admin_".concat(param);
-          localStorage.setItem(toSaveParam, localStorage.getItem(param));
-          localStorage.setItem(param, ["profile", "roles"].indexOf(param) !== -1 ? JSON.stringify(data[param]) : data[param]);
-        });
-        localStorage.setItem("impersonate", true);
-      });
-    },
-    stopImpersonate: function stopImpersonate() {
-      ["token", "roles", "username", "profile"].forEach(function (param) {
-        var savedParam = "admin_".concat(param);
-        localStorage.setItem(param, localStorage.getItem(savedParam));
-        localStorage.removeItem(savedParam);
-      });
-      localStorage.setItem("impersonate", false);
-      return Promise.resolve();
-    }
-  };
-};
-
-var createManyFormatter = function createManyFormatter() {
-  return function (many) {
-    var array = many ? many.map(function (p) {
-      return p.id;
-    }) : [];
-    return array;
-  };
-};
-
-var createManyParser = function createManyParser() {
-  return function (many) {
-    var objects = many ? many.map(function (id) {
-      return {
-        id: id
-      };
-    }) : [];
-    return objects;
-  };
-};
-
-var createI18nProvider = function createI18nProvider(_ref) {
-  var _ref$locale = _ref.locale,
-      locale = _ref$locale === void 0 ? "en" : _ref$locale,
-      languages = _ref.languages;
-  return polyglotI18nProvider__default["default"](function () {
-    if (process.env.NODE_ENV !== "production") {
-      localStorage.setItem("locale", locale);
-    }
-
-    moment__default["default"].locale(locale);
-    return lodash.get(languages, locale, {});
-  }, reactAdmin.resolveBrowserLocale());
-};
-
-var _excluded$p = ["component", "componentProps", "components", "addLabel", "sortBy"];
-
-var Component = function Component(_ref) {
-  var component = _ref.component,
-      componentProps = _ref.componentProps,
-      components = _ref.components,
-      _ref$addLabel = _ref.addLabel,
-      addLabel = _ref$addLabel === void 0 ? true : _ref$addLabel;
-      _ref.sortBy;
-      var props = _objectWithoutProperties(_ref, _excluded$p);
-
-  var Component = lodash.get(components, component);
-
-  if (!Component) {
-    return addLabel ? /*#__PURE__*/React__default["default"].createElement(reactAdmin.Labeled, {
-      label: props.label,
-      source: props.source,
-      fullWidth: true
-    }, /*#__PURE__*/React__default["default"].createElement(core.Typography, {
-      variant: "body2"
-    }, "No component found for ", /*#__PURE__*/React__default["default"].createElement("code", null, component), ".")) : /*#__PURE__*/React__default["default"].createElement(core.Typography, {
-      variant: "body2"
-    }, "No component found for ", /*#__PURE__*/React__default["default"].createElement("code", null, component), ".");
-  }
-
-  return /*#__PURE__*/React__default["default"].createElement(Component, _extends({}, props, componentProps));
-};
-
-var _require = require("ra-core"),
-    getResources = _require.getResources;
-
-var _require2 = require("react-redux"),
-    shallowEqual = _require2.shallowEqual,
-    useSelector = _require2.useSelector;
-
-var _require3 = require("lodash"),
-    get = _require3.get;
-
-var useCustomComponents = function useCustomComponents(resource) {
-  var resources = useSelector(getResources, shallowEqual);
-  var r = resources.find(function (r) {
-    return r.name === resource;
-  });
-  return get(r, "options.components");
-};
-
-var _excluded$o = ["chipSource"];
-
-var ChipArrayField = function ChipArrayField(_ref) {
-  var chipSource = _ref.chipSource,
-      props = _objectWithoutProperties(_ref, _excluded$o);
-
-  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.ArrayField, props, /*#__PURE__*/React__default["default"].createElement(reactAdmin.SingleFieldList, null, /*#__PURE__*/React__default["default"].createElement(reactAdmin.ChipField, {
-    source: chipSource
-  })));
-};
-
-var _excluded$n = ["record", "source", "width", "minWidth", "maxWidth", "maxRows", "sortable", "basePath", "sortBy"];
-var useStyles$5 = core.makeStyles(function (theme) {
-  return {
-    root: {
-      overflow: "hidden",
-      "text-overflow": "ellipsis",
-      display: "-webkit-box",
-      WebkitBoxOrient: "vertical",
-      whiteSpace: "break-spaces"
-    }
-  };
-});
-
-var LongTextField = function LongTextField(_ref) {
-  var record = _ref.record,
-      source = _ref.source,
-      _ref$width = _ref.width,
-      width = _ref$width === void 0 ? undefined : _ref$width,
-      _ref$minWidth = _ref.minWidth,
-      minWidth = _ref$minWidth === void 0 ? undefined : _ref$minWidth,
-      _ref$maxWidth = _ref.maxWidth,
-      maxWidth = _ref$maxWidth === void 0 ? undefined : _ref$maxWidth,
-      _ref$maxRows = _ref.maxRows,
-      maxRows = _ref$maxRows === void 0 ? 3 : _ref$maxRows;
-      _ref.sortable;
-      _ref.basePath;
-      _ref.sortBy;
-      var props = _objectWithoutProperties(_ref, _excluded$n);
-
-  var classes = useStyles$5();
-  return /*#__PURE__*/React__default["default"].createElement(core.Typography, _extends({}, props, {
-    variant: "body2",
-    title: lodash.get(record, source),
-    className: classes.root,
-    style: {
-      width: width,
-      minWidth: minWidth,
-      maxWidth: maxWidth,
-      WebkitLineClamp: maxRows
-    }
-  }), lodash.get(record, source));
-};
-
-LongTextField.propTypes = {
-  minWidth: PropTypes__default["default"].number,
-  maxWidth: PropTypes__default["default"].number,
-  width: PropTypes__default["default"].number,
-  maxRows: PropTypes__default["default"].number
+    label: "ra.action.back"
+  }), /*#__PURE__*/React__default["default"].createElement(BackIcon__default["default"], null));
 };
 
 var useWorkflow = function useWorkflow(_ref) {
@@ -2285,842 +1571,12 @@ var WorkflowProvider = function WorkflowProvider(_ref) {
   }, children);
 };
 
-var _excluded$m = ["label", "record", "resource"];
-
-var StateField = function StateField(_ref) {
-  var _ref$label = _ref.label,
-      label = _ref$label === void 0 ? "app.label.workflow.state" : _ref$label,
-      record = _ref.record,
-      toResolve = _ref.resource,
-      props = _objectWithoutProperties(_ref, _excluded$m);
-
-  var _useContext = React.useContext(WorkflowContext),
-      getWorkflow = _useContext.getWorkflow;
-
-  var resource = React.useMemo(function () {
-    return toResolve.replace("workflow/transactions/", "");
-  }, [toResolve]);
-  var workflow = React.useMemo(function () {
-    return getWorkflow(resource);
-  }, [resource, getWorkflow]);
-  var state = React.useMemo(function () {
-    return workflow && workflow.getState(_objectSpread2(_objectSpread2({}, record), {}, {
-      transaction: lodash.get(record, "transaction", record)
-    })) || undefined;
-  }, [record, workflow]);
-  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.ChipField, _extends({}, props, {
-    label: label,
-    source: "name",
-    record: state,
-    color: "primary"
-  }));
-};
-
-var MediaField = function MediaField(_ref) {
-  var props = _extends({}, _ref);
-
-  var id = lodash.get(props, "record.id", 0);
-  var source = id > 0 ? "file.path" : "filepath";
-  return /*#__PURE__*/React__default["default"].createElement(raUiMaterialui.FileField, _extends({}, props, {
-    source: source
-  }));
-};
-
-var useFieldLabel = function useFieldLabel(_ref) {
-  var resource = _ref.resource;
-  var t = reactAdmin.useTranslate();
-  return function (field) {
-    var translate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-    var label = "resources.".concat(resource, ".fields.").concat(field);
-    return translate ? t(label) : label;
-  };
-};
-
-var useStyles$4 = core.makeStyles(function (theme) {
-  return {
-    root: {
-      display: "-webkit-box",
-      WebkitBoxOrient: "vertical",
-      whiteSpace: "break-spaces"
-    },
-    link: {
-      cursor: "pointer",
-      fontWeight: "bold"
-    },
-    visibility: {
-      display: "block",
-      clear: "both"
-    }
-  };
-});
-
-var TransactionNotesField = function TransactionNotesField(_ref) {
-  var _ref$admin = _ref.admin,
-      admin = _ref$admin === void 0 ? false : _ref$admin,
-      record = _ref.record,
-      source = _ref.source,
-      _ref$minWidth = _ref.minWidth,
-      minWidth = _ref$minWidth === void 0 ? 150 : _ref$minWidth,
-      _ref$maxRows = _ref.maxRows,
-      maxRows = _ref$maxRows === void 0 ? 3 : _ref$maxRows,
-      component = _ref.component;
-  var classes = useStyles$4();
-  var fieldLabel = useFieldLabel({
-    resource: "transactions"
-  });
-
-  var _useMemo = React.useMemo(function () {
-    var isPrivate = lodash.get(record, "is_private", true);
-    var value = isPrivate && !admin ? null : lodash.get(record, source, "");
-    var tooLong = value !== null && value.length > 200;
-    return {
-      isPrivate: isPrivate,
-      value: value,
-      tooLong: tooLong
-    };
-  }, [record, admin, source]),
-      isPrivate = _useMemo.isPrivate,
-      value = _useMemo.value,
-      tooLong = _useMemo.tooLong;
-
-  var _useState = React.useState(false),
-      _useState2 = _slicedToArray(_useState, 2),
-      showMore = _useState2[0],
-      setShowMore = _useState2[1];
-
-  var handleToggle = function handleToggle() {
-    return setShowMore(!showMore);
-  };
-
-  return /*#__PURE__*/React__default["default"].createElement(React.Fragment, null, /*#__PURE__*/React__default["default"].createElement(core.Typography, {
-    component: component,
-    className: classes.root,
-    style: {
-      minWidth: minWidth,
-      WebkitLineClamp: showMore ? null : maxRows
-    },
-    variant: "body2",
-    color: value === null || value.length === 0 ? "textSecondary" : "textPrimary",
-    display: "inline"
-  }, tooLong === false ? value !== null && value.length > 0 ? value : fieldLabel("notes.empty") : null, tooLong && (showMore ? value : value.substring(0, 200) + "...")), admin && value !== null && value.length > 0 && /*#__PURE__*/React__default["default"].createElement(core.Typography, {
-    component: component,
-    color: isPrivate ? "error" : "textSecondary",
-    className: classes.visibility,
-    variant: "caption"
-  }, fieldLabel("notes.".concat(isPrivate ? "private" : "public"))), tooLong && /*#__PURE__*/React__default["default"].createElement(core.Link, {
-    underline: "hover",
-    className: classes.link,
-    onClick: handleToggle
-  }, fieldLabel("notes.".concat(showMore ? "show_less" : "show_more"))));
-};
-
-TransactionNotesField.propTypes = {
-  minWidth: PropTypes__default["default"].number,
-  maxRows: PropTypes__default["default"].number
-};
-
-var _excluded$l = ["fullWidth", "addLabel"],
-    _excluded2$3 = ["admin", "label"];
-
-var PaginationWrapper = function PaginationWrapper(_ref) {
-  _ref.fullWidth;
-      _ref.addLabel;
-      var props = _objectWithoutProperties(_ref, _excluded$l);
-
-  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.Pagination, props);
-};
-
-var TransactionLogsField = function TransactionLogsField(_ref2) {
-  var _ref2$admin = _ref2.admin,
-      admin = _ref2$admin === void 0 ? false : _ref2$admin,
-      label = _ref2.label,
-      props = _objectWithoutProperties(_ref2, _excluded2$3);
-
-  var _useContext = React.useContext(WorkflowContext),
-      getWorkflow = _useContext.getWorkflow;
-
-  var mobileBreakpoint = React.useMemo(function () {
-    return lodash.get(props, "mobileBreakpoint", "sm");
-  }, [props]);
-  var isMobile = core.useMediaQuery(function (theme) {
-    return theme.breakpoints.down(mobileBreakpoint !== null && mobileBreakpoint !== void 0 ? mobileBreakpoint : "sm");
-  });
-  var fieldLabel = useFieldLabel({
-    resource: "transactions"
-  });
-  var workflow = React.useMemo(function () {
-    return getWorkflow(props.resource);
-  }, [getWorkflow, props.resource]);
-
-  if (!workflow || !props.record) {
-    return null;
-  }
-
-  return /*#__PURE__*/React__default["default"].createElement(React.Fragment, null, /*#__PURE__*/React__default["default"].createElement("br", null), label && /*#__PURE__*/React__default["default"].createElement(core.Typography, {
-    variant: "subtitle1",
-    gutterBottom: true
-  }, label), label && /*#__PURE__*/React__default["default"].createElement(core.Divider, null), /*#__PURE__*/React__default["default"].createElement(reactAdmin.ReferenceManyField, _extends({
-    perPage: 5,
-    pagination: /*#__PURE__*/React__default["default"].createElement(PaginationWrapper, null),
-    reference: "workflow/transactions/".concat(props.resource),
-    sort: {
-      field: "Transactions.created",
-      order: "desc"
-    }
-  }, props, {
-    source: "id",
-    target: "id"
-  }), isMobile ? /*#__PURE__*/React__default["default"].createElement(reactAdmin.SimpleList, {
-    primaryText: function primaryText(record) {
-      return /*#__PURE__*/React__default["default"].createElement(reactAdmin.DateField, {
-        label: fieldLabel("created"),
-        record: record,
-        source: "created",
-        showTime: true
-      });
-    },
-    secondaryText: function secondaryText(record) {
-      return /*#__PURE__*/React__default["default"].createElement(TransactionNotesField, {
-        record: record,
-        component: "span",
-        label: fieldLabel("notes"),
-        source: "notes",
-        admin: admin,
-        sortable: false,
-        maxRows: 6
-      });
-    },
-    linkType: false
-  }) : /*#__PURE__*/React__default["default"].createElement(reactAdmin.Datagrid, null, admin && /*#__PURE__*/React__default["default"].createElement(reactAdmin.TextField, {
-    label: fieldLabel("id"),
-    source: "id"
-  }), /*#__PURE__*/React__default["default"].createElement(reactAdmin.DateField, {
-    label: fieldLabel("created"),
-    source: "created",
-    showTime: true,
-    sortBy: "Transactions.created"
-  }), /*#__PURE__*/React__default["default"].createElement(reactAdmin.TextField, {
-    label: fieldLabel("user"),
-    source: "user.name",
-    sortBy: "Users.username"
-  }), /*#__PURE__*/React__default["default"].createElement(TransactionNotesField, {
-    label: fieldLabel("notes"),
-    source: "notes",
-    admin: admin,
-    sortable: false,
-    maxRows: 6
-  }), /*#__PURE__*/React__default["default"].createElement(StateField, {
-    label: fieldLabel("state"),
-    sortBy: "Transactions.state"
-  }))), /*#__PURE__*/React__default["default"].createElement("br", null));
-};
-
-var fields = {
-  TextField: reactAdmin.TextField,
-  DateField: reactAdmin.DateField,
-  ChipField: reactAdmin.ChipField,
-  BooleanField: reactAdmin.BooleanField,
-  ChipArrayField: ChipArrayField,
-  LongTextField: LongTextField,
-  MediaField: MediaField,
-  // Workflow
-  StateField: StateField,
-  TransactionLogsField: TransactionLogsField
-};
-
-var useManyFormatter = function useManyFormatter() {
-  var memoizedFn = React.useMemo(function () {
-    return createManyFormatter();
-  }, []);
-  return memoizedFn;
-};
-
-var useManyParser = function useManyParser() {
-  var memoizedFn = React.useMemo(function () {
-    return createManyParser();
-  }, []);
-  return memoizedFn;
-};
-
-var _excluded$k = ["optionText"];
-
-var ReferenceCheckboxGroupInput = function ReferenceCheckboxGroupInput(_ref) {
-  var optionText = _ref.optionText,
-      props = _objectWithoutProperties(_ref, _excluded$k);
-
-  var parse = useManyParser();
-  var format = useManyFormatter();
-  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.ReferenceArrayInput, _extends({}, props, {
-    parse: parse,
-    format: format
-  }), /*#__PURE__*/React__default["default"].createElement(reactAdmin.CheckboxGroupInput, {
-    optionText: optionText
-  }));
-};
-
-var _excluded$j = ["optionText"];
-
-var ReferenceAutocompleteInput$1 = function ReferenceAutocompleteInput(_ref) {
-  var optionText = _ref.optionText,
-      props = _objectWithoutProperties(_ref, _excluded$j);
-
-  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.ReferenceInput, props, /*#__PURE__*/React__default["default"].createElement(reactAdmin.AutocompleteInput, {
-    optionText: optionText
-  }));
-};
-
-var _excluded$i = ["optionText"];
-
-var ReferenceAutocompleteInput = function ReferenceAutocompleteInput(_ref) {
-  var optionText = _ref.optionText,
-      props = _objectWithoutProperties(_ref, _excluded$i);
-
-  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.ReferenceInput, props, /*#__PURE__*/React__default["default"].createElement(reactAdmin.SelectInput, {
-    optionText: optionText
-  }));
-};
-
-var _excluded$h = ["filter"];
-
-var StateInput = function StateInput(_ref) {
-  var _ref$filter = _ref.filter,
-      filter = _ref$filter === void 0 ? undefined : _ref$filter,
-      props = _objectWithoutProperties(_ref, _excluded$h);
-
-  var _useContext = React.useContext(WorkflowContext),
-      getWorkflow = _useContext.getWorkflow;
-
-  var workflow = React.useMemo(function () {
-    return getWorkflow(props.resource);
-  }, [props.resource, getWorkflow]);
-  var states = React.useMemo(function () {
-    return workflow ? workflow.states.filter(function (s) {
-      return !s.isLoop && (filter === undefined || filter(s));
-    }) : [];
-  }, [workflow, filter]);
-  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.SelectInput, _extends({}, props, {
-    choices: states,
-    optionText: "name",
-    optionValue: "code",
-    allowEmpty: true,
-    emptyText: "ra.action.all"
-  }));
-};
-
-var useStyles$3 = core.makeStyles(function (theme) {
-  return {
-    required: {}
-  };
-});
-
-var ConfirmMove = function ConfirmMove(_ref) {
-  var _ref$admin = _ref.admin,
-      admin = _ref$admin === void 0 ? false : _ref$admin,
-      _ref$open = _ref.open,
-      open = _ref$open === void 0 ? false : _ref$open,
-      resource = _ref.resource,
-      record = _ref.record,
-      state = _ref.state,
-      onCancel = _ref.onCancel;
-  var classes = useStyles$3();
-  var refresh = reactAdmin.useRefresh();
-  var notify = reactAdmin.useNotify();
-
-  var _useState = React.useState(""),
-      _useState2 = _slicedToArray(_useState, 2),
-      notes = _useState2[0],
-      setNotes = _useState2[1];
-
-  var _useState3 = React.useState(false),
-      _useState4 = _slicedToArray(_useState3, 2),
-      isPrivate = _useState4[0],
-      setPrivate = _useState4[1];
-
-  var _useContext = React.useContext(WorkflowContext),
-      getWorkflow = _useContext.getWorkflow;
-
-  var workflow = React.useMemo(function () {
-    return getWorkflow(resource);
-  }, [getWorkflow, resource]);
-  var translate = reactAdmin.useTranslate();
-  var handleChange = React.useCallback(function (e) {
-    return setNotes(e.target.value);
-  }, [setNotes]);
-  var handlePrivate = React.useCallback(function (e) {
-    return setPrivate(e.target.checked);
-  }, [setPrivate]);
-  var needsNotes = React.useMemo(function () {
-    return workflow && workflow.needsNotes(record, state);
-  }, [workflow, record, state]);
-
-  var _useUpdate = reactAdmin.useUpdate(resource, record.id, _objectSpread2(_objectSpread2({}, record), {}, {
-    user: null,
-    state: lodash.get(state, "code"),
-    notes: notes,
-    is_private: isPrivate
-  }), record, {
-    onSuccess: function onSuccess() {
-      notify("resources.workflow.move.success");
-      refresh();
-    },
-    onFailure: function onFailure(_ref2) {
-      var message = _ref2.message,
-          body = _ref2.body,
-          status = _ref2.status;
-      onCancel();
-      notify("resources.workflow.move.error", "error", {
-        reason: message,
-        message: message,
-        body: body,
-        status: status
-      });
-    }
-  }),
-      _useUpdate2 = _slicedToArray(_useUpdate, 2),
-      handleUpdate = _useUpdate2[0],
-      loading = _useUpdate2[1].loading;
-
-  return /*#__PURE__*/React__default["default"].createElement(core.Dialog, {
-    open: open
-  }, /*#__PURE__*/React__default["default"].createElement(core.DialogTitle, null, translate("resources.workflow.move.title")), /*#__PURE__*/React__default["default"].createElement(core.DialogContent, null, /*#__PURE__*/React__default["default"].createElement(core.DialogContentText, {
-    className: classnames__default["default"](needsNotes && classes.required)
-  }, translate("resources.workflow.move.message" + (needsNotes ? ".required" : ""))), /*#__PURE__*/React__default["default"].createElement(core.TextField, {
-    autoFocus: true,
-    onChange: handleChange,
-    margin: "dense",
-    id: "notes",
-    label: translate("resources.workflow.fields.notes"),
-    type: "text",
-    multiline: true,
-    fullWidth: true
-  }), admin && /*#__PURE__*/React__default["default"].createElement(React.Fragment, null, /*#__PURE__*/React__default["default"].createElement(core.FormControlLabel, {
-    control: /*#__PURE__*/React__default["default"].createElement(core.Switch, {
-      checked: isPrivate,
-      onChange: handlePrivate,
-      name: "is_private",
-      color: "primary"
-    }),
-    label: translate("resources.workflow.fields.is_private")
-  }), /*#__PURE__*/React__default["default"].createElement(core.FormHelperText, null, translate("resources.workflow.fields.is_private.help")))), /*#__PURE__*/React__default["default"].createElement(core.DialogActions, null, /*#__PURE__*/React__default["default"].createElement(core.Button, {
-    onClick: onCancel
-  }, translate("ra.action.cancel")), /*#__PURE__*/React__default["default"].createElement(core.Button, {
-    onClick: handleUpdate,
-    color: "primary",
-    disabled: needsNotes && notes.length === 0 || loading
-  }, translate("ra.action.confirm"))));
-};
-
-ConfirmMove.propTypes = {
-  state: PropTypes__default["default"].shape({
-    code: PropTypes__default["default"].string,
-    name: PropTypes__default["default"].string,
-    label: PropTypes__default["default"].string
-  }),
-  resource: PropTypes__default["default"].string.isRequired,
-  record: PropTypes__default["default"].object.isRequired,
-  open: PropTypes__default["default"].bool.isRequired,
-  onCancel: PropTypes__default["default"].func.isRequired
-};
-
-var _this$1 = undefined;
-
-var StateCollectionInput = function StateCollectionInput(_ref) {
-  var _ref$readonly = _ref.readonly,
-      readonly = _ref$readonly === void 0 ? false : _ref$readonly,
-      _ref$admin = _ref.admin,
-      admin = _ref$admin === void 0 ? false : _ref$admin,
-      record = _ref.record,
-      toResolve = _ref.resource;
-
-  var _useState = React.useState(null),
-      _useState2 = _slicedToArray(_useState, 2),
-      state = _useState2[0],
-      setState = _useState2[1];
-
-  var _useGetIdentity = raCore.useGetIdentity(),
-      loading = _useGetIdentity.loading,
-      loaded = _useGetIdentity.loaded,
-      identity = _useGetIdentity.identity;
-
-  var roles = React.useMemo(function () {
-    return !loading && loaded ? identity === null || identity === void 0 ? void 0 : identity.roles : [];
-  }, [loading, loaded, identity]);
-  var resource = React.useMemo(function () {
-    return toResolve.replace("workflow/transactions/", "");
-  }, [toResolve]);
-
-  var _useContext = React.useContext(WorkflowContext),
-      getWorkflow = _useContext.getWorkflow;
-
-  var workflow = React.useMemo(function () {
-    return getWorkflow(resource);
-  }, [getWorkflow, resource]);
-
-  var _useMemo = React.useMemo(function () {
-    var currentState = workflow && workflow.getState(_objectSpread2(_objectSpread2({}, record), {}, {
-      // If component is used inside TransactionLogsField the transaction is referencing
-      // current record. I have to get it to make workflow work.
-      transaction: lodash.get(record, "transaction", record)
-    })) || undefined;
-    var nextStates = workflow.getNextStates(roles, record);
-    return {
-      currentState: currentState,
-      nextStates: nextStates
-    };
-  }, [roles, record, workflow]),
-      currentState = _useMemo.currentState,
-      nextStates = _useMemo.nextStates;
-
-  var _React$useState = React__default["default"].useState(null),
-      _React$useState2 = _slicedToArray(_React$useState, 2),
-      anchorEl = _React$useState2[0],
-      setAnchorEl = _React$useState2[1];
-
-  var handleClick = function handleClick(event) {
-    event.stopPropagation();
-    event.preventDefault();
-    setAnchorEl(event.currentTarget);
-  };
-
-  var handleClose = function handleClose() {
-    setAnchorEl(null);
-    setState(null);
-  };
-
-  var handleChange = function handleChange(state) {
-    setAnchorEl(null);
-    setState(state);
-  };
-
-  if (readonly || nextStates.length === 0) {
-    // If user is not admin and there are no next states, show current state
-    return /*#__PURE__*/React__default["default"].createElement(StateField, {
-      record: record,
-      resource: toResolve
-    });
-  }
-
-  return /*#__PURE__*/React__default["default"].createElement("div", null, /*#__PURE__*/React__default["default"].createElement(core.Button, {
-    disableElevation: true,
-    endIcon: /*#__PURE__*/React__default["default"].createElement(ArrowDropDownIcon__default["default"], null),
-    color: "primary",
-    variant: "contained",
-    "aria-controls": "simple-menu",
-    "aria-haspopup": "true",
-    style: {
-      textAlign: "left"
-    },
-    size: "small",
-    onClick: handleClick
-  }, /*#__PURE__*/React__default["default"].createElement(LongTextField, {
-    record: currentState,
-    source: "name",
-    variant: "body2"
-  })), /*#__PURE__*/React__default["default"].createElement(core.Menu, {
-    anchorEl: anchorEl,
-    keepMounted: true,
-    open: Boolean(anchorEl),
-    onClose: handleClose
-  }, nextStates.map(function (state) {
-    return /*#__PURE__*/React__default["default"].createElement(core.MenuItem, {
-      key: lodash.get(state, "code"),
-      onClick: handleChange.bind(_this$1, state)
-    }, lodash.get(state, "label"));
-  })), /*#__PURE__*/React__default["default"].createElement(ConfirmMove, {
-    admin: admin,
-    open: state !== null,
-    resource: resource,
-    record: record,
-    state: state,
-    onCancel: handleClose
-  }));
-};
-
-var _excluded$g = ["label", "helperText", "admin"];
-
-var TransactionNotesIsPrivateInput = function TransactionNotesIsPrivateInput(_ref) {
-  var label = _ref.label,
-      helperText = _ref.helperText,
-      _ref$admin = _ref.admin,
-      admin = _ref$admin === void 0 ? false : _ref$admin,
-      props = _objectWithoutProperties(_ref, _excluded$g);
-
-  var fieldLabel = useFieldLabel({
-    resource: "transactions"
-  });
-
-  if (!admin) {
-    return null;
-  }
-
-  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.BooleanInput, _extends({
-    label: label || fieldLabel("is_private", false),
-    helperText: helperText || fieldLabel("is_private.helper_text"),
-    source: "is_private"
-  }, props));
-};
-
-function useDebounce(value, delay) {
-  // State and setters for debounced value
-  var _useState = React.useState(value),
-      _useState2 = _slicedToArray(_useState, 2),
-      debouncedValue = _useState2[0],
-      setDebouncedValue = _useState2[1];
-
-  React.useEffect(function () {
-    // Update debounced value after delay
-    var handler = setTimeout(function () {
-      setDebouncedValue(value);
-    }, delay); // Cancel the timeout if value changes (also on delay change or unmount)
-    // This is how we prevent debounced value from updating if value is changed ...
-    // .. within the delay period. Timeout gets cleared and restarted.
-
-    return function () {
-      clearTimeout(handler);
-    };
-  }, [value, delay] // Only re-call effect if value or delay changes
-  );
-  return debouncedValue;
-}
-
-var _excluded$f = ["margin", "variant", "fullWidth", "maxLength", "multiline", "format", "rows", "disabled", "InputLabelProps"],
-    _excluded2$2 = ["name", "onChange"];
-
-var DebouncedTextInput = function DebouncedTextInput(_ref) {
-  var _ref$margin = _ref.margin,
-      margin = _ref$margin === void 0 ? "dense" : _ref$margin,
-      _ref$variant = _ref.variant,
-      variant = _ref$variant === void 0 ? "filled" : _ref$variant,
-      fullWidth = _ref.fullWidth,
-      maxLength = _ref.maxLength,
-      multiline = _ref.multiline,
-      format = _ref.format,
-      rows = _ref.rows,
-      disabled = _ref.disabled,
-      InputLabelProps = _ref.InputLabelProps,
-      props = _objectWithoutProperties(_ref, _excluded$f);
-
-  var className = props.className,
-      source = props.source,
-      resource = props.resource,
-      label = props.label;
-  var validationFn = raCore.maxLength(maxLength);
-  var helperText = props.helperText;
-  var validate = props.validate;
-
-  if (!validate) {
-    validate = [validationFn];
-  } else if (Array.isArray(validate)) {
-    if (validate.indexOf(validationFn) === -1) {
-      validate.push(validationFn);
-    }
-  }
-
-  var _useInput = reactAdmin.useInput(_objectSpread2({
-    validate: validate
-  }, props)),
-      _useInput$input = _useInput.input,
-      name = _useInput$input.name,
-      onChange = _useInput$input.onChange,
-      rest = _objectWithoutProperties(_useInput$input, _excluded2$2),
-      _useInput$meta = _useInput.meta,
-      touched = _useInput$meta.touched,
-      error = _useInput$meta.error,
-      submitError = _useInput$meta.submitError,
-      isRequired = _useInput.isRequired;
-
-  var translate = raCore.useTranslate();
-  var defaultValue = props.type === "number" ? 0 : "";
-
-  var _React$useState = React__default["default"].useState(rest.value !== undefined ? rest.value : defaultValue),
-      _React$useState2 = _slicedToArray(_React$useState, 2),
-      value = _React$useState2[0],
-      setValue = _React$useState2[1];
-
-  var formState = reactFinalForm.useFormState();
-  var formValue = lodash.get(formState.values, source, defaultValue);
-  var didMountEffect = React.useRef(false);
-  React.useEffect(function () {
-    if (didMountEffect.current === false) {
-      didMountEffect.current = true;
-      return;
-    }
-
-    if (formValue && formValue !== null) {
-      setValue(formValue);
-    }
-  }, [formValue]);
-  var handleChange = React.useCallback(function (evt) {
-    return setValue(evt.target.value);
-  }, []);
-  var debouncedValue = useDebounce(value, 500);
-  var didMountChange = React.useRef(false);
-  React.useEffect(function () {
-    if (didMountChange.current === false) {
-      didMountChange.current = true;
-      return;
-    }
-
-    if (debouncedValue !== (formValue !== null ? formValue : defaultValue) && debouncedValue !== defaultValue) {
-      onChange(debouncedValue);
-    } // eslint-disable-next-line react-hooks/exhaustive-deps
-
-  }, [debouncedValue, onChange]);
-  var usedCharsInfo = translate("app.input.max_length_info", {
-    count: lodash.get(value, "length", 0),
-    max: maxLength
-  });
-
-  if (maxLength) {
-    helperText = helperText && helperText.length > 0 ? "".concat(usedCharsInfo, " - ").concat(translate(helperText)) : usedCharsInfo;
-  }
-
-  return /*#__PURE__*/React__default["default"].createElement(TextField__default["default"], _extends({}, rest, {
-    disabled: disabled,
-    name: name,
-    className: className,
-    fullWidth: fullWidth,
-    multiline: multiline,
-    rows: rows,
-    variant: variant,
-    margin: margin,
-    value: format ? format(value) : value,
-    label: label !== "" && label !== false && /*#__PURE__*/React__default["default"].createElement(raCore.FieldTitle, {
-      label: label,
-      source: source,
-      resource: resource,
-      isRequired: isRequired
-    }),
-    onChange: handleChange,
-    error: !!(touched && (error || submitError)),
-    helperText: /*#__PURE__*/React__default["default"].createElement(raUiMaterialui.InputHelperText, {
-      touched: touched,
-      error: error || submitError,
-      helperText: helperText
-    }),
-    InputLabelProps: InputLabelProps,
-    required: isRequired
-  }));
-};
-
-var TransactionNotesInput = function TransactionNotesInput(props) {
-  var translate = reactAdmin.useTranslate();
-  var fieldLabel = useFieldLabel({
-    resource: "transactions"
-  });
-  var label = React.useMemo(function () {
-    return props.label || fieldLabel("notes");
-  }, [props.label, fieldLabel]);
-  var helperText = React.useMemo(function () {
-    return translate(props.helperText);
-  }, [props.helperText, translate]);
-  return /*#__PURE__*/React__default["default"].createElement(DebouncedTextInput, _extends({}, props, {
-    label: label,
-    helperText: helperText,
-    maxLength: 1500,
-    multiline: true
-  }));
-};
-
-/**
- * Convert Date object to String
- *
- * @param {Date} value value to convert
- * @returns {String} A standardized date (yyyy-MM-dd), to be passed to an <input type="date" />
- */
-
-var convertDateToString = function convertDateToString(value) {
-  if (!(value instanceof Date) || isNaN(value.getDate())) return "";
-  var pad = "00";
-  var yyyy = value.getFullYear().toString();
-  var MM = (value.getMonth() + 1).toString();
-  var dd = value.getDate().toString();
-  return "".concat(yyyy, "-").concat((pad + MM).slice(-2), "-").concat((pad + dd).slice(-2));
-};
-
-var dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-var defaultInputLabelProps = {
-  shrink: true
-};
-
-var getStringFromDate = function getStringFromDate(value) {
-  // null, undefined and empty string values should not go through dateFormatter
-  // otherwise, it returns undefined and will make the input an uncontrolled one.
-  if (value == null || value === "") {
-    return "";
-  }
-
-  if (value instanceof Date) {
-    return convertDateToString(value);
-  } // valid dates should not be converted
-
-
-  if (dateRegex.test(value)) {
-    return value;
-  }
-
-  return convertDateToString(new Date(value));
-};
-
-var DebouncedDateInput = function DebouncedDateInput(props) {
-  return /*#__PURE__*/React__default["default"].createElement(DebouncedTextInput, _extends({}, props, {
-    type: "date",
-    format: getStringFromDate,
-    InputLabelProps: defaultInputLabelProps
-  }));
-};
-
-var convertStringToNumber = function convertStringToNumber(value) {
-  var float = parseFloat(value);
-  return isNaN(float) ? null : float;
-};
-
-var DebouncedNumberInput = function DebouncedNumberInput(props) {
-  return /*#__PURE__*/React__default["default"].createElement(DebouncedTextInput, _extends({}, props, {
-    type: "number",
-    parse: convertStringToNumber
-  }));
-};
-
-var _excluded$e = ["title"];
-
-var MediaInput = function MediaInput(_ref) {
-  var title = _ref.title,
-      props = _objectWithoutProperties(_ref, _excluded$e);
-
-  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.FileInput, props, /*#__PURE__*/React__default["default"].createElement(MediaField, {
-    source: "filepath",
-    title: title
-  }));
-};
-
-var inputs = {
-  ReferenceCheckboxGroupInput: ReferenceCheckboxGroupInput,
-  ReferenceAutocompleteInput: ReferenceAutocompleteInput$1,
-  ReferenceSelectInput: ReferenceAutocompleteInput,
-  SearchInput: reactAdmin.SearchInput,
-  TextInput: reactAdmin.TextInput,
-  SelectInput: reactAdmin.SelectInput,
-  BooleanInput: reactAdmin.BooleanInput,
-  DateInput: reactAdmin.DateInput,
-  DateTimeInput: reactAdmin.DateTimeInput,
-  NumberInput: reactAdmin.NumberInput,
-  MediaInput: MediaInput,
-  StateInput: StateInput,
-  StateCollectionInput: StateCollectionInput,
-  TransactionNotesIsPrivateInput: TransactionNotesIsPrivateInput,
-  TransactionNotesInput: TransactionNotesInput,
-  DebouncedDateInput: DebouncedDateInput,
-  DebouncedNumberInput: DebouncedNumberInput,
-  DebouncedTextInput: DebouncedTextInput
-};
-
-var _excluded$d = ["record", "resource"];
+var _excluded$q = ["record", "resource"];
 
 var EditButton = function EditButton(_ref) {
   var record = _ref.record,
       resource = _ref.resource,
-      props = _objectWithoutProperties(_ref, _excluded$d);
+      props = _objectWithoutProperties(_ref, _excluded$q);
 
   var _useContext = React.useContext(WorkflowContext),
       getWorkflow = _useContext.getWorkflow;
@@ -3152,6 +1608,30 @@ var EditButton = function EditButton(_ref) {
     record: record
   }, props));
 };
+
+function getHeaders() {
+  var token = localStorage.getItem("token");
+  var headers = new Headers({
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: "Bearer ".concat(token)
+  });
+  return headers;
+}
+function getToken() {
+  return localStorage.getItem("token");
+}
+function useToken() {
+  var token = getToken();
+  var headers = getHeaders();
+  var headersMemo = React.useMemo(function () {
+    return headers;
+  }, [headers]);
+  return {
+    token: token,
+    headers: headersMemo
+  };
+}
 
 var load = /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(_ref) {
@@ -3335,14 +1815,14 @@ var ExportToXlsxButton = function ExportToXlsxButton(_ref, ref) {
 
 var ExportButton = /*#__PURE__*/React__default["default"].forwardRef(ExportToXlsxButton);
 
-var _excluded$c = ["exportTo", "label"];
+var _excluded$p = ["exportTo", "label"];
 
 var ExportToButton = function ExportToButton(_ref) {
   var _ref$exportTo = _ref.exportTo,
       exportTo = _ref$exportTo === void 0 ? ["csv", "xlsx"] : _ref$exportTo,
       _ref$label = _ref.label,
       label = _ref$label === void 0 ? "ra.action.export" : _ref$label,
-      props = _objectWithoutProperties(_ref, _excluded$c);
+      props = _objectWithoutProperties(_ref, _excluded$p);
 
   var _React$useState = React__default["default"].useState(null),
       _React$useState2 = _slicedToArray(_React$useState, 2),
@@ -3383,321 +1863,8 @@ var ExportToButton = function ExportToButton(_ref) {
   }));
 };
 
-var buttons = {
-  RaEditButton: reactAdmin.EditButton,
-  RaDeleteButton: reactAdmin.DeleteButton,
-  // Workflow smart buttons
-  EditButton: EditButton,
-  ExportToButton: ExportToButton
-};
-
-var useFiltersStyles = core.makeStyles(function (theme) {
-  return _defineProperty({
-    form: {
-      flexWrap: "nowrap",
-      "& .filter-field > div:last-child": {
-        width: theme.spacing(1)
-      }
-    }
-  }, theme.breakpoints.down("md"), {
-    button: {
-      display: "none"
-    }
-  });
-}, {
-  name: "RaFilters"
-});
-
-var _excluded$b = ["children"];
-
-var Filters = function Filters(_ref) {
-  var children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded$b);
-
-  var classes = useFiltersStyles();
-  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.Filter, _extends({
-    classes: classes
-  }, props), React__default["default"].Children.map(children, function (child, i) {
-    return /*#__PURE__*/React__default["default"].cloneElement(child ? child : /*#__PURE__*/React__default["default"].createElement(React.Fragment, null), {
-      key: i,
-      fullWidth: true
-    });
-  }));
-};
-
-var useListStyles = styles$1.makeStyles(function (theme) {
-  var _ref;
-
-  return _ref = {}, _defineProperty(_ref, theme.breakpoints.up("lg"), {
-    main: {
-      "& table td, table th": {
-        whiteSpace: "nowrap"
-      }
-    }
-  }), _defineProperty(_ref, theme.breakpoints.down("md"), {//   main: {
-    //     background: theme.palette.background.default,
-    //     marginTop: theme.spacing(2),
-    //     display: "block",
-    //   },
-    //   content: {
-    //     boxShadow: "none",
-    //   },
-    //   root: {
-    //     padding: theme.spacing(2),
-    //   },
-  }), _defineProperty(_ref, theme.breakpoints.down("sm"), {
-    bulkActionsDisplayed: {
-      "& .MuiToolbar-regular:first-child": {
-        display: "flex",
-        flexDirection: "column",
-        flexBasis: "auto",
-        height: "auto",
-        "& .MuiToolbar-root": {
-          background: "inherit",
-          padding: 0,
-          flexWrap: "wrap",
-          justifyContent: "flex-start",
-          paddingBottom: theme.spacing(1),
-          width: "100%"
-        },
-        "& div:nth-child(1)": {
-          paddingTop: theme.spacing(1),
-          paddingBottom: theme.spacing(1)
-        }
-      }
-    }
-  }), _defineProperty(_ref, "bulkActionsDisplayed", {
-    "& .MuiToolbar-regular:first-child": {
-      "& .MuiToolbar-root": {
-        flexWrap: "wrap"
-      }
-    }
-  }), _ref;
-}, {
-  name: "RaMobileList"
-});
-
-var exporter = function exporter(grid, data, translate) {
-  var columns = ((grid === null || grid === void 0 ? void 0 : grid.columns) || []).filter(function (c) {
-    return c.exportable === true;
-  });
-  var headers = columns.map(function (c) {
-    return lodash.get(c, "label", c.source);
-  });
-  var csvData = data.map(function (record) {
-    var row = {};
-    columns.forEach(function (column) {
-      var value = lodash.get(record, column.source);
-      row[column.label] = value;
-    });
-    return row;
-  });
-  jsonExport__default["default"](csvData, {
-    rowDelimiter: ";",
-    headers: headers
-  }, function (err, csv) {
-    return reactAdmin.downloadCSV("\uFEFF" + csv, translate(grid === null || grid === void 0 ? void 0 : grid.title));
-  });
-};
-
-var _excluded$a = ["grid"],
-    _excluded2$1 = ["className", "exporter", "filters"];
-
-var ListActions = function ListActions(_ref) {
-  var grid = _ref.grid,
-      props = _objectWithoutProperties(_ref, _excluded$a);
-
-  var className = props.className,
-      exporter = props.exporter,
-      filtersProp = props.filters,
-      rest = _objectWithoutProperties(props, _excluded2$1);
-
-  var _useListContext = raCore.useListContext(props),
-      currentSort = _useListContext.currentSort,
-      displayedFilters = _useListContext.displayedFilters,
-      filterValues = _useListContext.filterValues,
-      basePath = _useListContext.basePath,
-      showFilter = _useListContext.showFilter,
-      total = _useListContext.total;
-
-  var resource = raCore.useResourceContext(rest);
-
-  var _useResourceDefinitio = raCore.useResourceDefinition(rest),
-      hasCreate = _useResourceDefinitio.hasCreate;
-
-  var filters = React.useContext(reactAdmin.FilterContext) || filtersProp;
-  return React.useMemo(function () {
-    var _grid$exportTo;
-
-    return /*#__PURE__*/React__namespace.createElement(reactAdmin.TopToolbar, _extends({
-      className: className
-    }, raCore.sanitizeListRestProps(rest)), filtersProp ? /*#__PURE__*/React.cloneElement(filtersProp, {
-      resource: resource,
-      showFilter: showFilter,
-      displayedFilters: displayedFilters,
-      filterValues: filterValues,
-      context: "button"
-    }) : filters && /*#__PURE__*/React__namespace.createElement(reactAdmin.FilterButton, null), hasCreate && /*#__PURE__*/React__namespace.createElement(reactAdmin.CreateButton, {
-      basePath: basePath
-    }), (grid === null || grid === void 0 ? void 0 : (_grid$exportTo = grid.exportTo) === null || _grid$exportTo === void 0 ? void 0 : _grid$exportTo.length) > 0 ? /*#__PURE__*/React__namespace.createElement(ExportToButton, {
-      exportTo: grid === null || grid === void 0 ? void 0 : grid.exportTo,
-      disabled: total === 0,
-      resource: resource,
-      sort: currentSort,
-      filterValues: filterValues
-    }) : exporter !== false && /*#__PURE__*/React__namespace.createElement(reactAdmin.ExportButton, {
-      disabled: total === 0,
-      resource: resource,
-      sort: currentSort,
-      filterValues: filterValues
-    }));
-  },
-  /* eslint-disable react-hooks/exhaustive-deps */
-  [resource, displayedFilters, filterValues, showFilter, filters, total, basePath, className, currentSort, exporter, hasCreate]);
-};
-
-ListActions.propTypes = {
-  basePath: PropTypes__default["default"].string,
-  className: PropTypes__default["default"].string,
-  currentSort: PropTypes__default["default"].any,
-  displayedFilters: PropTypes__default["default"].object,
-  exporter: PropTypes__default["default"].oneOfType([PropTypes__default["default"].func, PropTypes__default["default"].bool]),
-  filters: PropTypes__default["default"].element,
-  filterValues: PropTypes__default["default"].object,
-  hasCreate: PropTypes__default["default"].bool,
-  resource: PropTypes__default["default"].string,
-  onUnselectItems: PropTypes__default["default"].func.isRequired,
-  selectedIds: PropTypes__default["default"].arrayOf(PropTypes__default["default"].any),
-  showFilter: PropTypes__default["default"].func,
-  total: PropTypes__default["default"].number
-};
-ListActions.defaultProps = {
-  selectedIds: [],
-  onUnselectItems: function onUnselectItems() {
-    return null;
-  }
-};
-
-var _excluded$9 = ["source", "label", "component", "componentProps"];
-
-var List = function List(props) {
-  var _grid$filters, _grid$columns;
-
-  var classes = useListStyles();
-  var translate = reactAdmin.useTranslate();
-
-  var _React$useContext = React__namespace.useContext(friendsofbabbaRa.CrudContext),
-      getGrid = _React$useContext.getGrid,
-      loading = _React$useContext.loading;
-
-  var grid = getGrid(props.resource);
-  var customComponents = useCustomComponents(props.resource);
-  var isMobile = core.useMediaQuery(function (theme) {
-    var _grid$mobileBreakpoin;
-
-    return theme.breakpoints.down((_grid$mobileBreakpoin = grid === null || grid === void 0 ? void 0 : grid.mobileBreakpoint) !== null && _grid$mobileBreakpoin !== void 0 ? _grid$mobileBreakpoin : "sm");
-  }) && grid.mobilePrimaryText != null;
-
-  if (loading) {
-    return /*#__PURE__*/React__namespace.createElement(reactAdmin.Loading, null);
-  }
-
-  if (grid === false || grid === null) {
-    return null;
-  }
-
-  return /*#__PURE__*/React__namespace.createElement(reactAdmin.List, _extends({}, props, {
-    classes: classes,
-    title: grid.title,
-    filter: grid.filter || {},
-    actions: /*#__PURE__*/React__namespace.createElement(ListActions, {
-      grid: grid
-    }),
-    exporter: function exporter$1(data) {
-      return exporter(grid, data, translate);
-    },
-    filterDefaultValues: grid.filterDefaultValues || {},
-    sort: grid === null || grid === void 0 ? void 0 : grid.sort,
-    perPage: grid === null || grid === void 0 ? void 0 : grid.perPage,
-    filters: grid !== null && grid !== void 0 && grid.filters ? /*#__PURE__*/React__namespace.createElement(Filters, null, grid === null || grid === void 0 ? void 0 : (_grid$filters = grid.filters) === null || _grid$filters === void 0 ? void 0 : _grid$filters.map(function (_ref) {
-      var source = _ref.source;
-          _ref.label;
-          var component = _ref.component,
-          componentProps = _ref.componentProps,
-          props = _objectWithoutProperties(_ref, _excluded$9);
-
-      return /*#__PURE__*/React__namespace.createElement(Component, _extends({}, props, {
-        key: source,
-        source: source,
-        component: component,
-        componentProps: componentProps,
-        components: _objectSpread2(_objectSpread2({}, inputs), customComponents.inputs),
-        alwaysOn: componentProps === null || componentProps === void 0 ? void 0 : componentProps.alwaysOn
-      }));
-    })) : null
-  }), isMobile ? /*#__PURE__*/React__namespace.createElement(reactAdmin.SimpleList, {
-    primaryText: function primaryText(record) {
-      return grid !== null && grid !== void 0 && grid.mobilePrimaryComponent ? /*#__PURE__*/React__namespace.createElement(Component, _extends({}, grid.mobilePrimaryComponent, {
-        record: record,
-        source: grid === null || grid === void 0 ? void 0 : grid.mobilePrimaryText,
-        components: _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), buttons), customComponents.inputs), customComponents.fields), customComponents.buttons)
-      })) : lodash.get(record, grid === null || grid === void 0 ? void 0 : grid.mobilePrimaryText);
-    },
-    secondaryText: function secondaryText(record) {
-      return grid !== null && grid !== void 0 && grid.mobileSecondaryComponent ? /*#__PURE__*/React__namespace.createElement(Component, _extends({}, grid.mobileSecondaryComponent, {
-        record: record,
-        source: grid === null || grid === void 0 ? void 0 : grid.mobileSecondaryText,
-        components: _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), buttons), customComponents.inputs), customComponents.fields), customComponents.buttons)
-      })) : lodash.get(record, grid === null || grid === void 0 ? void 0 : grid.mobileSecondaryText);
-    },
-    tertiaryText: function tertiaryText(record) {
-      return grid !== null && grid !== void 0 && grid.mobileTertiaryComponent ? /*#__PURE__*/React__namespace.createElement(Component, _extends({}, grid.mobileTertiaryComponent, {
-        record: record,
-        source: grid === null || grid === void 0 ? void 0 : grid.mobileTertiaryText,
-        components: _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), buttons), customComponents.inputs), customComponents.fields), customComponents.buttons)
-      })) : lodash.get(record, grid === null || grid === void 0 ? void 0 : grid.mobileTertiaryText);
-    },
-    linkType: grid === null || grid === void 0 ? void 0 : grid.mobileLinkType
-  }) : /*#__PURE__*/React__namespace.createElement(Datagrid, null, grid === null || grid === void 0 ? void 0 : (_grid$columns = grid.columns) === null || _grid$columns === void 0 ? void 0 : _grid$columns.map(function (_ref2) {
-    var source = _ref2.source,
-        label = _ref2.label,
-        sortable = _ref2.sortable,
-        component = _ref2.component,
-        sortBy = _ref2.sortBy,
-        componentProps = _ref2.componentProps;
-    return /*#__PURE__*/React__namespace.createElement(Component, _extends({
-      key: source
-    }, component.indexOf("Button") === -1 ? {
-      source: source,
-      label: label,
-      sortable: sortable,
-      sortBy: sortBy
-    } : {}, {
-      component: component,
-      componentProps: componentProps,
-      components: _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), buttons), customComponents.inputs), customComponents.fields), customComponents.buttons)
-    }));
-  })));
-};
-
-var _excluded$8 = ["resource", "baseRecord"];
-
-var BackButton = function BackButton(_ref) {
-  var resource = _ref.resource;
-      _ref.baseRecord;
-      var props = _objectWithoutProperties(_ref, _excluded$8);
-
-  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.Button, _extends({}, props, {
-    component: reactRouterDom.Link,
-    to: {
-      pathname: "/".concat(resource)
-    },
-    label: "ra.action.back"
-  }), /*#__PURE__*/React__default["default"].createElement(BackIcon__default["default"], null));
-};
-
-var _excluded$7 = ["handleSubmitWithRedirect", "small", "state", "pristine"];
-var useStyles$2 = styles$1.makeStyles(function (theme) {
+var _excluded$o = ["handleSubmitWithRedirect", "small", "state", "pristine"];
+var useStyles$6 = styles$1.makeStyles(function (theme) {
   var _theme$props, _theme$props$MuiButto;
 
   return {
@@ -3712,9 +1879,9 @@ var StateButton = function StateButton(_ref, ref) {
       _ref.small;
       var state = _ref.state;
       _ref.pristine;
-      var props = _objectWithoutProperties(_ref, _excluded$7);
+      var props = _objectWithoutProperties(_ref, _excluded$o);
 
-  var classes = useStyles$2();
+  var classes = useStyles$6();
   var form = reactFinalForm.useForm();
   var handleClick = React.useCallback(function () {
     form.change("state", state.code);
@@ -3731,10 +1898,10 @@ var StateButton = function StateButton(_ref, ref) {
 
 var StateButton$1 = /*#__PURE__*/React__default["default"].forwardRef(StateButton);
 
-var _excluded$6 = ["states"];
+var _excluded$n = ["states"];
 
-var _this = undefined;
-var useStyles$1 = styles$1.makeStyles(function (theme) {
+var _this$1 = undefined;
+var useStyles$5 = styles$1.makeStyles(function (theme) {
   var _theme$props, _theme$props$MuiButto;
 
   return {
@@ -3744,11 +1911,11 @@ var useStyles$1 = styles$1.makeStyles(function (theme) {
   };
 });
 
-var ButtonListMenu = function ButtonListMenu(_ref) {
+var StateButtonMenu = function StateButtonMenu(_ref) {
   var states = _ref.states,
-      props = _objectWithoutProperties(_ref, _excluded$6);
+      props = _objectWithoutProperties(_ref, _excluded$n);
 
-  var classes = useStyles$1();
+  var classes = useStyles$5();
   var translate = reactAdmin.useTranslate();
 
   var _React$useState = React__default["default"].useState(null),
@@ -3794,9 +1961,1199 @@ var ButtonListMenu = function ButtonListMenu(_ref) {
       color: "default",
       variant: "text",
       icon: /*#__PURE__*/React__default["default"].createElement(ArrowForwardIosIcon__default["default"], null),
-      onClick: handleState.bind(_this, state)
+      onClick: handleState.bind(_this$1, state)
     }));
   })));
+};
+
+var buttons = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  RaEditButton: reactAdmin.EditButton,
+  RaDeleteButton: reactAdmin.DeleteButton,
+  EditButton: EditButton,
+  ExportToButton: ExportToButton,
+  BackButton: BackButton,
+  StateButton: StateButton$1,
+  StateButtonMenu: StateButtonMenu
+});
+
+var _excluded$m = ["chipSource"];
+
+var ChipArrayField = function ChipArrayField(_ref) {
+  var chipSource = _ref.chipSource,
+      props = _objectWithoutProperties(_ref, _excluded$m);
+
+  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.ArrayField, props, /*#__PURE__*/React__default["default"].createElement(reactAdmin.SingleFieldList, null, /*#__PURE__*/React__default["default"].createElement(reactAdmin.ChipField, {
+    source: chipSource
+  })));
+};
+
+var _excluded$l = ["record", "source", "width", "minWidth", "maxWidth", "maxRows", "sortable", "basePath", "sortBy"];
+var useStyles$4 = core.makeStyles(function (theme) {
+  return {
+    root: {
+      overflow: "hidden",
+      "text-overflow": "ellipsis",
+      display: "-webkit-box",
+      WebkitBoxOrient: "vertical",
+      whiteSpace: "break-spaces"
+    }
+  };
+});
+
+var LongTextField = function LongTextField(_ref) {
+  var record = _ref.record,
+      source = _ref.source,
+      _ref$width = _ref.width,
+      width = _ref$width === void 0 ? undefined : _ref$width,
+      _ref$minWidth = _ref.minWidth,
+      minWidth = _ref$minWidth === void 0 ? undefined : _ref$minWidth,
+      _ref$maxWidth = _ref.maxWidth,
+      maxWidth = _ref$maxWidth === void 0 ? undefined : _ref$maxWidth,
+      _ref$maxRows = _ref.maxRows,
+      maxRows = _ref$maxRows === void 0 ? 3 : _ref$maxRows;
+      _ref.sortable;
+      _ref.basePath;
+      _ref.sortBy;
+      var props = _objectWithoutProperties(_ref, _excluded$l);
+
+  var classes = useStyles$4();
+  return /*#__PURE__*/React__default["default"].createElement(core.Typography, _extends({}, props, {
+    variant: "body2",
+    title: lodash.get(record, source),
+    className: classes.root,
+    style: {
+      width: width,
+      minWidth: minWidth,
+      maxWidth: maxWidth,
+      WebkitLineClamp: maxRows
+    }
+  }), lodash.get(record, source));
+};
+
+LongTextField.propTypes = {
+  minWidth: PropTypes__default["default"].number,
+  maxWidth: PropTypes__default["default"].number,
+  width: PropTypes__default["default"].number,
+  maxRows: PropTypes__default["default"].number
+};
+
+var MediaField = function MediaField(_ref) {
+  var props = _extends({}, _ref);
+
+  var id = lodash.get(props, "record.id", 0);
+  var source = id > 0 ? "file.path" : "filepath";
+  return /*#__PURE__*/React__default["default"].createElement(raUiMaterialui.FileField, _extends({}, props, {
+    source: source
+  }));
+};
+
+var _excluded$k = ["label", "record", "resource"];
+
+var StateField = function StateField(_ref) {
+  var _ref$label = _ref.label,
+      label = _ref$label === void 0 ? "app.label.workflow.state" : _ref$label,
+      record = _ref.record,
+      toResolve = _ref.resource,
+      props = _objectWithoutProperties(_ref, _excluded$k);
+
+  var _useContext = React.useContext(WorkflowContext),
+      getWorkflow = _useContext.getWorkflow;
+
+  var resource = React.useMemo(function () {
+    return toResolve.replace("workflow/transactions/", "");
+  }, [toResolve]);
+  var workflow = React.useMemo(function () {
+    return getWorkflow(resource);
+  }, [resource, getWorkflow]);
+  var state = React.useMemo(function () {
+    return workflow && workflow.getState(_objectSpread2(_objectSpread2({}, record), {}, {
+      transaction: lodash.get(record, "transaction", record)
+    })) || undefined;
+  }, [record, workflow]);
+  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.ChipField, _extends({}, props, {
+    label: label,
+    source: "name",
+    record: state,
+    color: "primary"
+  }));
+};
+
+var useFieldLabel = function useFieldLabel(_ref) {
+  var resource = _ref.resource;
+  var t = reactAdmin.useTranslate();
+  return function (field) {
+    var translate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+    var label = "resources.".concat(resource, ".fields.").concat(field);
+    return translate ? t(label) : label;
+  };
+};
+
+var useStyles$3 = core.makeStyles(function (theme) {
+  return {
+    root: {
+      display: "-webkit-box",
+      WebkitBoxOrient: "vertical",
+      whiteSpace: "break-spaces"
+    },
+    link: {
+      cursor: "pointer",
+      fontWeight: "bold"
+    },
+    visibility: {
+      display: "block",
+      clear: "both"
+    }
+  };
+});
+
+var TransactionNotesField = function TransactionNotesField(_ref) {
+  var _ref$admin = _ref.admin,
+      admin = _ref$admin === void 0 ? false : _ref$admin,
+      record = _ref.record,
+      source = _ref.source,
+      _ref$minWidth = _ref.minWidth,
+      minWidth = _ref$minWidth === void 0 ? 150 : _ref$minWidth,
+      _ref$maxRows = _ref.maxRows,
+      maxRows = _ref$maxRows === void 0 ? 3 : _ref$maxRows,
+      component = _ref.component;
+  var classes = useStyles$3();
+  var fieldLabel = useFieldLabel({
+    resource: "transactions"
+  });
+
+  var _useMemo = React.useMemo(function () {
+    var isPrivate = lodash.get(record, "is_private", true);
+    var value = isPrivate && !admin ? null : lodash.get(record, source, "");
+    var tooLong = value !== null && value.length > 200;
+    return {
+      isPrivate: isPrivate,
+      value: value,
+      tooLong: tooLong
+    };
+  }, [record, admin, source]),
+      isPrivate = _useMemo.isPrivate,
+      value = _useMemo.value,
+      tooLong = _useMemo.tooLong;
+
+  var _useState = React.useState(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      showMore = _useState2[0],
+      setShowMore = _useState2[1];
+
+  var handleToggle = function handleToggle() {
+    return setShowMore(!showMore);
+  };
+
+  return /*#__PURE__*/React__default["default"].createElement(React.Fragment, null, /*#__PURE__*/React__default["default"].createElement(core.Typography, {
+    component: component,
+    className: classes.root,
+    style: {
+      minWidth: minWidth,
+      WebkitLineClamp: showMore ? null : maxRows
+    },
+    variant: "body2",
+    color: value === null || value.length === 0 ? "textSecondary" : "textPrimary",
+    display: "inline"
+  }, tooLong === false ? value !== null && value.length > 0 ? value : fieldLabel("notes.empty") : null, tooLong && (showMore ? value : value.substring(0, 200) + "...")), admin && value !== null && value.length > 0 && /*#__PURE__*/React__default["default"].createElement(core.Typography, {
+    component: component,
+    color: isPrivate ? "error" : "textSecondary",
+    className: classes.visibility,
+    variant: "caption"
+  }, fieldLabel("notes.".concat(isPrivate ? "private" : "public"))), tooLong && /*#__PURE__*/React__default["default"].createElement(core.Link, {
+    underline: "hover",
+    className: classes.link,
+    onClick: handleToggle
+  }, fieldLabel("notes.".concat(showMore ? "show_less" : "show_more"))));
+};
+
+TransactionNotesField.propTypes = {
+  minWidth: PropTypes__default["default"].number,
+  maxRows: PropTypes__default["default"].number
+};
+
+var _excluded$j = ["fullWidth", "addLabel"],
+    _excluded2$3 = ["admin", "label"];
+
+var PaginationWrapper = function PaginationWrapper(_ref) {
+  _ref.fullWidth;
+      _ref.addLabel;
+      var props = _objectWithoutProperties(_ref, _excluded$j);
+
+  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.Pagination, props);
+};
+
+var TransactionLogsField = function TransactionLogsField(_ref2) {
+  var _ref2$admin = _ref2.admin,
+      admin = _ref2$admin === void 0 ? false : _ref2$admin,
+      label = _ref2.label,
+      props = _objectWithoutProperties(_ref2, _excluded2$3);
+
+  var _useContext = React.useContext(WorkflowContext),
+      getWorkflow = _useContext.getWorkflow;
+
+  var mobileBreakpoint = React.useMemo(function () {
+    return lodash.get(props, "mobileBreakpoint", "sm");
+  }, [props]);
+  var isMobile = core.useMediaQuery(function (theme) {
+    return theme.breakpoints.down(mobileBreakpoint !== null && mobileBreakpoint !== void 0 ? mobileBreakpoint : "sm");
+  });
+  var fieldLabel = useFieldLabel({
+    resource: "transactions"
+  });
+  var workflow = React.useMemo(function () {
+    return getWorkflow(props.resource);
+  }, [getWorkflow, props.resource]);
+
+  if (!workflow || !props.record) {
+    return null;
+  }
+
+  return /*#__PURE__*/React__default["default"].createElement(React.Fragment, null, /*#__PURE__*/React__default["default"].createElement("br", null), label && /*#__PURE__*/React__default["default"].createElement(core.Typography, {
+    variant: "subtitle1",
+    gutterBottom: true
+  }, label), label && /*#__PURE__*/React__default["default"].createElement(core.Divider, null), /*#__PURE__*/React__default["default"].createElement(reactAdmin.ReferenceManyField, _extends({
+    perPage: 5,
+    pagination: /*#__PURE__*/React__default["default"].createElement(PaginationWrapper, null),
+    reference: "workflow/transactions/".concat(props.resource),
+    sort: {
+      field: "Transactions.created",
+      order: "desc"
+    }
+  }, props, {
+    source: "id",
+    target: "id"
+  }), isMobile ? /*#__PURE__*/React__default["default"].createElement(reactAdmin.SimpleList, {
+    primaryText: function primaryText(record) {
+      return /*#__PURE__*/React__default["default"].createElement(reactAdmin.DateField, {
+        label: fieldLabel("created"),
+        record: record,
+        source: "created",
+        showTime: true
+      });
+    },
+    secondaryText: function secondaryText(record) {
+      return /*#__PURE__*/React__default["default"].createElement(TransactionNotesField, {
+        record: record,
+        component: "span",
+        label: fieldLabel("notes"),
+        source: "notes",
+        admin: admin,
+        sortable: false,
+        maxRows: 6
+      });
+    },
+    linkType: false
+  }) : /*#__PURE__*/React__default["default"].createElement(reactAdmin.Datagrid, null, admin && /*#__PURE__*/React__default["default"].createElement(reactAdmin.TextField, {
+    label: fieldLabel("id"),
+    source: "id"
+  }), /*#__PURE__*/React__default["default"].createElement(reactAdmin.DateField, {
+    label: fieldLabel("created"),
+    source: "created",
+    showTime: true,
+    sortBy: "Transactions.created"
+  }), /*#__PURE__*/React__default["default"].createElement(reactAdmin.TextField, {
+    label: fieldLabel("user"),
+    source: "user.name",
+    sortBy: "Users.username"
+  }), /*#__PURE__*/React__default["default"].createElement(TransactionNotesField, {
+    label: fieldLabel("notes"),
+    source: "notes",
+    admin: admin,
+    sortable: false,
+    maxRows: 6
+  }), /*#__PURE__*/React__default["default"].createElement(StateField, {
+    label: fieldLabel("state"),
+    sortBy: "Transactions.state"
+  }))), /*#__PURE__*/React__default["default"].createElement("br", null));
+};
+
+var fields = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  TextField: reactAdmin.TextField,
+  DateField: reactAdmin.DateField,
+  ChipField: reactAdmin.ChipField,
+  BooleanField: reactAdmin.BooleanField,
+  ChipArrayField: ChipArrayField,
+  LongTextField: LongTextField,
+  MediaField: MediaField,
+  StateField: StateField,
+  TransactionLogsField: TransactionLogsField
+});
+
+var useFormStyles = core.makeStyles(function (theme) {
+  var _ref;
+
+  return _ref = {}, _defineProperty(_ref, theme.breakpoints.up("md"), {
+    main: {
+      width: "70%",
+      minWidth: "960px",
+      margin: "1em auto"
+    }
+  }), _defineProperty(_ref, theme.breakpoints.down("md"), {
+    main: {
+      minWidth: "100%"
+    }
+  }), _ref;
+});
+
+var _excluded$i = ["children"];
+
+var Create$3 = function Create(_ref) {
+  var children = _ref.children,
+      props = _objectWithoutProperties(_ref, _excluded$i);
+
+  var classes = useFormStyles();
+  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.Create, _extends({}, props, {
+    classes: classes
+  }), children);
+};
+
+var _excluded$h = ["children"];
+
+var Create$2 = function Create(_ref) {
+  var children = _ref.children,
+      props = _objectWithoutProperties(_ref, _excluded$h);
+
+  var classes = useFormStyles();
+  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.Edit, _extends({}, props, {
+    classes: classes
+  }), children);
+};
+
+function useDebounce(value, delay) {
+  // State and setters for debounced value
+  var _useState = React.useState(value),
+      _useState2 = _slicedToArray(_useState, 2),
+      debouncedValue = _useState2[0],
+      setDebouncedValue = _useState2[1];
+
+  React.useEffect(function () {
+    // Update debounced value after delay
+    var handler = setTimeout(function () {
+      setDebouncedValue(value);
+    }, delay); // Cancel the timeout if value changes (also on delay change or unmount)
+    // This is how we prevent debounced value from updating if value is changed ...
+    // .. within the delay period. Timeout gets cleared and restarted.
+
+    return function () {
+      clearTimeout(handler);
+    };
+  }, [value, delay] // Only re-call effect if value or delay changes
+  );
+  return debouncedValue;
+}
+
+var _excluded$g = ["margin", "variant", "fullWidth", "maxLength", "multiline", "format", "rows", "disabled", "InputLabelProps"],
+    _excluded2$2 = ["name", "onChange"];
+
+var DebouncedTextInput = function DebouncedTextInput(_ref) {
+  var _ref$margin = _ref.margin,
+      margin = _ref$margin === void 0 ? "dense" : _ref$margin,
+      _ref$variant = _ref.variant,
+      variant = _ref$variant === void 0 ? "filled" : _ref$variant,
+      fullWidth = _ref.fullWidth,
+      maxLength = _ref.maxLength,
+      multiline = _ref.multiline,
+      format = _ref.format,
+      rows = _ref.rows,
+      disabled = _ref.disabled,
+      InputLabelProps = _ref.InputLabelProps,
+      props = _objectWithoutProperties(_ref, _excluded$g);
+
+  var className = props.className,
+      source = props.source,
+      resource = props.resource,
+      label = props.label;
+  var validationFn = raCore.maxLength(maxLength);
+  var helperText = props.helperText;
+  var validate = props.validate;
+
+  if (!validate) {
+    validate = [validationFn];
+  } else if (Array.isArray(validate)) {
+    if (validate.indexOf(validationFn) === -1) {
+      validate.push(validationFn);
+    }
+  }
+
+  var _useInput = reactAdmin.useInput(_objectSpread2({
+    validate: validate
+  }, props)),
+      _useInput$input = _useInput.input,
+      name = _useInput$input.name,
+      onChange = _useInput$input.onChange,
+      rest = _objectWithoutProperties(_useInput$input, _excluded2$2),
+      _useInput$meta = _useInput.meta,
+      touched = _useInput$meta.touched,
+      error = _useInput$meta.error,
+      submitError = _useInput$meta.submitError,
+      isRequired = _useInput.isRequired;
+
+  var translate = raCore.useTranslate();
+  var defaultValue = props.type === "number" ? 0 : "";
+
+  var _React$useState = React__default["default"].useState(rest.value !== undefined ? rest.value : defaultValue),
+      _React$useState2 = _slicedToArray(_React$useState, 2),
+      value = _React$useState2[0],
+      setValue = _React$useState2[1];
+
+  var formState = reactFinalForm.useFormState();
+  var formValue = lodash.get(formState.values, source, defaultValue);
+  var didMountEffect = React.useRef(false);
+  React.useEffect(function () {
+    if (didMountEffect.current === false) {
+      didMountEffect.current = true;
+      return;
+    }
+
+    if (formValue && formValue !== null) {
+      setValue(formValue);
+    }
+  }, [formValue]);
+  var handleChange = React.useCallback(function (evt) {
+    return setValue(evt.target.value);
+  }, []);
+  var debouncedValue = useDebounce(value, 500);
+  var didMountChange = React.useRef(false);
+  React.useEffect(function () {
+    if (didMountChange.current === false) {
+      didMountChange.current = true;
+      return;
+    }
+
+    if (debouncedValue !== (formValue !== null ? formValue : defaultValue) && debouncedValue !== defaultValue) {
+      onChange(debouncedValue);
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
+
+  }, [debouncedValue, onChange]);
+  var usedCharsInfo = translate("app.input.max_length_info", {
+    count: lodash.get(value, "length", 0),
+    max: maxLength
+  });
+
+  if (maxLength) {
+    helperText = helperText && helperText.length > 0 ? "".concat(usedCharsInfo, " - ").concat(translate(helperText)) : usedCharsInfo;
+  }
+
+  return /*#__PURE__*/React__default["default"].createElement(TextField__default["default"], _extends({}, rest, {
+    disabled: disabled,
+    name: name,
+    className: className,
+    fullWidth: fullWidth,
+    multiline: multiline,
+    rows: rows,
+    variant: variant,
+    margin: margin,
+    value: format ? format(value) : value,
+    label: label !== "" && label !== false && /*#__PURE__*/React__default["default"].createElement(raCore.FieldTitle, {
+      label: label,
+      source: source,
+      resource: resource,
+      isRequired: isRequired
+    }),
+    onChange: handleChange,
+    error: !!(touched && (error || submitError)),
+    helperText: /*#__PURE__*/React__default["default"].createElement(raUiMaterialui.InputHelperText, {
+      touched: touched,
+      error: error || submitError,
+      helperText: helperText
+    }),
+    InputLabelProps: InputLabelProps,
+    required: isRequired
+  }));
+};
+
+/**
+ * Convert Date object to String
+ *
+ * @param {Date} value value to convert
+ * @returns {String} A standardized date (yyyy-MM-dd), to be passed to an <input type="date" />
+ */
+
+var convertDateToString = function convertDateToString(value) {
+  if (!(value instanceof Date) || isNaN(value.getDate())) return "";
+  var pad = "00";
+  var yyyy = value.getFullYear().toString();
+  var MM = (value.getMonth() + 1).toString();
+  var dd = value.getDate().toString();
+  return "".concat(yyyy, "-").concat((pad + MM).slice(-2), "-").concat((pad + dd).slice(-2));
+};
+
+var dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+var defaultInputLabelProps = {
+  shrink: true
+};
+
+var getStringFromDate = function getStringFromDate(value) {
+  // null, undefined and empty string values should not go through dateFormatter
+  // otherwise, it returns undefined and will make the input an uncontrolled one.
+  if (value == null || value === "") {
+    return "";
+  }
+
+  if (value instanceof Date) {
+    return convertDateToString(value);
+  } // valid dates should not be converted
+
+
+  if (dateRegex.test(value)) {
+    return value;
+  }
+
+  return convertDateToString(new Date(value));
+};
+
+var DebouncedDateInput = function DebouncedDateInput(props) {
+  return /*#__PURE__*/React__default["default"].createElement(DebouncedTextInput, _extends({}, props, {
+    type: "date",
+    format: getStringFromDate,
+    InputLabelProps: defaultInputLabelProps
+  }));
+};
+
+var convertStringToNumber = function convertStringToNumber(value) {
+  var float = parseFloat(value);
+  return isNaN(float) ? null : float;
+};
+
+var DebouncedNumberInput = function DebouncedNumberInput(props) {
+  return /*#__PURE__*/React__default["default"].createElement(DebouncedTextInput, _extends({}, props, {
+    type: "number",
+    parse: convertStringToNumber
+  }));
+};
+
+var _excluded$f = ["title"];
+
+var MediaInput = function MediaInput(_ref) {
+  var title = _ref.title,
+      props = _objectWithoutProperties(_ref, _excluded$f);
+
+  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.FileInput, props, /*#__PURE__*/React__default["default"].createElement(MediaField, {
+    source: "filepath",
+    title: title
+  }));
+};
+
+var _excluded$e = ["optionText"];
+
+var ReferenceAutocompleteInput$1 = function ReferenceAutocompleteInput(_ref) {
+  var optionText = _ref.optionText,
+      props = _objectWithoutProperties(_ref, _excluded$e);
+
+  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.ReferenceInput, props, /*#__PURE__*/React__default["default"].createElement(reactAdmin.AutocompleteInput, {
+    optionText: optionText
+  }));
+};
+
+var createManyFormatter = function createManyFormatter() {
+  return function (many) {
+    var array = many ? many.map(function (p) {
+      return p.id;
+    }) : [];
+    return array;
+  };
+};
+
+var useManyFormatter = function useManyFormatter() {
+  var memoizedFn = React.useMemo(function () {
+    return createManyFormatter();
+  }, []);
+  return memoizedFn;
+};
+
+var createManyParser = function createManyParser() {
+  return function (many) {
+    var objects = many ? many.map(function (id) {
+      return {
+        id: id
+      };
+    }) : [];
+    return objects;
+  };
+};
+
+var useManyParser = function useManyParser() {
+  var memoizedFn = React.useMemo(function () {
+    return createManyParser();
+  }, []);
+  return memoizedFn;
+};
+
+var _excluded$d = ["optionText"];
+
+var ReferenceCheckboxGroupInput = function ReferenceCheckboxGroupInput(_ref) {
+  var optionText = _ref.optionText,
+      props = _objectWithoutProperties(_ref, _excluded$d);
+
+  var parse = useManyParser();
+  var format = useManyFormatter();
+  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.ReferenceArrayInput, _extends({}, props, {
+    parse: parse,
+    format: format
+  }), /*#__PURE__*/React__default["default"].createElement(reactAdmin.CheckboxGroupInput, {
+    optionText: optionText
+  }));
+};
+
+var _excluded$c = ["optionText"];
+
+var ReferenceAutocompleteInput = function ReferenceAutocompleteInput(_ref) {
+  var optionText = _ref.optionText,
+      props = _objectWithoutProperties(_ref, _excluded$c);
+
+  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.ReferenceInput, props, /*#__PURE__*/React__default["default"].createElement(reactAdmin.SelectInput, {
+    optionText: optionText
+  }));
+};
+
+var useStyles$2 = core.makeStyles(function (theme) {
+  return {
+    required: {}
+  };
+});
+
+var ConfirmMove = function ConfirmMove(_ref) {
+  var _ref$admin = _ref.admin,
+      admin = _ref$admin === void 0 ? false : _ref$admin,
+      _ref$open = _ref.open,
+      open = _ref$open === void 0 ? false : _ref$open,
+      resource = _ref.resource,
+      record = _ref.record,
+      state = _ref.state,
+      onCancel = _ref.onCancel;
+  var classes = useStyles$2();
+  var refresh = reactAdmin.useRefresh();
+  var notify = reactAdmin.useNotify();
+
+  var _useState = React.useState(""),
+      _useState2 = _slicedToArray(_useState, 2),
+      notes = _useState2[0],
+      setNotes = _useState2[1];
+
+  var _useState3 = React.useState(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      isPrivate = _useState4[0],
+      setPrivate = _useState4[1];
+
+  var _useContext = React.useContext(WorkflowContext),
+      getWorkflow = _useContext.getWorkflow;
+
+  var workflow = React.useMemo(function () {
+    return getWorkflow(resource);
+  }, [getWorkflow, resource]);
+  var translate = reactAdmin.useTranslate();
+  var handleChange = React.useCallback(function (e) {
+    return setNotes(e.target.value);
+  }, [setNotes]);
+  var handlePrivate = React.useCallback(function (e) {
+    return setPrivate(e.target.checked);
+  }, [setPrivate]);
+  var needsNotes = React.useMemo(function () {
+    return workflow && workflow.needsNotes(record, state);
+  }, [workflow, record, state]);
+
+  var _useUpdate = reactAdmin.useUpdate(resource, record.id, _objectSpread2(_objectSpread2({}, record), {}, {
+    user: null,
+    state: lodash.get(state, "code"),
+    notes: notes,
+    is_private: isPrivate
+  }), record, {
+    onSuccess: function onSuccess() {
+      notify("resources.workflow.move.success");
+      refresh();
+    },
+    onFailure: function onFailure(_ref2) {
+      var message = _ref2.message,
+          body = _ref2.body,
+          status = _ref2.status;
+      onCancel();
+      notify("resources.workflow.move.error", "error", {
+        reason: message,
+        message: message,
+        body: body,
+        status: status
+      });
+    }
+  }),
+      _useUpdate2 = _slicedToArray(_useUpdate, 2),
+      handleUpdate = _useUpdate2[0],
+      loading = _useUpdate2[1].loading;
+
+  return /*#__PURE__*/React__default["default"].createElement(core.Dialog, {
+    open: open
+  }, /*#__PURE__*/React__default["default"].createElement(core.DialogTitle, null, translate("resources.workflow.move.title")), /*#__PURE__*/React__default["default"].createElement(core.DialogContent, null, /*#__PURE__*/React__default["default"].createElement(core.DialogContentText, {
+    className: classnames__default["default"](needsNotes && classes.required)
+  }, translate("resources.workflow.move.message" + (needsNotes ? ".required" : ""))), /*#__PURE__*/React__default["default"].createElement(core.TextField, {
+    autoFocus: true,
+    onChange: handleChange,
+    margin: "dense",
+    id: "notes",
+    label: translate("resources.workflow.fields.notes"),
+    type: "text",
+    multiline: true,
+    fullWidth: true
+  }), admin && /*#__PURE__*/React__default["default"].createElement(React.Fragment, null, /*#__PURE__*/React__default["default"].createElement(core.FormControlLabel, {
+    control: /*#__PURE__*/React__default["default"].createElement(core.Switch, {
+      checked: isPrivate,
+      onChange: handlePrivate,
+      name: "is_private",
+      color: "primary"
+    }),
+    label: translate("resources.workflow.fields.is_private")
+  }), /*#__PURE__*/React__default["default"].createElement(core.FormHelperText, null, translate("resources.workflow.fields.is_private.help")))), /*#__PURE__*/React__default["default"].createElement(core.DialogActions, null, /*#__PURE__*/React__default["default"].createElement(core.Button, {
+    onClick: onCancel
+  }, translate("ra.action.cancel")), /*#__PURE__*/React__default["default"].createElement(core.Button, {
+    onClick: handleUpdate,
+    color: "primary",
+    disabled: needsNotes && notes.length === 0 || loading
+  }, translate("ra.action.confirm"))));
+};
+
+ConfirmMove.propTypes = {
+  state: PropTypes__default["default"].shape({
+    code: PropTypes__default["default"].string,
+    name: PropTypes__default["default"].string,
+    label: PropTypes__default["default"].string
+  }),
+  resource: PropTypes__default["default"].string.isRequired,
+  record: PropTypes__default["default"].object.isRequired,
+  open: PropTypes__default["default"].bool.isRequired,
+  onCancel: PropTypes__default["default"].func.isRequired
+};
+
+var _this = undefined;
+
+var StateCollectionInput = function StateCollectionInput(_ref) {
+  var _ref$readonly = _ref.readonly,
+      readonly = _ref$readonly === void 0 ? false : _ref$readonly,
+      _ref$admin = _ref.admin,
+      admin = _ref$admin === void 0 ? false : _ref$admin,
+      record = _ref.record,
+      toResolve = _ref.resource;
+
+  var _useState = React.useState(null),
+      _useState2 = _slicedToArray(_useState, 2),
+      state = _useState2[0],
+      setState = _useState2[1];
+
+  var _useGetIdentity = raCore.useGetIdentity(),
+      loading = _useGetIdentity.loading,
+      loaded = _useGetIdentity.loaded,
+      identity = _useGetIdentity.identity;
+
+  var roles = React.useMemo(function () {
+    return !loading && loaded ? identity === null || identity === void 0 ? void 0 : identity.roles : [];
+  }, [loading, loaded, identity]);
+  var resource = React.useMemo(function () {
+    return toResolve.replace("workflow/transactions/", "");
+  }, [toResolve]);
+
+  var _useContext = React.useContext(WorkflowContext),
+      getWorkflow = _useContext.getWorkflow;
+
+  var workflow = React.useMemo(function () {
+    return getWorkflow(resource);
+  }, [getWorkflow, resource]);
+
+  var _useMemo = React.useMemo(function () {
+    var currentState = workflow && workflow.getState(_objectSpread2(_objectSpread2({}, record), {}, {
+      // If component is used inside TransactionLogsField the transaction is referencing
+      // current record. I have to get it to make workflow work.
+      transaction: lodash.get(record, "transaction", record)
+    })) || undefined;
+    var nextStates = workflow.getNextStates(roles, record);
+    return {
+      currentState: currentState,
+      nextStates: nextStates
+    };
+  }, [roles, record, workflow]),
+      currentState = _useMemo.currentState,
+      nextStates = _useMemo.nextStates;
+
+  var _React$useState = React__default["default"].useState(null),
+      _React$useState2 = _slicedToArray(_React$useState, 2),
+      anchorEl = _React$useState2[0],
+      setAnchorEl = _React$useState2[1];
+
+  var handleClick = function handleClick(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    setAnchorEl(event.currentTarget);
+  };
+
+  var handleClose = function handleClose() {
+    setAnchorEl(null);
+    setState(null);
+  };
+
+  var handleChange = function handleChange(state) {
+    setAnchorEl(null);
+    setState(state);
+  };
+
+  if (readonly || nextStates.length === 0) {
+    // If user is not admin and there are no next states, show current state
+    return /*#__PURE__*/React__default["default"].createElement(StateField, {
+      record: record,
+      resource: toResolve
+    });
+  }
+
+  return /*#__PURE__*/React__default["default"].createElement("div", null, /*#__PURE__*/React__default["default"].createElement(core.Button, {
+    disableElevation: true,
+    endIcon: /*#__PURE__*/React__default["default"].createElement(ArrowDropDownIcon__default["default"], null),
+    color: "primary",
+    variant: "contained",
+    "aria-controls": "simple-menu",
+    "aria-haspopup": "true",
+    style: {
+      textAlign: "left"
+    },
+    size: "small",
+    onClick: handleClick
+  }, /*#__PURE__*/React__default["default"].createElement(LongTextField, {
+    record: currentState,
+    source: "name",
+    variant: "body2"
+  })), /*#__PURE__*/React__default["default"].createElement(core.Menu, {
+    anchorEl: anchorEl,
+    keepMounted: true,
+    open: Boolean(anchorEl),
+    onClose: handleClose
+  }, nextStates.map(function (state) {
+    return /*#__PURE__*/React__default["default"].createElement(core.MenuItem, {
+      key: lodash.get(state, "code"),
+      onClick: handleChange.bind(_this, state)
+    }, lodash.get(state, "label"));
+  })), /*#__PURE__*/React__default["default"].createElement(ConfirmMove, {
+    admin: admin,
+    open: state !== null,
+    resource: resource,
+    record: record,
+    state: state,
+    onCancel: handleClose
+  }));
+};
+
+var _excluded$b = ["filter"];
+
+var StateInput = function StateInput(_ref) {
+  var _ref$filter = _ref.filter,
+      filter = _ref$filter === void 0 ? undefined : _ref$filter,
+      props = _objectWithoutProperties(_ref, _excluded$b);
+
+  var _useContext = React.useContext(WorkflowContext),
+      getWorkflow = _useContext.getWorkflow;
+
+  var workflow = React.useMemo(function () {
+    return getWorkflow(props.resource);
+  }, [props.resource, getWorkflow]);
+  var states = React.useMemo(function () {
+    return workflow ? workflow.states.filter(function (s) {
+      return !s.isLoop && (filter === undefined || filter(s));
+    }) : [];
+  }, [workflow, filter]);
+  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.SelectInput, _extends({}, props, {
+    choices: states,
+    optionText: "name",
+    optionValue: "code",
+    allowEmpty: true,
+    emptyText: "ra.action.all"
+  }));
+};
+
+var TransactionNotesInput = function TransactionNotesInput(props) {
+  var translate = reactAdmin.useTranslate();
+  var fieldLabel = useFieldLabel({
+    resource: "transactions"
+  });
+  var label = React.useMemo(function () {
+    return props.label || fieldLabel("notes");
+  }, [props.label, fieldLabel]);
+  var helperText = React.useMemo(function () {
+    return translate(props.helperText);
+  }, [props.helperText, translate]);
+  return /*#__PURE__*/React__default["default"].createElement(DebouncedTextInput, _extends({}, props, {
+    label: label,
+    helperText: helperText,
+    maxLength: 1500,
+    multiline: true
+  }));
+};
+
+var _excluded$a = ["label", "helperText", "admin"];
+
+var TransactionNotesIsPrivateInput = function TransactionNotesIsPrivateInput(_ref) {
+  var label = _ref.label,
+      helperText = _ref.helperText,
+      _ref$admin = _ref.admin,
+      admin = _ref$admin === void 0 ? false : _ref$admin,
+      props = _objectWithoutProperties(_ref, _excluded$a);
+
+  var fieldLabel = useFieldLabel({
+    resource: "transactions"
+  });
+
+  if (!admin) {
+    return null;
+  }
+
+  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.BooleanInput, _extends({
+    label: label || fieldLabel("is_private", false),
+    helperText: helperText || fieldLabel("is_private.helper_text"),
+    source: "is_private"
+  }, props));
+};
+
+var inputs = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  ReferenceCheckboxGroupInput: ReferenceCheckboxGroupInput,
+  ReferenceAutocompleteInput: ReferenceAutocompleteInput$1,
+  ReferenceSelectInput: ReferenceAutocompleteInput,
+  SearchInput: reactAdmin.SearchInput,
+  TextInput: reactAdmin.TextInput,
+  SelectInput: reactAdmin.SelectInput,
+  BooleanInput: reactAdmin.BooleanInput,
+  DateInput: reactAdmin.DateInput,
+  DateTimeInput: reactAdmin.DateTimeInput,
+  NumberInput: reactAdmin.NumberInput,
+  MediaInput: MediaInput,
+  StateInput: StateInput,
+  StateCollectionInput: StateCollectionInput,
+  TransactionNotesIsPrivateInput: TransactionNotesIsPrivateInput,
+  TransactionNotesInput: TransactionNotesInput,
+  DebouncedDateInput: DebouncedDateInput,
+  DebouncedNumberInput: DebouncedNumberInput,
+  DebouncedTextInput: DebouncedTextInput
+});
+
+var _excluded$9 = ["children"];
+
+var getWidthToSubtract = function getWidthToSubtract(w) {
+  return w + (window.innerWidth - document.documentElement.clientWidth);
+};
+
+var useStyles$1 = core.makeStyles(function (theme) {
+  return {
+    container: function container(_ref) {
+      var sidebarOpen = _ref.sidebarOpen,
+          drawerWidth = _ref.drawerWidth;
+      return _defineProperty({
+        maxWidth: "calc(100vw - ".concat(sidebarOpen ? getWidthToSubtract(drawerWidth + theme.spacing(6) - 1) : getWidthToSubtract(58 + theme.spacing(6) - 1), "px)"),
+        borderRadius: theme.shape.borderRadius,
+        overflowX: "auto",
+        overflowY: "hidden"
+      }, theme.breakpoints.down("xs"), {
+        width: "100vw",
+        maxWidth: "100vw"
+      });
+    },
+    rowEven: {
+      backgroundColor: theme.palette.background.default
+    }
+  };
+});
+
+var Datagrid = function Datagrid(_ref3) {
+  var children = _ref3.children,
+      props = _objectWithoutProperties(_ref3, _excluded$9);
+
+  var _useContext = React.useContext(LayoutContext),
+      drawerWidth = _useContext.drawerWidth;
+
+  var sidebarOpen = reactRedux.useSelector(function (state) {
+    return state.admin.ui.sidebarOpen;
+  });
+  var classes = useStyles$1({
+    sidebarOpen: sidebarOpen,
+    drawerWidth: drawerWidth
+  });
+  return /*#__PURE__*/React__default["default"].createElement("div", {
+    className: classes.container
+  }, /*#__PURE__*/React__default["default"].createElement(reactAdmin.Datagrid, _extends({
+    classes: {
+      rowEven: classes.rowEven
+    }
+  }, props), children));
+};
+
+var _excluded$8 = ["component", "componentProps", "components", "addLabel", "sortBy"];
+
+var Component = function Component(_ref) {
+  var component = _ref.component,
+      componentProps = _ref.componentProps,
+      components = _ref.components,
+      _ref$addLabel = _ref.addLabel,
+      addLabel = _ref$addLabel === void 0 ? true : _ref$addLabel;
+      _ref.sortBy;
+      var props = _objectWithoutProperties(_ref, _excluded$8);
+
+  var Component = lodash.get(components, component);
+
+  if (!Component) {
+    return addLabel ? /*#__PURE__*/React__default["default"].createElement(reactAdmin.Labeled, {
+      label: props.label,
+      source: props.source,
+      fullWidth: true
+    }, /*#__PURE__*/React__default["default"].createElement(core.Typography, {
+      variant: "body2"
+    }, "No component found for ", /*#__PURE__*/React__default["default"].createElement("code", null, component), ".")) : /*#__PURE__*/React__default["default"].createElement(core.Typography, {
+      variant: "body2"
+    }, "No component found for ", /*#__PURE__*/React__default["default"].createElement("code", null, component), ".");
+  }
+
+  return /*#__PURE__*/React__default["default"].createElement(Component, _extends({}, props, componentProps));
+};
+
+var _excluded$7 = ["component", "disabled"];
+
+var Input = function Input(_ref) {
+  var component = _ref.component,
+      disabled = _ref.disabled,
+      props = _objectWithoutProperties(_ref, _excluded$7);
+
+  var _useGetIdentity = raCore.useGetIdentity(),
+      loaded = _useGetIdentity.loaded,
+      loading = _useGetIdentity.loading,
+      identity = _useGetIdentity.identity;
+
+  var roles = React.useMemo(function () {
+    return !loading && loaded ? identity === null || identity === void 0 ? void 0 : identity.roles : [];
+  }, [identity, loading, loaded]);
+
+  var _useMemo = React.useMemo(function () {
+    var resource = lodash.get(props, "resource", component.props.resource);
+    var source = lodash.get(props, "source", component.props.source);
+    var record = lodash.get(props, "record", component.props.record);
+    return {
+      resource: resource,
+      source: source,
+      record: record
+    };
+  }, [props, component]),
+      resource = _useMemo.resource,
+      source = _useMemo.source,
+      record = _useMemo.record;
+
+  var _useContext = React.useContext(WorkflowContext),
+      getWorkflow = _useContext.getWorkflow;
+
+  var workflow = React.useMemo(function () {
+    return getWorkflow(resource);
+  }, [resource, getWorkflow]);
+
+  var _useMemo2 = React.useMemo(function () {
+    var visible = workflow && workflow.canReadField(source, roles, record);
+    var disable = disabled || workflow && !workflow.canEditField(source, roles, record);
+    return {
+      visible: visible,
+      disable: disable
+    };
+  }, [workflow, source, record, roles, disabled]),
+      visible = _useMemo2.visible,
+      disable = _useMemo2.disable;
+
+  if (!visible) {
+    return null;
+  }
+
+  return /*#__PURE__*/React__default["default"].cloneElement(component, _objectSpread2(_objectSpread2(_objectSpread2({}, component.props), props), {}, {
+    disabled: disable,
+    resource: resource,
+    source: source,
+    record: record
+  }));
+};
+
+var _require = require("ra-core"),
+    getResources = _require.getResources;
+
+var _require2 = require("react-redux"),
+    shallowEqual = _require2.shallowEqual,
+    useSelector = _require2.useSelector;
+
+var _require3 = require("lodash"),
+    get = _require3.get;
+
+var useCustomComponents = function useCustomComponents(resource) {
+  var resources = useSelector(getResources, shallowEqual);
+  return React.useMemo(function () {
+    var r = resources.find(function (r) {
+      return r.name === resource;
+    });
+    return get(r, "options.components");
+  }, [resources, resource]);
+};
+
+var _excluded$6 = ["tabs"],
+    _excluded2$1 = ["componentProps"],
+    _excluded3 = ["fullWidth"];
+
+var TabbedForm = function TabbedForm(_ref) {
+  var tabs = _ref.tabs,
+      props = _objectWithoutProperties(_ref, _excluded$6);
+
+  var _useContext = React.useContext(CrudContext),
+      getForm = _useContext.getForm;
+
+  var _useContext2 = React.useContext(WorkflowContext),
+      getWorkflow = _useContext2.getWorkflow;
+
+  var form = React.useMemo(function () {
+    return getForm(props.resource);
+  }, [props.resource, getForm]);
+  var workflow = React.useMemo(function () {
+    return form !== null && form !== void 0 && form.useWorkflow ? getWorkflow(props.resource) : null;
+  }, [props.resource, getWorkflow, form]);
+  var customComponents = useCustomComponents(props.resource);
+  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.TabbedForm, props, tabs.map(function (_ref2, index) {
+    var _tab$inputs;
+
+    var label = _ref2.componentProps.label,
+        tab = _objectWithoutProperties(_ref2, _excluded2$1);
+
+    return /*#__PURE__*/React__default["default"].createElement(reactAdmin.FormTab, {
+      key: index,
+      label: label
+    }, tab === null || tab === void 0 ? void 0 : (_tab$inputs = tab.inputs) === null || _tab$inputs === void 0 ? void 0 : _tab$inputs.map(function (_ref3) {
+      var source = _ref3.source,
+          label = _ref3.label,
+          component = _ref3.component,
+          useWorkflow = _ref3.useWorkflow,
+          _ref3$componentProps = _ref3.componentProps,
+          fullWidth = _ref3$componentProps.fullWidth,
+          restComponentProps = _objectWithoutProperties(_ref3$componentProps, _excluded3);
+
+      return form !== null && form !== void 0 && form.useWorkflow && workflow !== null && useWorkflow === true ? /*#__PURE__*/React__default["default"].createElement(Input, {
+        key: source,
+        source: source,
+        fullWidth: true,
+        component: /*#__PURE__*/React__default["default"].createElement(Component, {
+          key: source,
+          source: source,
+          label: label,
+          fullWidth: fullWidth,
+          component: component,
+          componentProps: _objectSpread2({
+            fullWidth: fullWidth
+          }, restComponentProps),
+          components: _objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), customComponents)
+        })
+      }) : /*#__PURE__*/React__default["default"].createElement(Component, {
+        key: source,
+        source: source,
+        label: label,
+        fullWidth: fullWidth,
+        component: component,
+        componentProps: _objectSpread2({
+          fullWidth: fullWidth
+        }, restComponentProps),
+        components: _objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), customComponents)
+      });
+    }));
+  }));
 };
 
 var _excluded$5 = ["children", "mutationMode", "validating", "maxButtonsToDisplay"];
@@ -3865,7 +3222,7 @@ var Toolbar = function Toolbar(_ref) {
     color: "primary",
     handleSubmitWithRedirect: handleClick,
     disabled: props.saving
-  })), states.length > maxButtonsToDisplay && /*#__PURE__*/React__default["default"].createElement(ButtonListMenu, _extends({
+  })), states.length > maxButtonsToDisplay && /*#__PURE__*/React__default["default"].createElement(StateButtonMenu, _extends({
     states: states
   }, props, {
     disabled: props.saving
@@ -3881,66 +3238,6 @@ var Toolbar = function Toolbar(_ref) {
       key: key
     }));
   }), /*#__PURE__*/React__default["default"].createElement(BackButton, null));
-};
-
-var _excluded$4 = ["component", "disabled"];
-
-var Input = function Input(_ref) {
-  var component = _ref.component,
-      disabled = _ref.disabled,
-      props = _objectWithoutProperties(_ref, _excluded$4);
-
-  var _useGetIdentity = raCore.useGetIdentity(),
-      loaded = _useGetIdentity.loaded,
-      loading = _useGetIdentity.loading,
-      identity = _useGetIdentity.identity;
-
-  var roles = React.useMemo(function () {
-    return !loading && loaded ? identity === null || identity === void 0 ? void 0 : identity.roles : [];
-  }, [identity, loading, loaded]);
-
-  var _useMemo = React.useMemo(function () {
-    var resource = lodash.get(props, "resource", component.props.resource);
-    var source = lodash.get(props, "source", component.props.source);
-    var record = lodash.get(props, "record", component.props.record);
-    return {
-      resource: resource,
-      source: source,
-      record: record
-    };
-  }, [props, component]),
-      resource = _useMemo.resource,
-      source = _useMemo.source,
-      record = _useMemo.record;
-
-  var _useContext = React.useContext(WorkflowContext),
-      getWorkflow = _useContext.getWorkflow;
-
-  var workflow = React.useMemo(function () {
-    return getWorkflow(resource);
-  }, [resource, getWorkflow]);
-
-  var _useMemo2 = React.useMemo(function () {
-    var visible = workflow && workflow.canReadField(source, roles, record);
-    var disable = disabled || workflow && !workflow.canEditField(source, roles, record);
-    return {
-      visible: visible,
-      disable: disable
-    };
-  }, [workflow, source, record, roles, disabled]),
-      visible = _useMemo2.visible,
-      disable = _useMemo2.disable;
-
-  if (!visible) {
-    return null;
-  }
-
-  return /*#__PURE__*/React__default["default"].cloneElement(component, _objectSpread2(_objectSpread2(_objectSpread2({}, component.props), props), {}, {
-    disabled: disable,
-    resource: resource,
-    source: source,
-    record: record
-  }));
 };
 
 var mapFieldErrors = function mapFieldErrors(field, errors) {
@@ -4079,76 +3376,7 @@ var useSaveMutation = function useSaveMutation(_ref) {
   return save;
 };
 
-var _excluded$3 = ["tabs"],
-    _excluded2 = ["componentProps"],
-    _excluded3 = ["fullWidth"];
-
-var TabbedForm = function TabbedForm(_ref) {
-  var tabs = _ref.tabs,
-      props = _objectWithoutProperties(_ref, _excluded$3);
-
-  var _useContext = React.useContext(CrudContext),
-      getForm = _useContext.getForm;
-
-  var _useContext2 = React.useContext(WorkflowContext),
-      getWorkflow = _useContext2.getWorkflow;
-
-  var form = React.useMemo(function () {
-    return getForm(props.resource);
-  }, [props.resource, getForm]);
-  var workflow = React.useMemo(function () {
-    return form !== null && form !== void 0 && form.useWorkflow ? getWorkflow(props.resource) : null;
-  }, [props.resource, getWorkflow, form]);
-  var customComponents = useCustomComponents(props.resource);
-  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.TabbedForm, props, tabs.map(function (_ref2, index) {
-    var _tab$inputs;
-
-    var label = _ref2.componentProps.label,
-        tab = _objectWithoutProperties(_ref2, _excluded2);
-
-    return /*#__PURE__*/React__default["default"].createElement(reactAdmin.FormTab, {
-      key: index,
-      label: label
-    }, tab === null || tab === void 0 ? void 0 : (_tab$inputs = tab.inputs) === null || _tab$inputs === void 0 ? void 0 : _tab$inputs.map(function (_ref3) {
-      var source = _ref3.source,
-          label = _ref3.label,
-          component = _ref3.component,
-          useWorkflow = _ref3.useWorkflow,
-          _ref3$componentProps = _ref3.componentProps,
-          fullWidth = _ref3$componentProps.fullWidth,
-          restComponentProps = _objectWithoutProperties(_ref3$componentProps, _excluded3);
-
-      return form !== null && form !== void 0 && form.useWorkflow && workflow !== null && useWorkflow === true ? /*#__PURE__*/React__default["default"].createElement(Input, {
-        key: source,
-        source: source,
-        fullWidth: true,
-        component: /*#__PURE__*/React__default["default"].createElement(Component, {
-          key: source,
-          source: source,
-          label: label,
-          fullWidth: fullWidth,
-          component: component,
-          componentProps: _objectSpread2({
-            fullWidth: fullWidth
-          }, restComponentProps),
-          components: _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), customComponents.inputs), customComponents.fields)
-        })
-      }) : /*#__PURE__*/React__default["default"].createElement(Component, {
-        key: source,
-        source: source,
-        label: label,
-        fullWidth: fullWidth,
-        component: component,
-        componentProps: _objectSpread2({
-          fullWidth: fullWidth
-        }, restComponentProps),
-        components: _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), customComponents.inputs), customComponents.fields)
-      });
-    }));
-  }));
-};
-
-var _excluded$2 = ["fullWidth"];
+var _excluded$4 = ["fullWidth"];
 
 var Form = function Form(_ref) {
   var _form$inputs;
@@ -4199,7 +3427,7 @@ var Form = function Form(_ref) {
         useWorkflow = _ref2.useWorkflow,
         _ref2$componentProps = _ref2.componentProps,
         fullWidth = _ref2$componentProps.fullWidth,
-        restComponentProps = _objectWithoutProperties(_ref2$componentProps, _excluded$2);
+        restComponentProps = _objectWithoutProperties(_ref2$componentProps, _excluded$4);
 
     return form !== null && form !== void 0 && form.useWorkflow && workflow !== null && useWorkflow === true ? /*#__PURE__*/React__default["default"].createElement(Input, {
       key: source,
@@ -4214,7 +3442,7 @@ var Form = function Form(_ref) {
         componentProps: _objectSpread2({
           fullWidth: fullWidth
         }, restComponentProps),
-        components: _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), customComponents.inputs), customComponents.fields)
+        components: _objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), customComponents)
       })
     }) : /*#__PURE__*/React__default["default"].createElement(Component, {
       key: source,
@@ -4225,57 +3453,315 @@ var Form = function Form(_ref) {
       componentProps: _objectSpread2({
         fullWidth: fullWidth
       }, restComponentProps),
-      components: _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), customComponents.inputs), customComponents.fields)
+      components: _objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), customComponents)
     });
   }));
 };
 
-var useFormStyles = core.makeStyles(function (theme) {
-  var _ref;
-
-  return _ref = {}, _defineProperty(_ref, theme.breakpoints.up("md"), {
-    main: {
-      width: "70%",
-      minWidth: "960px",
-      margin: "1em auto"
-    }
-  }), _defineProperty(_ref, theme.breakpoints.down("md"), {
-    main: {
-      minWidth: "100%"
-    }
-  }), _ref;
-});
-
-var _excluded$1 = ["children"];
-
-var Create$3 = function Create(_ref) {
-  var children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded$1);
-
-  var classes = useFormStyles();
-  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.Create, _extends({}, props, {
-    classes: classes
-  }), children);
-};
-
-var Create$2 = function Create(props) {
+var Create$1 = function Create(props) {
   return /*#__PURE__*/React__default["default"].createElement(Create$3, props, /*#__PURE__*/React__default["default"].createElement(Form, null));
 };
 
-var _excluded = ["children"];
-
-var Create$1 = function Create(_ref) {
-  var children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded);
-
-  var classes = useFormStyles();
-  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.Edit, _extends({}, props, {
-    classes: classes
-  }), children);
+var Create = function Create(props) {
+  return /*#__PURE__*/React__default["default"].createElement(Create$2, props, /*#__PURE__*/React__default["default"].createElement(Form, null));
 };
 
-var Create = function Create(props) {
-  return /*#__PURE__*/React__default["default"].createElement(Create$1, props, /*#__PURE__*/React__default["default"].createElement(Form, null));
+var useFiltersStyles = core.makeStyles(function (theme) {
+  return _defineProperty({
+    form: {
+      flexWrap: "nowrap",
+      "& .filter-field > div:last-child": {
+        width: theme.spacing(1)
+      }
+    }
+  }, theme.breakpoints.down("md"), {
+    button: {
+      display: "none"
+    }
+  });
+}, {
+  name: "RaFilters"
+});
+
+var _excluded$3 = ["children"];
+
+var Filters = function Filters(_ref) {
+  var children = _ref.children,
+      props = _objectWithoutProperties(_ref, _excluded$3);
+
+  var classes = useFiltersStyles();
+  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.Filter, _extends({
+    classes: classes
+  }, props), React__default["default"].Children.map(children, function (child, i) {
+    return /*#__PURE__*/React__default["default"].cloneElement(child ? child : /*#__PURE__*/React__default["default"].createElement(React.Fragment, null), {
+      key: i,
+      fullWidth: true
+    });
+  }));
+};
+
+var _excluded$2 = ["grid"],
+    _excluded2 = ["className", "exporter", "filters"];
+
+var ListActions = function ListActions(_ref) {
+  var grid = _ref.grid,
+      props = _objectWithoutProperties(_ref, _excluded$2);
+
+  var className = props.className,
+      exporter = props.exporter,
+      filtersProp = props.filters,
+      rest = _objectWithoutProperties(props, _excluded2);
+
+  var _useListContext = raCore.useListContext(props),
+      currentSort = _useListContext.currentSort,
+      displayedFilters = _useListContext.displayedFilters,
+      filterValues = _useListContext.filterValues,
+      basePath = _useListContext.basePath,
+      showFilter = _useListContext.showFilter,
+      total = _useListContext.total;
+
+  var resource = raCore.useResourceContext(rest);
+
+  var _useResourceDefinitio = raCore.useResourceDefinition(rest),
+      hasCreate = _useResourceDefinitio.hasCreate;
+
+  var filters = React.useContext(reactAdmin.FilterContext) || filtersProp;
+  return React.useMemo(function () {
+    var _grid$exportTo;
+
+    return /*#__PURE__*/React__namespace.createElement(reactAdmin.TopToolbar, _extends({
+      className: className
+    }, raCore.sanitizeListRestProps(rest)), filtersProp ? /*#__PURE__*/React.cloneElement(filtersProp, {
+      resource: resource,
+      showFilter: showFilter,
+      displayedFilters: displayedFilters,
+      filterValues: filterValues,
+      context: "button"
+    }) : filters && /*#__PURE__*/React__namespace.createElement(reactAdmin.FilterButton, null), hasCreate && /*#__PURE__*/React__namespace.createElement(reactAdmin.CreateButton, {
+      basePath: basePath
+    }), (grid === null || grid === void 0 ? void 0 : (_grid$exportTo = grid.exportTo) === null || _grid$exportTo === void 0 ? void 0 : _grid$exportTo.length) > 0 ? /*#__PURE__*/React__namespace.createElement(ExportToButton, {
+      exportTo: grid === null || grid === void 0 ? void 0 : grid.exportTo,
+      disabled: total === 0,
+      resource: resource,
+      sort: currentSort,
+      filterValues: filterValues
+    }) : exporter !== false && /*#__PURE__*/React__namespace.createElement(reactAdmin.ExportButton, {
+      disabled: total === 0,
+      resource: resource,
+      sort: currentSort,
+      filterValues: filterValues
+    }));
+  },
+  /* eslint-disable react-hooks/exhaustive-deps */
+  [resource, displayedFilters, filterValues, showFilter, filters, total, basePath, className, currentSort, exporter, hasCreate]);
+};
+
+ListActions.propTypes = {
+  basePath: PropTypes__default["default"].string,
+  className: PropTypes__default["default"].string,
+  currentSort: PropTypes__default["default"].any,
+  displayedFilters: PropTypes__default["default"].object,
+  exporter: PropTypes__default["default"].oneOfType([PropTypes__default["default"].func, PropTypes__default["default"].bool]),
+  filters: PropTypes__default["default"].element,
+  filterValues: PropTypes__default["default"].object,
+  hasCreate: PropTypes__default["default"].bool,
+  resource: PropTypes__default["default"].string,
+  onUnselectItems: PropTypes__default["default"].func.isRequired,
+  selectedIds: PropTypes__default["default"].arrayOf(PropTypes__default["default"].any),
+  showFilter: PropTypes__default["default"].func,
+  total: PropTypes__default["default"].number
+};
+ListActions.defaultProps = {
+  selectedIds: [],
+  onUnselectItems: function onUnselectItems() {
+    return null;
+  }
+};
+
+var exporter = function exporter(grid, data, translate) {
+  var columns = ((grid === null || grid === void 0 ? void 0 : grid.columns) || []).filter(function (c) {
+    return c.exportable === true;
+  });
+  var headers = columns.map(function (c) {
+    return lodash.get(c, "label", c.source);
+  });
+  var csvData = data.map(function (record) {
+    var row = {};
+    columns.forEach(function (column) {
+      var value = lodash.get(record, column.source);
+      row[column.label] = value;
+    });
+    return row;
+  });
+  jsonExport__default["default"](csvData, {
+    rowDelimiter: ";",
+    headers: headers
+  }, function (err, csv) {
+    return reactAdmin.downloadCSV("\uFEFF" + csv, translate(grid === null || grid === void 0 ? void 0 : grid.title));
+  });
+};
+
+var useListStyles = styles$1.makeStyles(function (theme) {
+  var _ref;
+
+  return _ref = {}, _defineProperty(_ref, theme.breakpoints.up("lg"), {
+    main: {
+      "& table td, table th": {
+        whiteSpace: "nowrap"
+      }
+    }
+  }), _defineProperty(_ref, theme.breakpoints.down("md"), {//   main: {
+    //     background: theme.palette.background.default,
+    //     marginTop: theme.spacing(2),
+    //     display: "block",
+    //   },
+    //   content: {
+    //     boxShadow: "none",
+    //   },
+    //   root: {
+    //     padding: theme.spacing(2),
+    //   },
+  }), _defineProperty(_ref, theme.breakpoints.down("sm"), {
+    bulkActionsDisplayed: {
+      "& .MuiToolbar-regular:first-child": {
+        display: "flex",
+        flexDirection: "column",
+        flexBasis: "auto",
+        height: "auto",
+        "& .MuiToolbar-root": {
+          background: "inherit",
+          padding: 0,
+          flexWrap: "wrap",
+          justifyContent: "flex-start",
+          paddingBottom: theme.spacing(1),
+          width: "100%"
+        },
+        "& div:nth-child(1)": {
+          paddingTop: theme.spacing(1),
+          paddingBottom: theme.spacing(1)
+        }
+      }
+    }
+  }), _defineProperty(_ref, "bulkActionsDisplayed", {
+    "& .MuiToolbar-regular:first-child": {
+      "& .MuiToolbar-root": {
+        flexWrap: "wrap"
+      }
+    }
+  }), _ref;
+}, {
+  name: "RaMobileList"
+});
+
+var _excluded$1 = ["source", "label", "component", "componentProps"];
+
+var List = function List(props) {
+  var _grid$filters, _grid$columns;
+
+  var classes = useListStyles();
+  var translate = reactAdmin.useTranslate();
+
+  var _React$useContext = React__namespace.useContext(friendsofbabbaRa.CrudContext),
+      getGrid = _React$useContext.getGrid,
+      loading = _React$useContext.loading;
+
+  var grid = getGrid(props.resource);
+  var customComponents = useCustomComponents(props.resource);
+  var isMobile = core.useMediaQuery(function (theme) {
+    var _grid$mobileBreakpoin;
+
+    return theme.breakpoints.down((_grid$mobileBreakpoin = grid === null || grid === void 0 ? void 0 : grid.mobileBreakpoint) !== null && _grid$mobileBreakpoin !== void 0 ? _grid$mobileBreakpoin : "sm");
+  }) && grid.mobilePrimaryText != null;
+
+  if (loading) {
+    return /*#__PURE__*/React__namespace.createElement(reactAdmin.Loading, null);
+  }
+
+  if (grid === false || grid === null) {
+    return null;
+  }
+
+  return /*#__PURE__*/React__namespace.createElement(reactAdmin.List, _extends({}, props, {
+    classes: classes,
+    title: grid.title,
+    filter: grid.filter || {},
+    actions: /*#__PURE__*/React__namespace.createElement(ListActions, {
+      grid: grid
+    }),
+    pagination: grid === null || grid === void 0 ? void 0 : grid.pagination,
+    exporter: function exporter$1(data) {
+      return exporter(grid, data, translate);
+    },
+    filterDefaultValues: grid.filterDefaultValues || {},
+    sort: grid === null || grid === void 0 ? void 0 : grid.sort,
+    perPage: grid === null || grid === void 0 ? void 0 : grid.perPage,
+    filters: grid !== null && grid !== void 0 && grid.filters ? /*#__PURE__*/React__namespace.createElement(Filters, null, grid === null || grid === void 0 ? void 0 : (_grid$filters = grid.filters) === null || _grid$filters === void 0 ? void 0 : _grid$filters.map(function (_ref) {
+      var source = _ref.source;
+          _ref.label;
+          var component = _ref.component,
+          componentProps = _ref.componentProps,
+          props = _objectWithoutProperties(_ref, _excluded$1);
+
+      return /*#__PURE__*/React__namespace.createElement(Component, _extends({}, props, {
+        key: source,
+        source: source,
+        component: component,
+        componentProps: componentProps,
+        components: _objectSpread2(_objectSpread2({}, inputs), customComponents),
+        alwaysOn: componentProps === null || componentProps === void 0 ? void 0 : componentProps.alwaysOn
+      }));
+    })) : null
+  }), grid !== null && grid !== void 0 && grid.component && (grid === null || grid === void 0 ? void 0 : grid.component) !== "Datagrid" ? /*#__PURE__*/React__namespace.createElement(Component, {
+    component: grid.component,
+    componentProps: grid.componentProps,
+    components: _objectSpread2({
+      Datagrid: Datagrid,
+      SimpleList: reactAdmin.SimpleList
+    }, customComponents)
+  }) : isMobile ? /*#__PURE__*/React__namespace.createElement(reactAdmin.SimpleList, {
+    primaryText: function primaryText(record) {
+      return grid !== null && grid !== void 0 && grid.mobilePrimaryComponent ? /*#__PURE__*/React__namespace.createElement(Component, _extends({}, grid.mobilePrimaryComponent, {
+        record: record,
+        source: grid === null || grid === void 0 ? void 0 : grid.mobilePrimaryText,
+        components: _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), buttons), customComponents)
+      })) : lodash.get(record, grid === null || grid === void 0 ? void 0 : grid.mobilePrimaryText);
+    },
+    secondaryText: function secondaryText(record) {
+      return grid !== null && grid !== void 0 && grid.mobileSecondaryComponent ? /*#__PURE__*/React__namespace.createElement(Component, _extends({}, grid.mobileSecondaryComponent, {
+        record: record,
+        source: grid === null || grid === void 0 ? void 0 : grid.mobileSecondaryText,
+        components: _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), buttons), customComponents)
+      })) : lodash.get(record, grid === null || grid === void 0 ? void 0 : grid.mobileSecondaryText);
+    },
+    tertiaryText: function tertiaryText(record) {
+      return grid !== null && grid !== void 0 && grid.mobileTertiaryComponent ? /*#__PURE__*/React__namespace.createElement(Component, _extends({}, grid.mobileTertiaryComponent, {
+        record: record,
+        source: grid === null || grid === void 0 ? void 0 : grid.mobileTertiaryText,
+        components: _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), buttons), customComponents)
+      })) : lodash.get(record, grid === null || grid === void 0 ? void 0 : grid.mobileTertiaryText);
+    },
+    linkType: grid === null || grid === void 0 ? void 0 : grid.mobileLinkType
+  }) : /*#__PURE__*/React__namespace.createElement(Datagrid, null, grid === null || grid === void 0 ? void 0 : (_grid$columns = grid.columns) === null || _grid$columns === void 0 ? void 0 : _grid$columns.map(function (_ref2) {
+    var source = _ref2.source,
+        label = _ref2.label,
+        sortable = _ref2.sortable,
+        component = _ref2.component,
+        sortBy = _ref2.sortBy,
+        componentProps = _ref2.componentProps;
+    return /*#__PURE__*/React__namespace.createElement(Component, _extends({
+      key: source
+    }, component.indexOf("Button") === -1 ? {
+      source: source,
+      label: label,
+      sortable: sortable,
+      sortBy: sortBy,
+      addLabel: false
+    } : {}, {
+      component: component,
+      componentProps: componentProps,
+      components: _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), buttons), customComponents)
+    }));
+  })));
 };
 
 var createCrud = function createCrud(_ref) {
@@ -4284,7 +3770,7 @@ var createCrud = function createCrud(_ref) {
       _ref$list = _ref.list,
       list = _ref$list === void 0 ? List : _ref$list,
       _ref$create = _ref.create,
-      create = _ref$create === void 0 ? Create$2 : _ref$create,
+      create = _ref$create === void 0 ? Create$1 : _ref$create,
       _ref$edit = _ref.edit,
       edit = _ref$edit === void 0 ? Create : _ref$edit,
       _ref$options = _ref.options,
@@ -4293,12 +3779,7 @@ var createCrud = function createCrud(_ref) {
     roles: ["admin"]
   } : _ref$options,
       _ref$components = _ref.components,
-      components = _ref$components === void 0 ? {
-    grids: {},
-    fields: {},
-    forms: {},
-    inputs: {}
-  } : _ref$components;
+      components = _ref$components === void 0 ? {} : _ref$components;
   return {
     icon: icon,
     options: _objectSpread2(_objectSpread2({}, options), {}, {
@@ -4310,72 +3791,68 @@ var createCrud = function createCrud(_ref) {
   };
 };
 
-var useAuthProvider = function useAuthProvider(_ref) {
-  var apiUrl = _ref.apiUrl;
-  var memoizedFn = React.useMemo(function () {
-    return createAuthProvider({
-      apiUrl: apiUrl
+var _excluded = ["icon", "roles", "group", "options", "workflow", "components"];
+var defaultIcon = TableChart__default["default"];
+var defaultGroup = "dashboard";
+
+var CrudResource = function CrudResource(_ref) {
+  var icon = _ref.icon,
+      roles = _ref.roles,
+      group = _ref.group,
+      options = _ref.options;
+      _ref.workflow;
+      var components = _ref.components,
+      props = _objectWithoutProperties(_ref, _excluded);
+
+  var additionalProps = React.useMemo(function () {
+    return createCrud({
+      icon: icon,
+      options: _objectSpread2(_objectSpread2({}, options), {}, {
+        roles: roles,
+        group: group
+      }),
+      components: components
     });
-  }, [apiUrl]);
-  return memoizedFn;
+  }, [icon, roles, group, options, components]);
+  return [/*#__PURE__*/React__default["default"].createElement(reactAdmin.Resource, _extends({
+    key: props.name
+  }, props, additionalProps)), /*#__PURE__*/React__default["default"].createElement(reactAdmin.Resource, {
+    intent: "registration",
+    name: "workflow/transactions/".concat(props.name),
+    key: "".concat(props.name, "-transactions")
+  })];
 };
 
-var useDataProvider = function useDataProvider(_ref) {
-  var apiUrl = _ref.apiUrl,
-      fileFields = _ref.fileFields;
-  var memoizedFn = React.useMemo(function () {
-    return createDataProvider({
-      apiUrl: apiUrl,
-      fileFields: fileFields
-    });
-  }, [apiUrl, fileFields]);
-  return memoizedFn;
+CrudResource.propTypes = {
+  name: PropTypes__default["default"].string.isRequired,
+  roles: PropTypes__default["default"].arrayOf(PropTypes__default["default"].string),
+  group: PropTypes__default["default"].string.isRequired,
+  icon: PropTypes__default["default"].elementType.isRequired,
+  list: PropTypes__default["default"].elementType,
+  edit: PropTypes__default["default"].elementType,
+  create: PropTypes__default["default"].elementType,
+  options: PropTypes__default["default"].object,
+  components: PropTypes__default["default"].object
+};
+CrudResource.defaultProps = {
+  icon: defaultIcon,
+  group: defaultGroup,
+  components: {},
+  workflow: true
 };
 
-var useI18nProvider = function useI18nProvider(_ref) {
-  var apiUrl = _ref.apiUrl,
-      _ref$locale = _ref.locale,
+var createI18nProvider = function createI18nProvider(_ref) {
+  var _ref$locale = _ref.locale,
       locale = _ref$locale === void 0 ? "en" : _ref$locale,
-      _ref$languages = _ref.languages,
-      languages = _ref$languages === void 0 ? {} : _ref$languages;
-  var memoizedFn = React.useMemo(function () {
-    return createI18nProvider({
-      apiUrl: apiUrl,
-      locale: locale,
-      languages: languages
-    });
-  }, [apiUrl, locale, languages]);
-  return memoizedFn;
-};
+      languages = _ref.languages;
+  return polyglotI18nProvider__default["default"](function () {
+    if (process.env.NODE_ENV !== "production") {
+      localStorage.setItem("locale", locale);
+    }
 
-var useI18nLanguages = function useI18nLanguages(_ref) {
-  var apiUrl = _ref.apiUrl;
-
-  var _useState = React.useState({
-    loading: true,
-    languages: null
-  }),
-      _useState2 = _slicedToArray(_useState, 2),
-      data = _useState2[0],
-      setData = _useState2[1];
-
-  React.useEffect(function () {
-    var headers = new Headers();
-    headers.append("Accept", "application/json");
-    headers.append("Content-Type", "application/json");
-    fetch("".concat(apiUrl, "/languages/load"), {
-      headers: headers
-    }).then(function (response) {
-      return response.json();
-    }).then(function (_ref2) {
-      var data = _ref2.data;
-      return setData({
-        loading: false,
-        data: data
-      });
-    });
-  }, [apiUrl]);
-  return data;
+    moment__default["default"].locale(locale);
+    return lodash.get(languages, locale, {});
+  }, reactAdmin.resolveBrowserLocale());
 };
 
 var queued = [];
@@ -4432,27 +3909,711 @@ var useI18nCatcher = function useI18nCatcher(_ref) {
   return true;
 };
 
+var useI18nLanguages = function useI18nLanguages(_ref) {
+  var apiUrl = _ref.apiUrl;
+
+  var _useState = React.useState({
+    loading: true,
+    languages: null
+  }),
+      _useState2 = _slicedToArray(_useState, 2),
+      data = _useState2[0],
+      setData = _useState2[1];
+
+  React.useEffect(function () {
+    var headers = new Headers();
+    headers.append("Accept", "application/json");
+    headers.append("Content-Type", "application/json");
+    fetch("".concat(apiUrl, "/languages/load"), {
+      headers: headers
+    }).then(function (response) {
+      return response.json();
+    }).then(function (_ref2) {
+      var data = _ref2.data;
+      return setData({
+        loading: false,
+        data: data
+      });
+    });
+  }, [apiUrl]);
+  return data;
+};
+
+var useI18nProvider = function useI18nProvider(_ref) {
+  var apiUrl = _ref.apiUrl,
+      _ref$locale = _ref.locale,
+      locale = _ref$locale === void 0 ? "en" : _ref$locale,
+      _ref$languages = _ref.languages,
+      languages = _ref$languages === void 0 ? {} : _ref$languages;
+  var memoizedFn = React.useMemo(function () {
+    return createI18nProvider({
+      apiUrl: apiUrl,
+      locale: locale,
+      languages: languages
+    });
+  }, [apiUrl, locale, languages]);
+  return memoizedFn;
+};
+
+var convertFileToBase64 = function convertFileToBase64(file) {
+  return new Promise(function (resolve, reject) {
+    var reader = new FileReader();
+    reader.readAsDataURL(file.rawFile);
+
+    reader.onload = function () {
+      return resolve(reader.result);
+    };
+
+    reader.onerror = reject;
+  });
+};
+
+var convertFile = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(file) {
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            return _context.abrupt("return", file.rawFile ? convertFileToBase64(file).then(function (convertedFile) {
+              return {
+                data: convertedFile,
+                name: file.rawFile.name,
+                size: file.rawFile.size,
+                type: file.rawFile.type
+              };
+            }) : Promise.resolve(file));
+
+          case 1:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+
+  return function convertFile(_x) {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+var createAuthProvider = function createAuthProvider(_ref) {
+  var apiUrl = _ref.apiUrl;
+  return {
+    login: function login(params) {
+      var username = params.username,
+          password = params.password;
+      var requestURL = "".concat(apiUrl, "/users/login");
+      var request = new Request(requestURL, {
+        method: "POST",
+        body: JSON.stringify({
+          username: username,
+          password: password
+        }),
+        headers: new Headers({
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        })
+      });
+      return fetch(request).then(function (response) {
+        return response.json();
+      }).then(function (_ref2) {
+        var data = _ref2.data,
+            success = _ref2.success;
+
+        if (!success) {
+          throw new Error(data.message);
+        }
+
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("roles", JSON.stringify(data.roles));
+        localStorage.setItem("profile", JSON.stringify(data.profile));
+        var event = new Event("login");
+        event.key = "token";
+        event.value = data.token;
+        document.dispatchEvent(event);
+      });
+    },
+    logout: function logout() {
+      localStorage.removeItem("token");
+      localStorage.removeItem("roles");
+      localStorage.removeItem("profile");
+      return Promise.resolve();
+    },
+    checkAuth: function checkAuth() {
+      return localStorage.getItem("token") ? Promise.resolve() : Promise.reject();
+    },
+    checkError: function checkError(error) {
+      if (error.status === 401 || error.status === 500) {
+        return Promise.reject();
+      }
+
+      return Promise.resolve();
+    },
+    getPermissions: function getPermissions() {
+      var roles = JSON.parse(localStorage.getItem("roles"));
+      return Promise.resolve(function (v) {
+        return roles && roles.some(function (r) {
+          return v.includes(r.code);
+        });
+      });
+    },
+    getIdentity: function getIdentity() {
+      var profile = JSON.parse(localStorage.getItem("profile"));
+      var roles = JSON.parse(localStorage.getItem("roles"));
+      return Promise.resolve(_objectSpread2(_objectSpread2({}, profile), {}, {
+        roles: roles
+      }));
+    },
+    impersonate: function impersonate(id) {
+      var requestURL = "".concat(apiUrl, "/users/impersonate/?id=").concat(id);
+      var request = new Request(requestURL, {
+        method: "POST",
+        headers: getHeaders()
+      });
+      return fetch(request).then(function (response) {
+        return response.json();
+      }).then(function (_ref3) {
+        var success = _ref3.success,
+            data = _ref3.data;
+
+        if (!success) {
+          throw new Error(data.message);
+        }
+
+        ["token", "roles", "username", "profile"].forEach(function (param) {
+          var toSaveParam = "admin_".concat(param);
+          localStorage.setItem(toSaveParam, localStorage.getItem(param));
+          localStorage.setItem(param, ["profile", "roles"].indexOf(param) !== -1 ? JSON.stringify(data[param]) : data[param]);
+        });
+        localStorage.setItem("impersonate", true);
+      });
+    },
+    stopImpersonate: function stopImpersonate() {
+      ["token", "roles", "username", "profile"].forEach(function (param) {
+        var savedParam = "admin_".concat(param);
+        localStorage.setItem(param, localStorage.getItem(savedParam));
+        localStorage.removeItem(savedParam);
+      });
+      localStorage.setItem("impersonate", false);
+      return Promise.resolve();
+    }
+  };
+};
+
+var fetchJson = function fetchJson(url) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  return fetch(url, _objectSpread2({}, options)).then(function (response) {
+    return response.text().then(function (text) {
+      return {
+        status: response.status,
+        statusText: response.statusText,
+        headers: response.headers,
+        body: text
+      };
+    });
+  }).then(function (_ref) {
+    var status = _ref.status,
+        statusText = _ref.statusText,
+        headers = _ref.headers,
+        body = _ref.body;
+    var json;
+
+    try {
+      json = JSON.parse(body);
+    } catch (e) {// not json, no big deal
+    }
+
+    if (status < 200 || status >= 300) {
+      return Promise.reject(new reactAdmin.HttpError((json && json.data && json.data.message ? json.data.message : json.message) || statusText, status, json));
+    }
+
+    return Promise.resolve({
+      status: status,
+      headers: headers,
+      body: body,
+      json: json
+    });
+  });
+};
+
+// Remove unwanted _joinData props from JSON object before submission to the rest service.
+var createDataFormatter = function createDataFormatter(data) {
+  return Object.keys(data).reduce(function (r, key) {
+    return _objectSpread2(_objectSpread2({}, r), {}, _defineProperty({}, key, Array.isArray(data[key]) ? data[key].map(function (item) {
+      if (item._joinData === null) {
+        return {
+          id: item.id
+        };
+      }
+
+      return item;
+    }) : data[key]));
+  }, {});
+};
+
+var createFilesParser = function createFilesParser() {
+  return /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(data, fileFields) {
+      var i, field, value, files, file;
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              i = 0;
+
+            case 1:
+              if (!(i < fileFields.length)) {
+                _context.next = 19;
+                break;
+              }
+
+              field = fileFields[i];
+              value = lodash.get(data, field);
+
+              if (!(value && Array.isArray(value))) {
+                _context.next = 11;
+                break;
+              }
+
+              _context.next = 7;
+              return Promise.all(value.map(function (file) {
+                return convertFile(file);
+              }));
+
+            case 7:
+              files = _context.sent;
+              data = lodash.set(data, field, files);
+              _context.next = 16;
+              break;
+
+            case 11:
+              if (!value) {
+                _context.next = 16;
+                break;
+              }
+
+              _context.next = 14;
+              return convertFile(value);
+
+            case 14:
+              file = _context.sent;
+              data = lodash.set(data, field, file);
+
+            case 16:
+              i++;
+              _context.next = 1;
+              break;
+
+            case 19:
+              return _context.abrupt("return", Promise.resolve(data));
+
+            case 20:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    return function (_x, _x2) {
+      return _ref.apply(this, arguments);
+    };
+  }();
+};
+
+var createDataProvider = function createDataProvider(_ref) {
+  var apiUrl = _ref.apiUrl,
+      _ref$fileFields = _ref.fileFields,
+      fileFields = _ref$fileFields === void 0 ? [] : _ref$fileFields,
+      _ref$filesParser = _ref.filesParser,
+      filesParser = _ref$filesParser === void 0 ? createFilesParser() : _ref$filesParser,
+      _ref$prepareData = _ref.prepareData,
+      prepareData = _ref$prepareData === void 0 ? function (data) {
+    return createDataFormatter(data);
+  } : _ref$prepareData;
+  return {
+    getInfo: function getInfo(resource, params) {
+      var url = "".concat(apiUrl, "/").concat(resource, "/info?").concat(queryString.stringify(params));
+      var options = {
+        headers: getHeaders()
+      };
+      return fetchJson(url, options).then(function (_ref2) {
+        var json = _ref2.json;
+        return {
+          data: json.data
+        };
+      });
+    },
+    getBadges: function getBadges() {
+      var url = "".concat(apiUrl, "/stats/badges");
+      var options = {
+        headers: getHeaders()
+      };
+      return fetchJson(url, options).then(function (_ref3) {
+        var json = _ref3.json;
+        return {
+          data: json
+        };
+      });
+    },
+    getList: function getList(resource, params) {
+      var _params$pagination = params.pagination,
+          page = _params$pagination.page,
+          perPage = _params$pagination.perPage;
+      var _params$sort = params.sort,
+          field = _params$sort.field,
+          order = _params$sort.order;
+      var filter = Object.keys(params.filter || {}).reduce(function (f, filterName) {
+        return _objectSpread2(_objectSpread2({}, f), {}, _defineProperty({}, filterName, params.filter[filterName] instanceof Array ? params.filter[filterName].join(",") : params.filter[filterName]));
+      }, {});
+
+      var query = _objectSpread2({
+        sort: field,
+        direction: order,
+        page: page,
+        limit: perPage
+      }, filter);
+
+      var url = "".concat(apiUrl, "/").concat(resource, "?").concat(queryString.stringify(query));
+      var options = {
+        headers: getHeaders()
+      };
+      return fetchJson(url, options).then(function (_ref4) {
+        var json = _ref4.json;
+        return {
+          data: json.data,
+          total: parseInt(json.pagination.count, 10)
+        };
+      });
+    },
+    getOne: function getOne(resource, params) {
+      var url = "".concat(apiUrl, "/").concat(resource) + (params.id ? "/".concat(params.id) : "");
+      var options = {
+        headers: getHeaders()
+      };
+      return fetchJson(url, options).then(function (_ref5) {
+        var json = _ref5.json;
+        return {
+          data: json.data
+        };
+      });
+    },
+    getMany: function getMany(resource, params) {
+      var query = {
+        ids: params.ids.map(function (id) {
+          return id.id ? id.id : id;
+        }).join(",")
+      };
+      var url = "".concat(apiUrl, "/").concat(resource, "?").concat(queryString.stringify(query));
+      var options = {
+        headers: getHeaders()
+      };
+      return fetchJson(url, options).then(function (_ref6) {
+        var json = _ref6.json;
+        return {
+          data: json.data,
+          total: parseInt(json.pagination.count, 10)
+        };
+      });
+    },
+    getManyReference: function getManyReference(resource, params) {
+      var _params$pagination2 = params.pagination,
+          page = _params$pagination2.page,
+          perPage = _params$pagination2.perPage;
+      var _params$sort2 = params.sort,
+          field = _params$sort2.field,
+          order = _params$sort2.order;
+      var filter = Object.keys(params.filter || {}).reduce(function (f, filterName) {
+        return _objectSpread2(_objectSpread2({}, f), {}, _defineProperty({}, filterName, params.filter[filterName] instanceof Array ? params.filter[filterName].join(",") : params.filter[filterName]));
+      }, {});
+
+      var query = _objectSpread2(_defineProperty({
+        sort: field,
+        direction: order,
+        page: page,
+        limit: perPage
+      }, params.target, params.id), filter);
+
+      var url = "".concat(apiUrl, "/").concat(resource, "?").concat(queryString.stringify(query));
+      var options = {
+        headers: getHeaders()
+      };
+      return fetchJson(url, options).then(function (_ref7) {
+        var json = _ref7.json;
+        return {
+          data: json.data,
+          total: parseInt(json.pagination.count, 10)
+        };
+      });
+    },
+    create: function create(resource, params) {
+      return filesParser(params.data, fileFields).then(function (data) {
+        var url = "".concat(apiUrl, "/").concat(resource);
+        var options = {
+          method: "POST",
+          body: JSON.stringify(prepareData(data, resource, params)),
+          headers: getHeaders()
+        };
+        return fetchJson(url, options).then(function (_ref8) {
+          var json = _ref8.json;
+          return {
+            data: _objectSpread2(_objectSpread2({}, json.data || params.data), {}, {
+              id: json.data.id
+            })
+          };
+        });
+      });
+    },
+    update: function update(resource, params) {
+      return filesParser(params.data, fileFields).then(function (data) {
+        var id = data && data.pk ? data.pk : params.id;
+        var url = "".concat(apiUrl, "/").concat(resource) + (id ? "/".concat(id) : "");
+        var options = {
+          method: "PUT",
+          body: JSON.stringify(prepareData(data)),
+          headers: getHeaders()
+        };
+        return fetchJson(url, options).then(function (_ref9) {
+          var json = _ref9.json;
+          return {
+            data: _objectSpread2({
+              id: data.pk
+            }, json.data)
+          };
+        });
+      });
+    },
+    updateMany: function updateMany(resource, params) {
+      return Promise.all(params.ids.map(function (id) {
+        return fetchJson("".concat(apiUrl, "/").concat(resource, "/").concat(id), {
+          method: "PUT",
+          body: JSON.stringify(params.data),
+          headers: getHeaders()
+        });
+      })).then(function (responses) {
+        return {
+          data: responses.map(function (response) {
+            return response.json;
+          })
+        };
+      });
+    },
+    delete: function _delete(resource, params) {
+      var url = "".concat(apiUrl, "/").concat(resource, "/").concat(params.id);
+      var options = {
+        method: "DELETE",
+        headers: getHeaders()
+      };
+      return fetchJson(url, options).then(function (_ref10) {
+        var json = _ref10.json;
+        return {
+          data: json
+        };
+      });
+    },
+    deleteMany: function deleteMany(resource, params) {
+      return Promise.all(params.ids.map(function (id) {
+        return fetch("".concat(apiUrl, "/").concat(resource, "/").concat(id), {
+          method: "DELETE",
+          headers: getHeaders()
+        }).then(function (response) {
+          return response.json();
+        });
+      })).then(function (responses) {
+        var errors = responses.filter(function (r) {
+          return r.data && r.data.code && (r.data.code === 409 || r.data.code === 403);
+        });
+
+        if (errors.length > 0) {
+          return Promise.reject(errors.map(function (e) {
+            return e.data.message;
+          }).join("\n"));
+        }
+
+        return {
+          data: responses.map(function (_ref11) {
+            var json = _ref11.json;
+            return {
+              data: json
+            };
+          })
+        };
+      });
+    },
+    post: function post(resource, params) {
+      var url = "".concat(apiUrl, "/").concat(resource);
+      var body = params.body;
+      var options = {
+        body: JSON.stringify(body),
+        method: "POST",
+        headers: getHeaders()
+      };
+      return fetchJson(url, options).then(function (_ref12) {
+        var json = _ref12.json;
+        return {
+          data: json
+        };
+      });
+    },
+    get: function get(resource, params) {
+      var query = params.query;
+      var queryString$1 = queryString.stringify(query);
+      var url = "".concat(apiUrl, "/").concat(resource, "?").concat(queryString$1);
+      var options = {
+        method: "GET",
+        headers: getHeaders()
+      };
+      return fetchJson(url, options).then(function (_ref13) {
+        var json = _ref13.json;
+        return {
+          data: json
+        };
+      });
+    },
+    getTransactions: function getTransactions(resource, params) {
+      var url = "".concat(apiUrl, "/workflow/transactions/").concat(resource, "/").concat(params.id);
+      return fetchJson(url, {
+        headers: getHeaders()
+      }).then(function (_ref14) {
+        var json = _ref14.json;
+        return {
+          data: json.data
+        };
+      });
+    }
+  };
+};
+
+var useAuthProvider = function useAuthProvider(_ref) {
+  var apiUrl = _ref.apiUrl;
+  var memoizedFn = React.useMemo(function () {
+    return createAuthProvider({
+      apiUrl: apiUrl
+    });
+  }, [apiUrl]);
+  return memoizedFn;
+};
+
+var useDataProvider = function useDataProvider(_ref) {
+  var apiUrl = _ref.apiUrl,
+      fileFields = _ref.fileFields;
+  var memoizedFn = React.useMemo(function () {
+    return createDataProvider({
+      apiUrl: apiUrl,
+      fileFields: fileFields
+    });
+  }, [apiUrl, fileFields]);
+  return memoizedFn;
+};
+
+var useDataFormatter = function useDataFormatter() {
+  var memoizedFn = React.useMemo(function () {
+    return createDataFormatter();
+  }, []);
+  return memoizedFn;
+};
+
+Object.defineProperty(exports, 'BooleanField', {
+  enumerable: true,
+  get: function () { return reactAdmin.BooleanField; }
+});
+Object.defineProperty(exports, 'BooleanInput', {
+  enumerable: true,
+  get: function () { return reactAdmin.BooleanInput; }
+});
+Object.defineProperty(exports, 'ChipField', {
+  enumerable: true,
+  get: function () { return reactAdmin.ChipField; }
+});
+Object.defineProperty(exports, 'DateField', {
+  enumerable: true,
+  get: function () { return reactAdmin.DateField; }
+});
+Object.defineProperty(exports, 'DateInput', {
+  enumerable: true,
+  get: function () { return reactAdmin.DateInput; }
+});
+Object.defineProperty(exports, 'DateTimeInput', {
+  enumerable: true,
+  get: function () { return reactAdmin.DateTimeInput; }
+});
+Object.defineProperty(exports, 'NumberInput', {
+  enumerable: true,
+  get: function () { return reactAdmin.NumberInput; }
+});
+Object.defineProperty(exports, 'RaDeleteButton', {
+  enumerable: true,
+  get: function () { return reactAdmin.DeleteButton; }
+});
+Object.defineProperty(exports, 'RaEditButton', {
+  enumerable: true,
+  get: function () { return reactAdmin.EditButton; }
+});
+Object.defineProperty(exports, 'SearchInput', {
+  enumerable: true,
+  get: function () { return reactAdmin.SearchInput; }
+});
+Object.defineProperty(exports, 'SelectInput', {
+  enumerable: true,
+  get: function () { return reactAdmin.SelectInput; }
+});
+Object.defineProperty(exports, 'TextField', {
+  enumerable: true,
+  get: function () { return reactAdmin.TextField; }
+});
+Object.defineProperty(exports, 'TextInput', {
+  enumerable: true,
+  get: function () { return reactAdmin.TextInput; }
+});
 exports.AppBar = AppBar;
+exports.BackButton = BackButton;
+exports.Badge = Badge;
+exports.ChipArrayField = ChipArrayField;
 exports.CrudContext = CrudContext;
 exports.CrudProvider = CrudProvider;
-exports.Datagrid = Datagrid;
+exports.CrudResource = CrudResource;
+exports.DebouncedDateInput = DebouncedDateInput;
+exports.DebouncedNumberInput = DebouncedNumberInput;
+exports.DebouncedTextInput = DebouncedTextInput;
+exports.EditButton = EditButton;
+exports.ExportToButton = ExportToButton;
 exports.Layout = Layout;
+exports.LongTextField = LongTextField;
+exports.MediaField = MediaField;
+exports.MediaInput = MediaInput;
 exports.Menu = Menu$1;
 exports.MenuGroup = MenuGroup;
 exports.MenuItem = MenuItem;
+exports.ReferenceAutocompleteInput = ReferenceAutocompleteInput$1;
+exports.ReferenceCheckboxGroupInput = ReferenceCheckboxGroupInput;
+exports.ReferenceSelectInput = ReferenceAutocompleteInput;
 exports.Sidebar = Sidebar;
+exports.StateButton = StateButton$1;
+exports.StateButtonMenu = StateButtonMenu;
+exports.StateCollectionInput = StateCollectionInput;
+exports.StateField = StateField;
+exports.StateInput = StateInput;
+exports.TransactionLogsField = TransactionLogsField;
+exports.TransactionNotesInput = TransactionNotesInput;
+exports.TransactionNotesIsPrivateInput = TransactionNotesIsPrivateInput;
 exports.UserMenu = UserMenu;
 exports.UserMenuItem = UserMenuItem;
 exports.WorkflowContext = WorkflowContext;
 exports.WorkflowProvider = WorkflowProvider;
+exports.convertFile = convertFile;
 exports.createAuthProvider = createAuthProvider;
-exports.createCrud = createCrud;
+exports.createDataFormatter = createDataFormatter;
 exports.createDataProvider = createDataProvider;
+exports.createErrorMapper = createErrorMapper;
+exports.createFilesParser = createFilesParser;
 exports.createI18nProvider = createI18nProvider;
 exports.createManyFormatter = createManyFormatter;
 exports.createManyParser = createManyParser;
+exports.getHeaders = getHeaders;
+exports.getToken = getToken;
 exports.useAuthProvider = useAuthProvider;
 exports.useCrud = useCrud;
+exports.useDataFormatter = useDataFormatter;
 exports.useDataProvider = useDataProvider;
 exports.useI18nCatcher = useI18nCatcher;
 exports.useI18nLanguages = useI18nLanguages;
@@ -4460,4 +4621,5 @@ exports.useI18nProvider = useI18nProvider;
 exports.useManyFormatter = useManyFormatter;
 exports.useManyParser = useManyParser;
 exports.useSaveMutation = useSaveMutation;
+exports.useToken = useToken;
 exports.useWorkflow = useWorkflow;

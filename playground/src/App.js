@@ -1,26 +1,30 @@
+import * as Components from "friendsofbabba-ra";
 import * as Icons from "@material-ui/icons";
+
 import { Admin, Loading, Resource } from "react-admin";
 import {
   AppBar,
+  CrudContext,
+  CrudProvider,
+  CrudResource,
   Layout,
   Menu,
   MenuGroup,
   MenuItem,
   UserMenu,
   UserMenuItem,
-  useDataProvider,
-  useAuthProvider,
-  useI18nLanguages,
-  useI18nCatcher,
-  createI18nProvider,
-  createCrud,
-  CrudProvider,
   WorkflowProvider,
-  CrudContext,
+  createI18nProvider,
+  useAuthProvider,
+  useDataProvider,
+  useI18nCatcher,
+  useI18nLanguages,
 } from "friendsofbabba-ra";
-
 import React, { useContext, useMemo } from "react";
 
+import components from "./components";
+
+console.info("Components:", Components);
 const MyUserMenu = (props) => {
   const { logout } = props;
   return (
@@ -40,10 +44,6 @@ const MyUserMenu = (props) => {
 const MyAppBar = (props) => <AppBar {...props} userMenu={MyUserMenu} />;
 
 const MyMenu = (props) => {
-  // import { useQueryWithStore } from "ra-core";
-  // const { data: badges } = useQueryWithStore({
-  //   type: "getBadges",
-  // });
   const { data } = useContext(CrudContext);
   const badges = useMemo(
     () =>
@@ -89,12 +89,6 @@ const MyMenu = (props) => {
 const MyLayout = (props) => (
   <Layout {...props} menu={MyMenu} appBar={MyAppBar} />
 );
-const components = {
-  fields: {},
-  inputs: {},
-  forms: {},
-  grids: {},
-};
 const App = () => {
   const apiUrl = "http://babba.local/api";
   const languages = useI18nLanguages({ apiUrl });
@@ -125,35 +119,19 @@ const App = () => {
             locale: "it",
           })}
         >
-          <Resource
+          <CrudResource
             name="posts"
-            {...createCrud({
-              icon: Icons.AcUnit,
-              options: { group: "dashboard" },
-            })}
+            icon={Icons.AcUnit}
+            components={components}
           />
-          <Resource
-            name="tickets"
-            {...createCrud({
-              icon: Icons.List,
-              components,
-            })}
-          />
-          <Resource name="todos" {...createCrud({ icon: Icons.List })} />
-          <Resource
-            name="d-tests"
-            {...createCrud({ icon: Icons.TextureSharp })}
-          />
-          <Resource name="workflow/transactions/tickets" />
-          <Resource name="workflow/transactions/posts" />
-          <Resource name="workflow/transactions/todos" />
-          <Resource name="workflow/transactions/d-tests" />
-          <Resource
+          <CrudResource name="tickets" icon={Icons.AccessAlarm} />
+          <CrudResource
             name="users"
-            {...createCrud({
-              icon: Icons.SupervisedUserCircle,
-            })}
+            icon={Icons.AccountCircle}
+            roles={["admin"]}
           />
+          <CrudResource name="todos" icon={Icons.TextureSharp} />
+          <CrudResource name="d-tests" />
           <Resource name="roles" />
         </Admin>
       </CrudProvider>

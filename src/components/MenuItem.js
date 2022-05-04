@@ -40,6 +40,7 @@ const MenuItem = ({
             color={badge.color}
             variant={badge.variant}
             badgeContent={badge.value}
+            overlap="rectangular"
           >
             {createElement(icon)}
           </Badge>

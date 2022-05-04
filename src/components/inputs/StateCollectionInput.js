@@ -2,11 +2,11 @@ import { Button, Menu, MenuItem } from "@material-ui/core";
 import React, { useContext, useMemo, useState } from "react";
 
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import ConfirmMove from "../workflow/forms/ConfirmMove";
+import ConfirmMove from "../forms/ConfirmMove";
 import LongTextField from "../fields/LongTextField";
 import StateField from "../fields/StateField";
-import { get } from "lodash";
 import { WorkflowContext } from "../../data/workflow/WorkflowContext";
+import { get } from "lodash";
 import { useGetIdentity } from "ra-core";
 
 const StateCollectionInput = ({

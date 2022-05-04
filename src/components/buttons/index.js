@@ -1,17 +1,20 @@
 import {
-  EditButton as RaEditButton,
   DeleteButton as RaDeleteButton,
+  EditButton as RaEditButton,
 } from "react-admin";
-import EditButton from "../workflow/buttons/EditButton";
-import ExportToButton from "./ExportToButton";
 
-const buttons = {
+import BackButton from "./BackButton";
+import EditButton from "./EditButton";
+import ExportToButton from "./ExportToButton";
+import StateButton from "./StateButton";
+import StateButtonMenu from "./StateButtonMenu";
+
+export {
   RaEditButton,
   RaDeleteButton,
-
-  // Workflow smart buttons
   EditButton,
   ExportToButton,
+  BackButton,
+  StateButton,
+  StateButtonMenu,
 };
-
-export default buttons;

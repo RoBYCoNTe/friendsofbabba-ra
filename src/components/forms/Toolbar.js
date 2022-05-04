@@ -1,12 +1,14 @@
 import { Toolbar as RaToolbar, SaveButton, useGetIdentity } from "react-admin";
 import React, { useCallback, useContext, useMemo } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+
 import BackButton from "../buttons/BackButton";
-import ButtonListMenu from "./ButtonListMenu";
 import StateButton from "../buttons/StateButton";
+import StateButtonMenu from "../buttons/StateButtonMenu";
+import { WorkflowContext } from "../../data/workflow/WorkflowContext";
 import { get } from "lodash";
+import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-final-form";
-import { WorkflowContext } from "../../../data/workflow/WorkflowContext";
+
 const useStyles = makeStyles((theme) => ({
   toolbar: {
     "& .MuiButton-root": {
@@ -63,7 +65,7 @@ const Toolbar = ({
         />
       )}
       {states.length > maxButtonsToDisplay && (
-        <ButtonListMenu states={states} {...props} disabled={props.saving} />
+        <StateButtonMenu states={states} {...props} disabled={props.saving} />
       )}
       {states.length <= maxButtonsToDisplay &&
         states.map((state) => (

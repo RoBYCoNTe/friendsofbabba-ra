@@ -1,8 +1,9 @@
 import { EditButton as RaEditButton, useGetIdentity } from "react-admin";
-import { WorkflowContext } from "../../../data/workflow/WorkflowContext";
+import React, { useContext, useMemo } from "react";
+
 import ContentCreate from "@material-ui/icons/Create";
 import ContentView from "@material-ui/icons/Visibility";
-import React, { useContext, useMemo } from "react";
+import { WorkflowContext } from "../../data/workflow/WorkflowContext";
 
 const EditButton = ({ record, resource, ...props }) => {
   const { getWorkflow } = useContext(WorkflowContext);

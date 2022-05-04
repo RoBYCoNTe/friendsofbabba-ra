@@ -1,11 +1,12 @@
+import { BooleanField, ChipField, DateField, TextField } from "react-admin";
+
 import ChipArrayField from "./ChipArrayField";
 import LongTextField from "./LongTextField";
-import StateField from "./StateField";
 import MediaField from "./MediaField";
+import StateField from "./StateField";
 import TransactionLogsField from "./TransactionLogsField";
 
-import { TextField, DateField, ChipField, BooleanField } from "react-admin";
-const fields = {
+export {
   TextField,
   DateField,
   ChipField,
@@ -13,10 +14,7 @@ const fields = {
   ChipArrayField,
   LongTextField,
   MediaField,
-
   // Workflow
   StateField,
   TransactionLogsField,
 };
-
-export default fields;

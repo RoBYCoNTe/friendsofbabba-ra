@@ -4,16 +4,17 @@ import DoubleArrowIcon from "@material-ui/icons/DoubleArrow";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import React from "react";
-import StateButton from "../buttons/StateButton";
-import { useTranslate } from "react-admin";
+import StateButton from "./StateButton";
 import { makeStyles } from "@material-ui/core/styles";
+import { useTranslate } from "react-admin";
+
 const useStyles = makeStyles((theme) => ({
   button: {
     disableElevation: theme.props?.MuiButton?.disableElevation === true,
   },
 }));
 
-const ButtonListMenu = ({ states, ...props }) => {
+const StateButtonMenu = ({ states, ...props }) => {
   const classes = useStyles();
   const translate = useTranslate();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -67,4 +68,4 @@ const ButtonListMenu = ({ states, ...props }) => {
   );
 };
 
-export default ButtonListMenu;
+export default StateButtonMenu;

@@ -1,12 +1,14 @@
+import * as fields from "../fields/index.js";
+import * as inputs from "../inputs/index.js";
+
+import { FormTab, TabbedForm as RaTabbedForm } from "react-admin";
 import React, { useContext, useMemo } from "react";
-import { TabbedForm as RaTabbedForm, FormTab } from "react-admin";
+
+import Component from "../crud/Component";
 import { CrudContext } from "../../data/cakephp/crud/CrudContext";
 import { WorkflowContext } from "../../data/workflow/WorkflowContext";
-import useCustomComponents from "../crud/useCustomComponents";
-import Component from "../crud/Component";
 import WorkflowInput from "../inputs/WorkflowInput";
-import fields from "../fields/index.js";
-import inputs from "../inputs/index.js";
+import useCustomComponents from "../crud/useCustomComponents";
 
 const TabbedForm = ({ tabs, ...props }) => {
   const { getForm } = useContext(CrudContext);
@@ -48,8 +50,7 @@ const TabbedForm = ({ tabs, ...props }) => {
                       components={{
                         ...fields,
                         ...inputs,
-                        ...customComponents.inputs,
-                        ...customComponents.fields,
+                        ...customComponents,
                       }}
                     />
                   }
@@ -65,8 +66,7 @@ const TabbedForm = ({ tabs, ...props }) => {
                   components={{
                     ...fields,
                     ...inputs,
-                    ...customComponents.inputs,
-                    ...customComponents.fields,
+                    ...customComponents,
                   }}
                 />
               )

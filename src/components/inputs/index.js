@@ -1,24 +1,26 @@
-import ReferenceCheckboxGroupInput from "./ReferenceCheckboxGroupInput";
-import ReferenceAutocompleteInput from "./ReferenceAutocompleteInput";
-import ReferenceSelectInput from "./ReferenceSelectInput";
-import StateInput from "./StateInput";
-import StateCollectionInput from "./StateCollectionInput";
-import TransactionNotesIsPrivateInput from "./TransactionNotesIsPrivateInput";
-import TransactionNotesInput from "./TransactionNotesInput";
-import DebouncedTextInput from "./DebouncedTextInput";
-import DebouncedDateInput from "./DebouncedDateInput";
-import DebouncedNumberInput from "./DebouncedNumberInput";
-import MediaInput from "./MediaInput";
 import {
-  SearchInput,
-  TextInput,
-  SelectInput,
   BooleanInput,
   DateInput,
   DateTimeInput,
   NumberInput,
+  SearchInput,
+  SelectInput,
+  TextInput,
 } from "react-admin";
-const inputs = {
+
+import DebouncedDateInput from "./DebouncedDateInput";
+import DebouncedNumberInput from "./DebouncedNumberInput";
+import DebouncedTextInput from "./DebouncedTextInput";
+import MediaInput from "./MediaInput";
+import ReferenceAutocompleteInput from "./ReferenceAutocompleteInput";
+import ReferenceCheckboxGroupInput from "./ReferenceCheckboxGroupInput";
+import ReferenceSelectInput from "./ReferenceSelectInput";
+import StateCollectionInput from "./StateCollectionInput";
+import StateInput from "./StateInput";
+import TransactionNotesInput from "./TransactionNotesInput";
+import TransactionNotesIsPrivateInput from "./TransactionNotesIsPrivateInput";
+
+export {
   ReferenceCheckboxGroupInput,
   ReferenceAutocompleteInput,
   ReferenceSelectInput,
@@ -30,16 +32,11 @@ const inputs = {
   DateTimeInput,
   NumberInput,
   MediaInput,
-
   StateInput,
   StateCollectionInput,
-
   TransactionNotesIsPrivateInput,
   TransactionNotesInput,
-
   DebouncedDateInput,
   DebouncedNumberInput,
   DebouncedTextInput,
 };
-
-export default inputs;

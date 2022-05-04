@@ -1,16 +1,17 @@
-import React, { useContext, useMemo } from "react";
-import { Loading, SimpleForm } from "react-admin";
-import { CrudContext } from "../../data/cakephp/crud/CrudContext";
-import useCustomComponents from "./useCustomComponents";
-import fields from "../fields/index.js";
-import inputs from "../inputs/index.js";
-import Toolbar from "../workflow/forms/Toolbar";
-import WorkflowInput from "../inputs/WorkflowInput";
-import Component from "./Component";
-import useSaveMutation from "../../data/useSaveMutation";
-import { WorkflowContext } from "../../data/workflow/WorkflowContext";
+import * as fields from "../fields/index.js";
+import * as inputs from "../inputs/index.js";
 
+import { Loading, SimpleForm } from "react-admin";
+import React, { useContext, useMemo } from "react";
+
+import Component from "./Component";
+import { CrudContext } from "../../data/cakephp/crud/CrudContext";
 import TabbedForm from "../forms/TabbedForm";
+import Toolbar from "../forms/Toolbar";
+import { WorkflowContext } from "../../data/workflow/WorkflowContext";
+import WorkflowInput from "../inputs/WorkflowInput";
+import useCustomComponents from "./useCustomComponents";
+import useSaveMutation from "../../data/useSaveMutation";
 
 const Form = ({ ...props }) => {
   const { getForm, loading } = useContext(CrudContext);
@@ -69,8 +70,7 @@ const Form = ({ ...props }) => {
                   components={{
                     ...fields,
                     ...inputs,
-                    ...customComponents.inputs,
-                    ...customComponents.fields,
+                    ...customComponents,
                   }}
                 />
               }
@@ -86,8 +86,7 @@ const Form = ({ ...props }) => {
               components={{
                 ...fields,
                 ...inputs,
-                ...customComponents.inputs,
-                ...customComponents.fields,
+                ...customComponents,
               }}
             />
           )
