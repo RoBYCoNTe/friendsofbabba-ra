@@ -21,9 +21,10 @@ const List = (props) => {
   const { getGrid, loading } = React.useContext(CrudContext);
   const grid = getGrid(props.resource);
   const customComponents = useCustomComponents(props.resource);
-  const isMobile = useMediaQuery((theme) =>
-    theme.breakpoints.down(grid?.mobileBreakpoint ?? "sm")
-  );
+  const isMobile =
+    useMediaQuery((theme) =>
+      theme.breakpoints.down(grid?.mobileBreakpoint ?? "sm")
+    ) && grid.mobilePrimaryText != null;
 
   if (loading) {
     return <Loading />;

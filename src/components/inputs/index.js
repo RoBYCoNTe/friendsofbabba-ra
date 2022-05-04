@@ -15,6 +15,8 @@ import {
   SelectInput,
   BooleanInput,
   DateInput,
+  DateTimeInput,
+  NumberInput,
 } from "react-admin";
 const inputs = {
   ReferenceCheckboxGroupInput,
@@ -25,6 +27,8 @@ const inputs = {
   SelectInput,
   BooleanInput,
   DateInput,
+  DateTimeInput,
+  NumberInput,
   MediaInput,
 
   StateInput,

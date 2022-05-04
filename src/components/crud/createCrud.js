@@ -3,6 +3,9 @@ import Create from "./Create";
 import Edit from "./Edit";
 const createCrud = ({
   icon = null,
+  list = List,
+  create = Create,
+  edit = Edit,
   options = {
     group: "admin",
     roles: ["admin"],
@@ -16,9 +19,9 @@ const createCrud = ({
 }) => ({
   icon,
   options: { ...options, components },
-  list: List,
-  edit: Edit,
-  create: Create,
+  list,
+  edit,
+  create,
 });
 
 export default createCrud;

@@ -1,14 +1,11 @@
 import React from "react";
-import { Create as RaCreate } from "react-admin";
-import useFormStyles from "../forms/useFormStyles";
 import Form from "./Form";
-
+import StyledCreate from "../forms/Create";
 const Create = (props) => {
-  const classes = useFormStyles();
   return (
-    <RaCreate {...props} classes={classes}>
+    <StyledCreate {...props}>
       <Form />
-    </RaCreate>
+    </StyledCreate>
   );
 };
 export default Create;

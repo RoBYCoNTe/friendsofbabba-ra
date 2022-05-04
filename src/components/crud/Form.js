@@ -10,6 +10,8 @@ import Component from "./Component";
 import useSaveMutation from "../../data/useSaveMutation";
 import { WorkflowContext } from "../../data/workflow/WorkflowContext";
 
+import TabbedForm from "../forms/TabbedForm";
+
 const Form = ({ ...props }) => {
   const { getForm, loading } = useContext(CrudContext);
   const { getWorkflow } = useContext(WorkflowContext);
@@ -31,7 +33,7 @@ const Form = ({ ...props }) => {
   }
 
   return (
-    <SimpleForm
+    <Component
       {...props}
       save={save}
       toolbar={form?.useWorkflow ? <Toolbar /> : undefined}
@@ -39,6 +41,9 @@ const Form = ({ ...props }) => {
       sanitizeEmptyValues={form?.sanitizeEmptyValues}
       warnWhenUnsavedChanges={form?.warnWhenUnsavedChanges}
       redirect={form?.redirect}
+      component={form?.component}
+      componentProps={form?.componentProps}
+      components={{ SimpleForm, TabbedForm }}
     >
       {form?.inputs?.map(
         ({
@@ -87,7 +92,7 @@ const Form = ({ ...props }) => {
             />
           )
       )}
-    </SimpleForm>
+    </Component>
   );
 };
 

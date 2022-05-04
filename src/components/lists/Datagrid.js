@@ -17,6 +17,10 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: theme.shape.borderRadius,
     overflowX: "auto",
     overflowY: "hidden",
+    [theme.breakpoints.down("xs")]: {
+      width: "100vw",
+      maxWidth: "100vw",
+    },
   }),
   rowEven: { backgroundColor: theme.palette.background.default },
 }));
@@ -24,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
 const Datagrid = ({ children, ...props }) => {
   const { drawerWidth } = useContext(LayoutContext);
   const sidebarOpen = useSelector((state) => state.admin.ui.sidebarOpen);
+
   const classes = useStyles({ sidebarOpen, drawerWidth });
   return (
     <div className={classes.container}>

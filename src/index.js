@@ -6,6 +6,7 @@ import Sidebar from "./components/Sidebar";
 import AppBar from "./components/AppBar";
 import UserMenu from "./components/UserMenu";
 import UserMenuItem from "./components/UserMenuItem";
+import Datagrid from "./components/lists/Datagrid";
 
 import createDataProvider from "./data/createDataProvider";
 import createAuthProvider from "./data/createAuthProvider";
@@ -32,12 +33,6 @@ import {
   WorkflowContext,
 } from "./data/workflow/WorkflowContext";
 
-export * from "./components/lists/index.js";
-export * from "./components/fields/index.js";
-export * from "./components/inputs/index.js";
-export * from "./components/buttons/index.js";
-export * from "./data/authHeaders";
-
 export {
   Layout,
   Menu,
@@ -47,6 +42,7 @@ export {
   AppBar,
   UserMenu,
   UserMenuItem,
+  Datagrid,
   // Utilities
   createDataProvider,
   createAuthProvider,

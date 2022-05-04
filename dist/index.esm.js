@@ -1,6 +1,6 @@
-import { useTranslate as useTranslate$1, useGetIdentity, LoadingIndicator, getResources as getResources$2, defaultTheme, Notification, HttpError, resolveBrowserLocale, Labeled, ArrayField, SingleFieldList, ChipField, ReferenceManyField, SimpleList, DateField, Datagrid as Datagrid$1, TextField, Pagination, BooleanField, ReferenceArrayInput, CheckboxGroupInput, ReferenceInput, AutocompleteInput, SelectInput, useRefresh, useNotify, useUpdate, BooleanInput, useInput, FileInput, SearchInput, TextInput, DateInput, EditButton as EditButton$1, Button as Button$1, DeleteButton, Filter, downloadCSV, FilterContext, TopToolbar, FilterButton, CreateButton, ExportButton as ExportButton$1, Loading, List as List$2, SaveButton, Toolbar as Toolbar$2, SimpleForm, Create as Create$2, Edit, useLocale } from 'react-admin';
+import { useTranslate as useTranslate$1, useGetIdentity, LoadingIndicator, getResources as getResources$2, defaultTheme, Notification, Datagrid as Datagrid$1, HttpError, resolveBrowserLocale, Labeled, ArrayField, SingleFieldList, ChipField, ReferenceManyField, SimpleList, DateField, TextField, Pagination, BooleanField, ReferenceArrayInput, CheckboxGroupInput, ReferenceInput, AutocompleteInput, SelectInput, useRefresh, useNotify, useUpdate, BooleanInput, useInput, FileInput, SearchInput, TextInput, DateInput, DateTimeInput, NumberInput, EditButton as EditButton$1, Button as Button$1, DeleteButton, Filter, downloadCSV, FilterContext, TopToolbar, FilterButton, CreateButton, ExportButton as ExportButton$1, Loading, List as List$2, SaveButton, Toolbar as Toolbar$2, TabbedForm as TabbedForm$1, FormTab, SimpleForm, Create as Create$4, Edit, useLocale } from 'react-admin';
 import * as React from 'react';
-import React__default, { useCallback, createElement, useRef, useState, useEffect, useMemo as useMemo$1, createContext, useContext, Fragment, cloneElement } from 'react';
+import React__default, { useCallback, createElement, useRef, useState, useEffect, useContext, createContext, useMemo as useMemo$1, Fragment, cloneElement } from 'react';
 import { makeStyles, withStyles, createStyles, createTheme } from '@material-ui/core/styles';
 import { useMediaQuery, AppBar as AppBar$1, Toolbar as Toolbar$1, IconButton as IconButton$1, makeStyles as makeStyles$1, List as List$1, ListSubheader, Divider, Badge as Badge$1, ListItem, ListItemIcon, ListItemText, Drawer, Typography as Typography$1, MenuItem as MenuItem$1, Link as Link$1, Dialog, DialogTitle, DialogContent, DialogContentText, TextField as TextField$1, FormControlLabel, Switch, FormHelperText, DialogActions, Button, Menu as Menu$3 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -481,7 +481,7 @@ AppBar.propTypes = {
   userMenu: PropTypes.elementType
 };
 
-var _excluded$s = ["children", "open", "label"];
+var _excluded$v = ["children", "open", "label"];
 var useStyles$9 = makeStyles$1(function (theme) {
   return {
     subHeader: {
@@ -497,7 +497,7 @@ var MenuGroup = function MenuGroup(_ref) {
   var children = _ref.children,
       open = _ref.open,
       label = _ref.label,
-      props = _objectWithoutProperties(_ref, _excluded$s);
+      props = _objectWithoutProperties(_ref, _excluded$v);
 
   var classes = useStyles$9();
   return /*#__PURE__*/React__default.createElement(List$1, {
@@ -525,17 +525,17 @@ MenuGroup.propTypes = {
   group: PropTypes.string
 };
 
-var _excluded$r = ["titleAccess", "children"];
+var _excluded$u = ["titleAccess", "children"];
 
 var Badge = function Badge(_ref) {
   _ref.titleAccess;
       var children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded$r);
+      props = _objectWithoutProperties(_ref, _excluded$u);
 
   return /*#__PURE__*/React__default.createElement(Badge$1, props, children);
 };
 
-var _excluded$q = ["location", "badge", "to", "icon", "label", "sub", "onMenuClick", "permissions", "open"];
+var _excluded$t = ["location", "badge", "to", "icon", "label", "sub", "onMenuClick", "permissions", "open"];
 
 var isSelected = function isSelected(location, to) {
   var selected = location.pathname === to || location.pathname.indexOf("".concat(to, "?")) === 0 || location.pathname.indexOf("".concat(to, "/")) === 0;
@@ -552,7 +552,7 @@ var MenuItem = function MenuItem(_ref) {
       onMenuClick = _ref.onMenuClick;
       _ref.permissions;
       var open = _ref.open,
-      props = _objectWithoutProperties(_ref, _excluded$q);
+      props = _objectWithoutProperties(_ref, _excluded$t);
 
   return /*#__PURE__*/React__default.createElement(ListItem, _extends({}, props, {
     button: true,
@@ -933,7 +933,7 @@ Sidebar.propTypes = {
   appVersion: PropTypes.string
 };
 
-var _excluded$p = ["theme"];
+var _excluded$s = ["theme"];
 var LayoutContext = /*#__PURE__*/React__default.createContext({
   drawerWidth: 0
 });
@@ -1089,7 +1089,7 @@ var EnhancedLayout = compose(connect(mapStateToProps, {} // Avoid connect passin
 
 var Layout = function Layout(_ref2) {
   var themeOverride = _ref2.theme,
-      props = _objectWithoutProperties(_ref2, _excluded$p);
+      props = _objectWithoutProperties(_ref2, _excluded$s);
 
   var themeProp = useRef(themeOverride);
 
@@ -1126,7 +1126,7 @@ Layout.defaultProps = {
   drawerWidth: 240
 };
 
-var _excluded$o = ["className", "classes", "redirectTo", "icon", "label"];
+var _excluded$r = ["className", "classes", "redirectTo", "icon", "label"];
 var useStyles$7 = makeStyles(function (theme) {
   return {
     menuItem: {
@@ -1145,7 +1145,7 @@ var UserMenuItem = /*#__PURE__*/React.forwardRef(function UserMenuItem(props, re
       props.redirectTo;
       var icon = props.icon,
       label = props.label,
-      rest = _objectWithoutProperties(props, _excluded$o);
+      rest = _objectWithoutProperties(props, _excluded$r);
 
   var classes = useStyles$7(props);
   return /*#__PURE__*/React.createElement(MenuItem$1, _extends({
@@ -1161,6 +1161,56 @@ UserMenuItem.propTypes = {
   to: PropTypes.string,
   icon: PropTypes.element,
   onClick: PropTypes.func
+};
+
+var _excluded$q = ["children"];
+
+var getWidthToSubtract = function getWidthToSubtract(w) {
+  return w + (window.innerWidth - document.documentElement.clientWidth);
+};
+
+var useStyles$6 = makeStyles$1(function (theme) {
+  return {
+    container: function container(_ref) {
+      var sidebarOpen = _ref.sidebarOpen,
+          drawerWidth = _ref.drawerWidth;
+      return _defineProperty({
+        maxWidth: "calc(100vw - ".concat(sidebarOpen ? getWidthToSubtract(drawerWidth + theme.spacing(6) - 1) : getWidthToSubtract(58 + theme.spacing(6) - 1), "px)"),
+        borderRadius: theme.shape.borderRadius,
+        overflowX: "auto",
+        overflowY: "hidden"
+      }, theme.breakpoints.down("xs"), {
+        width: "100vw",
+        maxWidth: "100vw"
+      });
+    },
+    rowEven: {
+      backgroundColor: theme.palette.background.default
+    }
+  };
+});
+
+var Datagrid = function Datagrid(_ref3) {
+  var children = _ref3.children,
+      props = _objectWithoutProperties(_ref3, _excluded$q);
+
+  var _useContext = useContext(LayoutContext),
+      drawerWidth = _useContext.drawerWidth;
+
+  var sidebarOpen = useSelector$1(function (state) {
+    return state.admin.ui.sidebarOpen;
+  });
+  var classes = useStyles$6({
+    sidebarOpen: sidebarOpen,
+    drawerWidth: drawerWidth
+  });
+  return /*#__PURE__*/React__default.createElement("div", {
+    className: classes.container
+  }, /*#__PURE__*/React__default.createElement(Datagrid$1, _extends({
+    classes: {
+      rowEven: classes.rowEven
+    }
+  }, props), children));
 };
 
 var fetchJson = function fetchJson(url) {
@@ -1210,17 +1260,6 @@ function getHeaders() {
 }
 function getToken() {
   return localStorage.getItem("token");
-}
-function useToken() {
-  var token = getToken();
-  var headers = getHeaders();
-  var headersMemo = useMemo$1(function () {
-    return headers;
-  }, [headers]);
-  return {
-    token: token,
-    headers: headersMemo
-  };
 }
 
 // Remove unwanted _joinData props from JSON object before submission to the rest service.
@@ -1750,7 +1789,7 @@ var createI18nProvider = function createI18nProvider(_ref) {
   }, resolveBrowserLocale());
 };
 
-var _excluded$n = ["component", "componentProps", "components", "addLabel", "sortBy"];
+var _excluded$p = ["component", "componentProps", "components", "addLabel", "sortBy"];
 
 var Component = function Component(_ref) {
   var component = _ref.component,
@@ -1759,7 +1798,7 @@ var Component = function Component(_ref) {
       _ref$addLabel = _ref.addLabel,
       addLabel = _ref$addLabel === void 0 ? true : _ref$addLabel;
       _ref.sortBy;
-      var props = _objectWithoutProperties(_ref, _excluded$n);
+      var props = _objectWithoutProperties(_ref, _excluded$p);
 
   var Component = get$2(components, component);
 
@@ -1796,19 +1835,19 @@ var useCustomComponents = function useCustomComponents(resource) {
   return get(r, "options.components");
 };
 
-var _excluded$m = ["chipSource"];
+var _excluded$o = ["chipSource"];
 
 var ChipArrayField = function ChipArrayField(_ref) {
   var chipSource = _ref.chipSource,
-      props = _objectWithoutProperties(_ref, _excluded$m);
+      props = _objectWithoutProperties(_ref, _excluded$o);
 
   return /*#__PURE__*/React__default.createElement(ArrayField, props, /*#__PURE__*/React__default.createElement(SingleFieldList, null, /*#__PURE__*/React__default.createElement(ChipField, {
     source: chipSource
   })));
 };
 
-var _excluded$l = ["record", "source", "width", "minWidth", "maxWidth", "maxRows", "sortable", "basePath", "sortBy"];
-var useStyles$6 = makeStyles$1(function (theme) {
+var _excluded$n = ["record", "source", "width", "minWidth", "maxWidth", "maxRows", "sortable", "basePath", "sortBy"];
+var useStyles$5 = makeStyles$1(function (theme) {
   return {
     root: {
       overflow: "hidden",
@@ -1834,9 +1873,9 @@ var LongTextField = function LongTextField(_ref) {
       _ref.sortable;
       _ref.basePath;
       _ref.sortBy;
-      var props = _objectWithoutProperties(_ref, _excluded$l);
+      var props = _objectWithoutProperties(_ref, _excluded$n);
 
-  var classes = useStyles$6();
+  var classes = useStyles$5();
   return /*#__PURE__*/React__default.createElement(Typography$1, _extends({}, props, {
     variant: "body2",
     title: get$2(record, source),
@@ -2195,14 +2234,14 @@ var WorkflowProvider = function WorkflowProvider(_ref) {
   }, children);
 };
 
-var _excluded$k = ["label", "record", "resource"];
+var _excluded$m = ["label", "record", "resource"];
 
 var StateField = function StateField(_ref) {
   var _ref$label = _ref.label,
       label = _ref$label === void 0 ? "app.label.workflow.state" : _ref$label,
       record = _ref.record,
       toResolve = _ref.resource,
-      props = _objectWithoutProperties(_ref, _excluded$k);
+      props = _objectWithoutProperties(_ref, _excluded$m);
 
   var _useContext = useContext(WorkflowContext),
       getWorkflow = _useContext.getWorkflow;
@@ -2246,7 +2285,7 @@ var useFieldLabel = function useFieldLabel(_ref) {
   };
 };
 
-var useStyles$5 = makeStyles$1(function (theme) {
+var useStyles$4 = makeStyles$1(function (theme) {
   return {
     root: {
       display: "-webkit-box",
@@ -2274,7 +2313,7 @@ var TransactionNotesField = function TransactionNotesField(_ref) {
       _ref$maxRows = _ref.maxRows,
       maxRows = _ref$maxRows === void 0 ? 3 : _ref$maxRows,
       component = _ref.component;
-  var classes = useStyles$5();
+  var classes = useStyles$4();
   var fieldLabel = useFieldLabel({
     resource: "transactions"
   });
@@ -2329,13 +2368,13 @@ TransactionNotesField.propTypes = {
   maxRows: PropTypes.number
 };
 
-var _excluded$j = ["fullWidth", "addLabel"],
-    _excluded2$2 = ["admin", "label"];
+var _excluded$l = ["fullWidth", "addLabel"],
+    _excluded2$3 = ["admin", "label"];
 
 var PaginationWrapper = function PaginationWrapper(_ref) {
   _ref.fullWidth;
       _ref.addLabel;
-      var props = _objectWithoutProperties(_ref, _excluded$j);
+      var props = _objectWithoutProperties(_ref, _excluded$l);
 
   return /*#__PURE__*/React__default.createElement(Pagination, props);
 };
@@ -2344,7 +2383,7 @@ var TransactionLogsField = function TransactionLogsField(_ref2) {
   var _ref2$admin = _ref2.admin,
       admin = _ref2$admin === void 0 ? false : _ref2$admin,
       label = _ref2.label,
-      props = _objectWithoutProperties(_ref2, _excluded2$2);
+      props = _objectWithoutProperties(_ref2, _excluded2$3);
 
   var _useContext = useContext(WorkflowContext),
       getWorkflow = _useContext.getWorkflow;
@@ -2452,11 +2491,11 @@ var useManyParser = function useManyParser() {
   return memoizedFn;
 };
 
-var _excluded$i = ["optionText"];
+var _excluded$k = ["optionText"];
 
 var ReferenceCheckboxGroupInput = function ReferenceCheckboxGroupInput(_ref) {
   var optionText = _ref.optionText,
-      props = _objectWithoutProperties(_ref, _excluded$i);
+      props = _objectWithoutProperties(_ref, _excluded$k);
 
   var parse = useManyParser();
   var format = useManyFormatter();
@@ -2468,34 +2507,34 @@ var ReferenceCheckboxGroupInput = function ReferenceCheckboxGroupInput(_ref) {
   }));
 };
 
-var _excluded$h = ["optionText"];
+var _excluded$j = ["optionText"];
 
 var ReferenceAutocompleteInput$1 = function ReferenceAutocompleteInput(_ref) {
   var optionText = _ref.optionText,
-      props = _objectWithoutProperties(_ref, _excluded$h);
+      props = _objectWithoutProperties(_ref, _excluded$j);
 
   return /*#__PURE__*/React__default.createElement(ReferenceInput, props, /*#__PURE__*/React__default.createElement(AutocompleteInput, {
     optionText: optionText
   }));
 };
 
-var _excluded$g = ["optionText"];
+var _excluded$i = ["optionText"];
 
 var ReferenceAutocompleteInput = function ReferenceAutocompleteInput(_ref) {
   var optionText = _ref.optionText,
-      props = _objectWithoutProperties(_ref, _excluded$g);
+      props = _objectWithoutProperties(_ref, _excluded$i);
 
   return /*#__PURE__*/React__default.createElement(ReferenceInput, props, /*#__PURE__*/React__default.createElement(SelectInput, {
     optionText: optionText
   }));
 };
 
-var _excluded$f = ["filter"];
+var _excluded$h = ["filter"];
 
 var StateInput = function StateInput(_ref) {
   var _ref$filter = _ref.filter,
       filter = _ref$filter === void 0 ? undefined : _ref$filter,
-      props = _objectWithoutProperties(_ref, _excluded$f);
+      props = _objectWithoutProperties(_ref, _excluded$h);
 
   var _useContext = useContext(WorkflowContext),
       getWorkflow = _useContext.getWorkflow;
@@ -2517,7 +2556,7 @@ var StateInput = function StateInput(_ref) {
   }));
 };
 
-var useStyles$4 = makeStyles$1(function (theme) {
+var useStyles$3 = makeStyles$1(function (theme) {
   return {
     required: {}
   };
@@ -2532,7 +2571,7 @@ var ConfirmMove = function ConfirmMove(_ref) {
       record = _ref.record,
       state = _ref.state,
       onCancel = _ref.onCancel;
-  var classes = useStyles$4();
+  var classes = useStyles$3();
   var refresh = useRefresh();
   var notify = useNotify();
 
@@ -2746,14 +2785,14 @@ var StateCollectionInput = function StateCollectionInput(_ref) {
   }));
 };
 
-var _excluded$e = ["label", "helperText", "admin"];
+var _excluded$g = ["label", "helperText", "admin"];
 
 var TransactionNotesIsPrivateInput = function TransactionNotesIsPrivateInput(_ref) {
   var label = _ref.label,
       helperText = _ref.helperText,
       _ref$admin = _ref.admin,
       admin = _ref$admin === void 0 ? false : _ref$admin,
-      props = _objectWithoutProperties(_ref, _excluded$e);
+      props = _objectWithoutProperties(_ref, _excluded$g);
 
   var fieldLabel = useFieldLabel({
     resource: "transactions"
@@ -2793,8 +2832,8 @@ function useDebounce(value, delay) {
   return debouncedValue;
 }
 
-var _excluded$d = ["margin", "variant", "fullWidth", "maxLength", "multiline", "format", "rows", "disabled", "InputLabelProps"],
-    _excluded2$1 = ["name", "onChange"];
+var _excluded$f = ["margin", "variant", "fullWidth", "maxLength", "multiline", "format", "rows", "disabled", "InputLabelProps"],
+    _excluded2$2 = ["name", "onChange"];
 
 var DebouncedTextInput = function DebouncedTextInput(_ref) {
   var _ref$margin = _ref.margin,
@@ -2808,7 +2847,7 @@ var DebouncedTextInput = function DebouncedTextInput(_ref) {
       rows = _ref.rows,
       disabled = _ref.disabled,
       InputLabelProps = _ref.InputLabelProps,
-      props = _objectWithoutProperties(_ref, _excluded$d);
+      props = _objectWithoutProperties(_ref, _excluded$f);
 
   var className = props.className,
       source = props.source,
@@ -2832,7 +2871,7 @@ var DebouncedTextInput = function DebouncedTextInput(_ref) {
       _useInput$input = _useInput.input,
       name = _useInput$input.name,
       onChange = _useInput$input.onChange,
-      rest = _objectWithoutProperties(_useInput$input, _excluded2$1),
+      rest = _objectWithoutProperties(_useInput$input, _excluded2$2),
       _useInput$meta = _useInput.meta,
       touched = _useInput$meta.touched,
       error = _useInput$meta.error,
@@ -2992,11 +3031,11 @@ var DebouncedNumberInput = function DebouncedNumberInput(props) {
   }));
 };
 
-var _excluded$c = ["title"];
+var _excluded$e = ["title"];
 
 var MediaInput = function MediaInput(_ref) {
   var title = _ref.title,
-      props = _objectWithoutProperties(_ref, _excluded$c);
+      props = _objectWithoutProperties(_ref, _excluded$e);
 
   return /*#__PURE__*/React__default.createElement(FileInput, props, /*#__PURE__*/React__default.createElement(MediaField, {
     source: "filepath",
@@ -3013,6 +3052,8 @@ var inputs = {
   SelectInput: SelectInput,
   BooleanInput: BooleanInput,
   DateInput: DateInput,
+  DateTimeInput: DateTimeInput,
+  NumberInput: NumberInput,
   MediaInput: MediaInput,
   StateInput: StateInput,
   StateCollectionInput: StateCollectionInput,
@@ -3023,12 +3064,12 @@ var inputs = {
   DebouncedTextInput: DebouncedTextInput
 };
 
-var _excluded$b = ["record", "resource"];
+var _excluded$d = ["record", "resource"];
 
 var EditButton = function EditButton(_ref) {
   var record = _ref.record,
       resource = _ref.resource,
-      props = _objectWithoutProperties(_ref, _excluded$b);
+      props = _objectWithoutProperties(_ref, _excluded$d);
 
   var _useContext = useContext(WorkflowContext),
       getWorkflow = _useContext.getWorkflow;
@@ -3243,14 +3284,14 @@ var ExportToXlsxButton = function ExportToXlsxButton(_ref, ref) {
 
 var ExportButton = /*#__PURE__*/React__default.forwardRef(ExportToXlsxButton);
 
-var _excluded$a = ["exportTo", "label"];
+var _excluded$c = ["exportTo", "label"];
 
 var ExportToButton = function ExportToButton(_ref) {
   var _ref$exportTo = _ref.exportTo,
       exportTo = _ref$exportTo === void 0 ? ["csv", "xlsx"] : _ref$exportTo,
       _ref$label = _ref.label,
       label = _ref$label === void 0 ? "ra.action.export" : _ref$label,
-      props = _objectWithoutProperties(_ref, _excluded$a);
+      props = _objectWithoutProperties(_ref, _excluded$c);
 
   var _React$useState = React__default.useState(null),
       _React$useState2 = _slicedToArray(_React$useState, 2),
@@ -3299,53 +3340,6 @@ var buttons = {
   ExportToButton: ExportToButton
 };
 
-var _excluded$9 = ["children"];
-
-var getWidthToSubtract = function getWidthToSubtract(w) {
-  return w + (window.innerWidth - document.documentElement.clientWidth);
-};
-
-var useStyles$3 = makeStyles$1(function (theme) {
-  return {
-    container: function container(_ref) {
-      var sidebarOpen = _ref.sidebarOpen,
-          drawerWidth = _ref.drawerWidth;
-      return {
-        maxWidth: "calc(100vw - ".concat(sidebarOpen ? getWidthToSubtract(drawerWidth + theme.spacing(6) - 1) : getWidthToSubtract(58 + theme.spacing(6) - 1), "px)"),
-        borderRadius: theme.shape.borderRadius,
-        overflowX: "auto",
-        overflowY: "hidden"
-      };
-    },
-    rowEven: {
-      backgroundColor: theme.palette.background.default
-    }
-  };
-});
-
-var Datagrid = function Datagrid(_ref2) {
-  var children = _ref2.children,
-      props = _objectWithoutProperties(_ref2, _excluded$9);
-
-  var _useContext = useContext(LayoutContext),
-      drawerWidth = _useContext.drawerWidth;
-
-  var sidebarOpen = useSelector$1(function (state) {
-    return state.admin.ui.sidebarOpen;
-  });
-  var classes = useStyles$3({
-    sidebarOpen: sidebarOpen,
-    drawerWidth: drawerWidth
-  });
-  return /*#__PURE__*/React__default.createElement("div", {
-    className: classes.container
-  }, /*#__PURE__*/React__default.createElement(Datagrid$1, _extends({
-    classes: {
-      rowEven: classes.rowEven
-    }
-  }, props), children));
-};
-
 var useFiltersStyles = makeStyles$1(function (theme) {
   return _defineProperty({
     form: {
@@ -3363,11 +3357,11 @@ var useFiltersStyles = makeStyles$1(function (theme) {
   name: "RaFilters"
 });
 
-var _excluded$8 = ["children"];
+var _excluded$b = ["children"];
 
 var Filters = function Filters(_ref) {
   var children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded$8);
+      props = _objectWithoutProperties(_ref, _excluded$b);
 
   var classes = useFiltersStyles();
   return /*#__PURE__*/React__default.createElement(Filter, _extends({
@@ -3455,17 +3449,17 @@ var exporter = function exporter(grid, data, translate) {
   });
 };
 
-var _excluded$7 = ["grid"],
-    _excluded2 = ["className", "exporter", "filters"];
+var _excluded$a = ["grid"],
+    _excluded2$1 = ["className", "exporter", "filters"];
 
 var ListActions = function ListActions(_ref) {
   var grid = _ref.grid,
-      props = _objectWithoutProperties(_ref, _excluded$7);
+      props = _objectWithoutProperties(_ref, _excluded$a);
 
   var className = props.className,
       exporter = props.exporter,
       filtersProp = props.filters,
-      rest = _objectWithoutProperties(props, _excluded2);
+      rest = _objectWithoutProperties(props, _excluded2$1);
 
   var _useListContext = useListContext(props),
       currentSort = _useListContext.currentSort,
@@ -3533,7 +3527,7 @@ ListActions.defaultProps = {
   }
 };
 
-var _excluded$6 = ["source", "label", "component", "componentProps"];
+var _excluded$9 = ["source", "label", "component", "componentProps"];
 
 var List = function List(props) {
   var _grid$filters, _grid$columns;
@@ -3551,7 +3545,7 @@ var List = function List(props) {
     var _grid$mobileBreakpoin;
 
     return theme.breakpoints.down((_grid$mobileBreakpoin = grid === null || grid === void 0 ? void 0 : grid.mobileBreakpoint) !== null && _grid$mobileBreakpoin !== void 0 ? _grid$mobileBreakpoin : "sm");
-  });
+  }) && grid.mobilePrimaryText != null;
 
   if (loading) {
     return /*#__PURE__*/React.createElement(Loading, null);
@@ -3579,7 +3573,7 @@ var List = function List(props) {
           _ref.label;
           var component = _ref.component,
           componentProps = _ref.componentProps,
-          props = _objectWithoutProperties(_ref, _excluded$6);
+          props = _objectWithoutProperties(_ref, _excluded$9);
 
       return /*#__PURE__*/React.createElement(Component, _extends({}, props, {
         key: source,
@@ -3635,28 +3629,12 @@ var List = function List(props) {
   })));
 };
 
-var useFormStyles = makeStyles$1(function (theme) {
-  var _ref;
-
-  return _ref = {}, _defineProperty(_ref, theme.breakpoints.up("md"), {
-    main: {
-      width: "70%",
-      minWidth: "960px",
-      margin: "1em auto"
-    }
-  }), _defineProperty(_ref, theme.breakpoints.down("md"), {
-    main: {
-      minWidth: "100%"
-    }
-  }), _ref;
-});
-
-var _excluded$5 = ["resource", "baseRecord"];
+var _excluded$8 = ["resource", "baseRecord"];
 
 var BackButton = function BackButton(_ref) {
   var resource = _ref.resource;
       _ref.baseRecord;
-      var props = _objectWithoutProperties(_ref, _excluded$5);
+      var props = _objectWithoutProperties(_ref, _excluded$8);
 
   return /*#__PURE__*/React__default.createElement(Button$1, _extends({}, props, {
     component: Link,
@@ -3667,7 +3645,7 @@ var BackButton = function BackButton(_ref) {
   }), /*#__PURE__*/React__default.createElement(BackIcon, null));
 };
 
-var _excluded$4 = ["handleSubmitWithRedirect", "small", "state", "pristine"];
+var _excluded$7 = ["handleSubmitWithRedirect", "small", "state", "pristine"];
 var useStyles$2 = makeStyles(function (theme) {
   var _theme$props, _theme$props$MuiButto;
 
@@ -3683,7 +3661,7 @@ var StateButton = function StateButton(_ref, ref) {
       _ref.small;
       var state = _ref.state;
       _ref.pristine;
-      var props = _objectWithoutProperties(_ref, _excluded$4);
+      var props = _objectWithoutProperties(_ref, _excluded$7);
 
   var classes = useStyles$2();
   var form = useForm();
@@ -3702,7 +3680,7 @@ var StateButton = function StateButton(_ref, ref) {
 
 var StateButton$1 = /*#__PURE__*/React__default.forwardRef(StateButton);
 
-var _excluded$3 = ["states"];
+var _excluded$6 = ["states"];
 
 var _this = undefined;
 var useStyles$1 = makeStyles(function (theme) {
@@ -3717,7 +3695,7 @@ var useStyles$1 = makeStyles(function (theme) {
 
 var ButtonListMenu = function ButtonListMenu(_ref) {
   var states = _ref.states,
-      props = _objectWithoutProperties(_ref, _excluded$3);
+      props = _objectWithoutProperties(_ref, _excluded$6);
 
   var classes = useStyles$1();
   var translate = useTranslate$1();
@@ -3770,7 +3748,7 @@ var ButtonListMenu = function ButtonListMenu(_ref) {
   })));
 };
 
-var _excluded$2 = ["children", "mutationMode", "validating", "maxButtonsToDisplay"];
+var _excluded$5 = ["children", "mutationMode", "validating", "maxButtonsToDisplay"];
 var useStyles = makeStyles(function (theme) {
   return {
     toolbar: {
@@ -3787,7 +3765,7 @@ var Toolbar = function Toolbar(_ref) {
       _ref.validating;
       var _ref$maxButtonsToDisp = _ref.maxButtonsToDisplay,
       maxButtonsToDisplay = _ref$maxButtonsToDisp === void 0 ? 1 : _ref$maxButtonsToDisp,
-      props = _objectWithoutProperties(_ref, _excluded$2);
+      props = _objectWithoutProperties(_ref, _excluded$5);
 
   var form = useForm();
   var classes = useStyles();
@@ -3854,12 +3832,12 @@ var Toolbar = function Toolbar(_ref) {
   }), /*#__PURE__*/React__default.createElement(BackButton, null));
 };
 
-var _excluded$1 = ["component", "disabled"];
+var _excluded$4 = ["component", "disabled"];
 
 var Input = function Input(_ref) {
   var component = _ref.component,
       disabled = _ref.disabled,
-      props = _objectWithoutProperties(_ref, _excluded$1);
+      props = _objectWithoutProperties(_ref, _excluded$4);
 
   var _useGetIdentity = useGetIdentity$1(),
       loaded = _useGetIdentity.loaded,
@@ -4050,7 +4028,76 @@ var useSaveMutation = function useSaveMutation(_ref) {
   return save;
 };
 
-var _excluded = ["fullWidth"];
+var _excluded$3 = ["tabs"],
+    _excluded2 = ["componentProps"],
+    _excluded3 = ["fullWidth"];
+
+var TabbedForm = function TabbedForm(_ref) {
+  var tabs = _ref.tabs,
+      props = _objectWithoutProperties(_ref, _excluded$3);
+
+  var _useContext = useContext(CrudContext),
+      getForm = _useContext.getForm;
+
+  var _useContext2 = useContext(WorkflowContext),
+      getWorkflow = _useContext2.getWorkflow;
+
+  var form = useMemo$1(function () {
+    return getForm(props.resource);
+  }, [props.resource, getForm]);
+  var workflow = useMemo$1(function () {
+    return form !== null && form !== void 0 && form.useWorkflow ? getWorkflow(props.resource) : null;
+  }, [props.resource, getWorkflow, form]);
+  var customComponents = useCustomComponents(props.resource);
+  return /*#__PURE__*/React__default.createElement(TabbedForm$1, props, tabs.map(function (_ref2, index) {
+    var _tab$inputs;
+
+    var label = _ref2.componentProps.label,
+        tab = _objectWithoutProperties(_ref2, _excluded2);
+
+    return /*#__PURE__*/React__default.createElement(FormTab, {
+      key: index,
+      label: label
+    }, tab === null || tab === void 0 ? void 0 : (_tab$inputs = tab.inputs) === null || _tab$inputs === void 0 ? void 0 : _tab$inputs.map(function (_ref3) {
+      var source = _ref3.source,
+          label = _ref3.label,
+          component = _ref3.component,
+          useWorkflow = _ref3.useWorkflow,
+          _ref3$componentProps = _ref3.componentProps,
+          fullWidth = _ref3$componentProps.fullWidth,
+          restComponentProps = _objectWithoutProperties(_ref3$componentProps, _excluded3);
+
+      return form !== null && form !== void 0 && form.useWorkflow && workflow !== null && useWorkflow === true ? /*#__PURE__*/React__default.createElement(Input, {
+        key: source,
+        source: source,
+        fullWidth: true,
+        component: /*#__PURE__*/React__default.createElement(Component, {
+          key: source,
+          source: source,
+          label: label,
+          fullWidth: fullWidth,
+          component: component,
+          componentProps: _objectSpread2({
+            fullWidth: fullWidth
+          }, restComponentProps),
+          components: _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), customComponents.inputs), customComponents.fields)
+        })
+      }) : /*#__PURE__*/React__default.createElement(Component, {
+        key: source,
+        source: source,
+        label: label,
+        fullWidth: fullWidth,
+        component: component,
+        componentProps: _objectSpread2({
+          fullWidth: fullWidth
+        }, restComponentProps),
+        components: _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), customComponents.inputs), customComponents.fields)
+      });
+    }));
+  }));
+};
+
+var _excluded$2 = ["fullWidth"];
 
 var Form = function Form(_ref) {
   var _form$inputs;
@@ -4081,13 +4128,19 @@ var Form = function Form(_ref) {
     return null;
   }
 
-  return /*#__PURE__*/React__default.createElement(SimpleForm, _extends({}, props, {
+  return /*#__PURE__*/React__default.createElement(Component, _extends({}, props, {
     save: save,
     toolbar: form !== null && form !== void 0 && form.useWorkflow ? /*#__PURE__*/React__default.createElement(Toolbar, null) : undefined,
     initialValues: form === null || form === void 0 ? void 0 : form.initialValues,
     sanitizeEmptyValues: form === null || form === void 0 ? void 0 : form.sanitizeEmptyValues,
     warnWhenUnsavedChanges: form === null || form === void 0 ? void 0 : form.warnWhenUnsavedChanges,
-    redirect: form === null || form === void 0 ? void 0 : form.redirect
+    redirect: form === null || form === void 0 ? void 0 : form.redirect,
+    component: form === null || form === void 0 ? void 0 : form.component,
+    componentProps: form === null || form === void 0 ? void 0 : form.componentProps,
+    components: {
+      SimpleForm: SimpleForm,
+      TabbedForm: TabbedForm
+    }
   }), form === null || form === void 0 ? void 0 : (_form$inputs = form.inputs) === null || _form$inputs === void 0 ? void 0 : _form$inputs.map(function (_ref2) {
     var source = _ref2.source,
         label = _ref2.label,
@@ -4095,7 +4148,7 @@ var Form = function Form(_ref) {
         useWorkflow = _ref2.useWorkflow,
         _ref2$componentProps = _ref2.componentProps,
         fullWidth = _ref2$componentProps.fullWidth,
-        restComponentProps = _objectWithoutProperties(_ref2$componentProps, _excluded);
+        restComponentProps = _objectWithoutProperties(_ref2$componentProps, _excluded$2);
 
     return form !== null && form !== void 0 && form.useWorkflow && workflow !== null && useWorkflow === true ? /*#__PURE__*/React__default.createElement(Input, {
       key: source,
@@ -4126,23 +4179,63 @@ var Form = function Form(_ref) {
   }));
 };
 
-var Create$1 = function Create(props) {
+var useFormStyles = makeStyles$1(function (theme) {
+  var _ref;
+
+  return _ref = {}, _defineProperty(_ref, theme.breakpoints.up("md"), {
+    main: {
+      width: "70%",
+      minWidth: "960px",
+      margin: "1em auto"
+    }
+  }), _defineProperty(_ref, theme.breakpoints.down("md"), {
+    main: {
+      minWidth: "100%"
+    }
+  }), _ref;
+});
+
+var _excluded$1 = ["children"];
+
+var Create$3 = function Create(_ref) {
+  var children = _ref.children,
+      props = _objectWithoutProperties(_ref, _excluded$1);
+
   var classes = useFormStyles();
-  return /*#__PURE__*/React__default.createElement(Create$2, _extends({}, props, {
+  return /*#__PURE__*/React__default.createElement(Create$4, _extends({}, props, {
     classes: classes
-  }), /*#__PURE__*/React__default.createElement(Form, null));
+  }), children);
 };
 
-var Create = function Create(props) {
+var Create$2 = function Create(props) {
+  return /*#__PURE__*/React__default.createElement(Create$3, props, /*#__PURE__*/React__default.createElement(Form, null));
+};
+
+var _excluded = ["children"];
+
+var Create$1 = function Create(_ref) {
+  var children = _ref.children,
+      props = _objectWithoutProperties(_ref, _excluded);
+
   var classes = useFormStyles();
   return /*#__PURE__*/React__default.createElement(Edit, _extends({}, props, {
     classes: classes
-  }), /*#__PURE__*/React__default.createElement(Form, null));
+  }), children);
+};
+
+var Create = function Create(props) {
+  return /*#__PURE__*/React__default.createElement(Create$1, props, /*#__PURE__*/React__default.createElement(Form, null));
 };
 
 var createCrud = function createCrud(_ref) {
   var _ref$icon = _ref.icon,
       icon = _ref$icon === void 0 ? null : _ref$icon,
+      _ref$list = _ref.list,
+      list = _ref$list === void 0 ? List : _ref$list,
+      _ref$create = _ref.create,
+      create = _ref$create === void 0 ? Create$2 : _ref$create,
+      _ref$edit = _ref.edit,
+      edit = _ref$edit === void 0 ? Create : _ref$edit,
       _ref$options = _ref.options,
       options = _ref$options === void 0 ? {
     group: "admin",
@@ -4160,9 +4253,9 @@ var createCrud = function createCrud(_ref) {
     options: _objectSpread2(_objectSpread2({}, options), {}, {
       components: components
     }),
-    list: List,
-    edit: Create,
-    create: Create$1
+    list: list,
+    edit: edit,
+    create: create
   };
 };
 
@@ -4288,4 +4381,4 @@ var useI18nCatcher = function useI18nCatcher(_ref) {
   return true;
 };
 
-export { AppBar, CrudContext, CrudProvider, Layout, Menu$1 as Menu, MenuGroup, MenuItem, Sidebar, UserMenu, UserMenuItem, WorkflowContext, WorkflowProvider, createAuthProvider, createCrud, createDataProvider, createI18nProvider, createManyFormatter, createManyParser, getHeaders, getToken, useAuthProvider, useCrud, useDataProvider, useI18nCatcher, useI18nLanguages, useI18nProvider, useManyFormatter, useManyParser, useSaveMutation, useToken, useWorkflow };
+export { AppBar, CrudContext, CrudProvider, Datagrid, Layout, Menu$1 as Menu, MenuGroup, MenuItem, Sidebar, UserMenu, UserMenuItem, WorkflowContext, WorkflowProvider, createAuthProvider, createCrud, createDataProvider, createI18nProvider, createManyFormatter, createManyParser, useAuthProvider, useCrud, useDataProvider, useI18nCatcher, useI18nLanguages, useI18nProvider, useManyFormatter, useManyParser, useSaveMutation, useWorkflow };

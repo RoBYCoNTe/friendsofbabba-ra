@@ -16,9 +16,10 @@ import {
   createCrud,
   CrudProvider,
   WorkflowProvider,
+  CrudContext,
 } from "friendsofbabba-ra";
 
-import React from "react";
+import React, { useContext, useMemo } from "react";
 
 const MyUserMenu = (props) => {
   const { logout } = props;
@@ -43,6 +44,20 @@ const MyMenu = (props) => {
   // const { data: badges } = useQueryWithStore({
   //   type: "getBadges",
   // });
+  const { data } = useContext(CrudContext);
+  const badges = useMemo(
+    () =>
+      data
+        ? Object.keys(data).reduce(
+            (badges, k) =>
+              data[k].badge != null
+                ? { ...badges, [k]: data[k].badge }
+                : badges,
+            {}
+          )
+        : {},
+    [data]
+  );
   return (
     <Menu
       {...props}
@@ -51,15 +66,7 @@ const MyMenu = (props) => {
         dashboard: 0,
         admin: 1,
       }}
-      items={[
-        {
-          icon: Icons.AcUnit,
-          name: "posts",
-          group: "dashboard",
-          to: "/posts",
-        },
-      ]}
-      // badges={badges}
+      badges={badges}
     >
       <MenuGroup label="Useful Links">
         <MenuItem
@@ -82,6 +89,12 @@ const MyMenu = (props) => {
 const MyLayout = (props) => (
   <Layout {...props} menu={MyMenu} appBar={MyAppBar} />
 );
+const components = {
+  fields: {},
+  inputs: {},
+  forms: {},
+  grids: {},
+};
 const App = () => {
   const apiUrl = "http://babba.local/api";
   const languages = useI18nLanguages({ apiUrl });
@@ -112,8 +125,29 @@ const App = () => {
             locale: "it",
           })}
         >
-          <Resource name="tickets" {...createCrud({ icon: Icons.List })} />
+          <Resource
+            name="posts"
+            {...createCrud({
+              icon: Icons.AcUnit,
+              options: { group: "dashboard" },
+            })}
+          />
+          <Resource
+            name="tickets"
+            {...createCrud({
+              icon: Icons.List,
+              components,
+            })}
+          />
+          <Resource name="todos" {...createCrud({ icon: Icons.List })} />
+          <Resource
+            name="d-tests"
+            {...createCrud({ icon: Icons.TextureSharp })}
+          />
           <Resource name="workflow/transactions/tickets" />
+          <Resource name="workflow/transactions/posts" />
+          <Resource name="workflow/transactions/todos" />
+          <Resource name="workflow/transactions/d-tests" />
           <Resource
             name="users"
             {...createCrud({
