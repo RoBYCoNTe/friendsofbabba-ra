@@ -21,6 +21,7 @@ const DebouncedTextInput = ({
   format,
   rows,
   disabled,
+  InputProps,
   InputLabelProps,
   ...props
 }) => {
@@ -48,12 +49,14 @@ const DebouncedTextInput = ({
   const formState = useFormState();
   const formValue = get(formState.values, source, defaultValue);
   const didMountEffect = useRef(false);
+  const didUpdateValue = useRef(false);
   useEffect(() => {
     if (didMountEffect.current === false) {
       didMountEffect.current = true;
       return;
     }
     if (formValue && formValue !== null) {
+      didUpdateValue.current = true;
       setValue(formValue);
     }
   }, [formValue]);
@@ -66,10 +69,13 @@ const DebouncedTextInput = ({
       didMountChange.current = true;
       return;
     }
-    if (
-      debouncedValue !== (formValue !== null ? formValue : defaultValue) &&
-      debouncedValue !== defaultValue
-    ) {
+    if (didUpdateValue.current === true) {
+      didUpdateValue.current = false;
+      return;
+    }
+
+    const compareToValue = formValue !== null ? formValue : defaultValue;
+    if (debouncedValue !== compareToValue) {
       onChange(debouncedValue);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -100,12 +106,7 @@ const DebouncedTextInput = ({
       label={
         label !== "" &&
         label !== false && (
-          <FieldTitle
-            label={label}
-            source={source}
-            resource={resource}
-            isRequired={isRequired}
-          />
+          <FieldTitle label={label} source={source} resource={resource} />
         )
       }
       onChange={handleChange}
@@ -118,6 +119,7 @@ const DebouncedTextInput = ({
         />
       }
       InputLabelProps={InputLabelProps}
+      InputProps={InputProps}
       required={isRequired}
     />
   );

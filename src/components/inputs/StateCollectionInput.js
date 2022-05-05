@@ -1,5 +1,5 @@
 import { Button, Menu, MenuItem } from "@material-ui/core";
-import React, { useContext, useMemo, useState } from "react";
+import React, { useCallback, useContext, useMemo, useState } from "react";
 
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import ConfirmMove from "../forms/ConfirmMove";
@@ -56,10 +56,13 @@ const StateCollectionInput = ({
     setState(null);
   };
 
-  const handleChange = (state) => {
-    setAnchorEl(null);
-    setState(state);
-  };
+  const handleChange = useCallback(
+    (state) => (e) => {
+      setAnchorEl(null);
+      setState(state);
+    },
+    []
+  );
   if (readonly || nextStates.length === 0) {
     // If user is not admin and there are no next states, show current state
     return <StateField record={record} resource={toResolve} />;
@@ -87,10 +90,7 @@ const StateCollectionInput = ({
         onClose={handleClose}
       >
         {nextStates.map((state) => (
-          <MenuItem
-            key={get(state, "code")}
-            onClick={handleChange.bind(this, state)}
-          >
+          <MenuItem key={get(state, "code")} onClick={handleChange(state)}>
             {get(state, "label")}
           </MenuItem>
         ))}

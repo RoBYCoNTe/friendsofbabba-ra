@@ -1,9 +1,10 @@
+import React, { useCallback } from "react";
+
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import Button from "@material-ui/core/Button";
 import DoubleArrowIcon from "@material-ui/icons/DoubleArrow";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import React from "react";
 import StateButton from "./StateButton";
 import { makeStyles } from "@material-ui/core/styles";
 import { useTranslate } from "react-admin";
@@ -27,10 +28,13 @@ const StateButtonMenu = ({ states, ...props }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleState = (state) => {
-    setState(state.label);
-    setAnchorEl(null);
-  };
+  const handleState = useCallback(
+    (state) => (e) => {
+      setState(state.label);
+      setAnchorEl(null);
+    },
+    []
+  );
 
   return (
     <div>
@@ -60,7 +64,7 @@ const StateButtonMenu = ({ states, ...props }) => {
             color="default"
             variant="text"
             icon={<ArrowForwardIosIcon />}
-            onClick={handleState.bind(this, state)}
+            onClick={handleState(state)}
           />
         ))}
       </Menu>

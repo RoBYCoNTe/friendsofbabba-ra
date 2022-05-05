@@ -1,16 +1,20 @@
-import * as Components from "friendsofbabba-ra";
 import * as Icons from "@material-ui/icons";
 
-import { Admin, Loading, Resource } from "react-admin";
+import { Admin, Loading, Resource, RouteWithoutLayout } from "react-admin";
 import {
   AppBar,
   CrudContext,
   CrudProvider,
   CrudResource,
   Layout,
+  LocalLoginForm,
+  LoginPage,
   Menu,
   MenuGroup,
   MenuItem,
+  SignupPage,
+  SpidLoginForm,
+  SpidSignupForm,
   UserMenu,
   UserMenuItem,
   WorkflowProvider,
@@ -24,7 +28,6 @@ import React, { useContext, useMemo } from "react";
 
 import components from "./components";
 
-console.info("Components:", Components);
 const MyUserMenu = (props) => {
   const { logout } = props;
   return (
@@ -89,6 +92,17 @@ const MyMenu = (props) => {
 const MyLayout = (props) => (
   <Layout {...props} menu={MyMenu} appBar={MyAppBar} />
 );
+const MyLoginPage = (props) => (
+  <LoginPage {...props} apiUrl="http://babba.local/api">
+    <LocalLoginForm />
+    <SpidLoginForm apiUrl="http://babba.local/api" signup={"#/signup"} />
+  </LoginPage>
+);
+const MySignupPage = (props) => (
+  <SignupPage {...props}>
+    <SpidSignupForm apiUrl="http://babba.local/api" />
+  </SignupPage>
+);
 const App = () => {
   const apiUrl = "http://babba.local/api";
   const languages = useI18nLanguages({ apiUrl });
@@ -112,6 +126,14 @@ const App = () => {
       <CrudProvider apiUrl={apiUrl}>
         <Admin
           layout={MyLayout}
+          loginPage={MyLoginPage}
+          customRoutes={[
+            <RouteWithoutLayout
+              key="signup"
+              path="/signup"
+              component={MySignupPage}
+            />,
+          ]}
           dataProvider={dataProvider}
           authProvider={authProvider}
           i18nProvider={createI18nProvider({

@@ -14,6 +14,7 @@ export * from "./forms/index.js";
 export * from "./inputs/index.js";
 export * from "./lists/index.js";
 export * from "./crud/index.js";
+export * from "./pages/index.js";
 
 export {
   AppBar,
