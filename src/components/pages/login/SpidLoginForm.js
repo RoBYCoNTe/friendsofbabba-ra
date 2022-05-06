@@ -4,6 +4,7 @@ import { useNotify, useRedirect, useTranslate } from "react-admin";
 
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
+import { notifyToken } from "../../../data/authHeaders";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -76,6 +77,7 @@ const SpidLoginForm = ({
         redirect(
           typeof redirectUrl === "function" ? redirectUrl(data) : redirectUrl
         );
+        notifyToken(data.token);
       }
     };
     doAuth();

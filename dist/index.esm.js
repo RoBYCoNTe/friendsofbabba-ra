@@ -1,5 +1,5 @@
-import { useMediaQuery, AppBar as AppBar$1, Toolbar as Toolbar$1, IconButton as IconButton$1, Badge as Badge$1, makeStyles as makeStyles$1, List as List$1, ListSubheader, Divider, ListItem, ListItemIcon, ListItemText, Drawer, Typography as Typography$1, MenuItem as MenuItem$1, Link as Link$1, Dialog, DialogTitle, DialogContent, DialogContentText, TextField as TextField$2, FormControlLabel, Switch, FormHelperText, DialogActions, Button as Button$2, Menu as Menu$3, CircularProgress, ThemeProvider as ThemeProvider$1, Stepper, Step, StepLabel, StepContent, Grid } from '@material-ui/core';
-import { useTranslate as useTranslate$1, useGetIdentity, LoadingIndicator, getResources as getResources$2, defaultTheme, Notification, Button, EditButton as EditButton$1, SaveButton, DeleteButton, ArrayField, SingleFieldList, ChipField, ReferenceManyField, SimpleList, DateField, Datagrid as Datagrid$1, TextField, Pagination, BooleanField, Create as Create$4, Edit, useInput, FileInput, ReferenceInput, AutocompleteInput, ReferenceArrayInput, CheckboxGroupInput, SelectInput, useRefresh, useNotify, useUpdate, BooleanInput, SearchInput, TextInput, DateInput, DateTimeInput, NumberInput, Labeled, TabbedForm as TabbedForm$1, FormTab, Toolbar as Toolbar$2, Loading, SimpleForm, Filter, FilterContext, TopToolbar, FilterButton, CreateButton, ExportButton as ExportButton$1, downloadCSV, List as List$2, Resource, LoginForm, useRedirect as useRedirect$1, Login, resolveBrowserLocale, useLocale, HttpError } from 'react-admin';
+import { useMediaQuery, AppBar as AppBar$1, Toolbar as Toolbar$1, IconButton as IconButton$1, Badge as Badge$1, makeStyles as makeStyles$1, List as List$1, ListSubheader, Divider, ListItem, ListItemIcon, ListItemText, Drawer, Typography as Typography$1, MenuItem as MenuItem$1, Link as Link$1, Dialog, DialogTitle, DialogContent, DialogContentText, TextField as TextField$2, FormControlLabel, Switch, FormHelperText, DialogActions, Button as Button$2, Menu as Menu$3, ThemeProvider as ThemeProvider$1, Stepper, Step, StepLabel, StepContent, CircularProgress, Grid } from '@material-ui/core';
+import { useTranslate as useTranslate$1, useGetIdentity, LoadingIndicator, getResources as getResources$2, defaultTheme, Notification, Button, EditButton as EditButton$1, SaveButton, DeleteButton, ArrayField, SingleFieldList, ChipField, ReferenceManyField, SimpleList, DateField, Datagrid as Datagrid$1, TextField, Pagination, BooleanField, Create as Create$4, Edit, useInput, FileInput, ReferenceInput, AutocompleteInput, ReferenceArrayInput, CheckboxGroupInput, SelectInput, useRefresh, useNotify, useUpdate, BooleanInput, SearchInput, TextInput, DateInput, DateTimeInput, NumberInput, Labeled, TabbedForm as TabbedForm$1, FormTab, Toolbar as Toolbar$2, Loading, SimpleForm, Filter, FilterContext, TopToolbar, FilterButton, CreateButton, ExportButton as ExportButton$1, downloadCSV, List as List$2, Resource, LoginForm, Login, useRedirect as useRedirect$1, resolveBrowserLocale, useLocale, HttpError } from 'react-admin';
 export { BooleanField, BooleanInput, ChipField, DateField, DateInput, DateTimeInput, NumberInput, DeleteButton as RaDeleteButton, EditButton as RaEditButton, SearchInput, SelectInput, TextField, TextInput } from 'react-admin';
 import * as React from 'react';
 import React__default, { useCallback, createElement, useRef, useState, useEffect, createContext, useContext, useMemo as useMemo$1, Fragment, cloneElement } from 'react';
@@ -11,7 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Menu$2 from '@material-ui/core/Menu';
 import classnames from 'classnames';
 import { makeStyles, withStyles, createStyles, createTheme, useTheme } from '@material-ui/core/styles';
-import { toggleSidebar, usePermissions as usePermissions$1, useSafeSetState, maxLength, useTranslate as useTranslate$2, FieldTitle, useGetIdentity as useGetIdentity$1, useMutation, useRedirect, useRefresh as useRefresh$1, useNotify as useNotify$1, useListContext, useResourceContext, useResourceDefinition, sanitizeListRestProps, required, email } from 'ra-core';
+import { toggleSidebar, usePermissions as usePermissions$1, useSafeSetState, maxLength, useTranslate as useTranslate$2, FieldTitle, useGetIdentity as useGetIdentity$1, useMutation, useRedirect, useRefresh as useRefresh$1, useNotify as useNotify$1, useListContext, useResourceContext, useResourceDefinition, sanitizeListRestProps, useInput as useInput$1, required, email } from 'ra-core';
 import { useDispatch, useSelector as useSelector$1, connect } from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Link, withRouter } from 'react-router-dom';
@@ -483,17 +483,17 @@ AppBar.propTypes = {
   userMenu: PropTypes.elementType
 };
 
-var _excluded$B = ["titleAccess", "children"];
+var _excluded$C = ["titleAccess", "children"];
 
 var Badge = function Badge(_ref) {
   _ref.titleAccess;
       var children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded$B);
+      props = _objectWithoutProperties(_ref, _excluded$C);
 
   return /*#__PURE__*/React__default.createElement(Badge$1, props, children);
 };
 
-var _excluded$A = ["children", "open", "label"];
+var _excluded$B = ["children", "open", "label"];
 var useStyles$c = makeStyles$1(function (theme) {
   return {
     subHeader: {
@@ -509,7 +509,7 @@ var MenuGroup = function MenuGroup(_ref) {
   var children = _ref.children,
       open = _ref.open,
       label = _ref.label,
-      props = _objectWithoutProperties(_ref, _excluded$A);
+      props = _objectWithoutProperties(_ref, _excluded$B);
 
   var classes = useStyles$c();
   return /*#__PURE__*/React__default.createElement(List$1, {
@@ -537,7 +537,7 @@ MenuGroup.propTypes = {
   group: PropTypes.string
 };
 
-var _excluded$z = ["location", "badge", "to", "icon", "label", "sub", "onMenuClick", "permissions", "open"];
+var _excluded$A = ["location", "badge", "to", "icon", "label", "sub", "onMenuClick", "permissions", "open"];
 
 var isSelected = function isSelected(location, to) {
   var selected = location.pathname === to || location.pathname.indexOf("".concat(to, "?")) === 0 || location.pathname.indexOf("".concat(to, "/")) === 0;
@@ -554,7 +554,7 @@ var MenuItem = function MenuItem(_ref) {
       onMenuClick = _ref.onMenuClick;
       _ref.permissions;
       var open = _ref.open,
-      props = _objectWithoutProperties(_ref, _excluded$z);
+      props = _objectWithoutProperties(_ref, _excluded$A);
 
   return /*#__PURE__*/React__default.createElement(ListItem, _extends({}, props, {
     button: true,
@@ -936,7 +936,7 @@ Sidebar.propTypes = {
   appVersion: PropTypes.string
 };
 
-var _excluded$y = ["theme"];
+var _excluded$z = ["theme"];
 var LayoutContext = /*#__PURE__*/React__default.createContext({
   drawerWidth: 0
 });
@@ -1092,7 +1092,7 @@ var EnhancedLayout = compose(connect(mapStateToProps, {} // Avoid connect passin
 
 var Layout = function Layout(_ref2) {
   var themeOverride = _ref2.theme,
-      props = _objectWithoutProperties(_ref2, _excluded$y);
+      props = _objectWithoutProperties(_ref2, _excluded$z);
 
   var themeProp = useRef(themeOverride);
 
@@ -1129,7 +1129,7 @@ Layout.defaultProps = {
   drawerWidth: 240
 };
 
-var _excluded$x = ["className", "classes", "redirectTo", "icon", "label"];
+var _excluded$y = ["className", "classes", "redirectTo", "icon", "label"];
 var useStyles$a = makeStyles(function (theme) {
   return {
     menuItem: {
@@ -1148,7 +1148,7 @@ var UserMenuItem = /*#__PURE__*/React.forwardRef(function UserMenuItem(props, re
       props.redirectTo;
       var icon = props.icon,
       label = props.label,
-      rest = _objectWithoutProperties(props, _excluded$x);
+      rest = _objectWithoutProperties(props, _excluded$y);
 
   var classes = useStyles$a(props);
   return /*#__PURE__*/React.createElement(MenuItem$1, _extends({
@@ -1166,12 +1166,12 @@ UserMenuItem.propTypes = {
   onClick: PropTypes.func
 };
 
-var _excluded$w = ["resource", "baseRecord"];
+var _excluded$x = ["resource", "baseRecord"];
 
 var BackButton = function BackButton(_ref) {
   var resource = _ref.resource;
       _ref.baseRecord;
-      var props = _objectWithoutProperties(_ref, _excluded$w);
+      var props = _objectWithoutProperties(_ref, _excluded$x);
 
   return /*#__PURE__*/React__default.createElement(Button, _extends({}, props, {
     component: Link,
@@ -1520,12 +1520,12 @@ var WorkflowProvider = function WorkflowProvider(_ref) {
   }, children);
 };
 
-var _excluded$v = ["record", "resource"];
+var _excluded$w = ["record", "resource"];
 
 var EditButton = function EditButton(_ref) {
   var record = _ref.record,
       resource = _ref.resource,
-      props = _objectWithoutProperties(_ref, _excluded$v);
+      props = _objectWithoutProperties(_ref, _excluded$w);
 
   var _useContext = useContext(WorkflowContext),
       getWorkflow = _useContext.getWorkflow;
@@ -1558,6 +1558,12 @@ var EditButton = function EditButton(_ref) {
   }, props));
 };
 
+function notifyToken(token) {
+  var event = new Event("login");
+  event.key = "token";
+  event.value = token;
+  document.dispatchEvent(event);
+}
 function getHeaders() {
   var token = localStorage.getItem("token");
   var headers = new Headers({
@@ -1764,14 +1770,14 @@ var ExportToXlsxButton = function ExportToXlsxButton(_ref, ref) {
 
 var ExportButton = /*#__PURE__*/React__default.forwardRef(ExportToXlsxButton);
 
-var _excluded$u = ["exportTo", "label"];
+var _excluded$v = ["exportTo", "label"];
 
 var ExportToButton = function ExportToButton(_ref) {
   var _ref$exportTo = _ref.exportTo,
       exportTo = _ref$exportTo === void 0 ? ["csv", "xlsx"] : _ref$exportTo,
       _ref$label = _ref.label,
       label = _ref$label === void 0 ? "ra.action.export" : _ref$label,
-      props = _objectWithoutProperties(_ref, _excluded$u);
+      props = _objectWithoutProperties(_ref, _excluded$v);
 
   var _React$useState = React__default.useState(null),
       _React$useState2 = _slicedToArray(_React$useState, 2),
@@ -1812,7 +1818,7 @@ var ExportToButton = function ExportToButton(_ref) {
   }));
 };
 
-var _excluded$t = ["handleSubmitWithRedirect", "small", "state", "pristine"];
+var _excluded$u = ["handleSubmitWithRedirect", "small", "state", "pristine"];
 var useStyles$9 = makeStyles(function (theme) {
   var _theme$props, _theme$props$MuiButto;
 
@@ -1828,7 +1834,7 @@ var StateButton = function StateButton(_ref, ref) {
       _ref.small;
       var state = _ref.state;
       _ref.pristine;
-      var props = _objectWithoutProperties(_ref, _excluded$t);
+      var props = _objectWithoutProperties(_ref, _excluded$u);
 
   var classes = useStyles$9();
   var form = useForm();
@@ -1847,7 +1853,7 @@ var StateButton = function StateButton(_ref, ref) {
 
 var StateButton$1 = /*#__PURE__*/React__default.forwardRef(StateButton);
 
-var _excluded$s = ["states"];
+var _excluded$t = ["states"];
 var useStyles$8 = makeStyles(function (theme) {
   var _theme$props, _theme$props$MuiButto;
 
@@ -1860,7 +1866,7 @@ var useStyles$8 = makeStyles(function (theme) {
 
 var StateButtonMenu = function StateButtonMenu(_ref) {
   var states = _ref.states,
-      props = _objectWithoutProperties(_ref, _excluded$s);
+      props = _objectWithoutProperties(_ref, _excluded$t);
 
   var classes = useStyles$8();
   var translate = useTranslate$1();
@@ -1925,18 +1931,18 @@ var buttons = /*#__PURE__*/Object.freeze({
   StateButtonMenu: StateButtonMenu
 });
 
-var _excluded$r = ["chipSource"];
+var _excluded$s = ["chipSource"];
 
 var ChipArrayField = function ChipArrayField(_ref) {
   var chipSource = _ref.chipSource,
-      props = _objectWithoutProperties(_ref, _excluded$r);
+      props = _objectWithoutProperties(_ref, _excluded$s);
 
   return /*#__PURE__*/React__default.createElement(ArrayField, props, /*#__PURE__*/React__default.createElement(SingleFieldList, null, /*#__PURE__*/React__default.createElement(ChipField, {
     source: chipSource
   })));
 };
 
-var _excluded$q = ["record", "source", "width", "minWidth", "maxWidth", "maxRows", "sortable", "basePath", "sortBy"];
+var _excluded$r = ["record", "source", "width", "minWidth", "maxWidth", "maxRows", "sortable", "basePath", "sortBy"];
 var useStyles$7 = makeStyles$1(function (theme) {
   return {
     root: {
@@ -1963,7 +1969,7 @@ var LongTextField = function LongTextField(_ref) {
       _ref.sortable;
       _ref.basePath;
       _ref.sortBy;
-      var props = _objectWithoutProperties(_ref, _excluded$q);
+      var props = _objectWithoutProperties(_ref, _excluded$r);
 
   var classes = useStyles$7();
   return /*#__PURE__*/React__default.createElement(Typography$1, _extends({}, props, {
@@ -1996,14 +2002,14 @@ var MediaField = function MediaField(_ref) {
   }));
 };
 
-var _excluded$p = ["label", "record", "resource"];
+var _excluded$q = ["label", "record", "resource"];
 
 var StateField = function StateField(_ref) {
   var _ref$label = _ref.label,
       label = _ref$label === void 0 ? "app.label.workflow.state" : _ref$label,
       record = _ref.record,
       toResolve = _ref.resource,
-      props = _objectWithoutProperties(_ref, _excluded$p);
+      props = _objectWithoutProperties(_ref, _excluded$q);
 
   var _useContext = useContext(WorkflowContext),
       getWorkflow = _useContext.getWorkflow;
@@ -2120,13 +2126,13 @@ TransactionNotesField.propTypes = {
   maxRows: PropTypes.number
 };
 
-var _excluded$o = ["fullWidth", "addLabel"],
+var _excluded$p = ["fullWidth", "addLabel"],
     _excluded2$4 = ["admin", "label"];
 
 var PaginationWrapper = function PaginationWrapper(_ref) {
   _ref.fullWidth;
       _ref.addLabel;
-      var props = _objectWithoutProperties(_ref, _excluded$o);
+      var props = _objectWithoutProperties(_ref, _excluded$p);
 
   return /*#__PURE__*/React__default.createElement(Pagination, props);
 };
@@ -2245,11 +2251,11 @@ var useFormStyles = makeStyles$1(function (theme) {
   }), _ref;
 });
 
-var _excluded$n = ["children"];
+var _excluded$o = ["children"];
 
 var Create$3 = function Create(_ref) {
   var children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded$n);
+      props = _objectWithoutProperties(_ref, _excluded$o);
 
   var classes = useFormStyles();
   return /*#__PURE__*/React__default.createElement(Create$4, _extends({}, props, {
@@ -2257,11 +2263,11 @@ var Create$3 = function Create(_ref) {
   }), children);
 };
 
-var _excluded$m = ["children"];
+var _excluded$n = ["children"];
 
 var Create$2 = function Create(_ref) {
   var children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded$m);
+      props = _objectWithoutProperties(_ref, _excluded$n);
 
   var classes = useFormStyles();
   return /*#__PURE__*/React__default.createElement(Edit, _extends({}, props, {
@@ -2292,7 +2298,7 @@ function useDebounce(value, delay) {
   return debouncedValue;
 }
 
-var _excluded$l = ["margin", "variant", "fullWidth", "maxLength", "multiline", "format", "rows", "disabled", "InputProps", "InputLabelProps"],
+var _excluded$m = ["margin", "variant", "fullWidth", "maxLength", "multiline", "format", "rows", "disabled", "InputProps", "InputLabelProps"],
     _excluded2$3 = ["name", "onChange"];
 
 var DebouncedTextInput = function DebouncedTextInput(_ref) {
@@ -2308,7 +2314,7 @@ var DebouncedTextInput = function DebouncedTextInput(_ref) {
       disabled = _ref.disabled,
       InputProps = _ref.InputProps,
       InputLabelProps = _ref.InputLabelProps,
-      props = _objectWithoutProperties(_ref, _excluded$l);
+      props = _objectWithoutProperties(_ref, _excluded$m);
 
   var className = props.className,
       source = props.source,
@@ -2482,11 +2488,11 @@ var DebouncedNumberInput = function DebouncedNumberInput(props) {
   }));
 };
 
-var _excluded$k = ["title"];
+var _excluded$l = ["title"];
 
 var MediaInput = function MediaInput(_ref) {
   var title = _ref.title,
-      props = _objectWithoutProperties(_ref, _excluded$k);
+      props = _objectWithoutProperties(_ref, _excluded$l);
 
   return /*#__PURE__*/React__default.createElement(FileInput, props, /*#__PURE__*/React__default.createElement(MediaField, {
     source: "filepath",
@@ -2494,11 +2500,11 @@ var MediaInput = function MediaInput(_ref) {
   }));
 };
 
-var _excluded$j = ["optionText"];
+var _excluded$k = ["optionText"];
 
 var ReferenceAutocompleteInput$1 = function ReferenceAutocompleteInput(_ref) {
   var optionText = _ref.optionText,
-      props = _objectWithoutProperties(_ref, _excluded$j);
+      props = _objectWithoutProperties(_ref, _excluded$k);
 
   return /*#__PURE__*/React__default.createElement(ReferenceInput, props, /*#__PURE__*/React__default.createElement(AutocompleteInput, {
     optionText: optionText
@@ -2539,11 +2545,11 @@ var useManyParser = function useManyParser() {
   return memoizedFn;
 };
 
-var _excluded$i = ["optionText"];
+var _excluded$j = ["optionText"];
 
 var ReferenceCheckboxGroupInput = function ReferenceCheckboxGroupInput(_ref) {
   var optionText = _ref.optionText,
-      props = _objectWithoutProperties(_ref, _excluded$i);
+      props = _objectWithoutProperties(_ref, _excluded$j);
 
   var parse = useManyParser();
   var format = useManyFormatter();
@@ -2555,11 +2561,11 @@ var ReferenceCheckboxGroupInput = function ReferenceCheckboxGroupInput(_ref) {
   }));
 };
 
-var _excluded$h = ["optionText"];
+var _excluded$i = ["optionText"];
 
 var ReferenceAutocompleteInput = function ReferenceAutocompleteInput(_ref) {
   var optionText = _ref.optionText,
-      props = _objectWithoutProperties(_ref, _excluded$h);
+      props = _objectWithoutProperties(_ref, _excluded$i);
 
   return /*#__PURE__*/React__default.createElement(ReferenceInput, props, /*#__PURE__*/React__default.createElement(SelectInput, {
     optionText: optionText
@@ -2795,12 +2801,12 @@ var StateCollectionInput = function StateCollectionInput(_ref) {
   }));
 };
 
-var _excluded$g = ["filter"];
+var _excluded$h = ["filter"];
 
 var StateInput = function StateInput(_ref) {
   var _ref$filter = _ref.filter,
       filter = _ref$filter === void 0 ? undefined : _ref$filter,
-      props = _objectWithoutProperties(_ref, _excluded$g);
+      props = _objectWithoutProperties(_ref, _excluded$h);
 
   var _useContext = useContext(WorkflowContext),
       getWorkflow = _useContext.getWorkflow;
@@ -2841,14 +2847,14 @@ var TransactionNotesInput = function TransactionNotesInput(props) {
   }));
 };
 
-var _excluded$f = ["label", "helperText", "admin"];
+var _excluded$g = ["label", "helperText", "admin"];
 
 var TransactionNotesIsPrivateInput = function TransactionNotesIsPrivateInput(_ref) {
   var label = _ref.label,
       helperText = _ref.helperText,
       _ref$admin = _ref.admin,
       admin = _ref$admin === void 0 ? false : _ref$admin,
-      props = _objectWithoutProperties(_ref, _excluded$f);
+      props = _objectWithoutProperties(_ref, _excluded$g);
 
   var fieldLabel = useFieldLabel({
     resource: "transactions"
@@ -2887,7 +2893,7 @@ var inputs = /*#__PURE__*/Object.freeze({
   DebouncedTextInput: DebouncedTextInput
 });
 
-var _excluded$e = ["children"];
+var _excluded$f = ["children"];
 
 var getWidthToSubtract = function getWidthToSubtract(w) {
   return w + (window.innerWidth - document.documentElement.clientWidth);
@@ -2916,7 +2922,7 @@ var useStyles$4 = makeStyles$1(function (theme) {
 
 var Datagrid = function Datagrid(_ref3) {
   var children = _ref3.children,
-      props = _objectWithoutProperties(_ref3, _excluded$e);
+      props = _objectWithoutProperties(_ref3, _excluded$f);
 
   var _useContext = useContext(LayoutContext),
       drawerWidth = _useContext.drawerWidth;
@@ -2937,7 +2943,7 @@ var Datagrid = function Datagrid(_ref3) {
   }, props), children));
 };
 
-var _excluded$d = ["component", "componentProps", "components", "addLabel", "sortBy"];
+var _excluded$e = ["component", "componentProps", "components", "addLabel", "sortBy"];
 
 var Component = function Component(_ref) {
   var component = _ref.component,
@@ -2946,7 +2952,7 @@ var Component = function Component(_ref) {
       _ref$addLabel = _ref.addLabel,
       addLabel = _ref$addLabel === void 0 ? true : _ref$addLabel;
       _ref.sortBy;
-      var props = _objectWithoutProperties(_ref, _excluded$d);
+      var props = _objectWithoutProperties(_ref, _excluded$e);
 
   var Component = get$2(components, component);
 
@@ -2965,12 +2971,12 @@ var Component = function Component(_ref) {
   return /*#__PURE__*/React__default.createElement(Component, _extends({}, props, componentProps));
 };
 
-var _excluded$c = ["component", "disabled"];
+var _excluded$d = ["component", "disabled"];
 
 var Input = function Input(_ref) {
   var component = _ref.component,
       disabled = _ref.disabled,
-      props = _objectWithoutProperties(_ref, _excluded$c);
+      props = _objectWithoutProperties(_ref, _excluded$d);
 
   var _useGetIdentity = useGetIdentity$1(),
       loaded = _useGetIdentity.loaded,
@@ -3045,13 +3051,13 @@ var useCustomComponents = function useCustomComponents(resource) {
   }, [resources, resource]);
 };
 
-var _excluded$b = ["tabs"],
+var _excluded$c = ["tabs"],
     _excluded2$2 = ["componentProps"],
     _excluded3 = ["fullWidth"];
 
 var TabbedForm = function TabbedForm(_ref) {
   var tabs = _ref.tabs,
-      props = _objectWithoutProperties(_ref, _excluded$b);
+      props = _objectWithoutProperties(_ref, _excluded$c);
 
   var _useContext = useContext(CrudContext),
       getForm = _useContext.getForm;
@@ -3114,7 +3120,7 @@ var TabbedForm = function TabbedForm(_ref) {
   }));
 };
 
-var _excluded$a = ["children", "mutationMode", "validating", "maxButtonsToDisplay"];
+var _excluded$b = ["children", "mutationMode", "validating", "maxButtonsToDisplay"];
 var useStyles$3 = makeStyles(function (theme) {
   return {
     toolbar: {
@@ -3131,7 +3137,7 @@ var Toolbar = function Toolbar(_ref) {
       _ref.validating;
       var _ref$maxButtonsToDisp = _ref.maxButtonsToDisplay,
       maxButtonsToDisplay = _ref$maxButtonsToDisp === void 0 ? 1 : _ref$maxButtonsToDisp,
-      props = _objectWithoutProperties(_ref, _excluded$a);
+      props = _objectWithoutProperties(_ref, _excluded$b);
 
   var form = useForm();
   var classes = useStyles$3();
@@ -3334,7 +3340,7 @@ var useSaveMutation = function useSaveMutation(_ref) {
   return save;
 };
 
-var _excluded$9 = ["fullWidth"];
+var _excluded$a = ["fullWidth"];
 
 var Form = function Form(_ref) {
   var _form$inputs;
@@ -3385,7 +3391,7 @@ var Form = function Form(_ref) {
         useWorkflow = _ref2.useWorkflow,
         _ref2$componentProps = _ref2.componentProps,
         fullWidth = _ref2$componentProps.fullWidth,
-        restComponentProps = _objectWithoutProperties(_ref2$componentProps, _excluded$9);
+        restComponentProps = _objectWithoutProperties(_ref2$componentProps, _excluded$a);
 
     return form !== null && form !== void 0 && form.useWorkflow && workflow !== null && useWorkflow === true ? /*#__PURE__*/React__default.createElement(Input, {
       key: source,
@@ -3441,11 +3447,11 @@ var useFiltersStyles = makeStyles$1(function (theme) {
   name: "RaFilters"
 });
 
-var _excluded$8 = ["children"];
+var _excluded$9 = ["children"];
 
 var Filters = function Filters(_ref) {
   var children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded$8);
+      props = _objectWithoutProperties(_ref, _excluded$9);
 
   var classes = useFiltersStyles();
   return /*#__PURE__*/React__default.createElement(Filter, _extends({
@@ -3458,12 +3464,12 @@ var Filters = function Filters(_ref) {
   }));
 };
 
-var _excluded$7 = ["grid"],
+var _excluded$8 = ["grid"],
     _excluded2$1 = ["className", "exporter", "filters"];
 
 var ListActions = function ListActions(_ref) {
   var grid = _ref.grid,
-      props = _objectWithoutProperties(_ref, _excluded$7);
+      props = _objectWithoutProperties(_ref, _excluded$8);
 
   var className = props.className,
       exporter = props.exporter,
@@ -3611,7 +3617,7 @@ var useListStyles = makeStyles(function (theme) {
   name: "RaMobileList"
 });
 
-var _excluded$6 = ["source", "label", "component", "componentProps"];
+var _excluded$7 = ["source", "label", "component", "componentProps"];
 
 var List = function List(props) {
   var _grid$filters, _grid$columns;
@@ -3658,7 +3664,7 @@ var List = function List(props) {
           _ref.label;
           var component = _ref.component,
           componentProps = _ref.componentProps,
-          props = _objectWithoutProperties(_ref, _excluded$6);
+          props = _objectWithoutProperties(_ref, _excluded$7);
 
       return /*#__PURE__*/React.createElement(Component, _extends({}, props, {
         key: source,
@@ -3749,7 +3755,7 @@ var createCrud = function createCrud(_ref) {
   };
 };
 
-var _excluded$5 = ["icon", "roles", "group", "options", "workflow", "components"];
+var _excluded$6 = ["icon", "roles", "group", "options", "workflow", "components"];
 var defaultIcon = TableChart;
 var defaultGroup = "dashboard";
 
@@ -3760,7 +3766,7 @@ var CrudResource = function CrudResource(_ref) {
       options = _ref.options;
       _ref.workflow;
       var components = _ref.components,
-      props = _objectWithoutProperties(_ref, _excluded$5);
+      props = _objectWithoutProperties(_ref, _excluded$6);
 
   var additionalProps = useMemo$1(function () {
     return createCrud({
@@ -3803,157 +3809,8 @@ var LocalLoginForm = function LocalLoginForm(props) {
   return /*#__PURE__*/React__default.createElement(LoginForm, props);
 };
 
+var _excluded$5 = ["logo", "children"];
 var useStyles$2 = makeStyles(function (theme) {
-  return {
-    root: {
-      margin: theme.spacing(1),
-      textAlign: "center"
-    }
-  };
-});
-var setLoggedIn = function setLoggedIn(_ref) {
-  var data = _ref.data;
-  localStorage.setItem("token", data.token);
-  localStorage.setItem("roles", JSON.stringify(data.roles));
-  localStorage.setItem("username", data.username);
-  localStorage.setItem("profile", JSON.stringify(data.profile));
-};
-var setSignResponse = function setSignResponse(r) {
-  return localStorage.setItem("r", r);
-};
-var getSignResponse = function getSignResponse() {
-  return localStorage.getItem("r");
-};
-var clearSignResponse = function clearSignResponse() {
-  return localStorage.removeItem("r");
-};
-
-var doAuthentication = function doAuthentication(_ref2) {
-  var authenticationUrl = _ref2.authenticationUrl,
-      search = _ref2.search;
-  return fetch("".concat(authenticationUrl).concat(search), {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json"
-    }
-  }).then(function (response) {
-    return response.json();
-  }).catch(function (error) {
-    return error;
-  });
-};
-
-var SpidLoginForm = function SpidLoginForm(_ref3) {
-  var apiUrl = _ref3.apiUrl,
-      search = _ref3.location.search,
-      loginUrl = _ref3.loginUrl,
-      authenticationUrl = _ref3.authenticationUrl,
-      redirectUrl = _ref3.redirectUrl,
-      signup = _ref3.signup,
-      action = _ref3.action;
-  var notify = useNotify();
-  var classes = useStyles$2();
-  var redirect = useRedirect$1();
-  var translate = useTranslate$1();
-
-  var _useMemo = useMemo$1(function () {
-    return {
-      login: loginUrl || "".concat(apiUrl, "/spid/auth?b=client"),
-      authenticate: authenticationUrl || "".concat(apiUrl, "/spid/authenticate")
-    };
-  }, [apiUrl, loginUrl, authenticationUrl]),
-      login = _useMemo.login,
-      authenticate = _useMemo.authenticate;
-
-  useEffect(function () {
-    if (action !== "callback") {
-      return;
-    }
-
-    var doAuth = /*#__PURE__*/function () {
-      var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var _yield$doAuthenticati, success, data;
-
-        return regeneratorRuntime.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.next = 2;
-                return doAuthentication({
-                  authenticationUrl: authenticate,
-                  search: search
-                });
-
-              case 2:
-                _yield$doAuthenticati = _context.sent;
-                success = _yield$doAuthenticati.success;
-                data = _yield$doAuthenticati.data;
-
-                if (!success) {
-                  if (signup !== false) {
-                    setSignResponse(search);
-                    document.location = signup;
-                  } else {
-                    notify((data === null || data === void 0 ? void 0 : data.message) || "error.login.failed", "error");
-                    document.location = "#/login";
-                  }
-                } else {
-                  clearSignResponse();
-                  setLoggedIn({
-                    data: data
-                  });
-                  redirect(typeof redirectUrl === "function" ? redirectUrl(data) : redirectUrl);
-                }
-
-              case 6:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }));
-
-      return function doAuth() {
-        return _ref4.apply(this, arguments);
-      };
-    }();
-
-    doAuth();
-  }, [action, redirectUrl, search, signup, authenticate, redirect, notify]);
-
-  var stopPropagation = function stopPropagation(e) {
-    return e.stopPropagation();
-  };
-
-  return /*#__PURE__*/React__default.createElement("div", {
-    className: classes.root
-  }, action === "callback" ? /*#__PURE__*/React__default.createElement(CircularProgress, null) : /*#__PURE__*/React__default.createElement(Button$2, {
-    onClick: stopPropagation,
-    component: "a",
-    color: "primary",
-    variant: "contained",
-    href: login,
-    fullWidth: true
-  }, translate("ra.auth.login.spid")));
-};
-
-SpidLoginForm.propTypes = {
-  apiUrl: PropTypes.string,
-  location: PropTypes.object,
-  loginUrl: PropTypes.string,
-  authenticationUrl: PropTypes.string,
-  redirectUrl: PropTypes.string,
-  signup: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  action: PropTypes.string
-};
-SpidLoginForm.defaultProps = {
-  signup: false,
-  redirectUrl: "/"
-};
-
-var _excluded$4 = ["logo", "children"];
-var useStyles$1 = makeStyles(function (theme) {
   return {
     main: {
       overflow: "hidden",
@@ -3971,11 +3828,11 @@ var useStyles$1 = makeStyles(function (theme) {
 var LoginPage = function LoginPage(_ref) {
   var logo = _ref.logo,
       children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded$4);
+      props = _objectWithoutProperties(_ref, _excluded$5);
 
   var location = props.location;
   var search = location.search;
-  var classes = useStyles$1();
+  var classes = useStyles$2();
   var theme = useTheme();
   var action = useMemo$1(function () {
     if (search) {
@@ -4002,12 +3859,12 @@ LoginPage.propTypes = {
   logo: PropTypes.element
 };
 
-var _excluded$3 = ["staticContext", "children"];
+var _excluded$4 = ["staticContext", "children"];
 
 var SignupPage = function SignupPage(_ref) {
   _ref.staticContext;
       var children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded$3);
+      props = _objectWithoutProperties(_ref, _excluded$4);
 
   var theme = useTheme();
   return /*#__PURE__*/React__default.createElement(ThemeProvider$1, {
@@ -4017,7 +3874,7 @@ var SignupPage = function SignupPage(_ref) {
   }), /*#__PURE__*/React__default.createElement(Notification$1, null));
 };
 
-var _excluded$2 = ["children"];
+var _excluded$3 = ["children"];
 var SignupStepperContext = /*#__PURE__*/React__default.createContext({
   activeStep: 0,
   isLastStep: false
@@ -4047,7 +3904,7 @@ var SignupStepperProvider = function SignupStepperProvider(_ref) {
 
 var SignupStepper = function SignupStepper(_ref2) {
   var children = _ref2.children,
-      props = _objectWithoutProperties(_ref2, _excluded$2);
+      props = _objectWithoutProperties(_ref2, _excluded$3);
 
   var form = useForm();
 
@@ -4101,6 +3958,225 @@ var SignupStepper = function SignupStepper(_ref2) {
       onClick: handleNext
     }, translate("ra.action.next"), " \u2192")));
   }));
+};
+
+var useStyles$1 = makeStyles(function (theme) {
+  return {
+    root: {
+      margin: theme.spacing(1),
+      textAlign: "center"
+    }
+  };
+});
+var setLoggedIn = function setLoggedIn(_ref) {
+  var data = _ref.data;
+  localStorage.setItem("token", data.token);
+  localStorage.setItem("roles", JSON.stringify(data.roles));
+  localStorage.setItem("username", data.username);
+  localStorage.setItem("profile", JSON.stringify(data.profile));
+};
+var setSignResponse = function setSignResponse(r) {
+  return localStorage.setItem("r", r);
+};
+var getSignResponse = function getSignResponse() {
+  return localStorage.getItem("r");
+};
+var clearSignResponse = function clearSignResponse() {
+  return localStorage.removeItem("r");
+};
+
+var doAuthentication = function doAuthentication(_ref2) {
+  var authenticationUrl = _ref2.authenticationUrl,
+      search = _ref2.search;
+  return fetch("".concat(authenticationUrl).concat(search), {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    }
+  }).then(function (response) {
+    return response.json();
+  }).catch(function (error) {
+    return error;
+  });
+};
+
+var SpidLoginForm = function SpidLoginForm(_ref3) {
+  var apiUrl = _ref3.apiUrl,
+      search = _ref3.location.search,
+      loginUrl = _ref3.loginUrl,
+      authenticationUrl = _ref3.authenticationUrl,
+      redirectUrl = _ref3.redirectUrl,
+      signup = _ref3.signup,
+      action = _ref3.action;
+  var notify = useNotify();
+  var classes = useStyles$1();
+  var redirect = useRedirect$1();
+  var translate = useTranslate$1();
+
+  var _useMemo = useMemo$1(function () {
+    return {
+      login: loginUrl || "".concat(apiUrl, "/spid/auth?b=client"),
+      authenticate: authenticationUrl || "".concat(apiUrl, "/spid/authenticate")
+    };
+  }, [apiUrl, loginUrl, authenticationUrl]),
+      login = _useMemo.login,
+      authenticate = _useMemo.authenticate;
+
+  useEffect(function () {
+    if (action !== "callback") {
+      return;
+    }
+
+    var doAuth = /*#__PURE__*/function () {
+      var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var _yield$doAuthenticati, success, data;
+
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return doAuthentication({
+                  authenticationUrl: authenticate,
+                  search: search
+                });
+
+              case 2:
+                _yield$doAuthenticati = _context.sent;
+                success = _yield$doAuthenticati.success;
+                data = _yield$doAuthenticati.data;
+
+                if (!success) {
+                  if (signup !== false) {
+                    setSignResponse(search);
+                    document.location = signup;
+                  } else {
+                    notify((data === null || data === void 0 ? void 0 : data.message) || "error.login.failed", "error");
+                    document.location = "#/login";
+                  }
+                } else {
+                  clearSignResponse();
+                  setLoggedIn({
+                    data: data
+                  });
+                  redirect(typeof redirectUrl === "function" ? redirectUrl(data) : redirectUrl);
+                  notifyToken(data.token);
+                }
+
+              case 6:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      return function doAuth() {
+        return _ref4.apply(this, arguments);
+      };
+    }();
+
+    doAuth();
+  }, [action, redirectUrl, search, signup, authenticate, redirect, notify]);
+
+  var stopPropagation = function stopPropagation(e) {
+    return e.stopPropagation();
+  };
+
+  return /*#__PURE__*/React__default.createElement("div", {
+    className: classes.root
+  }, action === "callback" ? /*#__PURE__*/React__default.createElement(CircularProgress, null) : /*#__PURE__*/React__default.createElement(Button$2, {
+    onClick: stopPropagation,
+    component: "a",
+    color: "primary",
+    variant: "contained",
+    href: login,
+    fullWidth: true
+  }, translate("ra.auth.login.spid")));
+};
+
+SpidLoginForm.propTypes = {
+  apiUrl: PropTypes.string,
+  location: PropTypes.object,
+  loginUrl: PropTypes.string,
+  authenticationUrl: PropTypes.string,
+  redirectUrl: PropTypes.string,
+  signup: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  action: PropTypes.string
+};
+SpidLoginForm.defaultProps = {
+  signup: false,
+  redirectUrl: "/"
+};
+
+var _excluded$2 = ["siteKey"];
+
+var addScript = function addScript(_ref) {
+  var src = _ref.src,
+      id = _ref.id,
+      onLoad = _ref.onLoad;
+  var existing = document.getElementById(id);
+
+  if (existing) {
+    return existing;
+  } else {
+    var script = document.createElement("script");
+    script.src = src;
+    script.id = id;
+    script.async = true;
+
+    script.onload = function () {
+      if (onLoad) {
+        onLoad();
+      }
+    };
+
+    document.body.appendChild(script);
+    return script;
+  }
+};
+
+var removeScript = function removeScript(_ref2) {
+  var id = _ref2.id;
+  var script = document.getElementById(id);
+
+  if (script) {
+    document.body.removeChild(script);
+  }
+};
+
+var RecaptchaInput = function RecaptchaInput(_ref3) {
+  var siteKey = _ref3.siteKey,
+      props = _objectWithoutProperties(_ref3, _excluded$2);
+
+  var _useInput = useInput$1(_objectSpread2({}, props)),
+      onChange = _useInput.input.onChange;
+
+  useEffect(function () {
+    addScript({
+      src: "https://www.google.com/recaptcha/api.js?render=".concat(siteKey),
+      id: "recaptcha-api",
+      onLoad: function onLoad() {
+        // eslint-disable-next-line no-undef
+        grecaptcha.ready(function () {
+          // eslint-disable-next-line no-undef
+          grecaptcha.execute(siteKey, {
+            action: "submit"
+          }).then(function (token) {
+            console.info("token:", token);
+            onChange(token);
+          });
+        });
+      }
+    });
+    return function () {
+      return removeScript({
+        id: "recaptcha-api"
+      });
+    };
+  }, [siteKey, onChange]);
+  return null;
 };
 
 var _excluded$1 = ["record", "initialValues"];
@@ -4161,7 +4237,7 @@ var SpidSignupRolesStep = function SpidSignupRolesStep(_ref) {
 };
 
 var _excluded = ["basePath"],
-    _excluded2 = ["apiUrl", "loadUrl", "staticContext", "children", "logo", "title", "subTitle", "resource"];
+    _excluded2 = ["apiUrl", "loadUrl", "staticContext", "children", "logo", "title", "subTitle", "resource", "recaptchaSiteApiKey"];
 
 var getProfile = function getProfile(_ref) {
   var loadUrl = _ref.loadUrl,
@@ -4210,6 +4286,7 @@ var SpidSignupForm = function SpidSignupForm(_ref3) {
       title = _ref3.title,
       subTitle = _ref3.subTitle,
       resource = _ref3.resource,
+      recaptchaSiteApiKey = _ref3.recaptchaSiteApiKey,
       props = _objectWithoutProperties(_ref3, _excluded2);
 
   var classes = useStyles();
@@ -4290,8 +4367,10 @@ var SpidSignupForm = function SpidSignupForm(_ref3) {
     className: classes.root
   }, /*#__PURE__*/React__default.createElement(Grid, {
     item: true,
-    xs: 12,
-    lg: 5
+    lg: 5,
+    md: 8,
+    sm: 10,
+    xs: 12
   }, logo, /*#__PURE__*/React__default.isValidElement(title) ? title : /*#__PURE__*/React__default.createElement(Typography$1, {
     variant: "h3",
     gutterBottom: true,
@@ -4312,7 +4391,10 @@ var SpidSignupForm = function SpidSignupForm(_ref3) {
   }), /*#__PURE__*/React__default.createElement(SpidSignupRolesStep, {
     title: "Roles",
     fullWidth: true
-  })))))));
+  })), /*#__PURE__*/React__default.createElement(RecaptchaInput, {
+    source: "token",
+    siteKey: recaptchaSiteApiKey
+  }))))));
 };
 
 SpidSignupForm.propTypes = {
@@ -4321,6 +4403,7 @@ SpidSignupForm.propTypes = {
   logo: PropTypes.element,
   apiUrl: PropTypes.string,
   loadUrl: PropTypes.string,
+  recaptchaSiteApiKey: PropTypes.string.isRequired,
   staticContext: PropTypes.object
 };
 SpidSignupForm.defaultProps = {
@@ -4513,10 +4596,7 @@ var createAuthProvider = function createAuthProvider(_ref) {
         localStorage.setItem("token", data.token);
         localStorage.setItem("roles", JSON.stringify(data.roles));
         localStorage.setItem("profile", JSON.stringify(data.profile));
-        var event = new Event("login");
-        event.key = "token";
-        event.value = data.token;
-        document.dispatchEvent(event);
+        notifyToken(data.token);
       });
     },
     logout: function logout() {

@@ -1,7 +1,9 @@
-import { useSafeSetState } from "ra-core";
 import { useCallback, useEffect } from "react";
+
 import { getToken } from "../../authHeaders";
 import load from "./load";
+import { useSafeSetState } from "ra-core";
+
 const useCrud = ({ apiUrl }) => {
   const [{ loaded, loading, data, token }, setData] = useSafeSetState({
     loading: false,

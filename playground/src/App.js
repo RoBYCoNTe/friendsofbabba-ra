@@ -100,7 +100,10 @@ const MyLoginPage = (props) => (
 );
 const MySignupPage = (props) => (
   <SignupPage {...props}>
-    <SpidSignupForm apiUrl="http://babba.local/api" />
+    <SpidSignupForm
+      apiUrl="http://babba.local/api"
+      recaptchaSiteApiKey={"6LekNssfAAAAABcnZL0o-OmJPRUc52L8lxYz_dex"}
+    />
   </SignupPage>
 );
 const App = () => {
@@ -141,19 +144,7 @@ const App = () => {
             locale: "it",
           })}
         >
-          <CrudResource
-            name="posts"
-            icon={Icons.AcUnit}
-            components={components}
-          />
-          <CrudResource name="tickets" icon={Icons.AccessAlarm} />
-          <CrudResource
-            name="users"
-            icon={Icons.AccountCircle}
-            roles={["admin"]}
-          />
-          <CrudResource name="todos" icon={Icons.TextureSharp} />
-          <CrudResource name="d-tests" />
+          <CrudResource name="users" icon={Icons.AccountCircle} />
           <Resource name="roles" />
         </Admin>
       </CrudProvider>

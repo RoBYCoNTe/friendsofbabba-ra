@@ -14,6 +14,7 @@ import SignupStepper, {
 import { clearSignResponse, getSignResponse } from "../login/SpidLoginForm";
 
 import PropTypes from "prop-types";
+import RecaptchaInput from "../../inputs/RecaptchaInput";
 import SpidSignupAccountStep from "./SpidSignupAccountStep";
 import SpidSignupRolesStep from "./SpidSignupRolesStep";
 import { makeStyles } from "@material-ui/core/styles";
@@ -55,6 +56,7 @@ const SpidSignupForm = ({
   title,
   subTitle,
   resource,
+  recaptchaSiteApiKey,
   ...props
 }) => {
   const classes = useStyles();
@@ -96,7 +98,7 @@ const SpidSignupForm = ({
   return (
     <SignupStepperProvider>
       <Grid container justifyContent="center" className={classes.root}>
-        <Grid item xs={12} lg={5}>
+        <Grid item lg={5} md={8} sm={10} xs={12}>
           {logo}
           {React.isValidElement(title) ? (
             title
@@ -123,6 +125,7 @@ const SpidSignupForm = ({
                   <SpidSignupAccountStep title="General Infoes" fullWidth />
                   <SpidSignupRolesStep title="Roles" fullWidth />
                 </SignupStepper>
+                <RecaptchaInput source="token" siteKey={recaptchaSiteApiKey} />
               </SimpleForm>
             </Create>
           )}
@@ -137,6 +140,7 @@ SpidSignupForm.propTypes = {
   logo: PropTypes.element,
   apiUrl: PropTypes.string,
   loadUrl: PropTypes.string,
+  recaptchaSiteApiKey: PropTypes.string.isRequired,
   staticContext: PropTypes.object,
 };
 SpidSignupForm.defaultProps = {

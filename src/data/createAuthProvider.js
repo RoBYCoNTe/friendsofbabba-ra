@@ -1,4 +1,4 @@
-import { getHeaders } from "./authHeaders";
+import { getHeaders, notifyToken } from "./authHeaders";
 
 const createAuthProvider = ({ apiUrl }) => ({
   login: (params) => {
@@ -21,10 +21,7 @@ const createAuthProvider = ({ apiUrl }) => ({
         localStorage.setItem("token", data.token);
         localStorage.setItem("roles", JSON.stringify(data.roles));
         localStorage.setItem("profile", JSON.stringify(data.profile));
-        var event = new Event("login");
-        event.key = "token";
-        event.value = data.token;
-        document.dispatchEvent(event);
+        notifyToken(data.token);
       });
   },
   logout: () => {

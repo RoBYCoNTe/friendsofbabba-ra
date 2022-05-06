@@ -1,10 +1,8 @@
 import React, { useMemo } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 
-import LocalLoginForm from "./login/LocalLoginForm";
 import { Login } from "react-admin";
 import PropTypes from "prop-types";
-import SpidLoginForm from "./login/SpidLoginForm";
 import { ThemeProvider } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({

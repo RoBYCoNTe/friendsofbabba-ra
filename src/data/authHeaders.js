@@ -1,5 +1,12 @@
 import { useMemo } from "react";
 
+export function notifyToken(token) {
+  var event = new Event("login");
+  event.key = "token";
+  event.value = token;
+  document.dispatchEvent(event);
+}
+
 export function getHeaders() {
   const token = localStorage.getItem("token");
   const headers = new Headers({
