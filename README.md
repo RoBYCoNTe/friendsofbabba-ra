@@ -1,4 +1,4 @@
-# FriendsOfBabba/RA (React-Admin extension tools).
+# FriendsOfBabba/RA 🥧 - React Admin extended components
 
 I'm a big fan of [react-admin](https://github.com/marmelab/react-admin) and
 I've built a simple layout using [Mini drawer variant](https://v4.mui.com/components/drawers/).
