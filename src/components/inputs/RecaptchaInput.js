@@ -39,12 +39,7 @@ const RecaptchaInput = ({ siteKey, ...props }) => {
         // eslint-disable-next-line no-undef
         grecaptcha.ready(function () {
           // eslint-disable-next-line no-undef
-          grecaptcha
-            .execute(siteKey, { action: "submit" })
-            .then(function (token) {
-              console.info("token:", token);
-              onChange(token);
-            });
+          grecaptcha.execute(siteKey, { action: "submit" }).then(onChange);
         });
       },
     });

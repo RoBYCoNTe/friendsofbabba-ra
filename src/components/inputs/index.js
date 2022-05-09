@@ -12,6 +12,7 @@ import DebouncedDateInput from "./DebouncedDateInput";
 import DebouncedNumberInput from "./DebouncedNumberInput";
 import DebouncedTextInput from "./DebouncedTextInput";
 import MediaInput from "./MediaInput";
+import RecordInput from "./RecordInput";
 import ReferenceAutocompleteInput from "./ReferenceAutocompleteInput";
 import ReferenceCheckboxGroupInput from "./ReferenceCheckboxGroupInput";
 import ReferenceSelectInput from "./ReferenceSelectInput";
@@ -39,4 +40,5 @@ export {
   DebouncedDateInput,
   DebouncedNumberInput,
   DebouncedTextInput,
+  RecordInput,
 };
