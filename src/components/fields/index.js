@@ -5,6 +5,7 @@ import LongTextField from "./LongTextField";
 import MediaField from "./MediaField";
 import StateField from "./StateField";
 import TransactionLogsField from "./TransactionLogsField";
+import useFieldLabel from "./useFieldLabel";
 
 export {
   TextField,
@@ -17,4 +18,5 @@ export {
   // Workflow
   StateField,
   TransactionLogsField,
+  useFieldLabel,
 };

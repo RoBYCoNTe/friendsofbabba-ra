@@ -1,6 +1,6 @@
-import React from "react";
 import { FileInput } from "react-admin";
 import MediaField from "../fields/MediaField";
+import React from "react";
 
 const MediaInput = ({ title, ...props }) => (
   <FileInput {...props}>

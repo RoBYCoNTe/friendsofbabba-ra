@@ -14,7 +14,7 @@ import useCustomComponents from "./useCustomComponents";
 import useSaveMutation from "../../data/useSaveMutation";
 
 const Form = ({ ...props }) => {
-  const { getForm, loading } = useContext(CrudContext);
+  const { getForm, loading, components } = useContext(CrudContext);
   const { getWorkflow } = useContext(WorkflowContext);
   const form = useMemo(
     () => getForm(props.resource),
@@ -25,6 +25,7 @@ const Form = ({ ...props }) => {
     [props.resource, getWorkflow, form]
   );
   const customComponents = useCustomComponents(props.resource);
+
   const save = useSaveMutation({ ...props });
   if (loading) {
     return <Loading />;
@@ -44,7 +45,12 @@ const Form = ({ ...props }) => {
       redirect={form?.redirect}
       component={form?.component}
       componentProps={form?.componentProps}
-      components={{ SimpleForm, TabbedForm }}
+      components={{
+        SimpleForm,
+        TabbedForm,
+        ...components,
+        ...customComponents,
+      }}
     >
       {form?.inputs?.map(
         ({
@@ -70,6 +76,7 @@ const Form = ({ ...props }) => {
                   components={{
                     ...fields,
                     ...inputs,
+                    ...components,
                     ...customComponents,
                   }}
                 />
@@ -86,6 +93,7 @@ const Form = ({ ...props }) => {
               components={{
                 ...fields,
                 ...inputs,
+                ...components,
                 ...customComponents,
               }}
             />
