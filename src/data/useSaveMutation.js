@@ -1,7 +1,7 @@
 import { useMutation, useNotify, useRedirect, useRefresh } from "ra-core";
-import { useCallback } from "react";
 
 import createErrorMapper from "./cakephp/createErrorMapper";
+import { useCallback } from "react";
 
 const useSaveMutation = ({
   basePath,
@@ -9,7 +9,7 @@ const useSaveMutation = ({
   onSuccess = undefined,
   redir = null,
   redirect,
-  refresh,
+  refresh = true,
   resource,
   transform = undefined,
   type = null,

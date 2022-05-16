@@ -1,5 +1,5 @@
-import { stringify } from "query-string";
 import { HttpError } from "react-admin";
+import { stringify } from "query-string";
 
 export const createHeadersFromOptions = (options) => {
   const requestHeaders =

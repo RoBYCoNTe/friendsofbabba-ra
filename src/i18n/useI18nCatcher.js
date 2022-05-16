@@ -1,9 +1,12 @@
 import * as React from "react";
+
 import { useLocale } from "react-admin";
 
 const queued = [];
 
 const putMessage = (apiUrl, locale, message) =>
+  message != null &&
+  message !== "undefined" &&
   message.indexOf("[") === -1 &&
   message.indexOf("]") === -1 &&
   queued.indexOf(`${locale}-${message}`) === -1 &&
