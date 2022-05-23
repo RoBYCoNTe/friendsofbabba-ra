@@ -5,6 +5,8 @@ import GroupTitle from "./GroupTitle";
 import ReferenceToolbar from "./ReferenceToolbar";
 import Toolbar from "./Toolbar";
 import Unprop from "./Unprop";
+import ValidationItem from "./ValidationItem";
+import ValidationSummary from "./ValidationSummary";
 
 export {
   FormTab,
@@ -14,4 +16,6 @@ export {
   ReferenceToolbar,
   Toolbar,
   Unprop,
+  ValidationItem,
+  ValidationSummary,
 };

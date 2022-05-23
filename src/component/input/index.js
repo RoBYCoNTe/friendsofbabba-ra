@@ -12,6 +12,8 @@ import {
 import DebouncedDateInput from "./DebouncedDateInput";
 import DebouncedNumberInput from "./DebouncedNumberInput";
 import DebouncedTextInput from "./DebouncedTextInput";
+import Input from "./Input";
+import LanguageMessageInput from "./LanguageMessageInput";
 import MediaInput from "./MediaInput";
 import RecordInput from "./RecordInput";
 import ReferenceAutocompleteInput from "./ReferenceAutocompleteInput";
@@ -29,6 +31,8 @@ export {
   DebouncedDateInput,
   DebouncedNumberInput,
   DebouncedTextInput,
+  Input,
+  LanguageMessageInput,
   MediaInput,
   NullableBooleanInput,
   NumberInput,

@@ -16,16 +16,25 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
   },
 }));
-const GroupTitle = ({ title, subTitle, divider = true }) => {
+const GroupTitle = ({ title, subTitle, divider = true, color }) => {
   const classes = useStyles();
   return (
     <Fragment>
-      <Typography classes={{ root: classes.title }} variant="h6" gutterBottom>
+      <Typography
+        color={color}
+        classes={{ root: classes.title }}
+        variant="h6"
+        gutterBottom
+      >
         {title}
       </Typography>
       {divider && <Divider classes={{ root: classes.spacer }} />}
       {subTitle && (
-        <Typography classes={{ root: classes.subTitle }} variant="body1">
+        <Typography
+          color={color}
+          classes={{ root: classes.subTitle }}
+          variant="body1"
+        >
           {subTitle}
         </Typography>
       )}

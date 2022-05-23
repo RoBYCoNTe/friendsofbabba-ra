@@ -39,7 +39,8 @@ const useSaveMutation = ({
           { returnPromise: true }
         );
       } catch (error) {
-        return errorMapper(error, notify);
+        const errors = errorMapper(error, notify);
+        return errors;
       }
 
       if (!onSuccess) {

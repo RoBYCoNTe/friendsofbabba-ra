@@ -2,6 +2,7 @@ import * as React from "react";
 import * as buttons from "../button/index.js";
 import * as fields from "../field/index.js";
 import * as inputs from "../input/index.js";
+import * as lists from "../list/index.js";
 
 import {
   Filter,
@@ -11,10 +12,11 @@ import {
   useTranslate,
 } from "react-admin";
 
+import Actions from "./Actions";
+import BulkActionButtons from "./BulkActionButtons.js";
 import Component from "./Component";
 import { CrudContext } from "friendsofbabba-ra";
 import Datagrid from "../list/Datagrid";
-import ListActions from "./ListActions";
 import exporter from "./exporter";
 import { get } from "lodash";
 import useCustomComponents from "./useCustomComponents";
@@ -42,17 +44,24 @@ const List = (props) => {
       {...props}
       title={grid.title}
       filter={grid.filter || {}}
-      actions={<ListActions grid={grid} />}
+      actions={<Actions grid={grid} customComponents={customComponents} />}
       pagination={grid?.pagination}
-      exporter={(data) => exporter(grid, data, translate)}
+      exporter={
+        grid?.exporter !== false
+          ? (data) => exporter(grid, data, translate)
+          : false
+      }
       filterDefaultValues={grid.filterDefaultValues || {}}
       sort={grid?.sort}
       perPage={grid?.perPage}
+      bulkActionButtons={
+        <BulkActionButtons grid={grid} customComponents={customComponents} />
+      }
       filters={
         grid?.filters ? (
           <Filter>
             {grid?.filters?.map(
-              ({ source, label, component, componentProps, ...props }) => (
+              ({ source, component, componentProps, ...props }) => (
                 <Component
                   {...props}
                   key={source}
@@ -75,6 +84,7 @@ const List = (props) => {
           components={{
             Datagrid,
             SimpleList,
+            ...lists,
             ...customComponents,
           }}
         />
@@ -134,7 +144,7 @@ const List = (props) => {
           linkType={grid?.mobileLinkType}
         />
       ) : (
-        <Datagrid>
+        <Datagrid {...grid?.componentProps}>
           {grid?.columns?.map(
             ({
               source,

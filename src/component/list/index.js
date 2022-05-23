@@ -1,7 +1,4 @@
 import Datagrid from "./Datagrid";
+import NotificationList from "./NotificationList";
 
-const lists = {
-  Datagrid,
-};
-
-export default lists;
+export { Datagrid, NotificationList };

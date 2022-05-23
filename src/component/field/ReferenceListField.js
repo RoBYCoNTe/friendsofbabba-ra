@@ -4,6 +4,7 @@ import {
   ReferenceManyField,
   SimpleList,
   TopToolbar,
+  useInput,
   useTranslate,
 } from "react-admin";
 import React, { Fragment } from "react";
@@ -11,6 +12,7 @@ import { Typography, useMediaQuery } from "@material-ui/core";
 
 import { Button } from "@material-ui/core";
 import DeleteWithConfirmButton from "../button/DeleteWithConfirmButton";
+import { FormHelperText } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
@@ -31,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
   },
   empty: {
+    padding: theme.spacing(1),
+  },
+  error: {
     padding: theme.spacing(1),
   },
 }));
@@ -59,6 +64,9 @@ const ReferenceListField = ({
 }) => {
   const classes = useStyles();
   const { resource, record } = props;
+  const {
+    meta: { submitError },
+  } = useInput({ ...props });
   const translate = useTranslate();
   const isMobile = useMediaQuery((theme) =>
     theme.breakpoints.down(mobileBreakpoint ?? "sm")
@@ -105,6 +113,11 @@ const ReferenceListField = ({
           </Datagrid>
         )}
       </ReferenceManyField>
+      {submitError && (
+        <FormHelperText error className={classes.error}>
+          {submitError}
+        </FormHelperText>
+      )}
       {create && record?.id > 0 && (
         <TopToolbar resource={resource} className={classes.toolbar}>
           <Button

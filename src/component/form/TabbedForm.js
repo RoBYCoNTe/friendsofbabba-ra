@@ -6,8 +6,8 @@ import React, { useContext, useMemo } from "react";
 
 import Component from "../crud/Component";
 import { CrudContext } from "../../data/cakephp/crud/CrudContext";
+import Input from "../input/Input";
 import { WorkflowContext } from "../../data/workflow/WorkflowContext";
-import WorkflowInput from "../input/WorkflowInput";
 import useCustomComponents from "../crud/useCustomComponents";
 
 const TabbedForm = ({ tabs, ...props }) => {
@@ -35,7 +35,7 @@ const TabbedForm = ({ tabs, ...props }) => {
               componentProps: { fullWidth, ...restComponentProps },
             }) =>
               form?.useWorkflow && workflow !== null && useWorkflow === true ? (
-                <WorkflowInput
+                <Input
                   key={source}
                   source={source}
                   fullWidth

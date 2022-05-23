@@ -52,7 +52,7 @@ const InlineTextInput = ({ source, record, resource, minWidth = 300 }) => {
       onChange={handleChange}
       onKeyPress={handleKeyPress}
       onBlur={handleBlur}
-      style={{ minWidth }}
+      style={{ minWidth, width: "100%" }}
       multiline
       InputProps={{ "arial-label": "naked" }}
     />

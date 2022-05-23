@@ -1,22 +1,10 @@
+import * as Components from "./component";
 import * as Icons from "@material-ui/icons";
 
 import { Admin, Loading, Resource, RouteWithoutLayout } from "react-admin";
 import {
-  AppBar,
-  CrudContext,
   CrudProvider,
   CrudResource,
-  Layout,
-  LocalLoginForm,
-  LoginPage,
-  Menu,
-  MenuGroup,
-  MenuItem,
-  SignupPage,
-  SpidLoginForm,
-  SpidSignupForm,
-  UserMenu,
-  UserMenuItem,
   WorkflowProvider,
   createI18nProvider,
   useAuthProvider,
@@ -24,90 +12,21 @@ import {
   useI18nCatcher,
   useI18nLanguages,
 } from "friendsofbabba-ra";
-import React, { useContext, useMemo } from "react";
 
-import components from "./components";
+import { API_URL } from "./config";
+import Layout from "./component/Layout";
+import LoginPage from "./component/page/LoginPage";
+import React from "react";
+import SignupPage from "./component/page/SignupPage";
+import humanResource from "./resource/human-resource";
+import localPartner from "./resource/local-partner";
+import project from "./resource/project";
+import publicSpace from "./resource/public-space";
+import publicSpacesMedia from "./resource/public-spaces-media";
+import theme from "./theme";
 
-const MyUserMenu = (props) => {
-  const { logout } = props;
-  return (
-    <>
-      <UserMenu {...props}>
-        <UserMenuItem
-          label="Profile"
-          icon={<Icons.AccountCircle />}
-          to="/profile"
-        />
-        <UserMenuItem label="Tickets" icon={<Icons.List />} to="/tickets" />
-        {logout}
-      </UserMenu>
-    </>
-  );
-};
-const MyAppBar = (props) => <AppBar {...props} userMenu={MyUserMenu} />;
-
-const MyMenu = (props) => {
-  const { data } = useContext(CrudContext);
-  const badges = useMemo(
-    () =>
-      data
-        ? Object.keys(data).reduce(
-            (badges, k) =>
-              data[k].badge != null
-                ? { ...badges, [k]: data[k].badge }
-                : badges,
-            {}
-          )
-        : {},
-    [data]
-  );
-  return (
-    <Menu
-      {...props}
-      mode="build"
-      order={{
-        dashboard: 0,
-        admin: 1,
-      }}
-      badges={badges}
-    >
-      <MenuGroup label="Useful Links">
-        <MenuItem
-          label="Doctor strange"
-          sub="Doctor strange website"
-          icon={Icons.AccessAlarm}
-          href="https://doctorstrange.com"
-          target="_blank"
-        />
-        <MenuItem
-          label="My very long text label should be placed in two lines"
-          sub="My very long text sub label should be placed in two lines"
-          icon={Icons.AddToPhotos}
-          to="/posts/create"
-        />
-      </MenuGroup>
-    </Menu>
-  );
-};
-const MyLayout = (props) => (
-  <Layout {...props} menu={MyMenu} appBar={MyAppBar} />
-);
-const MyLoginPage = (props) => (
-  <LoginPage {...props} apiUrl="http://babba.local/api">
-    <LocalLoginForm />
-    <SpidLoginForm apiUrl="http://babba.local/api" signup={"#/signup"} />
-  </LoginPage>
-);
-const MySignupPage = (props) => (
-  <SignupPage {...props}>
-    <SpidSignupForm
-      apiUrl="http://babba.local/api"
-      recaptchaSiteApiKey={"6LekNssfAAAAABcnZL0o-OmJPRUc52L8lxYz_dex"}
-    />
-  </SignupPage>
-);
 const App = () => {
-  const apiUrl = "http://babba.local/api";
+  const apiUrl = API_URL;
   const languages = useI18nLanguages({ apiUrl });
 
   // Allow i18n to intercept and send unlocalized messages to the server.
@@ -115,7 +34,15 @@ const App = () => {
 
   const dataProvider = useDataProvider({
     apiUrl,
-    fileFields: ["media", "media_collection"],
+    fileFields: [
+      "activity_plan.civil_agreement_media",
+      "private_agreement_media",
+      "media_collection",
+      "media",
+      "operational_contact.curriculum_media",
+      "public_authority.expression_of_interest_media",
+      "support_and_commitments_letter_media",
+    ],
   });
   const authProvider = useAuthProvider({ apiUrl });
   if (languages?.loading) {
@@ -126,15 +53,16 @@ const App = () => {
 
   return (
     <WorkflowProvider apiUrl={apiUrl}>
-      <CrudProvider apiUrl={apiUrl}>
+      <CrudProvider apiUrl={apiUrl} components={Components}>
         <Admin
-          layout={MyLayout}
-          loginPage={MyLoginPage}
+          theme={theme}
+          layout={Layout}
+          loginPage={LoginPage}
           customRoutes={[
             <RouteWithoutLayout
               key="signup"
               path="/signup"
-              component={MySignupPage}
+              component={SignupPage}
             />,
           ]}
           dataProvider={dataProvider}
@@ -144,8 +72,32 @@ const App = () => {
             locale: "it",
           })}
         >
-          <CrudResource name="users" icon={Icons.AccountCircle} />
+          <CrudResource
+            name="notifications"
+            group="dashboard"
+            icon={Icons.NotificationImportant}
+          />
+
+          <Resource name="projects" {...project} />
+          <Resource name="public-spaces" {...publicSpace} />
+          <Resource name="public-spaces-media" {...publicSpacesMedia} />
+          <Resource name="local-partners" {...localPartner} />
+          <Resource name="human-resources" {...humanResource} />
+
           <Resource name="roles" />
+          <Resource name="languages" />
+          <Resource name="municipalities/provinces" />
+          <Resource name="public-space-types" />
+          <Resource name="public-space-media-types" />
+          <Resource name="workflow/transactions/projects" />
+          <Resource name="municipalities" group="admin" />
+
+          <CrudResource name="users" group="admin" />
+          <CrudResource
+            name="language-messages"
+            group="admin"
+            icon={Icons.FlagOutlined}
+          />
         </Admin>
       </CrudProvider>
     </WorkflowProvider>

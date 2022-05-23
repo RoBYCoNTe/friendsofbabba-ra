@@ -1,8 +1,8 @@
-import { useMediaQuery, AppBar as AppBar$1, Toolbar as Toolbar$1, IconButton as IconButton$1, Badge as Badge$1, makeStyles as makeStyles$1, List as List$1, ListSubheader, Divider, ListItem, ListItemIcon, ListItemText, Drawer, Typography as Typography$1, MenuItem as MenuItem$1, Link as Link$1, Dialog, DialogTitle, DialogContent, DialogContentText, TextField as TextField$2, FormControlLabel, Switch, FormHelperText, DialogActions, Button as Button$2, Menu as Menu$3, ThemeProvider as ThemeProvider$1, Stepper, Step, StepLabel, StepContent, CircularProgress, Grid } from '@material-ui/core';
-import { useTranslate as useTranslate$1, useGetIdentity, LoadingIndicator, getResources as getResources$2, defaultTheme, Notification, Button, EditButton as EditButton$1, SaveButton, DeleteButton, ArrayField, SingleFieldList, ChipField, ReferenceManyField, SimpleList, DateField, Datagrid as Datagrid$1, TextField, Pagination, BooleanField, Create as Create$4, Edit, useInput, FileInput, ReferenceInput, AutocompleteInput, ReferenceArrayInput, CheckboxGroupInput, SelectInput, useRefresh, useNotify, useUpdate, BooleanInput, SearchInput, TextInput, DateInput, DateTimeInput, NumberInput, Labeled, TabbedForm as TabbedForm$1, FormTab, Toolbar as Toolbar$2, Loading, SimpleForm, Filter, FilterContext, TopToolbar, FilterButton, CreateButton, ExportButton as ExportButton$1, downloadCSV, List as List$2, Resource, LoginForm, Login, useRedirect as useRedirect$1, resolveBrowserLocale, useLocale, HttpError } from 'react-admin';
-export { BooleanField, BooleanInput, ChipField, DateField, DateInput, DateTimeInput, NumberInput, DeleteButton as RaDeleteButton, EditButton as RaEditButton, SearchInput, SelectInput, TextField, TextInput } from 'react-admin';
+import { useMediaQuery, AppBar as AppBar$1, Toolbar as Toolbar$1, IconButton as IconButton$1, Badge as Badge$1, makeStyles as makeStyles$1, List as List$1, ListSubheader, Divider, ListItem, ListItemIcon, ListItemText, Drawer, Typography as Typography$1, MenuItem as MenuItem$1, Link as Link$1, Box, LinearProgress, FormHelperText, Button as Button$2, Grid, ListItemAvatar, Avatar, CircularProgress, TextField as TextField$2, Dialog, DialogTitle, DialogContent, DialogContentText, FormControlLabel, Switch, DialogActions, Menu as Menu$3, ThemeProvider as ThemeProvider$1, Stepper, Step, StepLabel, StepContent } from '@material-ui/core';
+import { useTranslate as useTranslate$1, useGetIdentity, LoadingIndicator, getResources as getResources$2, defaultTheme, Notification, Button, DeleteWithConfirmButton as DeleteWithConfirmButton$1, EditButton as EditButton$1, useRefresh, useNotify, useUnselectAll, useUpdateMany, SaveButton, DeleteButton, ArrayField, SingleFieldList, ChipField, DateField, useInput, ReferenceManyField, SimpleList, Datagrid as Datagrid$1, TopToolbar, TextField, Pagination, BooleanField, FormInput, Toolbar as Toolbar$2, useDataProvider as useDataProvider$1, Labeled, InputHelperText as InputHelperText$1, FileInput, ReferenceInput, AutocompleteInput, ReferenceArrayInput, CheckboxGroupInput, SelectInput, useUpdate, BooleanInput, DateInput, DateTimeInput, NullableBooleanInput, NumberInput, SearchInput, TextInput, TabbedForm as TabbedForm$1, FormTab as FormTab$1, Loading, SimpleForm, Create as Create$2, Edit, FilterContext, FilterButton, CreateButton, ExportButton as ExportButton$1, BulkDeleteButton, downloadCSV, List as List$2, Filter, Resource, LoginForm, Login, useRedirect as useRedirect$1, resolveBrowserLocale, useLocale as useLocale$1, HttpError } from 'react-admin';
+export { BooleanField, BooleanInput, ChipField, DateField, DateInput, DateTimeInput, NullableBooleanInput, NumberInput, DeleteButton as RaDeleteButton, EditButton as RaEditButton, SearchInput, SelectInput, TextField, TextInput } from 'react-admin';
 import * as React from 'react';
-import React__default, { useCallback, createElement, useRef, useState, useEffect, createContext, useContext, useMemo as useMemo$1, Fragment, cloneElement } from 'react';
+import React__default, { useCallback, createElement, useRef, useState, useEffect, useMemo as useMemo$1, createContext, useContext, Fragment, isValidElement, cloneElement } from 'react';
 import MenuIcon from '@material-ui/icons/Menu';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
@@ -10,11 +10,11 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import IconButton from '@material-ui/core/IconButton';
 import Menu$2 from '@material-ui/core/Menu';
 import classnames from 'classnames';
-import { makeStyles, withStyles, createStyles, createTheme, useTheme } from '@material-ui/core/styles';
-import { toggleSidebar, usePermissions as usePermissions$1, useSafeSetState, maxLength, useTranslate as useTranslate$2, FieldTitle, useGetIdentity as useGetIdentity$1, useMutation, useRedirect, useRefresh as useRefresh$1, useNotify as useNotify$1, useListContext, useResourceContext, useResourceDefinition, sanitizeListRestProps, useInput as useInput$1, required, email } from 'ra-core';
+import { makeStyles, withStyles, createStyles, createTheme, darken, lighten, useTheme } from '@material-ui/core/styles';
+import { toggleSidebar, usePermissions as usePermissions$1, useSafeSetState, useLocale, useTranslate as useTranslate$2, useFormContext, useFormGroup, FormGroupContextProvider, useFormGroupContext, maxLength, FieldTitle, useGetIdentity as useGetIdentity$1, useMutation, useRedirect, useRefresh as useRefresh$1, useNotify as useNotify$1, useListContext, useResourceContext, useResourceDefinition, sanitizeListRestProps, useInput as useInput$1, required, email } from 'ra-core';
 import { useDispatch, useSelector as useSelector$1, connect } from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, withRouter, useLocation } from 'react-router-dom';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import get$1 from 'lodash/get';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -25,20 +25,28 @@ import ContentCreate from '@material-ui/icons/Create';
 import ContentView from '@material-ui/icons/Visibility';
 import { get as get$2, set } from 'lodash';
 import GetAppIcon from '@material-ui/icons/GetApp';
+import EmailIcon from '@material-ui/icons/Email';
+import moment from 'moment';
+import DraftsIcon from '@material-ui/icons/Drafts';
 import { useForm, useFormState } from 'react-final-form';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import Button$1 from '@material-ui/core/Button';
 import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
 import MenuItem$2 from '@material-ui/core/MenuItem';
 import { FileField, InputHelperText, Notification as Notification$1, TextInput as TextInput$1, DateInput as DateInput$1 } from 'ra-ui-materialui';
+import { stringify } from 'query-string';
+import MuiTab from '@material-ui/core/Tab';
+import { Warning, Close, CheckOutlined, ReportProblemOutlined, ErrorOutline, InfoOutlined } from '@material-ui/icons';
+import Paper from '@material-ui/core/Paper';
+import { capitalize } from '@material-ui/core/utils';
+import clsx from 'clsx';
 import TextField$1 from '@material-ui/core/TextField';
+import Divider$1 from '@material-ui/core/Divider';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import TableChart from '@material-ui/icons/TableChart';
 import { CrudContext as CrudContext$1 } from 'friendsofbabba-ra';
 import jsonExport from 'jsonexport/dist';
-import moment from 'moment';
 import polyglotI18nProvider from 'ra-i18n-polyglot';
-import { stringify } from 'query-string';
 
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
@@ -386,7 +394,7 @@ UserMenu.propTypes = {
   logout: PropTypes.element.isRequired
 };
 
-var useStyles$d = makeStyles(function (theme) {
+var useStyles$k = makeStyles(function (theme) {
   return {
     title: {
       flexGrow: 1
@@ -436,7 +444,7 @@ var AppBar = function AppBar(_ref2) {
       location = _ref2.location,
       _ref2$userMenu = _ref2.userMenu,
       userMenu = _ref2$userMenu === void 0 ? UserMenu : _ref2$userMenu;
-  var classes = useStyles$d({
+  var classes = useStyles$k({
     drawerWidth: drawerWidth
   });
   var dispatch = useDispatch();
@@ -483,18 +491,18 @@ AppBar.propTypes = {
   userMenu: PropTypes.elementType
 };
 
-var _excluded$C = ["titleAccess", "children"];
+var _excluded$J = ["titleAccess", "children"];
 
 var Badge = function Badge(_ref) {
   _ref.titleAccess;
       var children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded$C);
+      props = _objectWithoutProperties(_ref, _excluded$J);
 
   return /*#__PURE__*/React__default.createElement(Badge$1, props, children);
 };
 
-var _excluded$B = ["children", "open", "label"];
-var useStyles$c = makeStyles$1(function (theme) {
+var _excluded$I = ["children", "open", "label"];
+var useStyles$j = makeStyles$1(function (theme) {
   return {
     subHeader: {
       backgroundColor: theme.palette.background.paper,
@@ -509,9 +517,9 @@ var MenuGroup = function MenuGroup(_ref) {
   var children = _ref.children,
       open = _ref.open,
       label = _ref.label,
-      props = _objectWithoutProperties(_ref, _excluded$B);
+      props = _objectWithoutProperties(_ref, _excluded$I);
 
-  var classes = useStyles$c();
+  var classes = useStyles$j();
   return /*#__PURE__*/React__default.createElement(List$1, {
     subheader: open ? /*#__PURE__*/React__default.createElement(ListSubheader, {
       className: classes.subHeader
@@ -537,7 +545,7 @@ MenuGroup.propTypes = {
   group: PropTypes.string
 };
 
-var _excluded$A = ["location", "badge", "to", "icon", "label", "sub", "onMenuClick", "permissions", "open"];
+var _excluded$H = ["location", "badge", "to", "icon", "label", "sub", "onMenuClick", "permissions", "open"];
 
 var isSelected = function isSelected(location, to) {
   var selected = location.pathname === to || location.pathname.indexOf("".concat(to, "?")) === 0 || location.pathname.indexOf("".concat(to, "/")) === 0;
@@ -554,7 +562,7 @@ var MenuItem = function MenuItem(_ref) {
       onMenuClick = _ref.onMenuClick;
       _ref.permissions;
       var open = _ref.open,
-      props = _objectWithoutProperties(_ref, _excluded$A);
+      props = _objectWithoutProperties(_ref, _excluded$H);
 
   return /*#__PURE__*/React__default.createElement(ListItem, _extends({}, props, {
     button: true,
@@ -825,7 +833,7 @@ var Menu$1 = compose(withRouter, connect(function (state) {
   };
 }))(Menu);
 
-var useStyles$b = makeStyles$1(function (theme) {
+var useStyles$i = makeStyles$1(function (theme) {
   return {
     brand: {
       paddingLeft: theme.spacing(1),
@@ -887,7 +895,7 @@ var Sidebar = function Sidebar(_ref2) {
       appTitle = _ref2.appTitle,
       appSubTitle = _ref2.appSubTitle,
       appVersion = _ref2.appVersion;
-  var classes = useStyles$b({
+  var classes = useStyles$i({
     drawerWidth: drawerWidth
   });
   var dispatch = useDispatch();
@@ -936,7 +944,7 @@ Sidebar.propTypes = {
   appVersion: PropTypes.string
 };
 
-var _excluded$z = ["theme"];
+var _excluded$G = ["theme"];
 var LayoutContext = /*#__PURE__*/React__default.createContext({
   drawerWidth: 0
 });
@@ -951,7 +959,7 @@ var LayoutProvider = function LayoutProvider(_ref) {
   }, children);
 };
 
-var styles = function styles(theme) {
+var styles$1 = function styles(theme) {
   return createStyles({
     root: {
       display: "flex"
@@ -1086,13 +1094,13 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 
 var EnhancedLayout = compose(connect(mapStateToProps, {} // Avoid connect passing dispatch in props
-), withRouter, withStyles(styles, {
+), withRouter, withStyles(styles$1, {
   name: "RaLayout"
 }))(LayoutWithoutTheme);
 
 var Layout = function Layout(_ref2) {
   var themeOverride = _ref2.theme,
-      props = _objectWithoutProperties(_ref2, _excluded$z);
+      props = _objectWithoutProperties(_ref2, _excluded$G);
 
   var themeProp = useRef(themeOverride);
 
@@ -1129,8 +1137,8 @@ Layout.defaultProps = {
   drawerWidth: 240
 };
 
-var _excluded$y = ["className", "classes", "redirectTo", "icon", "label"];
-var useStyles$a = makeStyles(function (theme) {
+var _excluded$F = ["className", "classes", "redirectTo", "icon", "label"];
+var useStyles$h = makeStyles(function (theme) {
   return {
     menuItem: {
       color: theme.palette.text.secondary
@@ -1148,9 +1156,9 @@ var UserMenuItem = /*#__PURE__*/React.forwardRef(function UserMenuItem(props, re
       props.redirectTo;
       var icon = props.icon,
       label = props.label,
-      rest = _objectWithoutProperties(props, _excluded$y);
+      rest = _objectWithoutProperties(props, _excluded$F);
 
-  var classes = useStyles$a(props);
+  var classes = useStyles$h(props);
   return /*#__PURE__*/React.createElement(MenuItem$1, _extends({
     className: classnames("user-menu-item", classes.menuItem, className),
     ref: ref,
@@ -1166,20 +1174,73 @@ UserMenuItem.propTypes = {
   onClick: PropTypes.func
 };
 
-var _excluded$x = ["resource", "baseRecord"];
+var _excluded$E = ["resource", "baseRecord", "to"];
 
 var BackButton = function BackButton(_ref) {
   var resource = _ref.resource;
       _ref.baseRecord;
-      var props = _objectWithoutProperties(_ref, _excluded$x);
+      var to = _ref.to,
+      props = _objectWithoutProperties(_ref, _excluded$E);
 
   return /*#__PURE__*/React__default.createElement(Button, _extends({}, props, {
     component: Link,
-    to: {
+    to: to || {
       pathname: "/".concat(resource)
     },
     label: "ra.action.back"
   }), /*#__PURE__*/React__default.createElement(BackIcon, null));
+};
+
+var _excluded$D = ["redirect", "reference"];
+/**
+ *
+ * @param {string} props.redirect - The redirect path after the delete action.
+ * @param {string} props.reference - The reference to the resource to delete.
+ * @param {string} props.title - The title of the delete dialog.
+ * @param {string} props.content - The message of the delete dialog.
+ * @returns
+ */
+
+var DeleteWithConfirmButton = function DeleteWithConfirmButton(_ref) {
+  var redirect = _ref.redirect;
+      _ref.reference;
+      var props = _objectWithoutProperties(_ref, _excluded$D);
+
+  var translate = useTranslate$1();
+
+  var _useMemo = useMemo$1(function () {
+    var title = props.title ? typeof props.title === "function" ? props.confirmTitle(props.record, translate) : props.title : translate("ra.title.confirm_delete");
+    var content = props.confirmTitle ? typeof props.content === "function" ? props.confirmTitle(props.record, translate) : props.content : translate("ra.message.confirm_delete");
+    return {
+      confirmTitle: title,
+      confirmContent: content
+    };
+  }, [props, translate]),
+      confirmTitle = _useMemo.confirmTitle,
+      confirmContent = _useMemo.confirmContent;
+
+  var record = props.record;
+
+  if (!record) {
+    // React-Admin original button soffer refreh's bug.
+    // While trying to recover id of an non existing records it crash the application.
+    // To avoid problems with this situation we have to return an empty component in this case.
+    return null;
+  }
+
+  return /*#__PURE__*/React__default.createElement(DeleteWithConfirmButton$1, _extends({}, props, {
+    redirect: redirect,
+    confirmTitle: confirmTitle,
+    confirmContent: confirmContent
+  }));
+};
+
+DeleteWithConfirmButton.propTypes = {
+  redirect: PropTypes.string,
+  reference: PropTypes.string,
+  record: PropTypes.object,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  content: PropTypes.oneOfType([PropTypes.string, PropTypes.func])
 };
 
 var useWorkflow = function useWorkflow(_ref) {
@@ -1242,49 +1303,22 @@ var Workflow = /*#__PURE__*/function () {
 
     this.states = data.states;
   }
-  /**
-   * Controlla se l'utente ha il permesso di creazione sullo stato iniziale
-   * @param {*} roles Ruoli dell'utente
-   */
-
 
   _createClass(Workflow, [{
     key: "canCreate",
     value: function canCreate(roles) {
       return this.check("create", roles);
     }
-    /**
-     * Controlla se l'utente ha il permesso di scrittura sullo stato in cui
-     * si trova il record
-     * @param {*} roles Ruoli dell'utente
-     * @param {*} record
-     */
-
   }, {
     key: "canEdit",
     value: function canEdit(roles, record) {
       return this.check("edit", roles, record);
     }
-    /**
-     * Controlla se l'utente ha il permesso di lettura sullo stato in cui
-     * si trova il record
-     * @param {*} roles Ruoli dell'utente
-     * @param {*} record
-     */
-
   }, {
     key: "canRead",
     value: function canRead(roles, record) {
       return this.check("read", roles, record);
     }
-    /**
-     * Controlla se l'utente ha il permesso specificato nella stato in cui
-     * si trova il record
-     * @param {String} permission
-     * @param {*} roles Ruoli dell'utente
-     * @param {*} record
-     */
-
   }, {
     key: "check",
     value: function check(permission, roles, record) {
@@ -1304,45 +1338,16 @@ var Workflow = /*#__PURE__*/function () {
         });
       });
     }
-    /**
-     * Controlla se l'utente ha il permesso di scrittura per il campo specificato,
-     * nello stato in cui si trova il record
-     * @param {String} fieldName
-     * @param {Array} roles Ruoli dell'utente
-     * @param {Object} record
-     */
-
   }, {
     key: "canEditField",
     value: function canEditField(fieldName, roles, record) {
       return this.checkField("edit", roles, fieldName, record);
     }
-    /**
-     * Controlla se l'utente ha il permesso di lettura per il campo specificato,
-     * nello stato in cui si trova il record
-     * @param {String} fieldName
-     * @param {Array} roles Ruoli dell'utente
-     * @param {Object} record
-     */
-
   }, {
     key: "canReadField",
     value: function canReadField(fieldName, roles, record) {
       return this.checkField("read", roles, fieldName, record);
     }
-    /**
-     * @description
-     *  Controlla se l'utente ha i permessi necessari per leggere uno o più campi tra quelli
-     *  specificati nell'array fields.
-     *
-     * @param {Array} fields
-     *  Elenco dei campi di cui verificare il permesso.
-     * @param {Array} roles
-     *  Elenco dei ruoli associati all'utente
-     * @param {Object} record
-     *  Record principale su cui verificare i permessi di workflow.
-     */
-
   }, {
     key: "canReadFields",
     value: function canReadFields(fields, roles, record) {
@@ -1352,15 +1357,6 @@ var Workflow = /*#__PURE__*/function () {
         return _this.canReadField(field, roles, record);
       });
     }
-    /**
-     * Controlla se l'utente ha il permesso per il campo specificato,
-     * per lo stato in cui si trova il record
-     * @param {String} permission
-     * @param {array} roles Ruoli dell'utente
-     * @param {String} fieldName
-     * @param {Object} record
-     */
-
   }, {
     key: "checkField",
     value: function checkField(permission, roles, fieldName, record) {
@@ -1382,20 +1378,13 @@ var Workflow = /*#__PURE__*/function () {
       var permissions = field.permissions.filter(function (p) {
         return p[can];
       });
-      return permissions.some(function (permission) {
+      var check = permissions.some(function (permission) {
         return roles.some(function (role) {
           return permission.role === role.code;
         });
       });
+      return check;
     }
-    /**
-     * Ottiene gli stati successivi disponibili dell'entità sottoposta a WF.
-     * Se si tratta di una creazione (record.id undefined) viene ritornato lo stato
-     * iniziale (sempre se si hanno i permessi)
-     * @param {*} roles Ruoli dell'utente
-     * @param {*} record
-     */
-
   }, {
     key: "getNextStates",
     value: function getNextStates(roles, record) {
@@ -1432,13 +1421,6 @@ var Workflow = /*#__PURE__*/function () {
       });
       return nextStates;
     }
-    /**
-     * Indica se per il passaggio nello stato specificato è necessario compilare il campo note obbligatoriamente.
-     * @param {Object} record
-     *  Record per il quale si richiede la verifica.
-     * @param {Object} state
-     */
-
   }, {
     key: "needsNotes",
     value: function needsNotes(record, state) {
@@ -1520,12 +1502,12 @@ var WorkflowProvider = function WorkflowProvider(_ref) {
   }, children);
 };
 
-var _excluded$w = ["record", "resource"];
+var _excluded$C = ["record", "resource"];
 
 var EditButton = function EditButton(_ref) {
   var record = _ref.record,
       resource = _ref.resource,
-      props = _objectWithoutProperties(_ref, _excluded$w);
+      props = _objectWithoutProperties(_ref, _excluded$C);
 
   var _useContext = useContext(WorkflowContext),
       getWorkflow = _useContext.getWorkflow;
@@ -1689,9 +1671,24 @@ var useCrud = function useCrud(_ref) {
   };
 };
 
+/**
+ * Export a context that will be used to provide the crud instance to the children.
+ */
+
 var CrudContext = /*#__PURE__*/createContext({});
+/**
+ * CrudProvider component, used to provide the crud instance to the children.
+ *
+ * @param {Array|Object} props.children The children to render.
+ * @param {Object} props.components List of additional components to render.
+ * @param {string} props.apiUrl The api url.
+ *
+ * @returns {React.ReactElement}
+ */
+
 var CrudProvider = function CrudProvider(_ref) {
   var children = _ref.children,
+      components = _ref.components,
       apiUrl = _ref.apiUrl;
 
   var _useState = useState({}),
@@ -1721,10 +1718,33 @@ var CrudProvider = function CrudProvider(_ref) {
       apiUrl: apiUrl,
       loading: loading,
       data: data,
+      components: components,
       getGrid: getGrid,
       getForm: getForm
     }
   }, children);
+};
+CrudProvider.propTypes = {
+  /**
+   * The children to render.
+   *
+   * @type {Array|Object}
+   */
+  children: PropTypes.node.isRequired,
+
+  /**
+   * List of additional components to render.
+   *
+   * @type {Object}
+   */
+  components: PropTypes.object,
+
+  /**
+   * The api url from which to fetch the crud entities.
+   *
+   * @type {string}
+   */
+  apiUrl: PropTypes.string.isRequired
 };
 
 var ExportToXlsxButton = function ExportToXlsxButton(_ref, ref) {
@@ -1770,14 +1790,14 @@ var ExportToXlsxButton = function ExportToXlsxButton(_ref, ref) {
 
 var ExportButton = /*#__PURE__*/React__default.forwardRef(ExportToXlsxButton);
 
-var _excluded$v = ["exportTo", "label"];
+var _excluded$B = ["exportTo", "label"];
 
 var ExportToButton = function ExportToButton(_ref) {
   var _ref$exportTo = _ref.exportTo,
       exportTo = _ref$exportTo === void 0 ? ["csv", "xlsx"] : _ref$exportTo,
       _ref$label = _ref.label,
       label = _ref$label === void 0 ? "ra.action.export" : _ref$label,
-      props = _objectWithoutProperties(_ref, _excluded$v);
+      props = _objectWithoutProperties(_ref, _excluded$B);
 
   var _React$useState = React__default.useState(null),
       _React$useState2 = _slicedToArray(_React$useState, 2),
@@ -1818,8 +1838,77 @@ var ExportToButton = function ExportToButton(_ref) {
   }));
 };
 
-var _excluded$u = ["handleSubmitWithRedirect", "small", "state", "pristine"];
-var useStyles$9 = makeStyles(function (theme) {
+var MarkAsReadedButton = function MarkAsReadedButton(_ref) {
+  var _ref$selectedIds = _ref.selectedIds,
+      selectedIds = _ref$selectedIds === void 0 ? [] : _ref$selectedIds;
+  var refresh = useRefresh();
+  var notify = useNotify();
+  var unselectAll = useUnselectAll();
+
+  var _useUpdateMany = useUpdateMany("notifications", selectedIds, {
+    readed: moment().format()
+  }, {
+    onSuccess: function onSuccess() {
+      refresh();
+      notify("resources.notifications.messages.readed.done");
+      unselectAll("notifications");
+    },
+    onFailure: function onFailure() {
+      return notify("resources.notifications.messages.readed.error", "warning");
+    }
+  }),
+      _useUpdateMany2 = _slicedToArray(_useUpdateMany, 2),
+      updateMany = _useUpdateMany2[0],
+      loading = _useUpdateMany2[1].loading;
+
+  var handleUpdateMany = useCallback(function (e) {
+    e.stopPropagation();
+    updateMany();
+  }, [updateMany]);
+  return /*#__PURE__*/React__default.createElement(Button, {
+    label: "resources.notifications.buttons.mark_as_readed",
+    disabled: loading,
+    onClick: handleUpdateMany
+  }, /*#__PURE__*/React__default.createElement(EmailIcon, null));
+};
+
+var MarkAsUnreadedButton = function MarkAsUnreadedButton(_ref) {
+  var _ref$selectedIds = _ref.selectedIds,
+      selectedIds = _ref$selectedIds === void 0 ? [] : _ref$selectedIds;
+  var refresh = useRefresh();
+  var notify = useNotify();
+  var unselectAll = useUnselectAll();
+
+  var _useUpdateMany = useUpdateMany("notifications", selectedIds, {
+    readed: null
+  }, {
+    onSuccess: function onSuccess() {
+      refresh();
+      notify("resources.notifications.messages.unreaded.done");
+      unselectAll("notifications");
+    },
+    onFailure: function onFailure() {
+      return notify("resources.notifications.messages.unreaded.error", "warning");
+    }
+  }),
+      _useUpdateMany2 = _slicedToArray(_useUpdateMany, 2),
+      updateMany = _useUpdateMany2[0],
+      loading = _useUpdateMany2[1].loading;
+
+  var handleUpdateMany = useCallback(function (e) {
+    e.stopPropagation();
+    updateMany();
+  }, [updateMany]);
+  return /*#__PURE__*/React__default.createElement(Button, {
+    color: "secondary",
+    label: "resources.notifications.buttons.mark_as_unreaded",
+    disabled: loading,
+    onClick: handleUpdateMany
+  }, /*#__PURE__*/React__default.createElement(DraftsIcon, null));
+};
+
+var _excluded$A = ["handleSubmitWithRedirect", "small", "state", "pristine"];
+var useStyles$g = makeStyles(function (theme) {
   var _theme$props, _theme$props$MuiButto;
 
   return {
@@ -1834,9 +1923,9 @@ var StateButton = function StateButton(_ref, ref) {
       _ref.small;
       var state = _ref.state;
       _ref.pristine;
-      var props = _objectWithoutProperties(_ref, _excluded$u);
+      var props = _objectWithoutProperties(_ref, _excluded$A);
 
-  var classes = useStyles$9();
+  var classes = useStyles$g();
   var form = useForm();
   var handleClick = useCallback(function () {
     form.change("state", state.code);
@@ -1853,8 +1942,8 @@ var StateButton = function StateButton(_ref, ref) {
 
 var StateButton$1 = /*#__PURE__*/React__default.forwardRef(StateButton);
 
-var _excluded$t = ["states"];
-var useStyles$8 = makeStyles(function (theme) {
+var _excluded$z = ["states"];
+var useStyles$f = makeStyles(function (theme) {
   var _theme$props, _theme$props$MuiButto;
 
   return {
@@ -1866,9 +1955,9 @@ var useStyles$8 = makeStyles(function (theme) {
 
 var StateButtonMenu = function StateButtonMenu(_ref) {
   var states = _ref.states,
-      props = _objectWithoutProperties(_ref, _excluded$t);
+      props = _objectWithoutProperties(_ref, _excluded$z);
 
-  var classes = useStyles$8();
+  var classes = useStyles$f();
   var translate = useTranslate$1();
 
   var _React$useState = React__default.useState(null),
@@ -1928,22 +2017,44 @@ var buttons = /*#__PURE__*/Object.freeze({
   ExportToButton: ExportToButton,
   BackButton: BackButton,
   StateButton: StateButton$1,
-  StateButtonMenu: StateButtonMenu
+  StateButtonMenu: StateButtonMenu,
+  MarkAsReadedButton: MarkAsReadedButton,
+  MarkAsUnreadedButton: MarkAsUnreadedButton,
+  DeleteWithConfirmButton: DeleteWithConfirmButton
 });
 
-var _excluded$s = ["chipSource"];
+var _excluded$y = ["chipSource"];
 
 var ChipArrayField = function ChipArrayField(_ref) {
   var chipSource = _ref.chipSource,
-      props = _objectWithoutProperties(_ref, _excluded$s);
+      props = _objectWithoutProperties(_ref, _excluded$y);
 
   return /*#__PURE__*/React__default.createElement(ArrayField, props, /*#__PURE__*/React__default.createElement(SingleFieldList, null, /*#__PURE__*/React__default.createElement(ChipField, {
     source: chipSource
   })));
 };
 
-var _excluded$r = ["record", "source", "width", "minWidth", "maxWidth", "maxRows", "sortable", "basePath", "sortBy"];
-var useStyles$7 = makeStyles$1(function (theme) {
+var DateAgoField = function DateAgoField(_ref) {
+  var record = _ref.record;
+  var locale = useLocale();
+  var fromNow = useMemo$1(function () {
+    require("moment/locale/".concat(locale));
+
+    moment.locale(locale);
+    return moment(record === null || record === void 0 ? void 0 : record.created).fromNow();
+  }, [record === null || record === void 0 ? void 0 : record.created, locale]);
+  return /*#__PURE__*/React__default.createElement(Fragment, null, /*#__PURE__*/React__default.createElement(Typography$1, {
+    variant: "caption"
+  }, fromNow), /*#__PURE__*/React__default.createElement("br", null), /*#__PURE__*/React__default.createElement(DateField, {
+    record: record,
+    source: "created",
+    addLabel: false,
+    showTime: true
+  }));
+};
+
+var _excluded$x = ["record", "source", "width", "minWidth", "maxWidth", "maxRows", "sortable", "basePath", "sortBy"];
+var useStyles$e = makeStyles$1(function (theme) {
   return {
     root: {
       overflow: "hidden",
@@ -1969,9 +2080,9 @@ var LongTextField = function LongTextField(_ref) {
       _ref.sortable;
       _ref.basePath;
       _ref.sortBy;
-      var props = _objectWithoutProperties(_ref, _excluded$r);
+      var props = _objectWithoutProperties(_ref, _excluded$x);
 
-  var classes = useStyles$7();
+  var classes = useStyles$e();
   return /*#__PURE__*/React__default.createElement(Typography$1, _extends({}, props, {
     variant: "body2",
     title: get$2(record, source),
@@ -2002,14 +2113,225 @@ var MediaField = function MediaField(_ref) {
   }));
 };
 
-var _excluded$q = ["label", "record", "resource"];
+var NotificationField = function NotificationField(_ref) {
+  var record = _ref.record;
+  var translate = useTranslate$2();
+  var readed = useMemo$1(function () {
+    return record !== null && record !== void 0 && record.readed ? moment(record === null || record === void 0 ? void 0 : record.readed).format(translate("app.date_format.long")) : false;
+  }, [record === null || record === void 0 ? void 0 : record.readed, translate]);
+  return /*#__PURE__*/React__default.createElement(Fragment, null, /*#__PURE__*/React__default.createElement(Typography$1, {
+    variant: "subtitle1"
+  }, /*#__PURE__*/React__default.createElement(Box, {
+    fontWeight: "bold"
+  }, " ", record === null || record === void 0 ? void 0 : record.title)), /*#__PURE__*/React__default.createElement(Typography$1, {
+    variant: "body1"
+  }, record === null || record === void 0 ? void 0 : record.content), readed && /*#__PURE__*/React__default.createElement(Typography$1, {
+    variant: "caption",
+    display: "block"
+  }, translate("resources.notifications.readed", {
+    readed: readed
+  })), record !== null && record !== void 0 && record.readed ? /*#__PURE__*/React__default.createElement(MarkAsUnreadedButton, {
+    selectedIds: [record === null || record === void 0 ? void 0 : record.id]
+  }) : /*#__PURE__*/React__default.createElement(MarkAsReadedButton, {
+    selectedIds: [record === null || record === void 0 ? void 0 : record.id]
+  }));
+};
+
+var useStyles$d = makeStyles(function (theme) {
+  return {
+    progress: {
+      height: 20 + theme.spacing(1),
+      width: "100%",
+      borderRadius: theme.spacing(0.5)
+    },
+    label: {
+      position: "absolute",
+      color: theme.palette.primary.contrastText
+    }
+  };
+});
+
+var ProgressField = function ProgressField(_ref) {
+  var record = _ref.record,
+      source = _ref.source;
+  var classes = useStyles$d();
+  return /*#__PURE__*/React__default.createElement(Box, {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  }, /*#__PURE__*/React__default.createElement(LinearProgress, {
+    classes: {
+      root: classes.progress
+    },
+    variant: "determinate",
+    color: get$2(record, source) >= 100 ? "primary" : "secondary",
+    value: get$2(record, source)
+  }), /*#__PURE__*/React__default.createElement(Typography$1, {
+    className: classes.label
+  }, get$2(record, source, 0).toFixed(2), "%"));
+};
+
+var _excluded$w = ["removeRedirect", "reference", "target", "tab", "filter", "empty", "sorry", "create", "createLabel", "modify", "modifyLabel", "remove", "removeLabel", "additionalData", "mobileBreakpoint", "mobilePrimaryText", "mobileSecondaryText", "mobileTertiaryText", "mobileLinkType"];
+var makeRedirect = function makeRedirect(_ref) {
+  var resource = _ref.resource,
+      record = _ref.record,
+      tab = _ref.tab;
+
+  if (tab > 0) {
+    return "/".concat(resource, "/").concat(record === null || record === void 0 ? void 0 : record.id, "/").concat(tab);
+  }
+
+  return "/".concat(resource, "/").concat(record === null || record === void 0 ? void 0 : record.id);
+};
+var useStyles$c = makeStyles(function (theme) {
+  return {
+    toolbar: {
+      padding: theme.spacing(1)
+    },
+    sorry: {
+      padding: theme.spacing(1)
+    },
+    empty: {
+      padding: theme.spacing(1)
+    },
+    error: {
+      padding: theme.spacing(1)
+    }
+  };
+});
+
+var ReferenceListField = function ReferenceListField(_ref2) {
+  var removeRedirect = _ref2.removeRedirect,
+      reference = _ref2.reference,
+      target = _ref2.target,
+      _ref2$tab = _ref2.tab,
+      tab = _ref2$tab === void 0 ? 0 : _ref2$tab,
+      filter = _ref2.filter,
+      _ref2$empty = _ref2.empty,
+      empty = _ref2$empty === void 0 ? "ra.no_results" : _ref2$empty,
+      _ref2$sorry = _ref2.sorry,
+      sorry = _ref2$sorry === void 0 ? "ra.reference_list.sorry" : _ref2$sorry,
+      _ref2$create = _ref2.create,
+      create = _ref2$create === void 0 ? true : _ref2$create,
+      _ref2$createLabel = _ref2.createLabel,
+      createLabel = _ref2$createLabel === void 0 ? "ra.action.create" : _ref2$createLabel,
+      _ref2$modify = _ref2.modify,
+      modify = _ref2$modify === void 0 ? true : _ref2$modify;
+      _ref2.modifyLabel;
+      var _ref2$remove = _ref2.remove,
+      remove = _ref2$remove === void 0 ? true : _ref2$remove;
+      _ref2.removeLabel;
+      var additionalData = _ref2.additionalData,
+      mobileBreakpoint = _ref2.mobileBreakpoint,
+      _ref2$mobilePrimaryTe = _ref2.mobilePrimaryText,
+      mobilePrimaryText = _ref2$mobilePrimaryTe === void 0 ? null : _ref2$mobilePrimaryTe,
+      _ref2$mobileSecondary = _ref2.mobileSecondaryText,
+      mobileSecondaryText = _ref2$mobileSecondary === void 0 ? null : _ref2$mobileSecondary,
+      _ref2$mobileTertiaryT = _ref2.mobileTertiaryText,
+      mobileTertiaryText = _ref2$mobileTertiaryT === void 0 ? null : _ref2$mobileTertiaryT,
+      _ref2$mobileLinkType = _ref2.mobileLinkType,
+      mobileLinkType = _ref2$mobileLinkType === void 0 ? false : _ref2$mobileLinkType,
+      props = _objectWithoutProperties(_ref2, _excluded$w);
+
+  var classes = useStyles$c();
+  var resource = props.resource,
+      record = props.record;
+
+  var _useInput = useInput(_objectSpread2({}, props)),
+      submitError = _useInput.meta.submitError;
+
+  var translate = useTranslate$1();
+  var isMobile = useMediaQuery(function (theme) {
+    return theme.breakpoints.down(mobileBreakpoint !== null && mobileBreakpoint !== void 0 ? mobileBreakpoint : "sm");
+  });
+
+  if (!removeRedirect) {
+    removeRedirect = makeRedirect({
+      resource: resource,
+      record: record,
+      tab: tab
+    });
+  }
+
+  return (record === null || record === void 0 ? void 0 : record.id) > 0 ? /*#__PURE__*/React__default.createElement(Fragment, null, /*#__PURE__*/React__default.createElement(ReferenceManyField, _extends({}, props, {
+    empty: /*#__PURE__*/React__default.isValidElement(empty) ? /*#__PURE__*/React__default.cloneElement(empty, {
+      key: "empty"
+    }) : /*#__PURE__*/React__default.createElement(Typography$1, {
+      className: classes.empty,
+      key: "empty"
+    }, translate(empty)),
+    reference: reference,
+    target: target,
+    filter: _objectSpread2(_defineProperty({}, target, record === null || record === void 0 ? void 0 : record.id), filter)
+  }), isMobile && mobileBreakpoint !== false && mobilePrimaryText !== null ? /*#__PURE__*/React__default.createElement(SimpleList, {
+    primaryText: mobilePrimaryText,
+    secondaryText: mobileSecondaryText,
+    tertiaryText: mobileTertiaryText,
+    linkType: mobileLinkType
+  }) : /*#__PURE__*/React__default.createElement(Datagrid$1, null, React__default.Children.map(props.children, function (field, index) {
+    return /*#__PURE__*/React__default.isValidElement(field) ? /*#__PURE__*/React__default.cloneElement(field, {
+      key: index
+    }) : null;
+  }), modify && /*#__PURE__*/React__default.createElement(EditButton$1, null), remove && /*#__PURE__*/React__default.createElement(DeleteWithConfirmButton, {
+    redirect: removeRedirect
+  }))), submitError && /*#__PURE__*/React__default.createElement(FormHelperText, {
+    error: true,
+    className: classes.error
+  }, submitError), create && (record === null || record === void 0 ? void 0 : record.id) > 0 && /*#__PURE__*/React__default.createElement(TopToolbar, {
+    resource: resource,
+    className: classes.toolbar
+  }, /*#__PURE__*/React__default.createElement(Button$2, {
+    component: Link,
+    disableElevation: true,
+    variant: "outlined",
+    color: "primary",
+    to: {
+      pathname: "/".concat(reference, "/create"),
+      search: stringify({
+        source: JSON.stringify(_objectSpread2(_defineProperty({}, target, record === null || record === void 0 ? void 0 : record.id), additionalData))
+      })
+    }
+  }, translate(createLabel)))) : /*#__PURE__*/React__default.isValidElement(sorry) ? /*#__PURE__*/React__default.cloneElement(sorry, {
+    key: "sorry"
+  }) : /*#__PURE__*/React__default.createElement(Typography$1, {
+    className: classes.sorry,
+    key: "sorry"
+  }, translate(sorry));
+};
+
+ReferenceListField.propTypes = {
+  tab: PropTypes.number,
+  sorry: PropTypes.oneOfType([PropTypes.string, PropTypes.element, PropTypes.func]),
+  mobileBreakpoint: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  mobilePrimaryText: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+  mobileSecondaryText: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+  mobileTertiaryText: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+  mobileLinkType: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  additionalData: PropTypes.object,
+  removeRedirect: PropTypes.string,
+  filter: PropTypes.object,
+  create: PropTypes.bool,
+  createLabel: PropTypes.string,
+  modify: PropTypes.bool,
+  modifyLabel: PropTypes.string,
+  remove: PropTypes.bool,
+  removeLabel: PropTypes.string,
+  source: PropTypes.string,
+  reference: PropTypes.string,
+  target: PropTypes.string,
+  record: PropTypes.object,
+  resource: PropTypes.string,
+  children: PropTypes.node.isRequired
+};
+
+var _excluded$v = ["label", "record", "resource"];
 
 var StateField = function StateField(_ref) {
   var _ref$label = _ref.label,
       label = _ref$label === void 0 ? "app.label.workflow.state" : _ref$label,
       record = _ref.record,
       toResolve = _ref.resource,
-      props = _objectWithoutProperties(_ref, _excluded$q);
+      props = _objectWithoutProperties(_ref, _excluded$v);
 
   var _useContext = useContext(WorkflowContext),
       getWorkflow = _useContext.getWorkflow;
@@ -2043,7 +2365,7 @@ var useFieldLabel = function useFieldLabel(_ref) {
   };
 };
 
-var useStyles$6 = makeStyles$1(function (theme) {
+var useStyles$b = makeStyles$1(function (theme) {
   return {
     root: {
       display: "-webkit-box",
@@ -2071,7 +2393,7 @@ var TransactionNotesField = function TransactionNotesField(_ref) {
       _ref$maxRows = _ref.maxRows,
       maxRows = _ref$maxRows === void 0 ? 3 : _ref$maxRows,
       component = _ref.component;
-  var classes = useStyles$6();
+  var classes = useStyles$b();
   var fieldLabel = useFieldLabel({
     resource: "transactions"
   });
@@ -2126,22 +2448,22 @@ TransactionNotesField.propTypes = {
   maxRows: PropTypes.number
 };
 
-var _excluded$p = ["fullWidth", "addLabel"],
+var _excluded$u = ["fullWidth", "addLabel"],
     _excluded2$4 = ["admin", "label"];
 
 var PaginationWrapper = function PaginationWrapper(_ref) {
   _ref.fullWidth;
       _ref.addLabel;
-      var props = _objectWithoutProperties(_ref, _excluded$p);
+      var props = _objectWithoutProperties(_ref, _excluded$u);
 
   return /*#__PURE__*/React__default.createElement(Pagination, props);
 };
 
 var TransactionLogsField = function TransactionLogsField(_ref2) {
   var _ref2$admin = _ref2.admin,
-      admin = _ref2$admin === void 0 ? false : _ref2$admin,
-      label = _ref2.label,
-      props = _objectWithoutProperties(_ref2, _excluded2$4);
+      admin = _ref2$admin === void 0 ? false : _ref2$admin;
+      _ref2.label;
+      var props = _objectWithoutProperties(_ref2, _excluded2$4);
 
   var _useContext = useContext(WorkflowContext),
       getWorkflow = _useContext.getWorkflow;
@@ -2163,10 +2485,7 @@ var TransactionLogsField = function TransactionLogsField(_ref2) {
     return null;
   }
 
-  return /*#__PURE__*/React__default.createElement(Fragment, null, /*#__PURE__*/React__default.createElement("br", null), label && /*#__PURE__*/React__default.createElement(Typography$1, {
-    variant: "subtitle1",
-    gutterBottom: true
-  }, label), label && /*#__PURE__*/React__default.createElement(Divider, null), /*#__PURE__*/React__default.createElement(ReferenceManyField, _extends({
+  return /*#__PURE__*/React__default.createElement(ReferenceManyField, _extends({
     perPage: 5,
     pagination: /*#__PURE__*/React__default.createElement(PaginationWrapper, null),
     reference: "workflow/transactions/".concat(props.resource),
@@ -2219,60 +2538,944 @@ var TransactionLogsField = function TransactionLogsField(_ref2) {
   }), /*#__PURE__*/React__default.createElement(StateField, {
     label: fieldLabel("state"),
     sortBy: "Transactions.state"
-  }))), /*#__PURE__*/React__default.createElement("br", null));
+  })));
 };
 
 var fields = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  TextField: TextField,
-  DateField: DateField,
-  ChipField: ChipField,
   BooleanField: BooleanField,
   ChipArrayField: ChipArrayField,
+  DateAgoField: DateAgoField,
+  ChipField: ChipField,
+  DateField: DateField,
+  NotificationField: NotificationField,
+  ProgressField: ProgressField,
+  ReferenceListField: ReferenceListField,
   LongTextField: LongTextField,
   MediaField: MediaField,
   StateField: StateField,
-  TransactionLogsField: TransactionLogsField
+  TextField: TextField,
+  TransactionLogsField: TransactionLogsField,
+  useFieldLabel: useFieldLabel
 });
 
-var useFormStyles = makeStyles$1(function (theme) {
-  var _ref;
+var _excluded$t = ["classes", "label", "value", "icon", "className", "syncWithLocation"];
 
-  return _ref = {}, _defineProperty(_ref, theme.breakpoints.up("md"), {
-    main: {
-      width: "70%",
-      minWidth: "960px",
-      margin: "1em auto"
-    }
-  }), _defineProperty(_ref, theme.breakpoints.down("md"), {
-    main: {
-      minWidth: "100%"
-    }
-  }), _ref;
-});
+var FormTabHeader = function FormTabHeader(_ref) {
+  var classes = _ref.classes,
+      label = _ref.label,
+      value = _ref.value,
+      icon = _ref.icon,
+      className = _ref.className,
+      syncWithLocation = _ref.syncWithLocation,
+      rest = _objectWithoutProperties(_ref, _excluded$t);
 
-var _excluded$o = ["children"];
+  var translate = useTranslate$2();
+  var location = useLocation();
 
-var Create$3 = function Create(_ref) {
+  var _useFormState = useFormState(UseFormStateOptions),
+      submitFailed = _useFormState.submitFailed,
+      submitErrors = _useFormState.submitErrors;
+
+  var formContext = useFormContext();
+  var formGroup = useFormGroup(value.toString());
+  var submitError = React.useMemo(function () {
+    var fields = formContext.getGroupFields(value.toString());
+    var errors = fields.some(function (field) {
+      return get$2(submitErrors, field) != null;
+    });
+    return errors;
+  }, [submitErrors, formContext, value]);
+  var propsForLink = {
+    component: Link,
+    to: _objectSpread2(_objectSpread2({}, location), {}, {
+      pathname: value
+    })
+  };
+  return /*#__PURE__*/React.createElement(MuiTab, _extends({
+    label: /*#__PURE__*/isValidElement(label) ? label : translate(label, {
+      _: label
+    }),
+    value: value,
+    icon: icon,
+    className: classnames("form-tab", className, _defineProperty({}, classes.errorTabButton, submitError || formGroup.invalid && (formGroup.touched || submitFailed)))
+  }, syncWithLocation ? propsForLink : {}, {
+    // to avoid TypeScript screams, see https://github.com/mui-org/material-ui/issues/9106#issuecomment-451270521
+    id: "tabheader-".concat(value),
+    "aria-controls": "tabpanel-".concat(value)
+  }, rest));
+};
+
+var UseFormStateOptions = {
+  subscription: {
+    submitFailed: true,
+    submitErrors: true
+  }
+};
+
+var _excluded$s = ["basePath", "className", "classes", "contentClassName", "children", "hidden", "icon", "intent", "label", "margin", "path", "record", "resource", "variant", "value"];
+var hiddenStyle = {
+  display: "none"
+};
+
+var FormTab = function FormTab(props) {
+  var basePath = props.basePath,
+      className = props.className,
+      classes = props.classes,
+      contentClassName = props.contentClassName,
+      children = props.children,
+      hidden = props.hidden,
+      icon = props.icon,
+      intent = props.intent,
+      label = props.label,
+      margin = props.margin;
+      props.path;
+      var record = props.record,
+      resource = props.resource,
+      variant = props.variant,
+      value = props.value,
+      rest = _objectWithoutProperties(props, _excluded$s);
+
+  var renderHeader = function renderHeader() {
+    return /*#__PURE__*/React.createElement(FormTabHeader, _extends({
+      label: label,
+      value: value,
+      icon: icon,
+      className: className,
+      classes: classes
+    }, rest));
+  };
+
+  var renderContent = function renderContent() {
+    return /*#__PURE__*/React.createElement(FormGroupContextProvider, {
+      name: value.toString()
+    }, /*#__PURE__*/React.createElement("span", {
+      style: hidden ? hiddenStyle : null,
+      className: contentClassName,
+      id: "tabpanel-".concat(value),
+      "aria-labelledby": "tabheader-".concat(value) // Set undefined instead of false because WAI-ARIA Authoring Practices 1.1
+      // notes that aria-hidden="false" currently behaves inconsistently across browsers.
+      ,
+      "aria-hidden": hidden || undefined
+    }, React.Children.map(children, function (input) {
+      return input && /*#__PURE__*/React.createElement(FormInput, {
+        basePath: basePath,
+        input: input,
+        record: record,
+        resource: resource,
+        variant: input.props.variant || variant,
+        margin: input.props.margin || margin
+      });
+    })));
+  };
+
+  return intent === "header" ? renderHeader() : renderContent();
+};
+
+var _excluded$r = ["children", "spacing", "wrapper"];
+
+var Group = function Group(_ref) {
   var children = _ref.children,
+      _ref$spacing = _ref.spacing,
+      spacing = _ref$spacing === void 0 ? 2 : _ref$spacing,
+      _ref$wrapper = _ref.wrapper,
+      wrapper = _ref$wrapper === void 0 ? false : _ref$wrapper,
+      props = _objectWithoutProperties(_ref, _excluded$r);
+
+  return !wrapper ? /*#__PURE__*/React__default.createElement(Grid, {
+    container: true,
+    spacing: spacing
+  }, React__default.Children.map(children, function (child) {
+    return /*#__PURE__*/React__default.isValidElement(child) ? /*#__PURE__*/React__default.cloneElement(child, _objectSpread2(_objectSpread2({}, props), child.props)) : child;
+  })) : React__default.Children.map(children, function (child) {
+    return /*#__PURE__*/React__default.isValidElement(child) ? /*#__PURE__*/React__default.cloneElement(child, _objectSpread2(_objectSpread2({}, props), child.props)) : child;
+  });
+};
+
+var _excluded$q = ["children", "lg", "md", "sm", "xs", "spacing", "block"];
+
+var GroupItem = function GroupItem(_ref) {
+  var children = _ref.children,
+      _ref$lg = _ref.lg,
+      lg = _ref$lg === void 0 ? 4 : _ref$lg,
+      _ref$md = _ref.md,
+      md = _ref$md === void 0 ? 6 : _ref$md,
+      _ref$sm = _ref.sm,
+      sm = _ref$sm === void 0 ? 12 : _ref$sm,
+      _ref$xs = _ref.xs,
+      xs = _ref$xs === void 0 ? 12 : _ref$xs,
+      spacing = _ref.spacing;
+      _ref.block;
+      var props = _objectWithoutProperties(_ref, _excluded$q);
+
+  return /*#__PURE__*/React__default.createElement(Grid, {
+    item: true,
+    lg: lg,
+    md: md,
+    sm: sm,
+    xs: xs,
+    spacing: spacing
+  }, React__default.Children.map(children, function (child) {
+    return /*#__PURE__*/React__default.isValidElement(child) ? /*#__PURE__*/React__default.cloneElement(child, _objectSpread2(_objectSpread2({}, props), child.props)) : child;
+  }));
+};
+
+var useStyles$a = makeStyles(function (theme) {
+  return {
+    title: {
+      margin: theme.spacing(1),
+      fontWeight: "bold"
+    },
+    spacer: {
+      marginTop: theme.spacing(1),
+      marginBottom: theme.spacing(1)
+    },
+    subTitle: {
+      margin: theme.spacing(1)
+    }
+  };
+});
+
+var GroupTitle = function GroupTitle(_ref) {
+  var title = _ref.title,
+      subTitle = _ref.subTitle,
+      _ref$divider = _ref.divider,
+      divider = _ref$divider === void 0 ? true : _ref$divider,
+      color = _ref.color;
+  var classes = useStyles$a();
+  return /*#__PURE__*/React__default.createElement(Fragment, null, /*#__PURE__*/React__default.createElement(Typography$1, {
+    color: color,
+    classes: {
+      root: classes.title
+    },
+    variant: "h6",
+    gutterBottom: true
+  }, title), divider && /*#__PURE__*/React__default.createElement(Divider, {
+    classes: {
+      root: classes.spacer
+    }
+  }), subTitle && /*#__PURE__*/React__default.createElement(Typography$1, {
+    color: color,
+    classes: {
+      root: classes.subTitle
+    },
+    variant: "body1"
+  }, subTitle));
+};
+
+var _excluded$p = ["backRedirect", "backReferenceTarget", "backReference", "backTab", "canSave", "canGoBack", "onSuccess"];
+var useStyles$9 = makeStyles(function (theme) {
+  return {
+    toolbar: {
+      "& .MuiButton-root": {
+        marginRight: theme.spacing(1)
+      }
+    }
+  };
+});
+
+var ReferenceToolbar = function ReferenceToolbar(_ref) {
+  var backRedirect = _ref.backRedirect,
+      backReferenceTarget = _ref.backReferenceTarget,
+      backReference = _ref.backReference,
+      _ref$backTab = _ref.backTab,
+      backTab = _ref$backTab === void 0 ? 1 : _ref$backTab,
+      _ref$canSave = _ref.canSave,
+      canSave = _ref$canSave === void 0 ? true : _ref$canSave,
+      _ref$canGoBack = _ref.canGoBack,
+      canGoBack = _ref$canGoBack === void 0 ? true : _ref$canGoBack,
+      onSuccess = _ref.onSuccess,
+      props = _objectWithoutProperties(_ref, _excluded$p);
+
+  var classes = useStyles$9();
+  var record = props.record;
+  var referenceId = get$2(record, backReferenceTarget, 0);
+  var backUrl = useMemo$1(function () {
+    return referenceId === 0 ? backRedirect : backTab > 0 ? "/".concat(backReference, "/").concat(referenceId, "/").concat(backTab) : "/".concat(backReference, "/").concat(referenceId);
+  }, [backRedirect, backReference, referenceId, backTab]);
+  return /*#__PURE__*/React__default.createElement(Toolbar$2, _extends({}, props, {
+    classes: classes
+  }), /*#__PURE__*/React__default.createElement(SaveButton, {
+    redirect: backUrl,
+    disabled: !canSave,
+    onSuccess: onSuccess ? onSuccess(backUrl) : undefined
+  }), canGoBack && /*#__PURE__*/React__default.createElement(BackButton, {
+    to: backUrl
+  }), (record === null || record === void 0 ? void 0 : record.id) > 0 && /*#__PURE__*/React__default.createElement(DeleteWithConfirmButton$1, {
+    redirect: backUrl
+  }));
+};
+
+var _excluded$o = ["children", "mutationMode", "validating", "maxButtonsToDisplay"];
+var useStyles$8 = makeStyles(function (theme) {
+  return {
+    toolbar: {
+      "& .MuiButton-root": {
+        marginRight: theme.spacing(1)
+      }
+    }
+  };
+});
+
+var Toolbar = function Toolbar(_ref) {
+  var children = _ref.children;
+      _ref.mutationMode;
+      _ref.validating;
+      var _ref$maxButtonsToDisp = _ref.maxButtonsToDisplay,
+      maxButtonsToDisplay = _ref$maxButtonsToDisp === void 0 ? 1 : _ref$maxButtonsToDisp,
       props = _objectWithoutProperties(_ref, _excluded$o);
 
-  var classes = useFormStyles();
-  return /*#__PURE__*/React__default.createElement(Create$4, _extends({}, props, {
+  var form = useForm();
+  var classes = useStyles$8();
+  var handleSubmitWithRedirect = props.handleSubmitWithRedirect,
+      record = props.record;
+
+  var _useGetIdentity = useGetIdentity(),
+      loading = _useGetIdentity.loading,
+      loaded = _useGetIdentity.loaded,
+      identity = _useGetIdentity.identity;
+
+  var roles = useMemo$1(function () {
+    return !loading && loaded ? identity === null || identity === void 0 ? void 0 : identity.roles : [];
+  }, [loading, loaded, identity]);
+
+  var _useContext = useContext(WorkflowContext),
+      getWorkflow = _useContext.getWorkflow;
+
+  var workflow = useMemo$1(function () {
+    return getWorkflow(props.resource);
+  }, [getWorkflow, props.resource]);
+
+  var _useMemo = useMemo$1(function () {
+    var save = workflow && workflow.canEdit(roles, record) && get$2(record, "id", 0) > 0;
+    var states = workflow && workflow.getNextStates(roles, record) || [];
+    return {
+      states: states,
+      save: save
+    };
+  }, [workflow, record, roles]),
+      states = _useMemo.states,
+      save = _useMemo.save;
+
+  var handleClick = useCallback(function () {
+    form.change("state", get$2(record, "transaction.state", get$2(record, "state")));
+    handleSubmitWithRedirect("list");
+  }, [form, record, handleSubmitWithRedirect]);
+
+  if (!record) {
+    return null;
+  }
+
+  return /*#__PURE__*/React__default.createElement(Toolbar$2, _extends({}, props, {
     classes: classes
-  }), children);
+  }), save && /*#__PURE__*/React__default.createElement(SaveButton, _extends({}, props, {
+    color: "primary",
+    handleSubmitWithRedirect: handleClick,
+    disabled: props.saving
+  })), states.length > maxButtonsToDisplay && /*#__PURE__*/React__default.createElement(StateButtonMenu, _extends({
+    states: states
+  }, props, {
+    disabled: props.saving
+  })), states.length <= maxButtonsToDisplay && states.map(function (state) {
+    return /*#__PURE__*/React__default.createElement(StateButton$1, _extends({
+      key: get$2(state, "code"),
+      state: state
+    }, props, {
+      disabled: props.saving
+    }));
+  }), React__default.Children.count(children) > 0 && React__default.Children.map(children, function (child, key) {
+    return /*#__PURE__*/React__default.cloneElement(child, _objectSpread2(_objectSpread2({}, props), {}, {
+      key: key
+    }));
+  }), /*#__PURE__*/React__default.createElement(BackButton, null));
 };
 
 var _excluded$n = ["children"];
 
-var Create$2 = function Create(_ref) {
+var Unprop = function Unprop(_ref) {
   var children = _ref.children,
       props = _objectWithoutProperties(_ref, _excluded$n);
 
-  var classes = useFormStyles();
-  return /*#__PURE__*/React__default.createElement(Edit, _extends({}, props, {
-    classes: classes
-  }), children);
+  return React__default.Children.map(children, function (child) {
+    return /*#__PURE__*/React__default.isValidElement(child) ? /*#__PURE__*/React__default.cloneElement(child, _objectSpread2(_objectSpread2({}, props), child.props)) : child;
+  });
+};
+
+var parseField = function parseField(field) {
+  var match = field.match(/\d+/);
+  var number = match ? parseInt(match[0], 10) + 1 : null;
+  var name = field.replace(/\d+/, "n");
+  return {
+    number: number,
+    name: name
+  };
+};
+
+var useStyles$7 = makeStyles(function (theme) {
+  return {
+    subheaderRoot: {
+      padding: theme.spacing(1),
+      paddingTop: 0,
+      paddingBottom: 0
+    },
+    listItemRoot: {
+      marginLeft: theme.spacing(1)
+    },
+    listRoot: {
+      "& .MuiList-root": {
+        margin: 0,
+        padding: 0,
+        paddingLeft: theme.spacing(3),
+        "& li:last-child": {
+          borderBottom: "1px solid ".concat(theme.palette.divider)
+        }
+      }
+    }
+  };
+});
+
+var ValidationItem = function ValidationItem(_ref) {
+  var resource = _ref.resource,
+      field = _ref.field,
+      error = _ref.error,
+      translate = _ref.translate,
+      component = _ref.component;
+
+  var _parseField = parseField(field),
+      number = _parseField.number,
+      name = _parseField.name;
+
+  var classes = useStyles$7();
+  return typeof error === "string" ? /*#__PURE__*/React__default.createElement(ListItem, {
+    dense: true,
+    disableGutters: true,
+    classes: {
+      root: classes.listItemRoot
+    }
+  }, /*#__PURE__*/React__default.isValidElement(component) ? /*#__PURE__*/React__default.cloneElement(component, {
+    error: error,
+    field: field,
+    number: number,
+    resource: resource
+  }) : /*#__PURE__*/React__default.createElement(Fragment, null, /*#__PURE__*/React__default.createElement(ListItemAvatar, null, /*#__PURE__*/React__default.createElement(Avatar, null, /*#__PURE__*/React__default.createElement(Warning, null))), /*#__PURE__*/React__default.createElement(ListItemText, {
+    primary: translate("errors.".concat(resource, ".").concat(name), {
+      number: number
+    }),
+    secondary: error
+  }))) : /*#__PURE__*/React__default.createElement(List$1, {
+    classes: {
+      root: classes.listRoot
+    }
+  }, /*#__PURE__*/React__default.createElement(ListSubheader, {
+    disableGutters: true,
+    disableSticky: true,
+    classes: {
+      root: classes.subheaderRoot
+    }
+  }, translate("errors.".concat(resource, ".subheader.").concat(name), {
+    number: number
+  })), Object.keys(error).map(function (subField) {
+    return /*#__PURE__*/React__default.createElement(ValidationItem, {
+      key: subField,
+      field: "".concat(field, ".").concat(subField),
+      error: error[subField],
+      resource: resource,
+      translate: translate,
+      component: component
+    });
+  }));
+};
+
+var _excluded$m = ["action", "children", "classes", "className", "closeText", "color", "icon", "iconMapping", "onClose", "role", "severity", "variant", "elevation"];
+var styles = function styles(theme) {
+  var getColor = theme.palette.type === "light" ? darken : lighten;
+  var getBackgroundColor = theme.palette.type === "light" ? lighten : darken;
+  return {
+    /* Styles applied to the root element. */
+    root: _objectSpread2(_objectSpread2({}, theme.typography.body2), {}, {
+      borderRadius: theme.shape.borderRadius,
+      backgroundColor: "transparent",
+      display: "flex",
+      padding: "6px 16px"
+    }),
+
+    /* Styles applied to the root element if `variant="standard"` and `color="success"`. */
+    standardSuccess: {
+      color: getColor(theme.palette.success.main, 0.6),
+      backgroundColor: getBackgroundColor(theme.palette.success.main, 0.9),
+      "& $icon": {
+        color: theme.palette.success.main
+      }
+    },
+
+    /* Styles applied to the root element if `variant="standard"` and `color="info"`. */
+    standardInfo: {
+      color: getColor(theme.palette.info.main, 0.6),
+      backgroundColor: getBackgroundColor(theme.palette.info.main, 0.9),
+      "& $icon": {
+        color: theme.palette.info.main
+      }
+    },
+
+    /* Styles applied to the root element if `variant="standard"` and `color="warning"`. */
+    standardWarning: {
+      color: getColor(theme.palette.warning.main, 0.6),
+      backgroundColor: getBackgroundColor(theme.palette.warning.main, 0.9),
+      "& $icon": {
+        color: theme.palette.warning.main
+      }
+    },
+
+    /* Styles applied to the root element if `variant="standard"` and `color="error"`. */
+    standardError: {
+      color: getColor(theme.palette.error.main, 0.6),
+      backgroundColor: getBackgroundColor(theme.palette.error.main, 0.9),
+      "& $icon": {
+        color: theme.palette.error.main
+      }
+    },
+
+    /* Styles applied to the root element if `variant="outlined"` and `color="success"`. */
+    outlinedSuccess: {
+      color: getColor(theme.palette.success.main, 0.6),
+      border: "1px solid ".concat(theme.palette.success.main),
+      "& $icon": {
+        color: theme.palette.success.main
+      }
+    },
+
+    /* Styles applied to the root element if `variant="outlined"` and `color="info"`. */
+    outlinedInfo: {
+      color: getColor(theme.palette.info.main, 0.6),
+      border: "1px solid ".concat(theme.palette.info.main),
+      "& $icon": {
+        color: theme.palette.info.main
+      }
+    },
+
+    /* Styles applied to the root element if `variant="outlined"` and `color="warning"`. */
+    outlinedWarning: {
+      color: getColor(theme.palette.warning.main, 0.6),
+      border: "1px solid ".concat(theme.palette.warning.main),
+      "& $icon": {
+        color: theme.palette.warning.main
+      }
+    },
+
+    /* Styles applied to the root element if `variant="outlined"` and `color="error"`. */
+    outlinedError: {
+      color: getColor(theme.palette.error.main, 0.6),
+      border: "1px solid ".concat(theme.palette.error.main),
+      "& $icon": {
+        color: theme.palette.error.main
+      }
+    },
+
+    /* Styles applied to the root element if `variant="filled"` and `color="success"`. */
+    filledSuccess: {
+      color: "#fff",
+      fontWeight: theme.typography.fontWeightMedium,
+      backgroundColor: theme.palette.success.main
+    },
+
+    /* Styles applied to the root element if `variant="filled"` and `color="info"`. */
+    filledInfo: {
+      color: "#fff",
+      fontWeight: theme.typography.fontWeightMedium,
+      backgroundColor: theme.palette.info.main
+    },
+
+    /* Styles applied to the root element if `variant="filled"` and `color="warning"`. */
+    filledWarning: {
+      color: "#fff",
+      fontWeight: theme.typography.fontWeightMedium,
+      backgroundColor: theme.palette.warning.main
+    },
+
+    /* Styles applied to the root element if `variant="filled"` and `color="error"`. */
+    filledError: {
+      color: "#fff",
+      fontWeight: theme.typography.fontWeightMedium,
+      backgroundColor: theme.palette.error.main
+    },
+
+    /* Styles applied to the icon wrapper element. */
+    icon: {
+      marginRight: 12,
+      padding: "7px 0",
+      display: "flex",
+      fontSize: 22,
+      opacity: 0.9
+    },
+
+    /* Styles applied to the message wrapper element. */
+    message: {
+      padding: "8px 0"
+    },
+
+    /* Styles applied to the action wrapper element if `action` is provided. */
+    action: {
+      display: "flex",
+      alignItems: "center",
+      marginLeft: "auto",
+      paddingLeft: 16,
+      marginRight: -8
+    }
+  };
+};
+var defaultIconMapping = {
+  success: /*#__PURE__*/React.createElement(CheckOutlined, {
+    fontSize: "inherit"
+  }),
+  warning: /*#__PURE__*/React.createElement(ReportProblemOutlined, {
+    fontSize: "inherit"
+  }),
+  error: /*#__PURE__*/React.createElement(ErrorOutline, {
+    fontSize: "inherit"
+  }),
+  info: /*#__PURE__*/React.createElement(InfoOutlined, {
+    fontSize: "inherit"
+  })
+};
+var Alert = /*#__PURE__*/React.forwardRef(function Alert(props, ref) {
+  var action = props.action,
+      children = props.children,
+      classes = props.classes,
+      className = props.className,
+      _props$closeText = props.closeText,
+      closeText = _props$closeText === void 0 ? "Close" : _props$closeText,
+      color = props.color,
+      icon = props.icon,
+      _props$iconMapping = props.iconMapping,
+      iconMapping = _props$iconMapping === void 0 ? defaultIconMapping : _props$iconMapping,
+      onClose = props.onClose,
+      _props$role = props.role,
+      role = _props$role === void 0 ? "alert" : _props$role,
+      _props$severity = props.severity,
+      severity = _props$severity === void 0 ? "success" : _props$severity,
+      _props$variant = props.variant,
+      variant = _props$variant === void 0 ? "standard" : _props$variant,
+      _props$elevation = props.elevation,
+      elevation = _props$elevation === void 0 ? 0 : _props$elevation,
+      other = _objectWithoutProperties(props, _excluded$m);
+
+  return /*#__PURE__*/React.createElement(Paper, _extends({
+    role: role,
+    square: true,
+    elevation: elevation,
+    className: clsx(classes.root, classes["".concat(variant).concat(capitalize(color || severity))], className),
+    ref: ref
+  }, other), icon !== false ? /*#__PURE__*/React.createElement("div", {
+    className: classes.icon
+  }, icon || iconMapping[severity] || defaultIconMapping[severity]) : null, /*#__PURE__*/React.createElement("div", {
+    className: classes.message
+  }, children), action != null ? /*#__PURE__*/React.createElement("div", {
+    className: classes.action
+  }, action) : null, action == null && onClose ? /*#__PURE__*/React.createElement("div", {
+    className: classes.action
+  }, /*#__PURE__*/React.createElement(IconButton, {
+    size: "small",
+    "aria-label": closeText,
+    title: closeText,
+    color: "inherit",
+    onClick: onClose
+  }, /*#__PURE__*/React.createElement(Close, {
+    fontSize: "small"
+  }))) : null);
+});
+Alert.propTypes = {
+  /**
+   * The action to display. It renders after the message, at the end of the alert.
+   */
+  action: PropTypes.node,
+
+  /**
+   * The content of the component.
+   */
+  children: PropTypes.node,
+
+  /**
+   * Override or extend the styles applied to the component.
+   * See [CSS API](#css) below for more details.
+   */
+  classes: PropTypes.object,
+
+  /**
+   * @ignore
+   */
+  className: PropTypes.string,
+
+  /**
+   * Override the default label for the *close popup* icon button.
+   *
+   * For localization purposes, you can use the provided [translations](/guides/localization/).
+   */
+  closeText: PropTypes.string,
+
+  /**
+   * The main color for the alert. Unless provided, the value is taken from the `severity` prop.
+   */
+  color: PropTypes.oneOf(["error", "info", "success", "warning"]),
+
+  /**
+   * Override the icon displayed before the children.
+   * Unless provided, the icon is mapped to the value of the `severity` prop.
+   */
+  icon: PropTypes.node,
+
+  /**
+   * The component maps the `severity` prop to a range of different icons,
+   * for instance success to `<SuccessOutlined>`.
+   * If you wish to change this mapping, you can provide your own.
+   * Alternatively, you can use the `icon` prop to override the icon displayed.
+   */
+  iconMapping: PropTypes.shape({
+    error: PropTypes.node,
+    info: PropTypes.node,
+    success: PropTypes.node,
+    warning: PropTypes.node
+  }),
+
+  /**
+   * Callback fired when the component requests to be closed.
+   * When provided and no `action` prop is set, a close icon button is displayed that triggers the callback when clicked.
+   *
+   * @param {object} event The event source of the callback.
+   */
+  onClose: PropTypes.func,
+
+  /**
+   * The ARIA role attribute of the element.
+   */
+  role: PropTypes.string,
+
+  /**
+   * The severity of the alert. This defines the color and icon used.
+   */
+  severity: PropTypes.oneOf(["error", "info", "success", "warning"]),
+
+  /**
+   * The variant to use.
+   */
+  variant: PropTypes.oneOf(["filled", "outlined", "standard"])
+};
+var Alert$1 = withStyles(styles, {
+  name: "MuiAlert"
+})(Alert);
+
+var mapFieldErrors = function mapFieldErrors(field, errors) {
+  var keys = Object.keys(errors);
+  var messages = keys.filter(function (k) {
+    return typeof errors[k] === "string";
+  });
+
+  if (messages.length > 0) {
+    return _defineProperty({}, field, messages.map(function (m) {
+      return errors[m];
+    }).join("\n"));
+  } else {
+    var out = keys.reduce(function (errorMap, key) {
+      return _objectSpread2(_objectSpread2({}, errorMap), mapFieldErrors(key, errors[key]));
+    }, {});
+    return Object.keys(out).length > 0 ? _defineProperty({}, field, out) : {};
+  }
+};
+
+var cakephpErrorMapper = function cakephpErrorMapper(errors) {
+  var fields = Object.keys(errors);
+  var validationErrors = fields.reduce(function (errorsMap, field) {
+    return _objectSpread2(_objectSpread2({}, errorsMap), mapFieldErrors(field, errors[field]));
+  }, {});
+  return validationErrors;
+};
+
+var createErrorMapper = function createErrorMapper() {
+  return function (error, notify) {
+    var errors = get$2(error, "body.data.errors", null);
+    var message = get$2(error, "body.data.message", null);
+
+    if (message) {
+      notify(message, {
+        type: "error"
+      });
+    }
+
+    if (errors) {
+      var mappedErrors = cakephpErrorMapper(errors);
+      return mappedErrors;
+    } else {
+      return false;
+    }
+  };
+};
+
+var useValidationSummary = function useValidationSummary() {
+  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+    groupName: undefined,
+    source: "validationErrors"
+  },
+      groupName = _ref.groupName,
+      source = _ref.source;
+
+  var _useFormState = useFormState({
+    subscription: {
+      submitFailed: true,
+      submitErrors: true
+    }
+  }),
+      submitErrors = _useFormState.submitErrors;
+
+  var formContext = useFormContext();
+  var defaultGroupName = useFormGroupContext();
+  var group = groupName || defaultGroupName;
+
+  var _useFormState2 = useFormState({
+    subscription: {
+      values: true
+    }
+  }),
+      values = _useFormState2.values;
+
+  return useMemo$1(function () {
+    var validationErrors = get$2(values, source);
+    var loading = validationErrors === undefined && values.id > 0;
+    var mode = values.id > 0 ? "edit" : "create";
+    var fields = formContext.getGroupFields(group);
+    var errors = fields.filter(function (field) {
+      return get$2(submitErrors, field) != null || get$2(validationErrors, field) != null;
+    });
+    var errorMaps = errors.length > 0 ? errors.reduce(function (acc, field) {
+      return _objectSpread2(_objectSpread2({}, acc), {}, _defineProperty({}, field, get$2(submitErrors, field) || get$2(validationErrors, field)));
+    }, {}) : {};
+    var errorMap = cakephpErrorMapper(errorMaps);
+    return {
+      errorsCount: Object.keys(errorMap).length,
+      errorKeys: errors,
+      errorMap: errorMap,
+      loading: loading,
+      mode: mode
+    };
+  }, [submitErrors, formContext, values, source, group]);
+};
+
+var useStyles$6 = makeStyles(function (theme) {
+  return {
+    progress: {
+      margin: theme.spacing(1)
+    },
+    spaced: {
+      marginTop: theme.spacing(1),
+      marginBottom: theme.spacing(2)
+    }
+  };
+});
+
+var detectState = function detectState(_ref) {
+  var errorsCount = _ref.errorsCount,
+      mode = _ref.mode,
+      loading = _ref.loading;
+  return mode === "create" ? "explain" : loading ? "loading" : errorsCount > 0 ? "warning" : "success";
+};
+
+var ValidationSummary = function ValidationSummary(_ref2) {
+  var _ref2$elevation = _ref2.elevation,
+      elevation = _ref2$elevation === void 0 ? 1 : _ref2$elevation,
+      _ref2$spaced = _ref2.spaced,
+      spaced = _ref2$spaced === void 0 ? true : _ref2$spaced,
+      _ref2$source = _ref2.source,
+      source = _ref2$source === void 0 ? "validationErrors" : _ref2$source,
+      _ref2$title = _ref2.title,
+      title = _ref2$title === void 0 ? {
+    warning: "ra.validation_summary.title.warning",
+    success: "ra.validation_summary.title.success",
+    loading: "ra.validation_summary.title.loading",
+    explain: "ra.validation_summary.title.explain"
+  } : _ref2$title,
+      _ref2$message = _ref2.message,
+      message = _ref2$message === void 0 ? {
+    warning: "ra.validation_summary.message.warning",
+    success: "ra.validation_summary.message.success",
+    loading: "ra.validation_summary.message.loading",
+    explain: "ra.validation_summary.message.explain"
+  } : _ref2$message,
+      _ref2$showWhenNoError = _ref2.showWhenNoErrors,
+      showWhenNoErrors = _ref2$showWhenNoError === void 0 ? true : _ref2$showWhenNoError,
+      resource = _ref2.resource,
+      children = _ref2.children;
+  var classes = useStyles$6();
+  var translate = useTranslate$2();
+
+  var _useValidationSummary = useValidationSummary({
+    source: source
+  }),
+      errorsCount = _useValidationSummary.errorsCount,
+      errorKeys = _useValidationSummary.errorKeys,
+      errorMap = _useValidationSummary.errorMap,
+      loading = _useValidationSummary.loading,
+      mode = _useValidationSummary.mode;
+
+  var _useMemo = useMemo$1(function () {
+    return {
+      groupTitle: title[detectState({
+        errorsCount: errorsCount,
+        mode: mode,
+        loading: loading
+      })],
+      groupMessage: message[detectState({
+        errorsCount: errorsCount,
+        mode: mode,
+        loading: loading
+      })],
+      severity: loading || mode === "create" ? "info" : errorsCount > 0 ? "warning" : "success"
+    };
+  }, [errorsCount, loading, mode, message, title]),
+      groupTitle = _useMemo.groupTitle,
+      groupMessage = _useMemo.groupMessage,
+      severity = _useMemo.severity;
+
+  if (resource == null || errorsCount === 0 && !showWhenNoErrors) {
+    return null;
+  }
+
+  return /*#__PURE__*/React__default.createElement(Alert$1, {
+    className: classnames(_defineProperty({}, classes.spaced, spaced)),
+    icon: false,
+    elevation: elevation,
+    severity: severity
+  }, /*#__PURE__*/React__default.createElement(Group, {
+    wrapper: true
+  }, /*#__PURE__*/React__default.createElement(GroupTitle, {
+    title: translate(groupTitle, {
+      count: errorsCount
+    }),
+    subTitle: translate(groupMessage, {
+      count: errorsCount
+    })
+  }), loading && /*#__PURE__*/React__default.createElement(Group, null, /*#__PURE__*/React__default.createElement(GroupItem, {
+    lg: 12,
+    md: 12,
+    sm: 12,
+    xs: 12
+  }, /*#__PURE__*/React__default.createElement(CircularProgress, {
+    className: classes.progress
+  }))), /*#__PURE__*/React__default.createElement(Group, null, /*#__PURE__*/React__default.createElement(GroupItem, {
+    lg: 10,
+    md: 11,
+    sm: 12
+  }, /*#__PURE__*/React__default.createElement(List$1, {
+    dense: true,
+    component: "nav",
+    color: "error"
+  }, errorKeys.map(function (field) {
+    return /*#__PURE__*/React__default.createElement(ValidationItem, {
+      key: field,
+      field: field,
+      error: errorMap[field],
+      resource: resource,
+      translate: translate,
+      component: children
+    });
+  }))))));
 };
 
 function useDebounce(value, delay) {
@@ -2298,7 +3501,7 @@ function useDebounce(value, delay) {
   return debouncedValue;
 }
 
-var _excluded$m = ["margin", "variant", "fullWidth", "maxLength", "multiline", "format", "rows", "disabled", "InputProps", "InputLabelProps"],
+var _excluded$l = ["margin", "variant", "fullWidth", "maxLength", "multiline", "format", "rows", "disabled", "InputProps", "InputLabelProps"],
     _excluded2$3 = ["name", "onChange"];
 
 var DebouncedTextInput = function DebouncedTextInput(_ref) {
@@ -2314,7 +3517,7 @@ var DebouncedTextInput = function DebouncedTextInput(_ref) {
       disabled = _ref.disabled,
       InputProps = _ref.InputProps,
       InputLabelProps = _ref.InputLabelProps,
-      props = _objectWithoutProperties(_ref, _excluded$m);
+      props = _objectWithoutProperties(_ref, _excluded$l);
 
   var className = props.className,
       source = props.source,
@@ -2424,6 +3627,9 @@ var DebouncedTextInput = function DebouncedTextInput(_ref) {
     }),
     InputLabelProps: InputLabelProps,
     InputProps: InputProps,
+    inputProps: {
+      maxLength: maxLength$1
+    },
     required: isRequired
   }));
 };
@@ -2488,11 +3694,199 @@ var DebouncedNumberInput = function DebouncedNumberInput(props) {
   }));
 };
 
-var _excluded$l = ["title"];
+var useWorkflowInput = function useWorkflowInput(_ref) {
+  var resource = _ref.resource,
+      source = _ref.source,
+      record = _ref.record;
+
+  var _useGetIdentity = useGetIdentity$1(),
+      loaded = _useGetIdentity.loaded,
+      loading = _useGetIdentity.loading,
+      identity = _useGetIdentity.identity;
+
+  var roles = useMemo$1(function () {
+    return !loading && loaded ? identity === null || identity === void 0 ? void 0 : identity.roles : [];
+  }, [identity, loading, loaded]);
+
+  var _useContext = useContext(WorkflowContext),
+      getWorkflow = _useContext.getWorkflow;
+
+  var workflow = useMemo$1(function () {
+    return getWorkflow(resource);
+  }, [resource, getWorkflow]);
+
+  var _useMemo = useMemo$1(function () {
+    var visible = workflow && workflow.canReadField(source, roles, record);
+    var disabled = workflow && !workflow.canEditField(source, roles, record);
+    return {
+      visible: visible,
+      disabled: disabled
+    };
+  }, [workflow, source, record, roles]),
+      visible = _useMemo.visible,
+      disabled = _useMemo.disabled;
+
+  return {
+    visible: visible,
+    disabled: disabled
+  };
+};
+
+var _excluded$k = ["component", "disabled"];
+
+var Input = function Input(_ref) {
+  var component = _ref.component;
+      _ref.disabled;
+      var props = _objectWithoutProperties(_ref, _excluded$k);
+
+  var _useMemo = useMemo$1(function () {
+    var resource = get$2(props, "resource", component.props.resource);
+    var source = get$2(props, "source", component.props.source);
+    var record = get$2(props, "record", component.props.record);
+    return {
+      resource: resource,
+      source: source,
+      record: record
+    };
+  }, [props, component]),
+      resource = _useMemo.resource,
+      source = _useMemo.source,
+      record = _useMemo.record;
+
+  var _useWorkflowInput = useWorkflowInput(_objectSpread2(_objectSpread2({}, props), {}, {
+    resource: resource,
+    source: source,
+    record: record
+  })),
+      visible = _useWorkflowInput.visible,
+      disable = _useWorkflowInput.disable;
+
+  if (!visible) {
+    return null;
+  }
+
+  return /*#__PURE__*/React__default.cloneElement(component, _objectSpread2(_objectSpread2(_objectSpread2({}, component.props), props), {}, {
+    disabled: disable,
+    resource: resource,
+    source: source,
+    record: record
+  }));
+};
+
+var InlineTextInput = function InlineTextInput(_ref) {
+  var source = _ref.source,
+      record = _ref.record,
+      resource = _ref.resource,
+      _ref$minWidth = _ref.minWidth,
+      minWidth = _ref$minWidth === void 0 ? 300 : _ref$minWidth;
+
+  var _useState = useState(get$2(record, source, "")),
+      _useState2 = _slicedToArray(_useState, 2),
+      value = _useState2[0],
+      setValue = _useState2[1];
+
+  var _useState3 = useState(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      updating = _useState4[0],
+      setUpdating = _useState4[1];
+
+  var handleChange = useCallback(function (evt) {
+    return setValue(evt.target.value);
+  }, []);
+  var dataProvider = useDataProvider$1();
+  var handleKeyPress = useCallback(function (evt) {
+    if (evt.key !== "Enter") {
+      return;
+    }
+
+    setUpdating(true);
+    dataProvider.update(resource, {
+      id: record.id,
+      data: _objectSpread2(_objectSpread2({}, record), {}, _defineProperty({}, source, value))
+    }).then(function () {
+      return setUpdating(false);
+    });
+  }, [value, dataProvider, resource, record, source]);
+  var handleBlur = useCallback(function () {
+    if (get$2(record, source) === value) {
+      return;
+    }
+
+    setUpdating(true);
+    dataProvider.update(resource, {
+      id: record.id,
+      data: _objectSpread2(_objectSpread2({}, record), {}, _defineProperty({}, source, value))
+    }).then(function () {
+      return setUpdating(false);
+    });
+  }, [value, dataProvider, resource, source, record]);
+  useEffect(function () {
+    return setValue(get$2(record, source));
+  }, [record, source]);
+  return /*#__PURE__*/React__default.createElement(TextField$2, {
+    value: value,
+    disabled: updating,
+    onChange: handleChange,
+    onKeyPress: handleKeyPress,
+    onBlur: handleBlur,
+    style: {
+      minWidth: minWidth,
+      width: "100%"
+    },
+    multiline: true,
+    InputProps: {
+      "arial-label": "naked"
+    }
+  });
+};
+
+var LanguageMessageInput = function LanguageMessageInput(props) {
+  return /*#__PURE__*/React__default.createElement(Fragment, null, /*#__PURE__*/React__default.createElement(TextField, _extends({}, props, {
+    source: "code",
+    variant: "caption",
+    fullWidth: true
+  })), /*#__PURE__*/React__default.createElement(Divider$1, null), /*#__PURE__*/React__default.createElement(InlineTextInput, _extends({}, props, {
+    fullWidth: true
+  })));
+};
+
+var _excluded$j = ["title", "disabled"];
+var useStyles$5 = makeStyles(function (theme) {
+  return {
+    labeled: {
+      padding: theme.spacing(1)
+    },
+    list: {
+      margin: theme.spacing(1)
+    }
+  };
+});
 
 var MediaInput = function MediaInput(_ref) {
   var title = _ref.title,
-      props = _objectWithoutProperties(_ref, _excluded$l);
+      disabled = _ref.disabled,
+      props = _objectWithoutProperties(_ref, _excluded$j);
+
+  var classes = useStyles$5();
+
+  if (disabled) {
+    var value = get$2(props.record, props.source);
+    var files = value ? Array.isArray(value) ? value : [value] : [];
+    return /*#__PURE__*/React__default.createElement(Labeled, _extends({}, props, {
+      className: classes.labeled
+    }), /*#__PURE__*/React__default.createElement(Fragment, null, files.map(function (file, index) {
+      return /*#__PURE__*/React__default.createElement(MediaField, {
+        key: index,
+        record: file,
+        source: "filepath",
+        title: title
+      });
+    }), /*#__PURE__*/React__default.createElement(FormHelperText, null, /*#__PURE__*/React__default.createElement(InputHelperText$1, {
+      touched: false,
+      error: false,
+      helperText: props.helperText
+    }))));
+  }
 
   return /*#__PURE__*/React__default.createElement(FileInput, props, /*#__PURE__*/React__default.createElement(MediaField, {
     source: "filepath",
@@ -2500,11 +3894,11 @@ var MediaInput = function MediaInput(_ref) {
   }));
 };
 
-var _excluded$k = ["optionText"];
+var _excluded$i = ["optionText"];
 
 var ReferenceAutocompleteInput$1 = function ReferenceAutocompleteInput(_ref) {
   var optionText = _ref.optionText,
-      props = _objectWithoutProperties(_ref, _excluded$k);
+      props = _objectWithoutProperties(_ref, _excluded$i);
 
   return /*#__PURE__*/React__default.createElement(ReferenceInput, props, /*#__PURE__*/React__default.createElement(AutocompleteInput, {
     optionText: optionText
@@ -2545,11 +3939,11 @@ var useManyParser = function useManyParser() {
   return memoizedFn;
 };
 
-var _excluded$j = ["optionText"];
+var _excluded$h = ["optionText"];
 
 var ReferenceCheckboxGroupInput = function ReferenceCheckboxGroupInput(_ref) {
   var optionText = _ref.optionText,
-      props = _objectWithoutProperties(_ref, _excluded$j);
+      props = _objectWithoutProperties(_ref, _excluded$h);
 
   var parse = useManyParser();
   var format = useManyFormatter();
@@ -2561,18 +3955,18 @@ var ReferenceCheckboxGroupInput = function ReferenceCheckboxGroupInput(_ref) {
   }));
 };
 
-var _excluded$i = ["optionText"];
+var _excluded$g = ["optionText"];
 
 var ReferenceAutocompleteInput = function ReferenceAutocompleteInput(_ref) {
   var optionText = _ref.optionText,
-      props = _objectWithoutProperties(_ref, _excluded$i);
+      props = _objectWithoutProperties(_ref, _excluded$g);
 
   return /*#__PURE__*/React__default.createElement(ReferenceInput, props, /*#__PURE__*/React__default.createElement(SelectInput, {
     optionText: optionText
   }));
 };
 
-var useStyles$5 = makeStyles$1(function (theme) {
+var useStyles$4 = makeStyles$1(function (theme) {
   return {
     required: {}
   };
@@ -2587,7 +3981,7 @@ var ConfirmMove = function ConfirmMove(_ref) {
       record = _ref.record,
       state = _ref.state,
       onCancel = _ref.onCancel;
-  var classes = useStyles$5();
+  var classes = useStyles$4();
   var refresh = useRefresh();
   var notify = useNotify();
 
@@ -2801,12 +4195,12 @@ var StateCollectionInput = function StateCollectionInput(_ref) {
   }));
 };
 
-var _excluded$h = ["filter"];
+var _excluded$f = ["filter"];
 
 var StateInput = function StateInput(_ref) {
   var _ref$filter = _ref.filter,
       filter = _ref$filter === void 0 ? undefined : _ref$filter,
-      props = _objectWithoutProperties(_ref, _excluded$h);
+      props = _objectWithoutProperties(_ref, _excluded$f);
 
   var _useContext = useContext(WorkflowContext),
       getWorkflow = _useContext.getWorkflow;
@@ -2847,14 +4241,14 @@ var TransactionNotesInput = function TransactionNotesInput(props) {
   }));
 };
 
-var _excluded$g = ["label", "helperText", "admin"];
+var _excluded$e = ["label", "helperText", "admin"];
 
 var TransactionNotesIsPrivateInput = function TransactionNotesIsPrivateInput(_ref) {
   var label = _ref.label,
       helperText = _ref.helperText,
       _ref$admin = _ref.admin,
       admin = _ref$admin === void 0 ? false : _ref$admin,
-      props = _objectWithoutProperties(_ref, _excluded$g);
+      props = _objectWithoutProperties(_ref, _excluded$e);
 
   var fieldLabel = useFieldLabel({
     resource: "transactions"
@@ -2873,33 +4267,37 @@ var TransactionNotesIsPrivateInput = function TransactionNotesIsPrivateInput(_re
 
 var inputs = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  ReferenceCheckboxGroupInput: ReferenceCheckboxGroupInput,
-  ReferenceAutocompleteInput: ReferenceAutocompleteInput$1,
-  ReferenceSelectInput: ReferenceAutocompleteInput,
-  SearchInput: SearchInput,
-  TextInput: TextInput,
-  SelectInput: SelectInput,
   BooleanInput: BooleanInput,
   DateInput: DateInput,
   DateTimeInput: DateTimeInput,
-  NumberInput: NumberInput,
-  MediaInput: MediaInput,
-  StateInput: StateInput,
-  StateCollectionInput: StateCollectionInput,
-  TransactionNotesIsPrivateInput: TransactionNotesIsPrivateInput,
-  TransactionNotesInput: TransactionNotesInput,
   DebouncedDateInput: DebouncedDateInput,
   DebouncedNumberInput: DebouncedNumberInput,
-  DebouncedTextInput: DebouncedTextInput
+  DebouncedTextInput: DebouncedTextInput,
+  Input: Input,
+  LanguageMessageInput: LanguageMessageInput,
+  MediaInput: MediaInput,
+  NullableBooleanInput: NullableBooleanInput,
+  NumberInput: NumberInput,
+  RecordInput: InlineTextInput,
+  ReferenceAutocompleteInput: ReferenceAutocompleteInput$1,
+  ReferenceCheckboxGroupInput: ReferenceCheckboxGroupInput,
+  ReferenceSelectInput: ReferenceAutocompleteInput,
+  SearchInput: SearchInput,
+  SelectInput: SelectInput,
+  StateCollectionInput: StateCollectionInput,
+  StateInput: StateInput,
+  TextInput: TextInput,
+  TransactionNotesInput: TransactionNotesInput,
+  TransactionNotesIsPrivateInput: TransactionNotesIsPrivateInput
 });
 
-var _excluded$f = ["children"];
+var _excluded$d = ["children", "evenOdd"];
 
 var getWidthToSubtract = function getWidthToSubtract(w) {
   return w + (window.innerWidth - document.documentElement.clientWidth);
 };
 
-var useStyles$4 = makeStyles$1(function (theme) {
+var useStyles$3 = makeStyles$1(function (theme) {
   return {
     container: function container(_ref) {
       var sidebarOpen = _ref.sidebarOpen,
@@ -2922,7 +4320,9 @@ var useStyles$4 = makeStyles$1(function (theme) {
 
 var Datagrid = function Datagrid(_ref3) {
   var children = _ref3.children,
-      props = _objectWithoutProperties(_ref3, _excluded$f);
+      _ref3$evenOdd = _ref3.evenOdd,
+      evenOdd = _ref3$evenOdd === void 0 ? true : _ref3$evenOdd,
+      props = _objectWithoutProperties(_ref3, _excluded$d);
 
   var _useContext = useContext(LayoutContext),
       drawerWidth = _useContext.drawerWidth;
@@ -2930,20 +4330,55 @@ var Datagrid = function Datagrid(_ref3) {
   var sidebarOpen = useSelector$1(function (state) {
     return state.admin.ui.sidebarOpen;
   });
-  var classes = useStyles$4({
+  var classes = useStyles$3({
     sidebarOpen: sidebarOpen,
     drawerWidth: drawerWidth
   });
   return /*#__PURE__*/React__default.createElement("div", {
     className: classes.container
   }, /*#__PURE__*/React__default.createElement(Datagrid$1, _extends({
-    classes: {
+    classes: evenOdd ? {
       rowEven: classes.rowEven
-    }
+    } : undefined
   }, props), children));
 };
 
-var _excluded$e = ["component", "componentProps", "components", "addLabel", "sortBy"];
+var handleRowClick = function handleRowClick(id, basePath, record) {
+  return record === null || record === void 0 ? void 0 : record.resource;
+};
+
+var NotificationList = function NotificationList(_ref) {
+  var props = _extends({}, _ref);
+
+  var theme = useTheme();
+  var handleRowStyle = useCallback(function (record) {
+    return {
+      marginLeft: -2,
+      borderLeftWidth: 2,
+      borderLeftStyle: "solid",
+      borderLeftColor: record !== null && record !== void 0 && record.readed ? lighten(theme.palette.primary.light, 0.9) : theme.palette.warning.light,
+      backgroundColor: record !== null && record !== void 0 && record.readed ? lighten(theme.palette.primary.light, 0.9) : lighten(theme.palette.warning.light, 0.8)
+    };
+  }, [theme]);
+  return /*#__PURE__*/React__default.createElement(Datagrid, _extends({}, props, {
+    evenOdd: false,
+    rowClick: handleRowClick,
+    rowStyle: handleRowStyle
+  }), /*#__PURE__*/React__default.createElement(NotificationField, {
+    source: "notification",
+    sortable: false
+  }), /*#__PURE__*/React__default.createElement(DateAgoField, {
+    source: "created"
+  }));
+};
+
+var lists = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  Datagrid: Datagrid,
+  NotificationList: NotificationList
+});
+
+var _excluded$c = ["component", "componentProps", "components", "addLabel", "sortBy"];
 
 var Component = function Component(_ref) {
   var component = _ref.component,
@@ -2952,7 +4387,7 @@ var Component = function Component(_ref) {
       _ref$addLabel = _ref.addLabel,
       addLabel = _ref$addLabel === void 0 ? true : _ref$addLabel;
       _ref.sortBy;
-      var props = _objectWithoutProperties(_ref, _excluded$e);
+      var props = _objectWithoutProperties(_ref, _excluded$c);
 
   var Component = get$2(components, component);
 
@@ -2969,66 +4404,6 @@ var Component = function Component(_ref) {
   }
 
   return /*#__PURE__*/React__default.createElement(Component, _extends({}, props, componentProps));
-};
-
-var _excluded$d = ["component", "disabled"];
-
-var Input = function Input(_ref) {
-  var component = _ref.component,
-      disabled = _ref.disabled,
-      props = _objectWithoutProperties(_ref, _excluded$d);
-
-  var _useGetIdentity = useGetIdentity$1(),
-      loaded = _useGetIdentity.loaded,
-      loading = _useGetIdentity.loading,
-      identity = _useGetIdentity.identity;
-
-  var roles = useMemo$1(function () {
-    return !loading && loaded ? identity === null || identity === void 0 ? void 0 : identity.roles : [];
-  }, [identity, loading, loaded]);
-
-  var _useMemo = useMemo$1(function () {
-    var resource = get$2(props, "resource", component.props.resource);
-    var source = get$2(props, "source", component.props.source);
-    var record = get$2(props, "record", component.props.record);
-    return {
-      resource: resource,
-      source: source,
-      record: record
-    };
-  }, [props, component]),
-      resource = _useMemo.resource,
-      source = _useMemo.source,
-      record = _useMemo.record;
-
-  var _useContext = useContext(WorkflowContext),
-      getWorkflow = _useContext.getWorkflow;
-
-  var workflow = useMemo$1(function () {
-    return getWorkflow(resource);
-  }, [resource, getWorkflow]);
-
-  var _useMemo2 = useMemo$1(function () {
-    var visible = workflow && workflow.canReadField(source, roles, record);
-    var disable = disabled || workflow && !workflow.canEditField(source, roles, record);
-    return {
-      visible: visible,
-      disable: disable
-    };
-  }, [workflow, source, record, roles, disabled]),
-      visible = _useMemo2.visible,
-      disable = _useMemo2.disable;
-
-  if (!visible) {
-    return null;
-  }
-
-  return /*#__PURE__*/React__default.cloneElement(component, _objectSpread2(_objectSpread2(_objectSpread2({}, component.props), props), {}, {
-    disabled: disable,
-    resource: resource,
-    source: source,
-    record: record
-  }));
 };
 
 var _require = require("ra-core"),
@@ -3051,13 +4426,13 @@ var useCustomComponents = function useCustomComponents(resource) {
   }, [resources, resource]);
 };
 
-var _excluded$c = ["tabs"],
+var _excluded$b = ["tabs"],
     _excluded2$2 = ["componentProps"],
-    _excluded3 = ["fullWidth"];
+    _excluded3$1 = ["fullWidth"];
 
 var TabbedForm = function TabbedForm(_ref) {
   var tabs = _ref.tabs,
-      props = _objectWithoutProperties(_ref, _excluded$c);
+      props = _objectWithoutProperties(_ref, _excluded$b);
 
   var _useContext = useContext(CrudContext),
       getForm = _useContext.getForm;
@@ -3078,7 +4453,7 @@ var TabbedForm = function TabbedForm(_ref) {
     var label = _ref2.componentProps.label,
         tab = _objectWithoutProperties(_ref2, _excluded2$2);
 
-    return /*#__PURE__*/React__default.createElement(FormTab, {
+    return /*#__PURE__*/React__default.createElement(FormTab$1, {
       key: index,
       label: label
     }, tab === null || tab === void 0 ? void 0 : (_tab$inputs = tab.inputs) === null || _tab$inputs === void 0 ? void 0 : _tab$inputs.map(function (_ref3) {
@@ -3088,7 +4463,7 @@ var TabbedForm = function TabbedForm(_ref) {
           useWorkflow = _ref3.useWorkflow,
           _ref3$componentProps = _ref3.componentProps,
           fullWidth = _ref3$componentProps.fullWidth,
-          restComponentProps = _objectWithoutProperties(_ref3$componentProps, _excluded3);
+          restComponentProps = _objectWithoutProperties(_ref3$componentProps, _excluded3$1);
 
       return form !== null && form !== void 0 && form.useWorkflow && workflow !== null && useWorkflow === true ? /*#__PURE__*/React__default.createElement(Input, {
         key: source,
@@ -3120,136 +4495,6 @@ var TabbedForm = function TabbedForm(_ref) {
   }));
 };
 
-var _excluded$b = ["children", "mutationMode", "validating", "maxButtonsToDisplay"];
-var useStyles$3 = makeStyles(function (theme) {
-  return {
-    toolbar: {
-      "& .MuiButton-root": {
-        marginRight: theme.spacing(1)
-      }
-    }
-  };
-});
-
-var Toolbar = function Toolbar(_ref) {
-  var children = _ref.children;
-      _ref.mutationMode;
-      _ref.validating;
-      var _ref$maxButtonsToDisp = _ref.maxButtonsToDisplay,
-      maxButtonsToDisplay = _ref$maxButtonsToDisp === void 0 ? 1 : _ref$maxButtonsToDisp,
-      props = _objectWithoutProperties(_ref, _excluded$b);
-
-  var form = useForm();
-  var classes = useStyles$3();
-  var handleSubmitWithRedirect = props.handleSubmitWithRedirect,
-      record = props.record;
-
-  var _useGetIdentity = useGetIdentity(),
-      loading = _useGetIdentity.loading,
-      loaded = _useGetIdentity.loaded,
-      identity = _useGetIdentity.identity;
-
-  var roles = useMemo$1(function () {
-    return !loading && loaded ? identity === null || identity === void 0 ? void 0 : identity.roles : [];
-  }, [loading, loaded, identity]);
-
-  var _useContext = useContext(WorkflowContext),
-      getWorkflow = _useContext.getWorkflow;
-
-  var workflow = useMemo$1(function () {
-    return getWorkflow(props.resource);
-  }, [getWorkflow, props.resource]);
-
-  var _useMemo = useMemo$1(function () {
-    var save = workflow && workflow.canEdit(roles, record) && get$2(record, "id", 0) > 0;
-    var states = workflow && workflow.getNextStates(roles, record) || [];
-    return {
-      states: states,
-      save: save
-    };
-  }, [workflow, record, roles]),
-      states = _useMemo.states,
-      save = _useMemo.save;
-
-  var handleClick = useCallback(function () {
-    form.change("state", get$2(record, "transaction.state", get$2(record, "state")));
-    handleSubmitWithRedirect("list");
-  }, [form, record, handleSubmitWithRedirect]);
-
-  if (!record) {
-    return null;
-  }
-
-  return /*#__PURE__*/React__default.createElement(Toolbar$2, _extends({}, props, {
-    classes: classes
-  }), save && /*#__PURE__*/React__default.createElement(SaveButton, _extends({}, props, {
-    color: "primary",
-    handleSubmitWithRedirect: handleClick,
-    disabled: props.saving
-  })), states.length > maxButtonsToDisplay && /*#__PURE__*/React__default.createElement(StateButtonMenu, _extends({
-    states: states
-  }, props, {
-    disabled: props.saving
-  })), states.length <= maxButtonsToDisplay && states.map(function (state) {
-    return /*#__PURE__*/React__default.createElement(StateButton$1, _extends({
-      key: get$2(state, "code"),
-      state: state
-    }, props, {
-      disabled: props.saving
-    }));
-  }), React__default.Children.count(children) > 0 && React__default.Children.map(children, function (child, key) {
-    return /*#__PURE__*/React__default.cloneElement(child, _objectSpread2(_objectSpread2({}, props), {}, {
-      key: key
-    }));
-  }), /*#__PURE__*/React__default.createElement(BackButton, null));
-};
-
-var mapFieldErrors = function mapFieldErrors(field, errors) {
-  var keys = Object.keys(errors);
-  var messages = keys.filter(function (k) {
-    return typeof errors[k] === "string";
-  });
-
-  if (messages.length > 0) {
-    return _defineProperty({}, field, messages.map(function (m) {
-      return errors[m];
-    }).join("\n"));
-  } else {
-    var out = keys.reduce(function (errorMap, key) {
-      return _objectSpread2(_objectSpread2({}, errorMap), mapFieldErrors(key, errors[key]));
-    }, {});
-    return _defineProperty({}, field, out);
-  }
-};
-
-var cakephpErrorMapper = function cakephpErrorMapper(errors) {
-  var fields = Object.keys(errors);
-  var validationErrors = fields.reduce(function (errorsMap, field) {
-    return _objectSpread2(_objectSpread2({}, errorsMap), mapFieldErrors(field, errors[field]));
-  }, {});
-  return validationErrors;
-};
-
-var createErrorMapper = function createErrorMapper() {
-  return function (error, notify) {
-    var errors = get$2(error, "body.data.errors", null);
-    var message = get$2(error, "body.data.message", null);
-
-    if (message) {
-      notify(message, {
-        type: "error"
-      });
-    }
-
-    if (errors) {
-      var mappedErrors = cakephpErrorMapper(errors);
-      return mappedErrors;
-    } else {
-      return false;
-    }
-  };
-};
-
 var useSaveMutation = function useSaveMutation(_ref) {
   var basePath = _ref.basePath,
       _ref$errorMapper = _ref.errorMapper,
@@ -3259,7 +4504,8 @@ var useSaveMutation = function useSaveMutation(_ref) {
       _ref$redir = _ref.redir,
       redir = _ref$redir === void 0 ? null : _ref$redir,
       redirect = _ref.redirect,
-      refresh = _ref.refresh,
+      _ref$refresh = _ref.refresh,
+      refresh = _ref$refresh === void 0 ? true : _ref$refresh,
       resource = _ref.resource,
       _ref$transform = _ref.transform,
       transform = _ref$transform === void 0 ? undefined : _ref$transform,
@@ -3275,7 +4521,7 @@ var useSaveMutation = function useSaveMutation(_ref) {
   var notify = useNotify$1();
   var save = useCallback( /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(values) {
-      var response;
+      var response, errors;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -3295,15 +4541,16 @@ var useSaveMutation = function useSaveMutation(_ref) {
 
             case 3:
               response = _context.sent;
-              _context.next = 9;
+              _context.next = 10;
               break;
 
             case 6:
               _context.prev = 6;
               _context.t0 = _context["catch"](0);
-              return _context.abrupt("return", errorMapper(_context.t0, notify));
+              errors = errorMapper(_context.t0, notify);
+              return _context.abrupt("return", errors);
 
-            case 9:
+            case 10:
               if (!onSuccess) {
                 if (redir) {
                   redirect(redir);
@@ -3325,7 +4572,7 @@ var useSaveMutation = function useSaveMutation(_ref) {
                 });
               } else onSuccess(response, values);
 
-            case 10:
+            case 11:
             case "end":
               return _context.stop();
           }
@@ -3349,7 +4596,8 @@ var Form = function Form(_ref) {
 
   var _useContext = useContext(CrudContext),
       getForm = _useContext.getForm,
-      loading = _useContext.loading;
+      loading = _useContext.loading,
+      components = _useContext.components;
 
   var _useContext2 = useContext(WorkflowContext),
       getWorkflow = _useContext2.getWorkflow;
@@ -3361,7 +4609,10 @@ var Form = function Form(_ref) {
     return form !== null && form !== void 0 && form.useWorkflow ? getWorkflow(props.resource) : null;
   }, [props.resource, getWorkflow, form]);
   var customComponents = useCustomComponents(props.resource);
-  var save = useSaveMutation(_objectSpread2({}, props));
+  var save = useSaveMutation(_objectSpread2(_objectSpread2({}, props), {}, {
+    refresh: form === null || form === void 0 ? void 0 : form.refresh,
+    redirect: form === null || form === void 0 ? void 0 : form.redirect
+  }));
 
   if (loading) {
     return /*#__PURE__*/React__default.createElement(Loading, null);
@@ -3380,10 +4631,10 @@ var Form = function Form(_ref) {
     redirect: form === null || form === void 0 ? void 0 : form.redirect,
     component: form === null || form === void 0 ? void 0 : form.component,
     componentProps: form === null || form === void 0 ? void 0 : form.componentProps,
-    components: {
+    components: _objectSpread2(_objectSpread2({
       SimpleForm: SimpleForm,
       TabbedForm: TabbedForm
-    }
+    }, components), customComponents)
   }), form === null || form === void 0 ? void 0 : (_form$inputs = form.inputs) === null || _form$inputs === void 0 ? void 0 : _form$inputs.map(function (_ref2) {
     var source = _ref2.source,
         label = _ref2.label,
@@ -3393,7 +4644,7 @@ var Form = function Form(_ref) {
         fullWidth = _ref2$componentProps.fullWidth,
         restComponentProps = _objectWithoutProperties(_ref2$componentProps, _excluded$a);
 
-    return form !== null && form !== void 0 && form.useWorkflow && workflow !== null && useWorkflow === true ? /*#__PURE__*/React__default.createElement(Input, {
+    return form !== null && form !== void 0 && form.useWorkflow && workflow !== null && useWorkflow === true ? /*#__PURE__*/React__default.createElement(InputHelperText$1, {
       key: source,
       source: source,
       fullWidth: true,
@@ -3406,7 +4657,7 @@ var Form = function Form(_ref) {
         componentProps: _objectSpread2({
           fullWidth: fullWidth
         }, restComponentProps),
-        components: _objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), customComponents)
+        components: _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), components), customComponents)
       })
     }) : /*#__PURE__*/React__default.createElement(Component, {
       key: source,
@@ -3417,59 +4668,27 @@ var Form = function Form(_ref) {
       componentProps: _objectSpread2({
         fullWidth: fullWidth
       }, restComponentProps),
-      components: _objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), customComponents)
+      components: _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, fields), inputs), components), customComponents)
     });
   }));
 };
 
 var Create$1 = function Create(props) {
-  return /*#__PURE__*/React__default.createElement(Create$3, props, /*#__PURE__*/React__default.createElement(Form, null));
-};
-
-var Create = function Create(props) {
   return /*#__PURE__*/React__default.createElement(Create$2, props, /*#__PURE__*/React__default.createElement(Form, null));
 };
 
-var useFiltersStyles = makeStyles$1(function (theme) {
-  return _defineProperty({
-    form: {
-      flexWrap: "nowrap",
-      "& .filter-field > div:last-child": {
-        width: theme.spacing(1)
-      }
-    }
-  }, theme.breakpoints.down("md"), {
-    button: {
-      display: "none"
-    }
-  });
-}, {
-  name: "RaFilters"
-});
-
-var _excluded$9 = ["children"];
-
-var Filters = function Filters(_ref) {
-  var children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded$9);
-
-  var classes = useFiltersStyles();
-  return /*#__PURE__*/React__default.createElement(Filter, _extends({
-    classes: classes
-  }, props), React__default.Children.map(children, function (child, i) {
-    return /*#__PURE__*/React__default.cloneElement(child ? child : /*#__PURE__*/React__default.createElement(Fragment, null), {
-      key: i,
-      fullWidth: true
-    });
-  }));
+var Create = function Create(props) {
+  return /*#__PURE__*/React__default.createElement(Edit, props, /*#__PURE__*/React__default.createElement(Form, null));
 };
 
-var _excluded$8 = ["grid"],
-    _excluded2$1 = ["className", "exporter", "filters"];
+var _excluded$9 = ["grid", "customComponents"],
+    _excluded2$1 = ["className", "exporter", "filters"],
+    _excluded3 = ["label", "component", "componentProps"];
 
-var ListActions = function ListActions(_ref) {
+var Actions = function Actions(_ref) {
   var grid = _ref.grid,
-      props = _objectWithoutProperties(_ref, _excluded$8);
+      customComponents = _ref.customComponents,
+      props = _objectWithoutProperties(_ref, _excluded$9);
 
   var className = props.className,
       exporter = props.exporter,
@@ -3491,7 +4710,7 @@ var ListActions = function ListActions(_ref) {
 
   var filters = useContext(FilterContext) || filtersProp;
   return useMemo$1(function () {
-    var _grid$exportTo;
+    var _grid$exportTo, _grid$actions;
 
     return /*#__PURE__*/React.createElement(TopToolbar, _extends({
       className: className
@@ -3501,7 +4720,7 @@ var ListActions = function ListActions(_ref) {
       displayedFilters: displayedFilters,
       filterValues: filterValues,
       context: "button"
-    }) : filters && /*#__PURE__*/React.createElement(FilterButton, null), hasCreate && /*#__PURE__*/React.createElement(CreateButton, {
+    }) : filters && /*#__PURE__*/React.createElement(FilterButton, null), (grid === null || grid === void 0 ? void 0 : grid.canCreate) !== false && hasCreate && /*#__PURE__*/React.createElement(CreateButton, {
       basePath: basePath
     }), (grid === null || grid === void 0 ? void 0 : (_grid$exportTo = grid.exportTo) === null || _grid$exportTo === void 0 ? void 0 : _grid$exportTo.length) > 0 ? /*#__PURE__*/React.createElement(ExportToButton, {
       exportTo: grid === null || grid === void 0 ? void 0 : grid.exportTo,
@@ -3514,13 +4733,26 @@ var ListActions = function ListActions(_ref) {
       resource: resource,
       sort: currentSort,
       filterValues: filterValues
+    }), grid === null || grid === void 0 ? void 0 : (_grid$actions = grid.actions) === null || _grid$actions === void 0 ? void 0 : _grid$actions.map(function (_ref2, index) {
+      var label = _ref2.label,
+          component = _ref2.component,
+          componentProps = _ref2.componentProps,
+          props = _objectWithoutProperties(_ref2, _excluded3);
+
+      return /*#__PURE__*/React.createElement(Component, _extends({}, props, {
+        key: index,
+        label: label,
+        component: component,
+        componentProps: componentProps,
+        components: _objectSpread2(_objectSpread2({}, buttons), customComponents)
+      }));
     }));
   },
   /* eslint-disable react-hooks/exhaustive-deps */
   [resource, displayedFilters, filterValues, showFilter, filters, total, basePath, className, currentSort, exporter, hasCreate]);
 };
 
-ListActions.propTypes = {
+Actions.propTypes = {
   basePath: PropTypes.string,
   className: PropTypes.string,
   currentSort: PropTypes.any,
@@ -3535,11 +4767,32 @@ ListActions.propTypes = {
   showFilter: PropTypes.func,
   total: PropTypes.number
 };
-ListActions.defaultProps = {
+Actions.defaultProps = {
   selectedIds: [],
   onUnselectItems: function onUnselectItems() {
     return null;
   }
+};
+
+var _excluded$8 = ["grid", "customComponents"];
+
+var BulkActionButtons = function BulkActionButtons(_ref) {
+  var _grid$bulkActionButto;
+
+  var grid = _ref.grid,
+      customComponents = _ref.customComponents,
+      props = _objectWithoutProperties(_ref, _excluded$8);
+
+  return /*#__PURE__*/React__default.createElement(Fragment, null, grid === null || grid === void 0 ? void 0 : (_grid$bulkActionButto = grid.bulkActionButtons) === null || _grid$bulkActionButto === void 0 ? void 0 : _grid$bulkActionButto.map(function (_ref2, index) {
+    var component = _ref2.component,
+        componentProps = _ref2.componentProps;
+    return /*#__PURE__*/React__default.createElement(Component, _extends({}, props, {
+      key: index,
+      component: component,
+      componentProps: componentProps,
+      components: _objectSpread2(_objectSpread2({}, buttons), customComponents)
+    }));
+  }), (grid === null || grid === void 0 ? void 0 : grid.canDelete) !== false && /*#__PURE__*/React__default.createElement(BulkDeleteButton, props));
 };
 
 var exporter = function exporter(grid, data, translate) {
@@ -3565,64 +4818,11 @@ var exporter = function exporter(grid, data, translate) {
   });
 };
 
-var useListStyles = makeStyles(function (theme) {
-  var _ref;
-
-  return _ref = {}, _defineProperty(_ref, theme.breakpoints.up("lg"), {
-    main: {
-      "& table td, table th": {
-        whiteSpace: "nowrap"
-      }
-    }
-  }), _defineProperty(_ref, theme.breakpoints.down("md"), {//   main: {
-    //     background: theme.palette.background.default,
-    //     marginTop: theme.spacing(2),
-    //     display: "block",
-    //   },
-    //   content: {
-    //     boxShadow: "none",
-    //   },
-    //   root: {
-    //     padding: theme.spacing(2),
-    //   },
-  }), _defineProperty(_ref, theme.breakpoints.down("sm"), {
-    bulkActionsDisplayed: {
-      "& .MuiToolbar-regular:first-child": {
-        display: "flex",
-        flexDirection: "column",
-        flexBasis: "auto",
-        height: "auto",
-        "& .MuiToolbar-root": {
-          background: "inherit",
-          padding: 0,
-          flexWrap: "wrap",
-          justifyContent: "flex-start",
-          paddingBottom: theme.spacing(1),
-          width: "100%"
-        },
-        "& div:nth-child(1)": {
-          paddingTop: theme.spacing(1),
-          paddingBottom: theme.spacing(1)
-        }
-      }
-    }
-  }), _defineProperty(_ref, "bulkActionsDisplayed", {
-    "& .MuiToolbar-regular:first-child": {
-      "& .MuiToolbar-root": {
-        flexWrap: "wrap"
-      }
-    }
-  }), _ref;
-}, {
-  name: "RaMobileList"
-});
-
-var _excluded$7 = ["source", "label", "component", "componentProps"];
+var _excluded$7 = ["source", "component", "componentProps"];
 
 var List = function List(props) {
   var _grid$filters, _grid$columns;
 
-  var classes = useListStyles();
   var translate = useTranslate$1();
 
   var _React$useContext = React.useContext(CrudContext$1),
@@ -3646,23 +4846,26 @@ var List = function List(props) {
   }
 
   return /*#__PURE__*/React.createElement(List$2, _extends({}, props, {
-    classes: classes,
     title: grid.title,
     filter: grid.filter || {},
-    actions: /*#__PURE__*/React.createElement(ListActions, {
-      grid: grid
+    actions: /*#__PURE__*/React.createElement(Actions, {
+      grid: grid,
+      customComponents: customComponents
     }),
     pagination: grid === null || grid === void 0 ? void 0 : grid.pagination,
-    exporter: function exporter$1(data) {
+    exporter: (grid === null || grid === void 0 ? void 0 : grid.exporter) !== false ? function (data) {
       return exporter(grid, data, translate);
-    },
+    } : false,
     filterDefaultValues: grid.filterDefaultValues || {},
     sort: grid === null || grid === void 0 ? void 0 : grid.sort,
     perPage: grid === null || grid === void 0 ? void 0 : grid.perPage,
-    filters: grid !== null && grid !== void 0 && grid.filters ? /*#__PURE__*/React.createElement(Filters, null, grid === null || grid === void 0 ? void 0 : (_grid$filters = grid.filters) === null || _grid$filters === void 0 ? void 0 : _grid$filters.map(function (_ref) {
-      var source = _ref.source;
-          _ref.label;
-          var component = _ref.component,
+    bulkActionButtons: /*#__PURE__*/React.createElement(BulkActionButtons, {
+      grid: grid,
+      customComponents: customComponents
+    }),
+    filters: grid !== null && grid !== void 0 && grid.filters ? /*#__PURE__*/React.createElement(Filter, null, grid === null || grid === void 0 ? void 0 : (_grid$filters = grid.filters) === null || _grid$filters === void 0 ? void 0 : _grid$filters.map(function (_ref) {
+      var source = _ref.source,
+          component = _ref.component,
           componentProps = _ref.componentProps,
           props = _objectWithoutProperties(_ref, _excluded$7);
 
@@ -3678,10 +4881,10 @@ var List = function List(props) {
   }), grid !== null && grid !== void 0 && grid.component && (grid === null || grid === void 0 ? void 0 : grid.component) !== "Datagrid" ? /*#__PURE__*/React.createElement(Component, {
     component: grid.component,
     componentProps: grid.componentProps,
-    components: _objectSpread2({
+    components: _objectSpread2(_objectSpread2({
       Datagrid: Datagrid,
       SimpleList: SimpleList
-    }, customComponents)
+    }, lists), customComponents)
   }) : isMobile ? /*#__PURE__*/React.createElement(SimpleList, {
     primaryText: function primaryText(record) {
       return grid !== null && grid !== void 0 && grid.mobilePrimaryComponent ? /*#__PURE__*/React.createElement(Component, _extends({}, grid.mobilePrimaryComponent, {
@@ -3705,7 +4908,7 @@ var List = function List(props) {
       })) : get$2(record, grid === null || grid === void 0 ? void 0 : grid.mobileTertiaryText);
     },
     linkType: grid === null || grid === void 0 ? void 0 : grid.mobileLinkType
-  }) : /*#__PURE__*/React.createElement(Datagrid, null, grid === null || grid === void 0 ? void 0 : (_grid$columns = grid.columns) === null || _grid$columns === void 0 ? void 0 : _grid$columns.map(function (_ref2) {
+  }) : /*#__PURE__*/React.createElement(Datagrid, grid === null || grid === void 0 ? void 0 : grid.componentProps, grid === null || grid === void 0 ? void 0 : (_grid$columns = grid.columns) === null || _grid$columns === void 0 ? void 0 : _grid$columns.map(function (_ref2) {
     var source = _ref2.source,
         label = _ref2.label,
         sortable = _ref2.sortable,
@@ -3768,7 +4971,7 @@ var CrudResource = function CrudResource(_ref) {
       var components = _ref.components,
       props = _objectWithoutProperties(_ref, _excluded$6);
 
-  var additionalProps = useMemo$1(function () {
+  var crudProps = useMemo$1(function () {
     return createCrud({
       icon: icon,
       options: _objectSpread2(_objectSpread2({}, options), {}, {
@@ -3778,13 +4981,7 @@ var CrudResource = function CrudResource(_ref) {
       components: components
     });
   }, [icon, roles, group, options, components]);
-  return [/*#__PURE__*/React__default.createElement(Resource, _extends({
-    key: props.name
-  }, props, additionalProps)), /*#__PURE__*/React__default.createElement(Resource, {
-    intent: "registration",
-    name: "workflow/transactions/".concat(props.name),
-    key: "".concat(props.name, "-transactions")
-  })];
+  return /*#__PURE__*/React__default.createElement(Resource, _extends({}, crudProps, props));
 };
 
 CrudResource.propTypes = {
@@ -4163,10 +5360,7 @@ var RecaptchaInput = function RecaptchaInput(_ref3) {
           // eslint-disable-next-line no-undef
           grecaptcha.execute(siteKey, {
             action: "submit"
-          }).then(function (token) {
-            console.info("token:", token);
-            onChange(token);
-          });
+          }).then(onChange);
         });
       }
     });
@@ -4376,7 +5570,7 @@ var SpidSignupForm = function SpidSignupForm(_ref3) {
     gutterBottom: true,
     display: "block",
     color: "textPrimary"
-  }, title), subTitle, initialValues == null && /*#__PURE__*/React__default.createElement(CircularProgress, null), initialValues != null && /*#__PURE__*/React__default.createElement(Create$4, _extends({
+  }, title), subTitle, initialValues == null && /*#__PURE__*/React__default.createElement(CircularProgress, null), initialValues != null && /*#__PURE__*/React__default.createElement(Create$2, _extends({
     basePath: resource,
     resource: resource
   }, props), /*#__PURE__*/React__default.createElement(SimpleForm, {
@@ -4427,7 +5621,7 @@ var createI18nProvider = function createI18nProvider(_ref) {
 var queued = [];
 
 var putMessage = function putMessage(apiUrl, locale, message) {
-  return message.indexOf("[") === -1 && message.indexOf("]") === -1 && queued.indexOf("".concat(locale, "-").concat(message)) === -1 && queued.push("".concat(locale, "-").concat(message)) && fetch("".concat(apiUrl, "/languages/put-message"), {
+  return message != null && message !== "undefined" && message.indexOf("[") === -1 && message.indexOf("]") === -1 && queued.indexOf("".concat(locale, "-").concat(message)) === -1 && queued.push("".concat(locale, "-").concat(message)) && fetch("".concat(apiUrl, "/languages/put-message"), {
     method: "PUT",
     headers: new Headers({
       Accept: "application/json",
@@ -4446,7 +5640,7 @@ var putMessage = function putMessage(apiUrl, locale, message) {
 var useI18nCatcher = function useI18nCatcher(_ref) {
   var apiUrl = _ref.apiUrl,
       loading = _ref.loading;
-  var locale = useLocale();
+  var locale = useLocale$1();
   React.useMemo(function () {
     if (process.env.NODE_ENV === "production") {
       return;
@@ -5079,4 +6273,28 @@ var useDataFormatter = function useDataFormatter() {
   return memoizedFn;
 };
 
-export { AppBar, BackButton, Badge, ChipArrayField, CrudContext, CrudProvider, CrudResource, DebouncedDateInput, DebouncedNumberInput, DebouncedTextInput, EditButton, ExportToButton, Layout, LocalLoginForm, LoginPage, LongTextField, MediaField, MediaInput, Menu$1 as Menu, MenuGroup, MenuItem, ReferenceAutocompleteInput$1 as ReferenceAutocompleteInput, ReferenceCheckboxGroupInput, ReferenceAutocompleteInput as ReferenceSelectInput, Sidebar, SignupPage, SignupStepper, SpidLoginForm, SpidSignupForm, StateButton$1 as StateButton, StateButtonMenu, StateCollectionInput, StateField, StateInput, TransactionLogsField, TransactionNotesInput, TransactionNotesIsPrivateInput, UserMenu, UserMenuItem, WorkflowContext, WorkflowProvider, convertFile, createAuthProvider, createDataFormatter, createDataProvider, createErrorMapper, createFilesParser, createI18nProvider, createManyFormatter, createManyParser, getHeaders, getToken, useAuthProvider, useCrud, useDataFormatter, useDataProvider, useI18nCatcher, useI18nLanguages, useI18nProvider, useManyFormatter, useManyParser, useSaveMutation, useToken, useWorkflow };
+function beep() {
+  var snd = new Audio("data:audio/wav;base64,//uQRAAAAWMSLwUIYAAsYkXgoQwAEaYLWfkWgAI0wWs/ItAAAGDgYtAgAyN+QWaAAihwMWm4G8QQRDiMcCBcH3Cc+CDv/7xA4Tvh9Rz/y8QADBwMWgQAZG/ILNAARQ4GLTcDeIIIhxGOBAuD7hOfBB3/94gcJ3w+o5/5eIAIAAAVwWgQAVQ2ORaIQwEMAJiDg95G4nQL7mQVWI6GwRcfsZAcsKkJvxgxEjzFUgfHoSQ9Qq7KNwqHwuB13MA4a1q/DmBrHgPcmjiGoh//EwC5nGPEmS4RcfkVKOhJf+WOgoxJclFz3kgn//dBA+ya1GhurNn8zb//9NNutNuhz31f////9vt///z+IdAEAAAK4LQIAKobHItEIYCGAExBwe8jcToF9zIKrEdDYIuP2MgOWFSE34wYiR5iqQPj0JIeoVdlG4VD4XA67mAcNa1fhzA1jwHuTRxDUQ//iYBczjHiTJcIuPyKlHQkv/LHQUYkuSi57yQT//uggfZNajQ3Vmz+Zt//+mm3Wm3Q576v////+32///5/EOgAAADVghQAAAAA//uQZAUAB1WI0PZugAAAAAoQwAAAEk3nRd2qAAAAACiDgAAAAAAABCqEEQRLCgwpBGMlJkIz8jKhGvj4k6jzRnqasNKIeoh5gI7BJaC1A1AoNBjJgbyApVS4IDlZgDU5WUAxEKDNmmALHzZp0Fkz1FMTmGFl1FMEyodIavcCAUHDWrKAIA4aa2oCgILEBupZgHvAhEBcZ6joQBxS76AgccrFlczBvKLC0QI2cBoCFvfTDAo7eoOQInqDPBtvrDEZBNYN5xwNwxQRfw8ZQ5wQVLvO8OYU+mHvFLlDh05Mdg7BT6YrRPpCBznMB2r//xKJjyyOh+cImr2/4doscwD6neZjuZR4AgAABYAAAABy1xcdQtxYBYYZdifkUDgzzXaXn98Z0oi9ILU5mBjFANmRwlVJ3/6jYDAmxaiDG3/6xjQQCCKkRb/6kg/wW+kSJ5//rLobkLSiKmqP/0ikJuDaSaSf/6JiLYLEYnW/+kXg1WRVJL/9EmQ1YZIsv/6Qzwy5qk7/+tEU0nkls3/zIUMPKNX/6yZLf+kFgAfgGyLFAUwY//uQZAUABcd5UiNPVXAAAApAAAAAE0VZQKw9ISAAACgAAAAAVQIygIElVrFkBS+Jhi+EAuu+lKAkYUEIsmEAEoMeDmCETMvfSHTGkF5RWH7kz/ESHWPAq/kcCRhqBtMdokPdM7vil7RG98A2sc7zO6ZvTdM7pmOUAZTnJW+NXxqmd41dqJ6mLTXxrPpnV8avaIf5SvL7pndPvPpndJR9Kuu8fePvuiuhorgWjp7Mf/PRjxcFCPDkW31srioCExivv9lcwKEaHsf/7ow2Fl1T/9RkXgEhYElAoCLFtMArxwivDJJ+bR1HTKJdlEoTELCIqgEwVGSQ+hIm0NbK8WXcTEI0UPoa2NbG4y2K00JEWbZavJXkYaqo9CRHS55FcZTjKEk3NKoCYUnSQ0rWxrZbFKbKIhOKPZe1cJKzZSaQrIyULHDZmV5K4xySsDRKWOruanGtjLJXFEmwaIbDLX0hIPBUQPVFVkQkDoUNfSoDgQGKPekoxeGzA4DUvnn4bxzcZrtJyipKfPNy5w+9lnXwgqsiyHNeSVpemw4bWb9psYeq//uQZBoABQt4yMVxYAIAAAkQoAAAHvYpL5m6AAgAACXDAAAAD59jblTirQe9upFsmZbpMudy7Lz1X1DYsxOOSWpfPqNX2WqktK0DMvuGwlbNj44TleLPQ+Gsfb+GOWOKJoIrWb3cIMeeON6lz2umTqMXV8Mj30yWPpjoSa9ujK8SyeJP5y5mOW1D6hvLepeveEAEDo0mgCRClOEgANv3B9a6fikgUSu/DmAMATrGx7nng5p5iimPNZsfQLYB2sDLIkzRKZOHGAaUyDcpFBSLG9MCQALgAIgQs2YunOszLSAyQYPVC2YdGGeHD2dTdJk1pAHGAWDjnkcLKFymS3RQZTInzySoBwMG0QueC3gMsCEYxUqlrcxK6k1LQQcsmyYeQPdC2YfuGPASCBkcVMQQqpVJshui1tkXQJQV0OXGAZMXSOEEBRirXbVRQW7ugq7IM7rPWSZyDlM3IuNEkxzCOJ0ny2ThNkyRai1b6ev//3dzNGzNb//4uAvHT5sURcZCFcuKLhOFs8mLAAEAt4UWAAIABAAAAAB4qbHo0tIjVkUU//uQZAwABfSFz3ZqQAAAAAngwAAAE1HjMp2qAAAAACZDgAAAD5UkTE1UgZEUExqYynN1qZvqIOREEFmBcJQkwdxiFtw0qEOkGYfRDifBui9MQg4QAHAqWtAWHoCxu1Yf4VfWLPIM2mHDFsbQEVGwyqQoQcwnfHeIkNt9YnkiaS1oizycqJrx4KOQjahZxWbcZgztj2c49nKmkId44S71j0c8eV9yDK6uPRzx5X18eDvjvQ6yKo9ZSS6l//8elePK/Lf//IInrOF/FvDoADYAGBMGb7FtErm5MXMlmPAJQVgWta7Zx2go+8xJ0UiCb8LHHdftWyLJE0QIAIsI+UbXu67dZMjmgDGCGl1H+vpF4NSDckSIkk7Vd+sxEhBQMRU8j/12UIRhzSaUdQ+rQU5kGeFxm+hb1oh6pWWmv3uvmReDl0UnvtapVaIzo1jZbf/pD6ElLqSX+rUmOQNpJFa/r+sa4e/pBlAABoAAAAA3CUgShLdGIxsY7AUABPRrgCABdDuQ5GC7DqPQCgbbJUAoRSUj+NIEig0YfyWUho1VBBBA//uQZB4ABZx5zfMakeAAAAmwAAAAF5F3P0w9GtAAACfAAAAAwLhMDmAYWMgVEG1U0FIGCBgXBXAtfMH10000EEEEEECUBYln03TTTdNBDZopopYvrTTdNa325mImNg3TTPV9q3pmY0xoO6bv3r00y+IDGid/9aaaZTGMuj9mpu9Mpio1dXrr5HERTZSmqU36A3CumzN/9Robv/Xx4v9ijkSRSNLQhAWumap82WRSBUqXStV/YcS+XVLnSS+WLDroqArFkMEsAS+eWmrUzrO0oEmE40RlMZ5+ODIkAyKAGUwZ3mVKmcamcJnMW26MRPgUw6j+LkhyHGVGYjSUUKNpuJUQoOIAyDvEyG8S5yfK6dhZc0Tx1KI/gviKL6qvvFs1+bWtaz58uUNnryq6kt5RzOCkPWlVqVX2a/EEBUdU1KrXLf40GoiiFXK///qpoiDXrOgqDR38JB0bw7SoL+ZB9o1RCkQjQ2CBYZKd/+VJxZRRZlqSkKiws0WFxUyCwsKiMy7hUVFhIaCrNQsKkTIsLivwKKigsj8XYlwt/WKi2N4d//uQRCSAAjURNIHpMZBGYiaQPSYyAAABLAAAAAAAACWAAAAApUF/Mg+0aohSIRobBAsMlO//Kk4soosy1JSFRYWaLC4qZBYWFRGZdwqKiwkNBVmoWFSJkWFxX4FFRQWR+LsS4W/rFRb/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////VEFHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAU291bmRib3kuZGUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMjAwNGh0dHA6Ly93d3cuc291bmRib3kuZGUAAAAAAAAAACU=");
+  snd.play();
+}
+
+var useTabVisibiliy = function useTabVisibiliy(tab) {
+  var _useLocation = useLocation(),
+      pathname = _useLocation.pathname;
+
+  var _useState = useState(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      visible = _useState2[0],
+      setVisible = _useState2[1];
+
+  useEffect(function () {
+    var args = pathname.split("/");
+
+    if (tab === 0 && args.length === 3 || pathname.endsWith("/".concat(tab))) {
+      setVisible(true);
+    }
+  }, [pathname, tab]);
+  return visible;
+};
+
+export { AppBar, BackButton, Badge, ChipArrayField, CrudContext, CrudProvider, CrudResource, Datagrid, DateAgoField, DebouncedDateInput, DebouncedNumberInput, DebouncedTextInput, DeleteWithConfirmButton, EditButton, ExportToButton, FormTab, Group, GroupItem, GroupTitle, Input, LanguageMessageInput, Layout, LocalLoginForm, LoginPage, LongTextField, MarkAsReadedButton, MarkAsUnreadedButton, MediaField, MediaInput, Menu$1 as Menu, MenuGroup, MenuItem, NotificationField, NotificationList, ProgressField, InlineTextInput as RecordInput, ReferenceAutocompleteInput$1 as ReferenceAutocompleteInput, ReferenceCheckboxGroupInput, ReferenceListField, ReferenceAutocompleteInput as ReferenceSelectInput, ReferenceToolbar, Sidebar, SignupPage, SignupStepper, SpidLoginForm, SpidSignupForm, StateButton$1 as StateButton, StateButtonMenu, StateCollectionInput, StateField, StateInput, Toolbar, TransactionLogsField, TransactionNotesInput, TransactionNotesIsPrivateInput, Unprop, UserMenu, UserMenuItem, ValidationItem, ValidationSummary, WorkflowContext, WorkflowProvider, beep, convertFile, createAuthProvider, createDataFormatter, createDataProvider, createErrorMapper, createFilesParser, createI18nProvider, createManyFormatter, createManyParser, getHeaders, getToken, useAuthProvider, useCrud, useDataFormatter, useDataProvider, useDebounce, useFieldLabel, useI18nCatcher, useI18nLanguages, useI18nProvider, useManyFormatter, useManyParser, useSaveMutation, useTabVisibiliy as useTabVisibility, useToken, useWorkflow, useWorkflowInput };

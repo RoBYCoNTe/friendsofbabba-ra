@@ -120,6 +120,9 @@ const DebouncedTextInput = ({
       }
       InputLabelProps={InputLabelProps}
       InputProps={InputProps}
+      inputProps={{
+        maxLength,
+      }}
       required={isRequired}
     />
   );

@@ -1,4 +1,5 @@
 import { get } from "lodash";
+
 const mapFieldErrors = (field, errors) => {
   const keys = Object.keys(errors);
   const messages = keys.filter((k) => typeof errors[k] === "string");
@@ -15,13 +16,16 @@ const mapFieldErrors = (field, errors) => {
       }),
       {}
     );
-    return {
-      [field]: out,
-    };
+
+    return Object.keys(out).length > 0
+      ? {
+          [field]: out,
+        }
+      : {};
   }
 };
 
-let cakephpErrorMapper = (errors) => {
+export const cakephpErrorMapper = (errors) => {
   var fields = Object.keys(errors);
   var validationErrors = fields.reduce((errorsMap, field) => {
     return {
