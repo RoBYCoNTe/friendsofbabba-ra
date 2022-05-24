@@ -92,10 +92,11 @@ const App = () => {
           <Resource name="workflow/transactions/projects" />
           <Resource name="municipalities" group="admin" />
 
-          <CrudResource name="users" group="admin" />
+          <CrudResource name="users" group="admin" roles={["admin"]} />
           <CrudResource
             name="language-messages"
             group="admin"
+            roles={["admin"]}
             icon={Icons.FlagOutlined}
           />
         </Admin>

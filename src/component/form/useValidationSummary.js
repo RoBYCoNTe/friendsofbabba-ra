@@ -48,6 +48,7 @@ const useValidationSummary = (
           )
         : {};
     const errorMap = cakephpErrorMapper(errorMaps);
+
     return {
       errorsCount: Object.keys(errorMap).length,
       errorKeys: errors,

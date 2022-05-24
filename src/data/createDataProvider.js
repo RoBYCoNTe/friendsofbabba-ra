@@ -1,8 +1,8 @@
-import { fetchJson } from "./fetch";
-import { stringify } from "query-string";
-import { getHeaders } from "./authHeaders";
-import defaultPrepareData from "./cakephp/createDataFormatter";
 import createFilesParser from "./createFilesParser";
+import defaultPrepareData from "./cakephp/createDataFormatter";
+import { fetchJson } from "./fetch";
+import { getHeaders } from "./authHeaders";
+import { stringify } from "query-string";
 
 const createDataProvider = ({
   apiUrl,

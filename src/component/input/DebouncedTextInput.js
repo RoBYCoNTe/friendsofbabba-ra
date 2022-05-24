@@ -46,8 +46,8 @@ const DebouncedTextInput = ({
   const [value, setValue] = React.useState(
     rest.value !== undefined ? rest.value : defaultValue
   );
-  const formState = useFormState();
-  const formValue = get(formState.values, source, defaultValue);
+  const { values } = useFormState({ subscription: { values: true } });
+  const formValue = get(values, source, defaultValue);
   const didMountEffect = useRef(false);
   const didUpdateValue = useRef(false);
   useEffect(() => {

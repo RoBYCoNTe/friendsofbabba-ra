@@ -1,4 +1,4 @@
-import { HttpError } from "react-admin";
+import { HttpError } from "ra-core";
 import { stringify } from "query-string";
 
 export const createHeadersFromOptions = (options) => {
@@ -38,15 +38,7 @@ export const fetchJson = (url, options = {}) => {
         // not json, no big deal
       }
       if (status < 200 || status >= 300) {
-        return Promise.reject(
-          new HttpError(
-            (json && json.data && json.data.message
-              ? json.data.message
-              : json.message) || statusText,
-            status,
-            json
-          )
-        );
+        return Promise.reject(new HttpError(statusText, status, json));
       }
       return Promise.resolve({ status, headers, body, json });
     });

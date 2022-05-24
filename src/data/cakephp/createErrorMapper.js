@@ -4,7 +4,11 @@ const mapFieldErrors = (field, errors) => {
   const keys = Object.keys(errors);
   const messages = keys.filter((k) => typeof errors[k] === "string");
 
-  if (messages.length > 0) {
+  if (typeof errors === "string") {
+    return {
+      [field]: errors,
+    };
+  } else if (messages.length > 0 && isNaN(parseInt(field))) {
     return {
       [field]: messages.map((m) => errors[m]).join("\n"),
     };
@@ -37,8 +41,8 @@ export const cakephpErrorMapper = (errors) => {
 };
 
 const createErrorMapper = () => (error, notify) => {
-  const errors = get(error, "body.data.errors", null);
-  const message = get(error, "body.data.message", null);
+  const errors = get(error, "body.data.errors");
+  const message = get(error, "body.data.message", error?.message);
   if (message) {
     notify(message, { type: "error" });
   }

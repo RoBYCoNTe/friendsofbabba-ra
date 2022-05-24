@@ -2331,7 +2331,7 @@ var ReferenceListField = function ReferenceListField(_ref2) {
     }) : null;
   }), modify && /*#__PURE__*/React__default["default"].createElement(reactAdmin.EditButton, null), remove && /*#__PURE__*/React__default["default"].createElement(DeleteWithConfirmButton, {
     redirect: removeRedirect
-  }))), submitError && /*#__PURE__*/React__default["default"].createElement(core.FormHelperText, {
+  }))), submitError && typeof submitError === "string" && /*#__PURE__*/React__default["default"].createElement(core.FormHelperText, {
     error: true,
     className: classes.error
   }, submitError), create && (record === null || record === void 0 ? void 0 : record.id) > 0 && /*#__PURE__*/React__default["default"].createElement(reactAdmin.TopToolbar, {
@@ -3326,7 +3326,9 @@ var mapFieldErrors = function mapFieldErrors(field, errors) {
     return typeof errors[k] === "string";
   });
 
-  if (messages.length > 0) {
+  if (typeof errors === "string") {
+    return _defineProperty({}, field, errors);
+  } else if (messages.length > 0 && isNaN(parseInt(field))) {
     return _defineProperty({}, field, messages.map(function (m) {
       return errors[m];
     }).join("\n"));
@@ -3348,8 +3350,8 @@ var cakephpErrorMapper = function cakephpErrorMapper(errors) {
 
 var createErrorMapper = function createErrorMapper() {
   return function (error, notify) {
-    var errors = lodash.get(error, "body.data.errors", null);
-    var message = lodash.get(error, "body.data.message", null);
+    var errors = lodash.get(error, "body.data.errors");
+    var message = lodash.get(error, "body.data.message", error === null || error === void 0 ? void 0 : error.message);
 
     if (message) {
       notify(message, {
@@ -3613,8 +3615,14 @@ var DebouncedTextInput = function DebouncedTextInput(_ref) {
       value = _React$useState2[0],
       setValue = _React$useState2[1];
 
-  var formState = reactFinalForm.useFormState();
-  var formValue = lodash.get(formState.values, source, defaultValue);
+  var _useFormState = reactFinalForm.useFormState({
+    subscription: {
+      values: true
+    }
+  }),
+      values = _useFormState.values;
+
+  var formValue = lodash.get(values, source, defaultValue);
   var didMountEffect = React.useRef(false);
   var didUpdateValue = React.useRef(false);
   React.useEffect(function () {
@@ -5861,7 +5869,7 @@ var createAuthProvider = function createAuthProvider(_ref) {
     },
     checkError: function checkError(error) {
       if (error.status === 401 || error.status === 500) {
-        return Promise.reject();
+        return Promise.reject(error === null || error === void 0 ? void 0 : error.message);
       }
 
       return Promise.resolve();
@@ -5915,57 +5923,6 @@ var createAuthProvider = function createAuthProvider(_ref) {
       return Promise.resolve();
     }
   };
-};
-
-var fetchJson = function fetchJson(url) {
-  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  return fetch(url, _objectSpread2({}, options)).then(function (response) {
-    return response.text().then(function (text) {
-      return {
-        status: response.status,
-        statusText: response.statusText,
-        headers: response.headers,
-        body: text
-      };
-    });
-  }).then(function (_ref) {
-    var status = _ref.status,
-        statusText = _ref.statusText,
-        headers = _ref.headers,
-        body = _ref.body;
-    var json;
-
-    try {
-      json = JSON.parse(body);
-    } catch (e) {// not json, no big deal
-    }
-
-    if (status < 200 || status >= 300) {
-      return Promise.reject(new reactAdmin.HttpError((json && json.data && json.data.message ? json.data.message : json.message) || statusText, status, json));
-    }
-
-    return Promise.resolve({
-      status: status,
-      headers: headers,
-      body: body,
-      json: json
-    });
-  });
-};
-
-// Remove unwanted _joinData props from JSON object before submission to the rest service.
-var createDataFormatter = function createDataFormatter(data) {
-  return Object.keys(data).reduce(function (r, key) {
-    return _objectSpread2(_objectSpread2({}, r), {}, _defineProperty({}, key, Array.isArray(data[key]) ? data[key].map(function (item) {
-      if (item._joinData === null) {
-        return {
-          id: item.id
-        };
-      }
-
-      return item;
-    }) : data[key]));
-  }, {});
 };
 
 var createFilesParser = function createFilesParser() {
@@ -6036,6 +5993,57 @@ var createFilesParser = function createFilesParser() {
       return _ref.apply(this, arguments);
     };
   }();
+};
+
+// Remove unwanted _joinData props from JSON object before submission to the rest service.
+var createDataFormatter = function createDataFormatter(data) {
+  return Object.keys(data).reduce(function (r, key) {
+    return _objectSpread2(_objectSpread2({}, r), {}, _defineProperty({}, key, Array.isArray(data[key]) ? data[key].map(function (item) {
+      if (item._joinData === null) {
+        return {
+          id: item.id
+        };
+      }
+
+      return item;
+    }) : data[key]));
+  }, {});
+};
+
+var fetchJson = function fetchJson(url) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  return fetch(url, _objectSpread2({}, options)).then(function (response) {
+    return response.text().then(function (text) {
+      return {
+        status: response.status,
+        statusText: response.statusText,
+        headers: response.headers,
+        body: text
+      };
+    });
+  }).then(function (_ref) {
+    var status = _ref.status,
+        statusText = _ref.statusText,
+        headers = _ref.headers,
+        body = _ref.body;
+    var json;
+
+    try {
+      json = JSON.parse(body);
+    } catch (e) {// not json, no big deal
+    }
+
+    if (status < 200 || status >= 300) {
+      return Promise.reject(new raCore.HttpError(statusText, status, json));
+    }
+
+    return Promise.resolve({
+      status: status,
+      headers: headers,
+      body: body,
+      json: json
+    });
+  });
 };
 
 var createDataProvider = function createDataProvider(_ref) {

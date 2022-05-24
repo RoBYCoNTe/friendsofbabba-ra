@@ -113,7 +113,7 @@ const ReferenceListField = ({
           </Datagrid>
         )}
       </ReferenceManyField>
-      {submitError && (
+      {submitError && typeof submitError === "string" && (
         <FormHelperText error className={classes.error}>
           {submitError}
         </FormHelperText>
