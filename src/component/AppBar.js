@@ -1,6 +1,10 @@
 import { IconButton, Toolbar, useMediaQuery } from "@material-ui/core";
 import { LoadingIndicator, useGetIdentity, useTranslate } from "react-admin";
 import React, { useCallback } from "react";
+import {
+  useIsImpersonating,
+  useUndoImpersonate,
+} from "../data/createAuthProvider";
 
 import MenuIcon from "@material-ui/icons/Menu";
 import { AppBar as MuiAppBar } from "@material-ui/core";
@@ -49,6 +53,19 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     flexGrow: 1,
   },
+  welcome: {
+    lineHeight: "1.2em",
+  },
+  undoImpersonate: {
+    display: "block",
+    clear: "both",
+    marginTop: -theme.spacing(0.5),
+    fontSize: 12,
+    cursor: "pointer",
+    "&:hover": {
+      textDecoration: "underline",
+    },
+  },
 }));
 
 const AppBar = ({
@@ -61,13 +78,22 @@ const AppBar = ({
   const classes = useStyles({ drawerWidth });
   const dispatch = useDispatch();
   const translate = useTranslate();
+  const isImpersonating = useIsImpersonating();
+  const undoImpersonate = useUndoImpersonate();
+  const handleUndoClick = useCallback(
+    (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      undoImpersonate();
+    },
+    [undoImpersonate]
+  );
   const isXSmall = useMediaQuery((theme) => theme.breakpoints.down("xs"));
   const { identity } = useGetIdentity();
   const handleToggleSidebar = useCallback(
     () => dispatch(toggleSidebar()),
     [dispatch]
   );
-
   return (
     <MuiAppBar
       position="fixed"
@@ -98,8 +124,22 @@ const AppBar = ({
         />
         {!isXSmall && <div className={classes.spacer} />}
         {!isXSmall && (
-          <Typography variant="body1">
+          <Typography
+            variant="body1"
+            component="div"
+            className={classes.welcome}
+          >
             {translate("app.welcome", identity)}
+            {isImpersonating && (
+              <Typography
+                variant="body1"
+                display="block"
+                onClick={handleUndoClick}
+                className={classes.undoImpersonate}
+              >
+                {translate("ra.auth.impersonating.undo", identity)}
+              </Typography>
+            )}
           </Typography>
         )}
         <LoadingIndicator />

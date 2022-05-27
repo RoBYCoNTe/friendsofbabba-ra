@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const setLoggedIn = ({ data }) => {
+  localStorage.setItem("email", data.email);
   localStorage.setItem("token", data.token);
   localStorage.setItem("roles", JSON.stringify(data.roles));
   localStorage.setItem("username", data.username);
@@ -93,6 +94,7 @@ const SpidLoginForm = ({
           onClick={stopPropagation}
           component="a"
           color="primary"
+          type="button"
           variant="contained"
           href={login}
           fullWidth

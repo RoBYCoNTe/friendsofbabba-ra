@@ -17,6 +17,7 @@ import BulkActionButtons from "./BulkActionButtons.js";
 import Component from "./Component";
 import { CrudContext } from "friendsofbabba-ra";
 import Datagrid from "../list/Datagrid";
+import Empty from "./Empty.js";
 import exporter from "./exporter";
 import { get } from "lodash";
 import useCustomComponents from "./useCustomComponents";
@@ -53,6 +54,7 @@ const List = (props) => {
       }
       filterDefaultValues={grid.filterDefaultValues || {}}
       sort={grid?.sort}
+      empty={<Empty grid={grid} />}
       perPage={grid?.perPage}
       bulkActionButtons={
         <BulkActionButtons grid={grid} customComponents={customComponents} />

@@ -1,4 +1,52 @@
 import { getHeaders, notifyToken } from "./authHeaders";
+import { useAuthProvider, useNotify, useRedirect } from "ra-core";
+
+import { useCallback } from "react";
+
+export const useIsImpersonating = () => {
+  const impersonate = localStorage.getItem("impersonate");
+  return impersonate === "true";
+};
+
+export const useDoImpersonate = (id) => {
+  const authProvider = useAuthProvider();
+  const redirect = useRedirect();
+  const notify = useNotify();
+  const handle = useCallback(
+    () =>
+      authProvider
+        .impersonate(id)
+        .then(() => {
+          notify("ra.auth.sign_in_success", "info");
+          redirect("/");
+          setTimeout(() => window.location.reload(), 1000);
+        })
+        .catch(() => {
+          notify("ra.auth.sign_in_error", "warning");
+        }),
+    [authProvider, notify, redirect, id]
+  );
+  return handle;
+};
+
+export const useUndoImpersonate = () => {
+  const authProvider = useAuthProvider();
+  const redirect = useRedirect();
+  const notify = useNotify();
+  const handleImpersonateLogout = useCallback(
+    () =>
+      authProvider
+        .stopImpersonate()
+        .then(() => {
+          redirect("/");
+          notify("ra.auth.sign_out_success", "info");
+          setTimeout(() => document.location.reload(), 1000);
+        })
+        .catch((error) => notify(error, "warning")),
+    [authProvider, redirect, notify]
+  );
+  return handleImpersonateLogout;
+};
 
 const createAuthProvider = ({ apiUrl }) => ({
   login: (params) => {
@@ -18,6 +66,7 @@ const createAuthProvider = ({ apiUrl }) => ({
         if (!success) {
           throw new Error(data.message);
         }
+        localStorage.setItem("email", data.email);
         localStorage.setItem("token", data.token);
         localStorage.setItem("roles", JSON.stringify(data.roles));
         localStorage.setItem("profile", JSON.stringify(data.profile));
@@ -25,6 +74,7 @@ const createAuthProvider = ({ apiUrl }) => ({
       });
   },
   logout: () => {
+    localStorage.removeItem("email");
     localStorage.removeItem("token");
     localStorage.removeItem("roles");
     localStorage.removeItem("profile");
@@ -48,9 +98,11 @@ const createAuthProvider = ({ apiUrl }) => ({
   getIdentity: () => {
     const profile = JSON.parse(localStorage.getItem("profile"));
     const roles = JSON.parse(localStorage.getItem("roles"));
+    const email = localStorage.getItem("email");
     return Promise.resolve({
       ...profile,
       roles,
+      email,
     });
   },
 
@@ -66,7 +118,7 @@ const createAuthProvider = ({ apiUrl }) => ({
         if (!success) {
           throw new Error(data.message);
         }
-        ["token", "roles", "username", "profile"].forEach((param) => {
+        ["token", "roles", "username", "profile", "email"].forEach((param) => {
           const toSaveParam = `admin_${param}`;
           localStorage.setItem(toSaveParam, localStorage.getItem(param));
           localStorage.setItem(
@@ -80,7 +132,7 @@ const createAuthProvider = ({ apiUrl }) => ({
       });
   },
   stopImpersonate() {
-    ["token", "roles", "username", "profile"].forEach((param) => {
+    ["token", "roles", "username", "profile", "email"].forEach((param) => {
       const savedParam = `admin_${param}`;
       localStorage.setItem(param, localStorage.getItem(savedParam));
       localStorage.removeItem(savedParam);

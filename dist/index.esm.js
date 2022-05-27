@@ -1,8 +1,9 @@
 import { useMediaQuery, AppBar as AppBar$1, Toolbar as Toolbar$1, IconButton as IconButton$1, Badge as Badge$1, makeStyles as makeStyles$1, List as List$1, ListSubheader, Divider, ListItem, ListItemIcon, ListItemText, Drawer, Typography as Typography$1, MenuItem as MenuItem$1, Link as Link$1, Box, LinearProgress, FormHelperText, Button as Button$2, Grid, ListItemAvatar, Avatar, CircularProgress, TextField as TextField$2, Dialog, DialogTitle, DialogContent, DialogContentText, FormControlLabel, Switch, DialogActions, Menu as Menu$3, ThemeProvider as ThemeProvider$1, Stepper, Step, StepLabel, StepContent } from '@material-ui/core';
-import { useTranslate as useTranslate$1, useGetIdentity, LoadingIndicator, getResources as getResources$2, defaultTheme, Notification, Button, DeleteWithConfirmButton as DeleteWithConfirmButton$1, EditButton as EditButton$1, useRefresh, useNotify, useUnselectAll, useUpdateMany, SaveButton, DeleteButton, ArrayField, SingleFieldList, ChipField, DateField, useInput, ReferenceManyField, SimpleList, Datagrid as Datagrid$1, TopToolbar, TextField, Pagination, BooleanField, FormInput, Toolbar as Toolbar$2, useDataProvider as useDataProvider$1, Labeled, InputHelperText as InputHelperText$1, FileInput, ReferenceInput, AutocompleteInput, ReferenceArrayInput, CheckboxGroupInput, SelectInput, useUpdate, BooleanInput, DateInput, DateTimeInput, NullableBooleanInput, NumberInput, SearchInput, TextInput, TabbedForm as TabbedForm$1, FormTab as FormTab$1, Loading, SimpleForm, Create as Create$2, Edit, FilterContext, FilterButton, CreateButton, ExportButton as ExportButton$1, BulkDeleteButton, downloadCSV, List as List$2, Filter, Resource, LoginForm, Login, useRedirect as useRedirect$1, resolveBrowserLocale, useLocale as useLocale$1 } from 'react-admin';
+import { useTranslate as useTranslate$1, useGetIdentity, LoadingIndicator, getResources as getResources$2, defaultTheme, Notification, Button, DeleteWithConfirmButton as DeleteWithConfirmButton$1, EditButton as EditButton$1, useRefresh, useNotify as useNotify$1, useUnselectAll, useUpdateMany, SaveButton, DeleteButton, ArrayField, SingleFieldList, ChipField, DateField, useInput, ReferenceManyField, SimpleList, Datagrid as Datagrid$1, TopToolbar, TextField, Pagination, BooleanField, FormInput, Toolbar as Toolbar$2, useDataProvider as useDataProvider$1, Labeled, InputHelperText as InputHelperText$1, FileInput, ReferenceInput, AutocompleteInput, ReferenceArrayInput, CheckboxGroupInput, SelectInput, useUpdate, BooleanInput, DateInput, DateTimeInput, NullableBooleanInput, NumberInput, SearchInput, TextInput, TabbedForm as TabbedForm$1, FormTab as FormTab$1, Loading, SimpleForm, Create as Create$2, Edit, FilterContext, FilterButton, CreateButton, ExportButton as ExportButton$1, BulkDeleteButton, downloadCSV, List as List$2, Filter, Resource, LoginForm, Login, useRedirect as useRedirect$1, resolveBrowserLocale, useLocale as useLocale$1 } from 'react-admin';
 export { BooleanField, BooleanInput, ChipField, DateField, DateInput, DateTimeInput, NullableBooleanInput, NumberInput, DeleteButton as RaDeleteButton, EditButton as RaEditButton, SearchInput, SelectInput, TextField, TextInput } from 'react-admin';
 import * as React from 'react';
-import React__default, { useCallback, createElement, useRef, useState, useEffect, useMemo as useMemo$1, createContext, useContext, Fragment, isValidElement, cloneElement } from 'react';
+import React__default, { useMemo as useMemo$1, useCallback, createElement, useRef, useState, useEffect, createContext, useContext, Fragment, isValidElement, cloneElement } from 'react';
+import { useAuthProvider as useAuthProvider$1, useRedirect, useNotify, toggleSidebar, usePermissions as usePermissions$1, useTranslate as useTranslate$2, useGetIdentity as useGetIdentity$1, useSafeSetState, useLocale, useFormContext, useFormGroup, FormGroupContextProvider, useFormGroupContext, maxLength, FieldTitle, useMutation, useRefresh as useRefresh$1, useListContext, useResourceContext, useResourceDefinition, sanitizeListRestProps, useGetResourceLabel, required, email, FormDataConsumer, useInput as useInput$1, useDataProvider as useDataProvider$2, HttpError } from 'ra-core';
 import MenuIcon from '@material-ui/icons/Menu';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
@@ -11,7 +12,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Menu$2 from '@material-ui/core/Menu';
 import classnames from 'classnames';
 import { makeStyles, withStyles, createStyles, createTheme, darken, lighten, useTheme } from '@material-ui/core/styles';
-import { toggleSidebar, usePermissions as usePermissions$1, useSafeSetState, useLocale, useTranslate as useTranslate$2, useFormContext, useFormGroup, FormGroupContextProvider, useFormGroupContext, maxLength, FieldTitle, useGetIdentity as useGetIdentity$1, useMutation, useRedirect, useRefresh as useRefresh$1, useNotify as useNotify$1, useListContext, useResourceContext, useResourceDefinition, sanitizeListRestProps, useInput as useInput$1, required, email, HttpError } from 'ra-core';
 import { useDispatch, useSelector as useSelector$1, connect } from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Link, withRouter, useLocation } from 'react-router-dom';
@@ -25,10 +25,11 @@ import ContentCreate from '@material-ui/icons/Create';
 import ContentView from '@material-ui/icons/Visibility';
 import { get as get$2, set } from 'lodash';
 import GetAppIcon from '@material-ui/icons/GetApp';
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import EmailIcon from '@material-ui/icons/Email';
 import moment from 'moment';
 import DraftsIcon from '@material-ui/icons/Drafts';
-import { useForm, useFormState } from 'react-final-form';
+import { useForm, useFormState, Form as Form$1, Field } from 'react-final-form';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import Button$1 from '@material-ui/core/Button';
 import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
@@ -45,6 +46,7 @@ import Divider$1 from '@material-ui/core/Divider';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import TableChart from '@material-ui/icons/TableChart';
 import { CrudContext as CrudContext$1 } from 'friendsofbabba-ra';
+import Inbox from '@material-ui/icons/Inbox';
 import jsonExport from 'jsonexport/dist';
 import polyglotI18nProvider from 'ra-i18n-polyglot';
 
@@ -347,6 +349,180 @@ function _nonIterableRest() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
+function notifyToken(token) {
+  var event = new Event("login");
+  event.key = "token";
+  event.value = token;
+  document.dispatchEvent(event);
+}
+function getHeaders() {
+  var token = localStorage.getItem("token");
+  var headers = new Headers({
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: "Bearer ".concat(token)
+  });
+  return headers;
+}
+function getToken() {
+  return localStorage.getItem("token");
+}
+function useToken() {
+  var token = getToken();
+  var headers = getHeaders();
+  var headersMemo = useMemo$1(function () {
+    return headers;
+  }, [headers]);
+  return {
+    token: token,
+    headers: headersMemo
+  };
+}
+
+var useIsImpersonating = function useIsImpersonating() {
+  var impersonate = localStorage.getItem("impersonate");
+  return impersonate === "true";
+};
+var useDoImpersonate = function useDoImpersonate(id) {
+  var authProvider = useAuthProvider$1();
+  var redirect = useRedirect();
+  var notify = useNotify();
+  var handle = useCallback(function () {
+    return authProvider.impersonate(id).then(function () {
+      notify("ra.auth.sign_in_success", "info");
+      redirect("/");
+      setTimeout(function () {
+        return window.location.reload();
+      }, 1000);
+    }).catch(function () {
+      notify("ra.auth.sign_in_error", "warning");
+    });
+  }, [authProvider, notify, redirect, id]);
+  return handle;
+};
+var useUndoImpersonate = function useUndoImpersonate() {
+  var authProvider = useAuthProvider$1();
+  var redirect = useRedirect();
+  var notify = useNotify();
+  var handleImpersonateLogout = useCallback(function () {
+    return authProvider.stopImpersonate().then(function () {
+      redirect("/");
+      notify("ra.auth.sign_out_success", "info");
+      setTimeout(function () {
+        return document.location.reload();
+      }, 1000);
+    }).catch(function (error) {
+      return notify(error, "warning");
+    });
+  }, [authProvider, redirect, notify]);
+  return handleImpersonateLogout;
+};
+
+var createAuthProvider = function createAuthProvider(_ref) {
+  var apiUrl = _ref.apiUrl;
+  return {
+    login: function login(params) {
+      var username = params.username,
+          password = params.password;
+      var requestURL = "".concat(apiUrl, "/users/login");
+      var request = new Request(requestURL, {
+        method: "POST",
+        body: JSON.stringify({
+          username: username,
+          password: password
+        }),
+        headers: new Headers({
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        })
+      });
+      return fetch(request).then(function (response) {
+        return response.json();
+      }).then(function (_ref2) {
+        var data = _ref2.data,
+            success = _ref2.success;
+
+        if (!success) {
+          throw new Error(data.message);
+        }
+
+        localStorage.setItem("email", data.email);
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("roles", JSON.stringify(data.roles));
+        localStorage.setItem("profile", JSON.stringify(data.profile));
+        notifyToken(data.token);
+      });
+    },
+    logout: function logout() {
+      localStorage.removeItem("email");
+      localStorage.removeItem("token");
+      localStorage.removeItem("roles");
+      localStorage.removeItem("profile");
+      return Promise.resolve();
+    },
+    checkAuth: function checkAuth() {
+      return localStorage.getItem("token") ? Promise.resolve() : Promise.reject();
+    },
+    checkError: function checkError(error) {
+      if (error.status === 401 || error.status === 500) {
+        return Promise.reject(error === null || error === void 0 ? void 0 : error.message);
+      }
+
+      return Promise.resolve();
+    },
+    getPermissions: function getPermissions() {
+      var roles = JSON.parse(localStorage.getItem("roles"));
+      return Promise.resolve(function (v) {
+        return roles && roles.some(function (r) {
+          return v.includes(r.code);
+        });
+      });
+    },
+    getIdentity: function getIdentity() {
+      var profile = JSON.parse(localStorage.getItem("profile"));
+      var roles = JSON.parse(localStorage.getItem("roles"));
+      var email = localStorage.getItem("email");
+      return Promise.resolve(_objectSpread2(_objectSpread2({}, profile), {}, {
+        roles: roles,
+        email: email
+      }));
+    },
+    impersonate: function impersonate(id) {
+      var requestURL = "".concat(apiUrl, "/users/impersonate/?id=").concat(id);
+      var request = new Request(requestURL, {
+        method: "POST",
+        headers: getHeaders()
+      });
+      return fetch(request).then(function (response) {
+        return response.json();
+      }).then(function (_ref3) {
+        var success = _ref3.success,
+            data = _ref3.data;
+
+        if (!success) {
+          throw new Error(data.message);
+        }
+
+        ["token", "roles", "username", "profile", "email"].forEach(function (param) {
+          var toSaveParam = "admin_".concat(param);
+          localStorage.setItem(toSaveParam, localStorage.getItem(param));
+          localStorage.setItem(param, ["profile", "roles"].indexOf(param) !== -1 ? JSON.stringify(data[param]) : data[param]);
+        });
+        localStorage.setItem("impersonate", true);
+      });
+    },
+    stopImpersonate: function stopImpersonate() {
+      ["token", "roles", "username", "profile", "email"].forEach(function (param) {
+        var savedParam = "admin_".concat(param);
+        localStorage.setItem(param, localStorage.getItem(savedParam));
+        localStorage.removeItem(savedParam);
+      });
+      localStorage.setItem("impersonate", false);
+      return Promise.resolve();
+    }
+  };
+};
+
 var UserMenu = function UserMenu(_ref) {
   var logout = _ref.logout,
       children = _ref.children;
@@ -394,7 +570,7 @@ UserMenu.propTypes = {
   logout: PropTypes.element.isRequired
 };
 
-var useStyles$k = makeStyles(function (theme) {
+var useStyles$p = makeStyles(function (theme) {
   return {
     title: {
       flexGrow: 1
@@ -433,6 +609,19 @@ var useStyles$k = makeStyles(function (theme) {
     spacer: {
       flex: 1,
       flexGrow: 1
+    },
+    welcome: {
+      lineHeight: "1.2em"
+    },
+    undoImpersonate: {
+      display: "block",
+      clear: "both",
+      marginTop: -theme.spacing(0.5),
+      fontSize: 12,
+      cursor: "pointer",
+      "&:hover": {
+        textDecoration: "underline"
+      }
     }
   };
 });
@@ -444,11 +633,18 @@ var AppBar = function AppBar(_ref2) {
       location = _ref2.location,
       _ref2$userMenu = _ref2.userMenu,
       userMenu = _ref2$userMenu === void 0 ? UserMenu : _ref2$userMenu;
-  var classes = useStyles$k({
+  var classes = useStyles$p({
     drawerWidth: drawerWidth
   });
   var dispatch = useDispatch();
   var translate = useTranslate$1();
+  var isImpersonating = useIsImpersonating();
+  var undoImpersonate = useUndoImpersonate();
+  var handleUndoClick = useCallback(function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+    undoImpersonate();
+  }, [undoImpersonate]);
   var isXSmall = useMediaQuery(function (theme) {
     return theme.breakpoints.down("xs");
   });
@@ -477,8 +673,15 @@ var AppBar = function AppBar(_ref2) {
   }), !isXSmall && /*#__PURE__*/React__default.createElement("div", {
     className: classes.spacer
   }), !isXSmall && /*#__PURE__*/React__default.createElement(Typography, {
-    variant: "body1"
-  }, translate("app.welcome", identity)), /*#__PURE__*/React__default.createElement(LoadingIndicator, null), /*#__PURE__*/React__default.createElement(userMenu, {
+    variant: "body1",
+    component: "div",
+    className: classes.welcome
+  }, translate("app.welcome", identity), isImpersonating && /*#__PURE__*/React__default.createElement(Typography, {
+    variant: "body1",
+    display: "block",
+    onClick: handleUndoClick,
+    className: classes.undoImpersonate
+  }, translate("ra.auth.impersonating.undo", identity))), /*#__PURE__*/React__default.createElement(LoadingIndicator, null), /*#__PURE__*/React__default.createElement(userMenu, {
     logout: logout,
     location: location
   })));
@@ -491,18 +694,18 @@ AppBar.propTypes = {
   userMenu: PropTypes.elementType
 };
 
-var _excluded$J = ["titleAccess", "children"];
+var _excluded$Q = ["titleAccess", "children"];
 
 var Badge = function Badge(_ref) {
   _ref.titleAccess;
       var children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded$J);
+      props = _objectWithoutProperties(_ref, _excluded$Q);
 
   return /*#__PURE__*/React__default.createElement(Badge$1, props, children);
 };
 
-var _excluded$I = ["children", "open", "label"];
-var useStyles$j = makeStyles$1(function (theme) {
+var _excluded$P = ["children", "open", "label"];
+var useStyles$o = makeStyles$1(function (theme) {
   return {
     subHeader: {
       backgroundColor: theme.palette.background.paper,
@@ -517,9 +720,9 @@ var MenuGroup = function MenuGroup(_ref) {
   var children = _ref.children,
       open = _ref.open,
       label = _ref.label,
-      props = _objectWithoutProperties(_ref, _excluded$I);
+      props = _objectWithoutProperties(_ref, _excluded$P);
 
-  var classes = useStyles$j();
+  var classes = useStyles$o();
   return /*#__PURE__*/React__default.createElement(List$1, {
     subheader: open ? /*#__PURE__*/React__default.createElement(ListSubheader, {
       className: classes.subHeader
@@ -545,7 +748,7 @@ MenuGroup.propTypes = {
   group: PropTypes.string
 };
 
-var _excluded$H = ["location", "badge", "to", "icon", "label", "sub", "onMenuClick", "permissions", "open"];
+var _excluded$O = ["location", "badge", "to", "icon", "label", "sub", "onMenuClick", "permissions", "open"];
 
 var isSelected = function isSelected(location, to) {
   var selected = location.pathname === to || location.pathname.indexOf("".concat(to, "?")) === 0 || location.pathname.indexOf("".concat(to, "/")) === 0;
@@ -562,7 +765,7 @@ var MenuItem = function MenuItem(_ref) {
       onMenuClick = _ref.onMenuClick;
       _ref.permissions;
       var open = _ref.open,
-      props = _objectWithoutProperties(_ref, _excluded$H);
+      props = _objectWithoutProperties(_ref, _excluded$O);
 
   return /*#__PURE__*/React__default.createElement(ListItem, _extends({}, props, {
     button: true,
@@ -833,7 +1036,7 @@ var Menu$1 = compose(withRouter, connect(function (state) {
   };
 }))(Menu);
 
-var useStyles$i = makeStyles$1(function (theme) {
+var useStyles$n = makeStyles$1(function (theme) {
   return {
     brand: {
       paddingLeft: theme.spacing(1),
@@ -882,7 +1085,21 @@ var useStyles$i = makeStyles$1(function (theme) {
       alignItems: "center",
       justifyContent: "flex-end",
       padding: theme.spacing(0, 1)
-    }, theme.mixins.toolbar)
+    }, theme.mixins.toolbar),
+    undoImpersonate: {
+      display: "block",
+      clear: "both",
+      marginTop: -theme.spacing(0.5),
+      fontSize: 12,
+      cursor: "pointer",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      color: theme.palette.secondary,
+      "&:hover": {
+        textDecoration: "underline",
+        color: theme.palette.primary.main
+      }
+    }
   };
 });
 
@@ -895,7 +1112,7 @@ var Sidebar = function Sidebar(_ref2) {
       appTitle = _ref2.appTitle,
       appSubTitle = _ref2.appSubTitle,
       appVersion = _ref2.appVersion;
-  var classes = useStyles$i({
+  var classes = useStyles$n({
     drawerWidth: drawerWidth
   });
   var dispatch = useDispatch();
@@ -905,6 +1122,18 @@ var Sidebar = function Sidebar(_ref2) {
   var isXSmall = useMediaQuery(function (theme) {
     return theme.breakpoints.down("xs");
   });
+  var translate = useTranslate$2();
+
+  var _useGetIdentity = useGetIdentity$1(),
+      identity = _useGetIdentity.identity;
+
+  var isImpersonating = useIsImpersonating();
+  var undoImpersonate = useUndoImpersonate();
+  var handleUndoClick = useCallback(function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+    undoImpersonate();
+  }, [undoImpersonate]);
   return /*#__PURE__*/React__default.createElement(Drawer, {
     open: open,
     onClose: handleToggleSidebar,
@@ -925,7 +1154,12 @@ var Sidebar = function Sidebar(_ref2) {
   }, appTitle), /*#__PURE__*/React__default.createElement(Typography$1, {
     color: "textSecondary",
     variant: "caption"
-  }, appSubTitle, " (", appVersion, ")")), /*#__PURE__*/React__default.createElement(IconButton$1, {
+  }, appSubTitle, " (", appVersion, ")"), isImpersonating && isXSmall && /*#__PURE__*/React__default.createElement(Typography$1, {
+    variant: "body1",
+    display: "block",
+    onClick: handleUndoClick,
+    className: classes.undoImpersonate
+  }, translate("ra.auth.impersonating.undo.short", identity))), /*#__PURE__*/React__default.createElement(IconButton$1, {
     onClick: handleToggleSidebar
   }, /*#__PURE__*/React__default.createElement(ChevronLeftIcon, null))), React__default.Children.map(children, function (child) {
     return /*#__PURE__*/React__default.cloneElement(child, {
@@ -944,7 +1178,7 @@ Sidebar.propTypes = {
   appVersion: PropTypes.string
 };
 
-var _excluded$G = ["theme"];
+var _excluded$N = ["theme"];
 var LayoutContext = /*#__PURE__*/React__default.createContext({
   drawerWidth: 0
 });
@@ -1100,7 +1334,7 @@ var EnhancedLayout = compose(connect(mapStateToProps, {} // Avoid connect passin
 
 var Layout = function Layout(_ref2) {
   var themeOverride = _ref2.theme,
-      props = _objectWithoutProperties(_ref2, _excluded$G);
+      props = _objectWithoutProperties(_ref2, _excluded$N);
 
   var themeProp = useRef(themeOverride);
 
@@ -1137,8 +1371,8 @@ Layout.defaultProps = {
   drawerWidth: 240
 };
 
-var _excluded$F = ["className", "classes", "redirectTo", "icon", "label"];
-var useStyles$h = makeStyles(function (theme) {
+var _excluded$M = ["className", "classes", "redirectTo", "icon", "label"];
+var useStyles$m = makeStyles(function (theme) {
   return {
     menuItem: {
       color: theme.palette.text.secondary
@@ -1156,9 +1390,9 @@ var UserMenuItem = /*#__PURE__*/React.forwardRef(function UserMenuItem(props, re
       props.redirectTo;
       var icon = props.icon,
       label = props.label,
-      rest = _objectWithoutProperties(props, _excluded$F);
+      rest = _objectWithoutProperties(props, _excluded$M);
 
-  var classes = useStyles$h(props);
+  var classes = useStyles$m(props);
   return /*#__PURE__*/React.createElement(MenuItem$1, _extends({
     className: classnames("user-menu-item", classes.menuItem, className),
     ref: ref,
@@ -1174,13 +1408,13 @@ UserMenuItem.propTypes = {
   onClick: PropTypes.func
 };
 
-var _excluded$E = ["resource", "baseRecord", "to"];
+var _excluded$L = ["resource", "baseRecord", "to"];
 
 var BackButton = function BackButton(_ref) {
   var resource = _ref.resource;
       _ref.baseRecord;
       var to = _ref.to,
-      props = _objectWithoutProperties(_ref, _excluded$E);
+      props = _objectWithoutProperties(_ref, _excluded$L);
 
   return /*#__PURE__*/React__default.createElement(Button, _extends({}, props, {
     component: Link,
@@ -1191,7 +1425,7 @@ var BackButton = function BackButton(_ref) {
   }), /*#__PURE__*/React__default.createElement(BackIcon, null));
 };
 
-var _excluded$D = ["redirect", "reference"];
+var _excluded$K = ["redirect", "reference"];
 /**
  *
  * @param {string} props.redirect - The redirect path after the delete action.
@@ -1204,7 +1438,7 @@ var _excluded$D = ["redirect", "reference"];
 var DeleteWithConfirmButton = function DeleteWithConfirmButton(_ref) {
   var redirect = _ref.redirect;
       _ref.reference;
-      var props = _objectWithoutProperties(_ref, _excluded$D);
+      var props = _objectWithoutProperties(_ref, _excluded$K);
 
   var translate = useTranslate$1();
 
@@ -1502,12 +1736,12 @@ var WorkflowProvider = function WorkflowProvider(_ref) {
   }, children);
 };
 
-var _excluded$C = ["record", "resource"];
+var _excluded$J = ["record", "resource"];
 
 var EditButton = function EditButton(_ref) {
   var record = _ref.record,
       resource = _ref.resource,
-      props = _objectWithoutProperties(_ref, _excluded$C);
+      props = _objectWithoutProperties(_ref, _excluded$J);
 
   var _useContext = useContext(WorkflowContext),
       getWorkflow = _useContext.getWorkflow;
@@ -1539,36 +1773,6 @@ var EditButton = function EditButton(_ref) {
     record: record
   }, props));
 };
-
-function notifyToken(token) {
-  var event = new Event("login");
-  event.key = "token";
-  event.value = token;
-  document.dispatchEvent(event);
-}
-function getHeaders() {
-  var token = localStorage.getItem("token");
-  var headers = new Headers({
-    "Content-Type": "application/json",
-    Accept: "application/json",
-    Authorization: "Bearer ".concat(token)
-  });
-  return headers;
-}
-function getToken() {
-  return localStorage.getItem("token");
-}
-function useToken() {
-  var token = getToken();
-  var headers = getHeaders();
-  var headersMemo = useMemo$1(function () {
-    return headers;
-  }, [headers]);
-  return {
-    token: token,
-    headers: headersMemo
-  };
-}
 
 var load = /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(_ref) {
@@ -1790,14 +1994,14 @@ var ExportToXlsxButton = function ExportToXlsxButton(_ref, ref) {
 
 var ExportButton = /*#__PURE__*/React__default.forwardRef(ExportToXlsxButton);
 
-var _excluded$B = ["exportTo", "label"];
+var _excluded$I = ["exportTo", "label"];
 
 var ExportToButton = function ExportToButton(_ref) {
   var _ref$exportTo = _ref.exportTo,
       exportTo = _ref$exportTo === void 0 ? ["csv", "xlsx"] : _ref$exportTo,
       _ref$label = _ref.label,
       label = _ref$label === void 0 ? "ra.action.export" : _ref$label,
-      props = _objectWithoutProperties(_ref, _excluded$B);
+      props = _objectWithoutProperties(_ref, _excluded$I);
 
   var _React$useState = React__default.useState(null),
       _React$useState2 = _slicedToArray(_React$useState, 2),
@@ -1838,11 +2042,42 @@ var ExportToButton = function ExportToButton(_ref) {
   }));
 };
 
+var _excluded$H = ["label", "record"];
+
+var ImpersonateUserButton = function ImpersonateUserButton(_ref) {
+  var _ref$label = _ref.label,
+      label = _ref$label === void 0 ? "ra.auth.sign_in" : _ref$label,
+      record = _ref.record,
+      rest = _objectWithoutProperties(_ref, _excluded$H);
+
+  var _useState = useState(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      loading = _useState2[0],
+      setLoading = _useState2[1];
+
+  var doImpersonate = useDoImpersonate(record === null || record === void 0 ? void 0 : record.id);
+  var handleClick = useCallback(function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+    setLoading(true);
+    doImpersonate().then(function () {
+      return setLoading(false);
+    });
+  }, [doImpersonate, setLoading]);
+  return /*#__PURE__*/React__default.createElement(Button, _extends({
+    disabled: loading,
+    color: "primary",
+    variant: "text",
+    label: label,
+    onClick: handleClick
+  }, rest), /*#__PURE__*/React__default.createElement(VpnKeyIcon, null));
+};
+
 var MarkAsReadedButton = function MarkAsReadedButton(_ref) {
   var _ref$selectedIds = _ref.selectedIds,
       selectedIds = _ref$selectedIds === void 0 ? [] : _ref$selectedIds;
   var refresh = useRefresh();
-  var notify = useNotify();
+  var notify = useNotify$1();
   var unselectAll = useUnselectAll();
 
   var _useUpdateMany = useUpdateMany("notifications", selectedIds, {
@@ -1876,7 +2111,7 @@ var MarkAsUnreadedButton = function MarkAsUnreadedButton(_ref) {
   var _ref$selectedIds = _ref.selectedIds,
       selectedIds = _ref$selectedIds === void 0 ? [] : _ref$selectedIds;
   var refresh = useRefresh();
-  var notify = useNotify();
+  var notify = useNotify$1();
   var unselectAll = useUnselectAll();
 
   var _useUpdateMany = useUpdateMany("notifications", selectedIds, {
@@ -1907,8 +2142,8 @@ var MarkAsUnreadedButton = function MarkAsUnreadedButton(_ref) {
   }, /*#__PURE__*/React__default.createElement(DraftsIcon, null));
 };
 
-var _excluded$A = ["handleSubmitWithRedirect", "small", "state", "pristine"];
-var useStyles$g = makeStyles(function (theme) {
+var _excluded$G = ["handleSubmitWithRedirect", "small", "state", "pristine"];
+var useStyles$l = makeStyles(function (theme) {
   var _theme$props, _theme$props$MuiButto;
 
   return {
@@ -1923,9 +2158,9 @@ var StateButton = function StateButton(_ref, ref) {
       _ref.small;
       var state = _ref.state;
       _ref.pristine;
-      var props = _objectWithoutProperties(_ref, _excluded$A);
+      var props = _objectWithoutProperties(_ref, _excluded$G);
 
-  var classes = useStyles$g();
+  var classes = useStyles$l();
   var form = useForm();
   var handleClick = useCallback(function () {
     form.change("state", state.code);
@@ -1942,8 +2177,8 @@ var StateButton = function StateButton(_ref, ref) {
 
 var StateButton$1 = /*#__PURE__*/React__default.forwardRef(StateButton);
 
-var _excluded$z = ["states"];
-var useStyles$f = makeStyles(function (theme) {
+var _excluded$F = ["states"];
+var useStyles$k = makeStyles(function (theme) {
   var _theme$props, _theme$props$MuiButto;
 
   return {
@@ -1955,9 +2190,9 @@ var useStyles$f = makeStyles(function (theme) {
 
 var StateButtonMenu = function StateButtonMenu(_ref) {
   var states = _ref.states,
-      props = _objectWithoutProperties(_ref, _excluded$z);
+      props = _objectWithoutProperties(_ref, _excluded$F);
 
-  var classes = useStyles$f();
+  var classes = useStyles$k();
   var translate = useTranslate$1();
 
   var _React$useState = React__default.useState(null),
@@ -2015,6 +2250,7 @@ var buttons = /*#__PURE__*/Object.freeze({
   RaDeleteButton: DeleteButton,
   EditButton: EditButton,
   ExportToButton: ExportToButton,
+  ImpersonateUserButton: ImpersonateUserButton,
   BackButton: BackButton,
   StateButton: StateButton$1,
   StateButtonMenu: StateButtonMenu,
@@ -2023,11 +2259,11 @@ var buttons = /*#__PURE__*/Object.freeze({
   DeleteWithConfirmButton: DeleteWithConfirmButton
 });
 
-var _excluded$y = ["chipSource"];
+var _excluded$E = ["chipSource"];
 
 var ChipArrayField = function ChipArrayField(_ref) {
   var chipSource = _ref.chipSource,
-      props = _objectWithoutProperties(_ref, _excluded$y);
+      props = _objectWithoutProperties(_ref, _excluded$E);
 
   return /*#__PURE__*/React__default.createElement(ArrayField, props, /*#__PURE__*/React__default.createElement(SingleFieldList, null, /*#__PURE__*/React__default.createElement(ChipField, {
     source: chipSource
@@ -2053,8 +2289,8 @@ var DateAgoField = function DateAgoField(_ref) {
   }));
 };
 
-var _excluded$x = ["record", "source", "width", "minWidth", "maxWidth", "maxRows", "sortable", "basePath", "sortBy"];
-var useStyles$e = makeStyles$1(function (theme) {
+var _excluded$D = ["record", "source", "width", "minWidth", "maxWidth", "maxRows", "sortable", "basePath", "sortBy"];
+var useStyles$j = makeStyles$1(function (theme) {
   return {
     root: {
       overflow: "hidden",
@@ -2080,9 +2316,9 @@ var LongTextField = function LongTextField(_ref) {
       _ref.sortable;
       _ref.basePath;
       _ref.sortBy;
-      var props = _objectWithoutProperties(_ref, _excluded$x);
+      var props = _objectWithoutProperties(_ref, _excluded$D);
 
-  var classes = useStyles$e();
+  var classes = useStyles$j();
   return /*#__PURE__*/React__default.createElement(Typography$1, _extends({}, props, {
     variant: "body2",
     title: get$2(record, source),
@@ -2113,9 +2349,22 @@ var MediaField = function MediaField(_ref) {
   }));
 };
 
+var useStyles$i = makeStyles(function (theme) {
+  return {
+    content: {
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      display: "-webkit-box",
+      WebkitBoxOrient: "vertical",
+      whiteSpace: "break-spaces"
+    }
+  };
+});
+
 var NotificationField = function NotificationField(_ref) {
   var record = _ref.record;
   var translate = useTranslate$2();
+  var classes = useStyles$i();
   var readed = useMemo$1(function () {
     return record !== null && record !== void 0 && record.readed ? moment(record === null || record === void 0 ? void 0 : record.readed).format(translate("app.date_format.long")) : false;
   }, [record === null || record === void 0 ? void 0 : record.readed, translate]);
@@ -2124,7 +2373,8 @@ var NotificationField = function NotificationField(_ref) {
   }, /*#__PURE__*/React__default.createElement(Box, {
     fontWeight: "bold"
   }, " ", record === null || record === void 0 ? void 0 : record.title)), /*#__PURE__*/React__default.createElement(Typography$1, {
-    variant: "body1"
+    variant: "body1",
+    className: classes.content
   }, record === null || record === void 0 ? void 0 : record.content), readed && /*#__PURE__*/React__default.createElement(Typography$1, {
     variant: "caption",
     display: "block"
@@ -2137,7 +2387,7 @@ var NotificationField = function NotificationField(_ref) {
   }));
 };
 
-var useStyles$d = makeStyles(function (theme) {
+var useStyles$h = makeStyles(function (theme) {
   return {
     progress: {
       height: 20 + theme.spacing(1),
@@ -2154,7 +2404,7 @@ var useStyles$d = makeStyles(function (theme) {
 var ProgressField = function ProgressField(_ref) {
   var record = _ref.record,
       source = _ref.source;
-  var classes = useStyles$d();
+  var classes = useStyles$h();
   return /*#__PURE__*/React__default.createElement(Box, {
     display: "flex",
     justifyContent: "center",
@@ -2171,7 +2421,7 @@ var ProgressField = function ProgressField(_ref) {
   }, get$2(record, source, 0).toFixed(2), "%"));
 };
 
-var _excluded$w = ["removeRedirect", "reference", "target", "tab", "filter", "empty", "sorry", "create", "createLabel", "modify", "modifyLabel", "remove", "removeLabel", "additionalData", "mobileBreakpoint", "mobilePrimaryText", "mobileSecondaryText", "mobileTertiaryText", "mobileLinkType"];
+var _excluded$C = ["removeRedirect", "reference", "target", "tab", "filter", "empty", "sorry", "create", "createLabel", "modify", "modifyLabel", "remove", "removeLabel", "additionalData", "mobileBreakpoint", "mobilePrimaryText", "mobileSecondaryText", "mobileTertiaryText", "mobileLinkType"];
 var makeRedirect = function makeRedirect(_ref) {
   var resource = _ref.resource,
       record = _ref.record,
@@ -2183,7 +2433,7 @@ var makeRedirect = function makeRedirect(_ref) {
 
   return "/".concat(resource, "/").concat(record === null || record === void 0 ? void 0 : record.id);
 };
-var useStyles$c = makeStyles(function (theme) {
+var useStyles$g = makeStyles(function (theme) {
   return {
     toolbar: {
       padding: theme.spacing(1)
@@ -2231,9 +2481,9 @@ var ReferenceListField = function ReferenceListField(_ref2) {
       mobileTertiaryText = _ref2$mobileTertiaryT === void 0 ? null : _ref2$mobileTertiaryT,
       _ref2$mobileLinkType = _ref2.mobileLinkType,
       mobileLinkType = _ref2$mobileLinkType === void 0 ? false : _ref2$mobileLinkType,
-      props = _objectWithoutProperties(_ref2, _excluded$w);
+      props = _objectWithoutProperties(_ref2, _excluded$C);
 
-  var classes = useStyles$c();
+  var classes = useStyles$g();
   var resource = props.resource,
       record = props.record;
 
@@ -2324,14 +2574,14 @@ ReferenceListField.propTypes = {
   children: PropTypes.node.isRequired
 };
 
-var _excluded$v = ["label", "record", "resource"];
+var _excluded$B = ["label", "record", "resource"];
 
 var StateField = function StateField(_ref) {
   var _ref$label = _ref.label,
       label = _ref$label === void 0 ? "app.label.workflow.state" : _ref$label,
       record = _ref.record,
       toResolve = _ref.resource,
-      props = _objectWithoutProperties(_ref, _excluded$v);
+      props = _objectWithoutProperties(_ref, _excluded$B);
 
   var _useContext = useContext(WorkflowContext),
       getWorkflow = _useContext.getWorkflow;
@@ -2365,7 +2615,7 @@ var useFieldLabel = function useFieldLabel(_ref) {
   };
 };
 
-var useStyles$b = makeStyles$1(function (theme) {
+var useStyles$f = makeStyles$1(function (theme) {
   return {
     root: {
       display: "-webkit-box",
@@ -2393,7 +2643,7 @@ var TransactionNotesField = function TransactionNotesField(_ref) {
       _ref$maxRows = _ref.maxRows,
       maxRows = _ref$maxRows === void 0 ? 3 : _ref$maxRows,
       component = _ref.component;
-  var classes = useStyles$b();
+  var classes = useStyles$f();
   var fieldLabel = useFieldLabel({
     resource: "transactions"
   });
@@ -2448,13 +2698,13 @@ TransactionNotesField.propTypes = {
   maxRows: PropTypes.number
 };
 
-var _excluded$u = ["fullWidth", "addLabel"],
+var _excluded$A = ["fullWidth", "addLabel"],
     _excluded2$4 = ["admin", "label"];
 
 var PaginationWrapper = function PaginationWrapper(_ref) {
   _ref.fullWidth;
       _ref.addLabel;
-      var props = _objectWithoutProperties(_ref, _excluded$u);
+      var props = _objectWithoutProperties(_ref, _excluded$A);
 
   return /*#__PURE__*/React__default.createElement(Pagination, props);
 };
@@ -2559,7 +2809,7 @@ var fields = /*#__PURE__*/Object.freeze({
   useFieldLabel: useFieldLabel
 });
 
-var _excluded$t = ["classes", "label", "value", "icon", "className", "syncWithLocation"];
+var _excluded$z = ["classes", "label", "value", "icon", "className", "syncWithLocation"];
 
 var FormTabHeader = function FormTabHeader(_ref) {
   var classes = _ref.classes,
@@ -2568,7 +2818,7 @@ var FormTabHeader = function FormTabHeader(_ref) {
       icon = _ref.icon,
       className = _ref.className,
       syncWithLocation = _ref.syncWithLocation,
-      rest = _objectWithoutProperties(_ref, _excluded$t);
+      rest = _objectWithoutProperties(_ref, _excluded$z);
 
   var translate = useTranslate$2();
   var location = useLocation();
@@ -2613,7 +2863,7 @@ var UseFormStateOptions = {
   }
 };
 
-var _excluded$s = ["basePath", "className", "classes", "contentClassName", "children", "hidden", "icon", "intent", "label", "margin", "path", "record", "resource", "variant", "value"];
+var _excluded$y = ["basePath", "className", "classes", "contentClassName", "children", "hidden", "icon", "intent", "label", "margin", "path", "record", "resource", "variant", "value"];
 var hiddenStyle = {
   display: "none"
 };
@@ -2634,7 +2884,7 @@ var FormTab = function FormTab(props) {
       resource = props.resource,
       variant = props.variant,
       value = props.value,
-      rest = _objectWithoutProperties(props, _excluded$s);
+      rest = _objectWithoutProperties(props, _excluded$y);
 
   var renderHeader = function renderHeader() {
     return /*#__PURE__*/React.createElement(FormTabHeader, _extends({
@@ -2672,7 +2922,7 @@ var FormTab = function FormTab(props) {
   return intent === "header" ? renderHeader() : renderContent();
 };
 
-var _excluded$r = ["children", "spacing", "wrapper"];
+var _excluded$x = ["children", "spacing", "wrapper"];
 
 var Group = function Group(_ref) {
   var children = _ref.children,
@@ -2680,7 +2930,7 @@ var Group = function Group(_ref) {
       spacing = _ref$spacing === void 0 ? 2 : _ref$spacing,
       _ref$wrapper = _ref.wrapper,
       wrapper = _ref$wrapper === void 0 ? false : _ref$wrapper,
-      props = _objectWithoutProperties(_ref, _excluded$r);
+      props = _objectWithoutProperties(_ref, _excluded$x);
 
   return !wrapper ? /*#__PURE__*/React__default.createElement(Grid, {
     container: true,
@@ -2692,7 +2942,7 @@ var Group = function Group(_ref) {
   });
 };
 
-var _excluded$q = ["children", "lg", "md", "sm", "xs", "spacing", "block"];
+var _excluded$w = ["children", "lg", "md", "sm", "xs", "spacing", "block"];
 
 var GroupItem = function GroupItem(_ref) {
   var children = _ref.children,
@@ -2706,7 +2956,7 @@ var GroupItem = function GroupItem(_ref) {
       xs = _ref$xs === void 0 ? 12 : _ref$xs,
       spacing = _ref.spacing;
       _ref.block;
-      var props = _objectWithoutProperties(_ref, _excluded$q);
+      var props = _objectWithoutProperties(_ref, _excluded$w);
 
   return /*#__PURE__*/React__default.createElement(Grid, {
     item: true,
@@ -2720,7 +2970,7 @@ var GroupItem = function GroupItem(_ref) {
   }));
 };
 
-var useStyles$a = makeStyles(function (theme) {
+var useStyles$e = makeStyles(function (theme) {
   return {
     title: {
       margin: theme.spacing(1),
@@ -2742,7 +2992,7 @@ var GroupTitle = function GroupTitle(_ref) {
       _ref$divider = _ref.divider,
       divider = _ref$divider === void 0 ? true : _ref$divider,
       color = _ref.color;
-  var classes = useStyles$a();
+  var classes = useStyles$e();
   return /*#__PURE__*/React__default.createElement(Fragment, null, /*#__PURE__*/React__default.createElement(Typography$1, {
     color: color,
     classes: {
@@ -2763,8 +3013,8 @@ var GroupTitle = function GroupTitle(_ref) {
   }, subTitle));
 };
 
-var _excluded$p = ["backRedirect", "backReferenceTarget", "backReference", "backTab", "canSave", "canGoBack", "onSuccess"];
-var useStyles$9 = makeStyles(function (theme) {
+var _excluded$v = ["backRedirect", "backReferenceTarget", "backReference", "backTab", "canSave", "canGoBack", "onSuccess"];
+var useStyles$d = makeStyles(function (theme) {
   return {
     toolbar: {
       "& .MuiButton-root": {
@@ -2785,9 +3035,9 @@ var ReferenceToolbar = function ReferenceToolbar(_ref) {
       _ref$canGoBack = _ref.canGoBack,
       canGoBack = _ref$canGoBack === void 0 ? true : _ref$canGoBack,
       onSuccess = _ref.onSuccess,
-      props = _objectWithoutProperties(_ref, _excluded$p);
+      props = _objectWithoutProperties(_ref, _excluded$v);
 
-  var classes = useStyles$9();
+  var classes = useStyles$d();
   var record = props.record;
   var referenceId = get$2(record, backReferenceTarget, 0);
   var backUrl = useMemo$1(function () {
@@ -2806,8 +3056,8 @@ var ReferenceToolbar = function ReferenceToolbar(_ref) {
   }));
 };
 
-var _excluded$o = ["children", "mutationMode", "validating", "maxButtonsToDisplay"];
-var useStyles$8 = makeStyles(function (theme) {
+var _excluded$u = ["children", "mutationMode", "validating", "maxButtonsToDisplay"];
+var useStyles$c = makeStyles(function (theme) {
   return {
     toolbar: {
       "& .MuiButton-root": {
@@ -2823,10 +3073,10 @@ var Toolbar = function Toolbar(_ref) {
       _ref.validating;
       var _ref$maxButtonsToDisp = _ref.maxButtonsToDisplay,
       maxButtonsToDisplay = _ref$maxButtonsToDisp === void 0 ? 1 : _ref$maxButtonsToDisp,
-      props = _objectWithoutProperties(_ref, _excluded$o);
+      props = _objectWithoutProperties(_ref, _excluded$u);
 
   var form = useForm();
-  var classes = useStyles$8();
+  var classes = useStyles$c();
   var handleSubmitWithRedirect = props.handleSubmitWithRedirect,
       record = props.record;
 
@@ -2890,11 +3140,11 @@ var Toolbar = function Toolbar(_ref) {
   }), /*#__PURE__*/React__default.createElement(BackButton, null));
 };
 
-var _excluded$n = ["children"];
+var _excluded$t = ["children"];
 
 var Unprop = function Unprop(_ref) {
   var children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded$n);
+      props = _objectWithoutProperties(_ref, _excluded$t);
 
   return React__default.Children.map(children, function (child) {
     return /*#__PURE__*/React__default.isValidElement(child) ? /*#__PURE__*/React__default.cloneElement(child, _objectSpread2(_objectSpread2({}, props), child.props)) : child;
@@ -2911,7 +3161,7 @@ var parseField = function parseField(field) {
   };
 };
 
-var useStyles$7 = makeStyles(function (theme) {
+var useStyles$b = makeStyles(function (theme) {
   return {
     subheaderRoot: {
       padding: theme.spacing(1),
@@ -2945,7 +3195,7 @@ var ValidationItem = function ValidationItem(_ref) {
       number = _parseField.number,
       name = _parseField.name;
 
-  var classes = useStyles$7();
+  var classes = useStyles$b();
   return typeof error === "string" ? /*#__PURE__*/React__default.createElement(ListItem, {
     dense: true,
     disableGutters: true,
@@ -2986,7 +3236,7 @@ var ValidationItem = function ValidationItem(_ref) {
   }));
 };
 
-var _excluded$m = ["action", "children", "classes", "className", "closeText", "color", "icon", "iconMapping", "onClose", "role", "severity", "variant", "elevation"];
+var _excluded$s = ["action", "children", "classes", "className", "closeText", "color", "icon", "iconMapping", "onClose", "role", "severity", "variant", "elevation"];
 var styles = function styles(theme) {
   var getColor = theme.palette.type === "light" ? darken : lighten;
   var getBackgroundColor = theme.palette.type === "light" ? lighten : darken;
@@ -3157,7 +3407,7 @@ var Alert = /*#__PURE__*/React.forwardRef(function Alert(props, ref) {
       variant = _props$variant === void 0 ? "standard" : _props$variant,
       _props$elevation = props.elevation,
       elevation = _props$elevation === void 0 ? 0 : _props$elevation,
-      other = _objectWithoutProperties(props, _excluded$m);
+      other = _objectWithoutProperties(props, _excluded$s);
 
   return /*#__PURE__*/React.createElement(Paper, _extends({
     role: role,
@@ -3360,7 +3610,7 @@ var useValidationSummary = function useValidationSummary() {
   }, [submitErrors, formContext, values, source, group]);
 };
 
-var useStyles$6 = makeStyles(function (theme) {
+var useStyles$a = makeStyles(function (theme) {
   return {
     progress: {
       margin: theme.spacing(1)
@@ -3404,7 +3654,7 @@ var ValidationSummary = function ValidationSummary(_ref2) {
       showWhenNoErrors = _ref2$showWhenNoError === void 0 ? true : _ref2$showWhenNoError,
       resource = _ref2.resource,
       children = _ref2.children;
-  var classes = useStyles$6();
+  var classes = useStyles$a();
   var translate = useTranslate$2();
 
   var _useValidationSummary = useValidationSummary({
@@ -3503,7 +3753,7 @@ function useDebounce(value, delay) {
   return debouncedValue;
 }
 
-var _excluded$l = ["margin", "variant", "fullWidth", "maxLength", "multiline", "format", "rows", "disabled", "InputProps", "InputLabelProps"],
+var _excluded$r = ["margin", "variant", "fullWidth", "maxLength", "multiline", "format", "rows", "disabled", "InputProps", "InputLabelProps"],
     _excluded2$3 = ["name", "onChange"];
 
 var DebouncedTextInput = function DebouncedTextInput(_ref) {
@@ -3519,7 +3769,7 @@ var DebouncedTextInput = function DebouncedTextInput(_ref) {
       disabled = _ref.disabled,
       InputProps = _ref.InputProps,
       InputLabelProps = _ref.InputLabelProps,
-      props = _objectWithoutProperties(_ref, _excluded$l);
+      props = _objectWithoutProperties(_ref, _excluded$r);
 
   var className = props.className,
       source = props.source,
@@ -3740,12 +3990,12 @@ var useWorkflowInput = function useWorkflowInput(_ref) {
   };
 };
 
-var _excluded$k = ["component", "disabled"];
+var _excluded$q = ["component", "disabled"];
 
-var Input = function Input(_ref) {
+var Input$1 = function Input(_ref) {
   var component = _ref.component;
       _ref.disabled;
-      var props = _objectWithoutProperties(_ref, _excluded$k);
+      var props = _objectWithoutProperties(_ref, _excluded$q);
 
   var _useMemo = useMemo$1(function () {
     var resource = get$2(props, "resource", component.props.resource);
@@ -3858,8 +4108,8 @@ var LanguageMessageInput = function LanguageMessageInput(props) {
   })));
 };
 
-var _excluded$j = ["title", "disabled"];
-var useStyles$5 = makeStyles(function (theme) {
+var _excluded$p = ["title", "disabled"];
+var useStyles$9 = makeStyles(function (theme) {
   return {
     labeled: {
       padding: theme.spacing(1)
@@ -3873,9 +4123,9 @@ var useStyles$5 = makeStyles(function (theme) {
 var MediaInput = function MediaInput(_ref) {
   var title = _ref.title,
       disabled = _ref.disabled,
-      props = _objectWithoutProperties(_ref, _excluded$j);
+      props = _objectWithoutProperties(_ref, _excluded$p);
 
-  var classes = useStyles$5();
+  var classes = useStyles$9();
 
   if (disabled) {
     var value = get$2(props.record, props.source);
@@ -3902,11 +4152,11 @@ var MediaInput = function MediaInput(_ref) {
   }));
 };
 
-var _excluded$i = ["optionText"];
+var _excluded$o = ["optionText"];
 
 var ReferenceAutocompleteInput$1 = function ReferenceAutocompleteInput(_ref) {
   var optionText = _ref.optionText,
-      props = _objectWithoutProperties(_ref, _excluded$i);
+      props = _objectWithoutProperties(_ref, _excluded$o);
 
   return /*#__PURE__*/React__default.createElement(ReferenceInput, props, /*#__PURE__*/React__default.createElement(AutocompleteInput, {
     optionText: optionText
@@ -3947,11 +4197,11 @@ var useManyParser = function useManyParser() {
   return memoizedFn;
 };
 
-var _excluded$h = ["optionText"];
+var _excluded$n = ["optionText"];
 
 var ReferenceCheckboxGroupInput = function ReferenceCheckboxGroupInput(_ref) {
   var optionText = _ref.optionText,
-      props = _objectWithoutProperties(_ref, _excluded$h);
+      props = _objectWithoutProperties(_ref, _excluded$n);
 
   var parse = useManyParser();
   var format = useManyFormatter();
@@ -3963,18 +4213,22 @@ var ReferenceCheckboxGroupInput = function ReferenceCheckboxGroupInput(_ref) {
   }));
 };
 
-var _excluded$g = ["optionText"];
+var _excluded$m = ["optionText"];
 
 var ReferenceAutocompleteInput = function ReferenceAutocompleteInput(_ref) {
   var optionText = _ref.optionText,
-      props = _objectWithoutProperties(_ref, _excluded$g);
+      props = _objectWithoutProperties(_ref, _excluded$m);
 
   return /*#__PURE__*/React__default.createElement(ReferenceInput, props, /*#__PURE__*/React__default.createElement(SelectInput, {
     optionText: optionText
   }));
 };
 
-var useStyles$4 = makeStyles$1(function (theme) {
+var stopPropagation = function stopPropagation(e) {
+  return e.stopPropagation();
+};
+
+var useStyles$8 = makeStyles$1(function (theme) {
   return {
     required: {}
   };
@@ -3989,9 +4243,9 @@ var ConfirmMove = function ConfirmMove(_ref) {
       record = _ref.record,
       state = _ref.state,
       onCancel = _ref.onCancel;
-  var classes = useStyles$4();
+  var classes = useStyles$8();
   var refresh = useRefresh();
-  var notify = useNotify();
+  var notify = useNotify$1();
 
   var _useState = useState(""),
       _useState2 = _slicedToArray(_useState, 2),
@@ -4048,8 +4302,12 @@ var ConfirmMove = function ConfirmMove(_ref) {
       loading = _useUpdate2[1].loading;
 
   return /*#__PURE__*/React__default.createElement(Dialog, {
-    open: open
-  }, /*#__PURE__*/React__default.createElement(DialogTitle, null, translate("resources.workflow.move.title")), /*#__PURE__*/React__default.createElement(DialogContent, null, /*#__PURE__*/React__default.createElement(DialogContentText, {
+    open: open,
+    onClick: stopPropagation
+  }, /*#__PURE__*/React__default.createElement(DialogTitle, null, translate("resources.workflow.move.title"), /*#__PURE__*/React__default.createElement(Typography$1, {
+    variant: "caption",
+    display: "block"
+  }, state === null || state === void 0 ? void 0 : state.label)), /*#__PURE__*/React__default.createElement(DialogContent, null, /*#__PURE__*/React__default.createElement(DialogContentText, {
     className: classnames(needsNotes && classes.required)
   }, translate("resources.workflow.move.message" + (needsNotes ? ".required" : ""))), /*#__PURE__*/React__default.createElement(TextField$2, {
     autoFocus: true,
@@ -4141,19 +4399,23 @@ var StateCollectionInput = function StateCollectionInput(_ref) {
       anchorEl = _React$useState2[0],
       setAnchorEl = _React$useState2[1];
 
-  var handleClick = function handleClick(event) {
-    event.stopPropagation();
-    event.preventDefault();
-    setAnchorEl(event.currentTarget);
+  var handleClick = function handleClick(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    setAnchorEl(e.currentTarget);
   };
 
-  var handleClose = function handleClose() {
+  var handleClose = function handleClose(e) {
+    e.stopPropagation();
+    e.preventDefault();
     setAnchorEl(null);
     setState(null);
   };
 
   var handleChange = useCallback(function (state) {
     return function (e) {
+      e.stopPropagation();
+      e.preventDefault();
       setAnchorEl(null);
       setState(state);
     };
@@ -4203,12 +4465,12 @@ var StateCollectionInput = function StateCollectionInput(_ref) {
   }));
 };
 
-var _excluded$f = ["filter"];
+var _excluded$l = ["filter"];
 
 var StateInput = function StateInput(_ref) {
   var _ref$filter = _ref.filter,
       filter = _ref$filter === void 0 ? undefined : _ref$filter,
-      props = _objectWithoutProperties(_ref, _excluded$f);
+      props = _objectWithoutProperties(_ref, _excluded$l);
 
   var _useContext = useContext(WorkflowContext),
       getWorkflow = _useContext.getWorkflow;
@@ -4249,14 +4511,14 @@ var TransactionNotesInput = function TransactionNotesInput(props) {
   }));
 };
 
-var _excluded$e = ["label", "helperText", "admin"];
+var _excluded$k = ["label", "helperText", "admin"];
 
 var TransactionNotesIsPrivateInput = function TransactionNotesIsPrivateInput(_ref) {
   var label = _ref.label,
       helperText = _ref.helperText,
       _ref$admin = _ref.admin,
       admin = _ref$admin === void 0 ? false : _ref$admin,
-      props = _objectWithoutProperties(_ref, _excluded$e);
+      props = _objectWithoutProperties(_ref, _excluded$k);
 
   var fieldLabel = useFieldLabel({
     resource: "transactions"
@@ -4281,7 +4543,7 @@ var inputs = /*#__PURE__*/Object.freeze({
   DebouncedDateInput: DebouncedDateInput,
   DebouncedNumberInput: DebouncedNumberInput,
   DebouncedTextInput: DebouncedTextInput,
-  Input: Input,
+  Input: Input$1,
   LanguageMessageInput: LanguageMessageInput,
   MediaInput: MediaInput,
   NullableBooleanInput: NullableBooleanInput,
@@ -4299,13 +4561,13 @@ var inputs = /*#__PURE__*/Object.freeze({
   TransactionNotesIsPrivateInput: TransactionNotesIsPrivateInput
 });
 
-var _excluded$d = ["children", "evenOdd"];
+var _excluded$j = ["children", "evenOdd"];
 
 var getWidthToSubtract = function getWidthToSubtract(w) {
   return w + (window.innerWidth - document.documentElement.clientWidth);
 };
 
-var useStyles$3 = makeStyles$1(function (theme) {
+var useStyles$7 = makeStyles$1(function (theme) {
   return {
     container: function container(_ref) {
       var sidebarOpen = _ref.sidebarOpen,
@@ -4330,7 +4592,7 @@ var Datagrid = function Datagrid(_ref3) {
   var children = _ref3.children,
       _ref3$evenOdd = _ref3.evenOdd,
       evenOdd = _ref3$evenOdd === void 0 ? true : _ref3$evenOdd,
-      props = _objectWithoutProperties(_ref3, _excluded$d);
+      props = _objectWithoutProperties(_ref3, _excluded$j);
 
   var _useContext = useContext(LayoutContext),
       drawerWidth = _useContext.drawerWidth;
@@ -4338,7 +4600,7 @@ var Datagrid = function Datagrid(_ref3) {
   var sidebarOpen = useSelector$1(function (state) {
     return state.admin.ui.sidebarOpen;
   });
-  var classes = useStyles$3({
+  var classes = useStyles$7({
     sidebarOpen: sidebarOpen,
     drawerWidth: drawerWidth
   });
@@ -4386,7 +4648,7 @@ var lists = /*#__PURE__*/Object.freeze({
   NotificationList: NotificationList
 });
 
-var _excluded$c = ["component", "componentProps", "components", "addLabel", "sortBy"];
+var _excluded$i = ["component", "componentProps", "components", "addLabel", "sortBy"];
 
 var Component = function Component(_ref) {
   var component = _ref.component,
@@ -4395,7 +4657,7 @@ var Component = function Component(_ref) {
       _ref$addLabel = _ref.addLabel,
       addLabel = _ref$addLabel === void 0 ? true : _ref$addLabel;
       _ref.sortBy;
-      var props = _objectWithoutProperties(_ref, _excluded$c);
+      var props = _objectWithoutProperties(_ref, _excluded$i);
 
   var Component = get$2(components, component);
 
@@ -4434,13 +4696,13 @@ var useCustomComponents = function useCustomComponents(resource) {
   }, [resources, resource]);
 };
 
-var _excluded$b = ["tabs"],
+var _excluded$h = ["tabs"],
     _excluded2$2 = ["componentProps"],
     _excluded3$1 = ["fullWidth"];
 
 var TabbedForm = function TabbedForm(_ref) {
   var tabs = _ref.tabs,
-      props = _objectWithoutProperties(_ref, _excluded$b);
+      props = _objectWithoutProperties(_ref, _excluded$h);
 
   var _useContext = useContext(CrudContext),
       getForm = _useContext.getForm;
@@ -4473,7 +4735,7 @@ var TabbedForm = function TabbedForm(_ref) {
           fullWidth = _ref3$componentProps.fullWidth,
           restComponentProps = _objectWithoutProperties(_ref3$componentProps, _excluded3$1);
 
-      return form !== null && form !== void 0 && form.useWorkflow && workflow !== null && useWorkflow === true ? /*#__PURE__*/React__default.createElement(Input, {
+      return form !== null && form !== void 0 && form.useWorkflow && workflow !== null && useWorkflow === true ? /*#__PURE__*/React__default.createElement(Input$1, {
         key: source,
         source: source,
         fullWidth: true,
@@ -4526,7 +4788,7 @@ var useSaveMutation = function useSaveMutation(_ref) {
 
   var doRedirect = useRedirect();
   var doRefresh = useRefresh$1();
-  var notify = useNotify$1();
+  var notify = useNotify();
   var save = useCallback( /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(values) {
       var response, errors;
@@ -4595,7 +4857,7 @@ var useSaveMutation = function useSaveMutation(_ref) {
   return save;
 };
 
-var _excluded$a = ["fullWidth"];
+var _excluded$g = ["fullWidth"];
 
 var Form = function Form(_ref) {
   var _form$inputs;
@@ -4650,7 +4912,7 @@ var Form = function Form(_ref) {
         useWorkflow = _ref2.useWorkflow,
         _ref2$componentProps = _ref2.componentProps,
         fullWidth = _ref2$componentProps.fullWidth,
-        restComponentProps = _objectWithoutProperties(_ref2$componentProps, _excluded$a);
+        restComponentProps = _objectWithoutProperties(_ref2$componentProps, _excluded$g);
 
     return form !== null && form !== void 0 && form.useWorkflow && workflow !== null && useWorkflow === true ? /*#__PURE__*/React__default.createElement(InputHelperText$1, {
       key: source,
@@ -4689,14 +4951,14 @@ var Create = function Create(props) {
   return /*#__PURE__*/React__default.createElement(Edit, props, /*#__PURE__*/React__default.createElement(Form, null));
 };
 
-var _excluded$9 = ["grid", "customComponents"],
+var _excluded$f = ["grid", "customComponents"],
     _excluded2$1 = ["className", "exporter", "filters"],
     _excluded3 = ["label", "component", "componentProps"];
 
 var Actions = function Actions(_ref) {
   var grid = _ref.grid,
       customComponents = _ref.customComponents,
-      props = _objectWithoutProperties(_ref, _excluded$9);
+      props = _objectWithoutProperties(_ref, _excluded$f);
 
   var className = props.className,
       exporter = props.exporter,
@@ -4782,14 +5044,14 @@ Actions.defaultProps = {
   }
 };
 
-var _excluded$8 = ["grid", "customComponents"];
+var _excluded$e = ["grid", "customComponents"];
 
 var BulkActionButtons = function BulkActionButtons(_ref) {
   var _grid$bulkActionButto;
 
   var grid = _ref.grid,
       customComponents = _ref.customComponents,
-      props = _objectWithoutProperties(_ref, _excluded$8);
+      props = _objectWithoutProperties(_ref, _excluded$e);
 
   return /*#__PURE__*/React__default.createElement(Fragment, null, grid === null || grid === void 0 ? void 0 : (_grid$bulkActionButto = grid.bulkActionButtons) === null || _grid$bulkActionButto === void 0 ? void 0 : _grid$bulkActionButto.map(function (_ref2, index) {
     var component = _ref2.component,
@@ -4802,6 +5064,73 @@ var BulkActionButtons = function BulkActionButtons(_ref) {
     }));
   }), (grid === null || grid === void 0 ? void 0 : grid.canDelete) !== false && /*#__PURE__*/React__default.createElement(BulkDeleteButton, props));
 };
+
+var _excluded$d = ["grid"];
+
+var Empty = function Empty(_ref) {
+  var grid = _ref.grid,
+      props = _objectWithoutProperties(_ref, _excluded$d);
+
+  var _useListContext = useListContext(props),
+      basePath = _useListContext.basePath,
+      hasCreate = _useListContext.hasCreate;
+
+  var resource = useResourceContext(props);
+  var classes = useStyles$6(props);
+  var translate = useTranslate$2();
+  var getResourceLabel = useGetResourceLabel();
+  var resourceName = translate("resources.".concat(resource, ".forcedCaseName"), {
+    smart_count: 0,
+    _: getResourceLabel(resource, 0)
+  });
+  var emptyMessage = translate("ra.page.empty", {
+    name: resourceName
+  });
+  var inviteMessage = translate("ra.page.invite");
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: classes.message
+  }, /*#__PURE__*/React.createElement(Inbox, {
+    className: classes.icon
+  }), /*#__PURE__*/React.createElement(Typography$1, {
+    variant: "h4",
+    paragraph: true
+  }, translate("resources.".concat(resource, ".empty"), {
+    _: emptyMessage
+  })), hasCreate && (grid === null || grid === void 0 ? void 0 : grid.canCreate) !== false && /*#__PURE__*/React.createElement(Typography$1, {
+    variant: "body1"
+  }, translate("resources.".concat(resource, ".invite"), {
+    _: inviteMessage
+  }))), hasCreate && (grid === null || grid === void 0 ? void 0 : grid.canCreate) !== false && /*#__PURE__*/React.createElement("div", {
+    className: classes.toolbar
+  }, /*#__PURE__*/React.createElement(CreateButton, {
+    variant: "contained",
+    basePath: basePath,
+    label: translate("resources.".concat(resource, ".create"), {
+      _: "ra.action.create"
+    })
+  })));
+};
+
+var useStyles$6 = makeStyles(function (theme) {
+  return {
+    message: {
+      textAlign: "center",
+      opacity: theme.palette.type === "light" ? 0.5 : 0.8,
+      margin: "0 1em",
+      color: theme.palette.type === "light" ? "inherit" : theme.palette.text.primary
+    },
+    icon: {
+      width: "9em",
+      height: "9em"
+    },
+    toolbar: {
+      textAlign: "center",
+      marginTop: "2em"
+    }
+  };
+}, {
+  name: "RaEmpty"
+});
 
 var exporter = function exporter(grid, data, translate) {
   var columns = ((grid === null || grid === void 0 ? void 0 : grid.columns) || []).filter(function (c) {
@@ -4826,7 +5155,7 @@ var exporter = function exporter(grid, data, translate) {
   });
 };
 
-var _excluded$7 = ["source", "component", "componentProps"];
+var _excluded$c = ["source", "component", "componentProps"];
 
 var List = function List(props) {
   var _grid$filters, _grid$columns;
@@ -4866,6 +5195,9 @@ var List = function List(props) {
     } : false,
     filterDefaultValues: grid.filterDefaultValues || {},
     sort: grid === null || grid === void 0 ? void 0 : grid.sort,
+    empty: /*#__PURE__*/React.createElement(Empty, {
+      grid: grid
+    }),
     perPage: grid === null || grid === void 0 ? void 0 : grid.perPage,
     bulkActionButtons: /*#__PURE__*/React.createElement(BulkActionButtons, {
       grid: grid,
@@ -4875,7 +5207,7 @@ var List = function List(props) {
       var source = _ref.source,
           component = _ref.component,
           componentProps = _ref.componentProps,
-          props = _objectWithoutProperties(_ref, _excluded$7);
+          props = _objectWithoutProperties(_ref, _excluded$c);
 
       return /*#__PURE__*/React.createElement(Component, _extends({}, props, {
         key: source,
@@ -4966,7 +5298,7 @@ var createCrud = function createCrud(_ref) {
   };
 };
 
-var _excluded$6 = ["icon", "roles", "group", "options", "workflow", "components"];
+var _excluded$b = ["icon", "roles", "group", "options", "workflow", "components"];
 var defaultIcon = TableChart;
 var defaultGroup = "dashboard";
 
@@ -4977,7 +5309,7 @@ var CrudResource = function CrudResource(_ref) {
       options = _ref.options;
       _ref.workflow;
       var components = _ref.components,
-      props = _objectWithoutProperties(_ref, _excluded$6);
+      props = _objectWithoutProperties(_ref, _excluded$b);
 
   var crudProps = useMemo$1(function () {
     return createCrud({
@@ -5010,12 +5342,65 @@ CrudResource.defaultProps = {
   workflow: true
 };
 
+var _excluded$a = ["children"];
+
+var BaseProfileForm = function BaseProfileForm(_ref) {
+  var children = _ref.children,
+      props = _objectWithoutProperties(_ref, _excluded$a);
+
+  var notify = useNotify$1();
+  var save = useSaveMutation(_objectSpread2(_objectSpread2({}, props), {}, {
+    resource: "users/profile",
+    redirect: "/",
+    onSuccess: function onSuccess(_ref2) {
+      var _ref2$data = _ref2.data,
+          email = _ref2$data.email,
+          profile = _ref2$data.profile;
+      localStorage.setItem("profile", JSON.stringify(_objectSpread2({
+        email: email
+      }, profile)));
+      notify("ra.message.profile_updated");
+    }
+  }));
+  return /*#__PURE__*/React__default.createElement(SimpleForm, _extends({}, props, {
+    toolbar: /*#__PURE__*/React__default.createElement(Toolbar$2, null, /*#__PURE__*/React__default.createElement(SaveButton, null)),
+    save: save
+  }), React__default.Children.map(children, function (child) {
+    return /*#__PURE__*/React__default.isValidElement(child) ? /*#__PURE__*/React__default.cloneElement(child, _objectSpread2({}, props)) : child;
+  }));
+};
+
+var _excluded$9 = ["formData"];
+
+var ProfileForm = function ProfileForm(props) {
+  return /*#__PURE__*/React__default.createElement(BaseProfileForm, props, /*#__PURE__*/React__default.createElement(DebouncedTextInput, {
+    source: "email",
+    validate: [required(), email()]
+  }), /*#__PURE__*/React__default.createElement(DebouncedTextInput, {
+    source: "profile.name",
+    validate: required(),
+    maxLength: 50
+  }), /*#__PURE__*/React__default.createElement(DebouncedTextInput, {
+    source: "profile.surname",
+    validate: required(),
+    maxLength: 50
+  }), /*#__PURE__*/React__default.createElement(FormDataConsumer, null, function (_ref) {
+    var formData = _ref.formData,
+        props = _objectWithoutProperties(_ref, _excluded$9);
+
+    return formData.auth === "local" && /*#__PURE__*/React__default.createElement(DebouncedTextInput, _extends({}, props, {
+      type: "password",
+      source: "password"
+    }));
+  }));
+};
+
 var LocalLoginForm = function LocalLoginForm(props) {
   return /*#__PURE__*/React__default.createElement(LoginForm, props);
 };
 
-var _excluded$5 = ["logo", "children"];
-var useStyles$2 = makeStyles(function (theme) {
+var _excluded$8 = ["logo", "children"];
+var useStyles$5 = makeStyles(function (theme) {
   return {
     main: {
       overflow: "hidden",
@@ -5033,11 +5418,11 @@ var useStyles$2 = makeStyles(function (theme) {
 var LoginPage = function LoginPage(_ref) {
   var logo = _ref.logo,
       children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded$5);
+      props = _objectWithoutProperties(_ref, _excluded$8);
 
   var location = props.location;
   var search = location.search;
-  var classes = useStyles$2();
+  var classes = useStyles$5();
   var theme = useTheme();
   var action = useMemo$1(function () {
     if (search) {
@@ -5064,12 +5449,339 @@ LoginPage.propTypes = {
   logo: PropTypes.element
 };
 
-var _excluded$4 = ["staticContext", "children"];
+var _excluded$7 = ["children", "staticContext", "title"];
+
+var ProfilePage = function ProfilePage(_ref) {
+  var _ref$children = _ref.children,
+      children = _ref$children === void 0 ? /*#__PURE__*/React__default.createElement(ProfileForm, null) : _ref$children;
+      _ref.staticContext;
+      var _ref$title = _ref.title,
+      title = _ref$title === void 0 ? "ra.page.profile.title" : _ref$title,
+      props = _objectWithoutProperties(_ref, _excluded$7);
+
+  return /*#__PURE__*/React__default.createElement(Edit, _extends({}, props, {
+    id: "profile",
+    title: title,
+    resource: "users",
+    basePath: "users"
+  }), /*#__PURE__*/React__default.isValidElement(children) ? /*#__PURE__*/React__default.cloneElement(children, _objectSpread2({}, props)) : children);
+};
+
+ProfilePage.propTypes = {
+  children: PropTypes.element,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
+};
+
+var useStyles$4 = makeStyles(function (theme) {
+  return {
+    button: {
+      margin: theme.spacing(1),
+      width: "calc(100% - ".concat(theme.spacing(2), "px)")
+    }
+  };
+});
+
+var ResetPasswordButton = function ResetPasswordButton(_ref) {
+  var _ref$href = _ref.href,
+      href = _ref$href === void 0 ? "/#/reset-password" : _ref$href,
+      _ref$color = _ref.color,
+      color = _ref$color === void 0 ? "primary" : _ref$color,
+      _ref$variant = _ref.variant,
+      variant = _ref$variant === void 0 ? "outlined" : _ref$variant,
+      _ref$label = _ref.label,
+      label = _ref$label === void 0 ? "ra.auth.reset_password" : _ref$label;
+  var classes = useStyles$4();
+  var translate = useTranslate$2();
+  return /*#__PURE__*/React__default.createElement(Button$1, {
+    className: classes.button,
+    href: href,
+    color: color,
+    type: "button",
+    variant: variant
+  }, translate(label));
+};
+
+var _excluded$6 = ["siteKey", "reset"];
+
+var addScript = function addScript(_ref) {
+  var src = _ref.src,
+      id = _ref.id,
+      onLoad = _ref.onLoad;
+  var existing = document.getElementById(id);
+
+  if (existing) {
+    return existing;
+  } else {
+    var script = document.createElement("script");
+    script.src = src;
+    script.id = id;
+    script.async = true;
+
+    script.onload = function () {
+      if (onLoad) {
+        onLoad();
+      }
+    };
+
+    document.body.appendChild(script);
+    return script;
+  }
+};
+
+var removeScript = function removeScript(_ref2) {
+  var id = _ref2.id;
+  var script = document.getElementById(id);
+
+  if (script) {
+    document.body.removeChild(script);
+  }
+};
+
+var RecaptchaInput = function RecaptchaInput(_ref3) {
+  var siteKey = _ref3.siteKey;
+      _ref3.reset;
+      var props = _objectWithoutProperties(_ref3, _excluded$6);
+
+  var _useInput = useInput$1(_objectSpread2({}, props)),
+      onChange = _useInput.input.onChange;
+
+  useEffect(function () {
+    addScript({
+      src: "https://www.google.com/recaptcha/api.js?render=".concat(siteKey),
+      id: "recaptcha-api",
+      onLoad: function onLoad() {
+        // eslint-disable-next-line no-undef
+        grecaptcha.ready(function () {
+          // eslint-disable-next-line no-undef
+          grecaptcha.execute(siteKey, {
+            action: "submit"
+          }).then(onChange);
+        });
+      }
+    });
+    return function () {
+      return removeScript({
+        id: "recaptcha-api"
+      });
+    };
+  }, [siteKey, onChange]);
+  return null;
+};
+
+var useResetPassword = function useResetPassword() {
+  var dataProvider = useDataProvider$2();
+  var handler = useCallback(function (_ref) {
+    var account = _ref.account,
+        token = _ref.token;
+    return dataProvider.post("users/reset-password", {
+      account: account,
+      token: token
+    });
+  }, [dataProvider]);
+  return handler;
+};
+
+var _excluded$5 = ["meta", "input"];
+var useStyles$3 = makeStyles(function (theme) {
+  return {
+    form: {
+      padding: "0 1em 1em 1em"
+    },
+    input: {
+      marginTop: theme.spacing(2),
+      marginBottom: theme.spacing(2)
+    },
+    button: {
+      width: "100%",
+      display: "block",
+      clear: "both",
+      marginTop: theme.spacing(1)
+    },
+    icon: {
+      marginRight: theme.spacing(1)
+    }
+  };
+}, {
+  name: "RaResetPasswordForm"
+});
+
+var Input = function Input(_ref) {
+  var _ref$meta = _ref.meta,
+      touched = _ref$meta.touched,
+      error = _ref$meta.error,
+      inputProps = _ref.input,
+      props = _objectWithoutProperties(_ref, _excluded$5);
+
+  return /*#__PURE__*/React.createElement(TextField$2, _extends({
+    error: !!(touched && error),
+    helperText: touched && error
+  }, inputProps, props, {
+    fullWidth: true
+  }));
+};
+
+var ResetPasswordForm = function ResetPasswordForm(_ref2) {
+  var recaptchaSiteApiKey = _ref2.recaptchaSiteApiKey,
+      _ref2$redirectTo = _ref2.redirectTo,
+      redirectTo = _ref2$redirectTo === void 0 ? "/login" : _ref2$redirectTo;
+
+  var _useSafeSetState = useSafeSetState(false),
+      _useSafeSetState2 = _slicedToArray(_useSafeSetState, 2),
+      loading = _useSafeSetState2[0],
+      setLoading = _useSafeSetState2[1];
+
+  var resetPassword = useResetPassword();
+  var translate = useTranslate$2();
+  var redirect = useRedirect();
+  var notify = useNotify();
+  var classes = useStyles$3();
+
+  var validate = function validate(values) {
+    var errors = {
+      account: undefined
+    };
+
+    if (!values.account) {
+      errors.account = translate("ra.validation.required");
+    }
+
+    return errors;
+  };
+
+  var _React$useState = React.useState(Date.now()),
+      _React$useState2 = _slicedToArray(_React$useState, 2),
+      timestamp = _React$useState2[0],
+      setTimestamp = _React$useState2[1];
+
+  var submit = function submit(values) {
+    setLoading(true);
+    resetPassword(values).then(function (_ref3) {
+      var data = _ref3.data;
+      setLoading(false);
+      setTimestamp(Date.now());
+      notify(data === null || data === void 0 ? void 0 : data.message, {
+        variant: "info"
+      });
+      redirect(redirectTo);
+    }).catch(function (error) {
+      setLoading(false);
+      setTimestamp(Date.now());
+      notify(error === null || error === void 0 ? void 0 : error.message, {
+        type: "warning"
+      });
+    });
+  };
+
+  return /*#__PURE__*/React.createElement(Form$1, {
+    onSubmit: submit,
+    validate: validate,
+    render: function render(_ref4) {
+      var handleSubmit = _ref4.handleSubmit;
+      return /*#__PURE__*/React.createElement("form", {
+        onSubmit: handleSubmit,
+        noValidate: true
+      }, /*#__PURE__*/React.createElement("div", {
+        className: classes.form
+      }, /*#__PURE__*/React.createElement("div", {
+        className: classes.input
+      }, /*#__PURE__*/React.createElement(Field, {
+        autoFocus: true,
+        id: "account",
+        name: "account",
+        component: Input,
+        label: translate("ra.auth.account"),
+        disabled: loading
+      }), /*#__PURE__*/React.createElement(Field, {
+        id: "token",
+        key: timestamp,
+        name: "token",
+        source: "token",
+        component: RecaptchaInput,
+        siteKey: recaptchaSiteApiKey
+      })), /*#__PURE__*/React.createElement(Button$2, {
+        variant: "contained",
+        type: "submit",
+        color: "primary",
+        disabled: loading,
+        className: classes.button
+      }, loading && /*#__PURE__*/React.createElement(CircularProgress, {
+        className: classes.icon,
+        size: 18,
+        thickness: 2
+      }), translate("ra.auth.password_reset.button")), /*#__PURE__*/React.createElement(Button$2, {
+        className: classes.button,
+        href: "/#/login",
+        color: "primary",
+        type: "button",
+        disabled: loading
+      }, "\u2190", translate("ra.auth.back_to_login"))));
+    }
+  });
+};
+
+ResetPasswordForm.propTypes = {
+  redirectTo: PropTypes.string
+};
+
+var _excluded$4 = ["logo", "children"];
+var useStyles$2 = makeStyles(function (theme) {
+  return {
+    main: {
+      overflow: "hidden",
+      minHeight: "98vh",
+      backgroundImage: "none",
+      backgroundColor: theme.palette.background.default,
+      "& [class*=MuiAvatar-root]": {
+        display: "none",
+        visibility: "hidden"
+      }
+    }
+  };
+});
+
+var ResetPasswordPage = function ResetPasswordPage(_ref) {
+  var logo = _ref.logo,
+      _ref$children = _ref.children,
+      children = _ref$children === void 0 ? /*#__PURE__*/React__default.createElement(ResetPasswordForm, null) : _ref$children,
+      props = _objectWithoutProperties(_ref, _excluded$4);
+
+  var location = props.location;
+  var search = location.search;
+  var classes = useStyles$2();
+  var theme = useTheme();
+  var action = useMemo$1(function () {
+    if (search) {
+      var params = new URLSearchParams(search);
+      return params.get("action");
+    }
+
+    return null;
+  }, [search]);
+  return /*#__PURE__*/React__default.createElement(ThemeProvider$1, {
+    theme: theme
+  }, /*#__PURE__*/React__default.createElement(Login, {
+    backgroundImage: "",
+    classes: classes
+  }, logo, React__default.Children.map(children, function (child) {
+    return /*#__PURE__*/React__default.isValidElement(child) ? /*#__PURE__*/React__default.cloneElement(child, _objectSpread2({
+      action: action
+    }, props)) : child;
+  })));
+};
+
+ResetPasswordPage.propTypes = {
+  action: PropTypes.string,
+  logo: PropTypes.element,
+  recaptchaSiteApiKey: PropTypes.string.isRequired,
+  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node])
+};
+
+var _excluded$3 = ["staticContext", "children"];
 
 var SignupPage = function SignupPage(_ref) {
   _ref.staticContext;
       var children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded$4);
+      props = _objectWithoutProperties(_ref, _excluded$3);
 
   var theme = useTheme();
   return /*#__PURE__*/React__default.createElement(ThemeProvider$1, {
@@ -5079,7 +5791,7 @@ var SignupPage = function SignupPage(_ref) {
   }), /*#__PURE__*/React__default.createElement(Notification$1, null));
 };
 
-var _excluded$3 = ["children"];
+var _excluded$2 = ["children"];
 var SignupStepperContext = /*#__PURE__*/React__default.createContext({
   activeStep: 0,
   isLastStep: false
@@ -5092,7 +5804,7 @@ var SignupStepperProvider = function SignupStepperProvider(_ref) {
       activeStep = _React$useState2[0],
       setActiveStep = _React$useState2[1];
 
-  var _React$useState3 = React__default.useState(false),
+  var _React$useState3 = React__default.useState(React__default.Children.toArray(children).length === 1),
       _React$useState4 = _slicedToArray(_React$useState3, 2),
       isLastStep = _React$useState4[0],
       setIsLastStep = _React$useState4[1];
@@ -5109,7 +5821,7 @@ var SignupStepperProvider = function SignupStepperProvider(_ref) {
 
 var SignupStepper = function SignupStepper(_ref2) {
   var children = _ref2.children,
-      props = _objectWithoutProperties(_ref2, _excluded$3);
+      props = _objectWithoutProperties(_ref2, _excluded$2);
 
   var form = useForm();
 
@@ -5150,7 +5862,7 @@ var SignupStepper = function SignupStepper(_ref2) {
     activeStep: activeStep,
     orientation: "vertical"
   }, React__default.Children.map(children, function (field, index) {
-    return /*#__PURE__*/React__default.createElement(Step, {
+    return /*#__PURE__*/React__default.isValidElement(field) ? /*#__PURE__*/React__default.createElement(Step, {
       key: index
     }, /*#__PURE__*/React__default.createElement(StepLabel, null, field.props.title || field.props.source), /*#__PURE__*/React__default.createElement(StepContent, {
       TransitionProps: {
@@ -5161,7 +5873,7 @@ var SignupStepper = function SignupStepper(_ref2) {
       onClick: handleBack
     }, "\u2190 ", translate("ra.action.back")), activeStep < children.length - 1 && /*#__PURE__*/React__default.createElement(Button$2, {
       onClick: handleNext
-    }, translate("ra.action.next"), " \u2192")));
+    }, translate("ra.action.next"), " \u2192"))) : undefined;
   }));
 };
 
@@ -5175,6 +5887,7 @@ var useStyles$1 = makeStyles(function (theme) {
 });
 var setLoggedIn = function setLoggedIn(_ref) {
   var data = _ref.data;
+  localStorage.setItem("email", data.email);
   localStorage.setItem("token", data.token);
   localStorage.setItem("roles", JSON.stringify(data.roles));
   localStorage.setItem("username", data.username);
@@ -5214,7 +5927,7 @@ var SpidLoginForm = function SpidLoginForm(_ref3) {
       redirectUrl = _ref3.redirectUrl,
       signup = _ref3.signup,
       action = _ref3.action;
-  var notify = useNotify();
+  var notify = useNotify$1();
   var classes = useStyles$1();
   var redirect = useRedirect$1();
   var translate = useTranslate$1();
@@ -5295,6 +6008,7 @@ var SpidLoginForm = function SpidLoginForm(_ref3) {
     onClick: stopPropagation,
     component: "a",
     color: "primary",
+    type: "button",
     variant: "contained",
     href: login,
     fullWidth: true
@@ -5313,72 +6027,6 @@ SpidLoginForm.propTypes = {
 SpidLoginForm.defaultProps = {
   signup: false,
   redirectUrl: "/"
-};
-
-var _excluded$2 = ["siteKey"];
-
-var addScript = function addScript(_ref) {
-  var src = _ref.src,
-      id = _ref.id,
-      onLoad = _ref.onLoad;
-  var existing = document.getElementById(id);
-
-  if (existing) {
-    return existing;
-  } else {
-    var script = document.createElement("script");
-    script.src = src;
-    script.id = id;
-    script.async = true;
-
-    script.onload = function () {
-      if (onLoad) {
-        onLoad();
-      }
-    };
-
-    document.body.appendChild(script);
-    return script;
-  }
-};
-
-var removeScript = function removeScript(_ref2) {
-  var id = _ref2.id;
-  var script = document.getElementById(id);
-
-  if (script) {
-    document.body.removeChild(script);
-  }
-};
-
-var RecaptchaInput = function RecaptchaInput(_ref3) {
-  var siteKey = _ref3.siteKey,
-      props = _objectWithoutProperties(_ref3, _excluded$2);
-
-  var _useInput = useInput$1(_objectSpread2({}, props)),
-      onChange = _useInput.input.onChange;
-
-  useEffect(function () {
-    addScript({
-      src: "https://www.google.com/recaptcha/api.js?render=".concat(siteKey),
-      id: "recaptcha-api",
-      onLoad: function onLoad() {
-        // eslint-disable-next-line no-undef
-        grecaptcha.ready(function () {
-          // eslint-disable-next-line no-undef
-          grecaptcha.execute(siteKey, {
-            action: "submit"
-          }).then(onChange);
-        });
-      }
-    });
-    return function () {
-      return removeScript({
-        id: "recaptcha-api"
-      });
-    };
-  }, [siteKey, onChange]);
-  return null;
 };
 
 var _excluded$1 = ["record", "initialValues"];
@@ -5427,17 +6075,6 @@ var SpidSignupAccountStep = function SpidSignupAccountStep(_ref) {
   })));
 };
 
-var SpidSignupRolesStep = function SpidSignupRolesStep(_ref) {
-  var props = _extends({}, _ref);
-
-  return /*#__PURE__*/React__default.createElement(Fragment, null, /*#__PURE__*/React__default.createElement(ReferenceCheckboxGroupInput, _extends({}, props, {
-    source: "roles",
-    reference: "roles",
-    optionText: "name",
-    validate: required()
-  })));
-};
-
 var _excluded = ["basePath"],
     _excluded2 = ["apiUrl", "loadUrl", "staticContext", "children", "logo", "title", "subTitle", "resource", "recaptchaSiteApiKey"];
 
@@ -5483,20 +6120,25 @@ var SpidSignupForm = function SpidSignupForm(_ref3) {
   var apiUrl = _ref3.apiUrl,
       loadUrl = _ref3.loadUrl;
       _ref3.staticContext;
-      _ref3.children;
-      var logo = _ref3.logo,
+      var children = _ref3.children,
+      logo = _ref3.logo,
       title = _ref3.title,
       subTitle = _ref3.subTitle,
       resource = _ref3.resource,
       recaptchaSiteApiKey = _ref3.recaptchaSiteApiKey,
       props = _objectWithoutProperties(_ref3, _excluded2);
 
+  var _useState = useState(Date.now()),
+      _useState2 = _slicedToArray(_useState, 2),
+      timestamp = _useState2[0],
+      setTimestamp = _useState2[1];
+
   var classes = useStyles();
 
-  var _useState = useState(null),
-      _useState2 = _slicedToArray(_useState, 2),
-      initialValues = _useState2[0],
-      setInitialValues = _useState2[1];
+  var _useState3 = useState(null),
+      _useState4 = _slicedToArray(_useState3, 2),
+      initialValues = _useState4[0],
+      setInitialValues = _useState4[1];
 
   var redirect = useRedirect$1();
   var search = getSignResponse();
@@ -5507,6 +6149,9 @@ var SpidSignupForm = function SpidSignupForm(_ref3) {
         document.location.href = "#/login".concat(search);
         document.location.reload();
       }, 100);
+    },
+    onError: function onError() {
+      setTimestamp(Date.now());
     }
   });
 
@@ -5563,6 +6208,7 @@ var SpidSignupForm = function SpidSignupForm(_ref3) {
 
     doLoad();
   }, [search, load, redirect]);
+  console.info(children);
   return /*#__PURE__*/React__default.createElement(SignupStepperProvider, null, /*#__PURE__*/React__default.createElement(Grid, {
     container: true,
     justifyContent: "center",
@@ -5590,10 +6236,10 @@ var SpidSignupForm = function SpidSignupForm(_ref3) {
   }, /*#__PURE__*/React__default.createElement(SpidSignupAccountStep, {
     title: "General Infoes",
     fullWidth: true
-  }), /*#__PURE__*/React__default.createElement(SpidSignupRolesStep, {
-    title: "Roles",
-    fullWidth: true
+  }), React__default.Children.map(children, function (child) {
+    return /*#__PURE__*/React__default.isValidElement(child) ? /*#__PURE__*/React__default.cloneElement(child, _objectSpread2({}, props)) : child;
   })), /*#__PURE__*/React__default.createElement(RecaptchaInput, {
+    key: timestamp,
     source: "token",
     siteKey: recaptchaSiteApiKey
   }))))));
@@ -5606,7 +6252,8 @@ SpidSignupForm.propTypes = {
   apiUrl: PropTypes.string,
   loadUrl: PropTypes.string,
   recaptchaSiteApiKey: PropTypes.string.isRequired,
-  staticContext: PropTypes.object
+  staticContext: PropTypes.object,
+  children: PropTypes.node
 };
 SpidSignupForm.defaultProps = {
   resource: "spid"
@@ -5767,107 +6414,6 @@ var convertFile = /*#__PURE__*/function () {
   };
 }();
 
-var createAuthProvider = function createAuthProvider(_ref) {
-  var apiUrl = _ref.apiUrl;
-  return {
-    login: function login(params) {
-      var username = params.username,
-          password = params.password;
-      var requestURL = "".concat(apiUrl, "/users/login");
-      var request = new Request(requestURL, {
-        method: "POST",
-        body: JSON.stringify({
-          username: username,
-          password: password
-        }),
-        headers: new Headers({
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        })
-      });
-      return fetch(request).then(function (response) {
-        return response.json();
-      }).then(function (_ref2) {
-        var data = _ref2.data,
-            success = _ref2.success;
-
-        if (!success) {
-          throw new Error(data.message);
-        }
-
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("roles", JSON.stringify(data.roles));
-        localStorage.setItem("profile", JSON.stringify(data.profile));
-        notifyToken(data.token);
-      });
-    },
-    logout: function logout() {
-      localStorage.removeItem("token");
-      localStorage.removeItem("roles");
-      localStorage.removeItem("profile");
-      return Promise.resolve();
-    },
-    checkAuth: function checkAuth() {
-      return localStorage.getItem("token") ? Promise.resolve() : Promise.reject();
-    },
-    checkError: function checkError(error) {
-      if (error.status === 401 || error.status === 500) {
-        return Promise.reject(error === null || error === void 0 ? void 0 : error.message);
-      }
-
-      return Promise.resolve();
-    },
-    getPermissions: function getPermissions() {
-      var roles = JSON.parse(localStorage.getItem("roles"));
-      return Promise.resolve(function (v) {
-        return roles && roles.some(function (r) {
-          return v.includes(r.code);
-        });
-      });
-    },
-    getIdentity: function getIdentity() {
-      var profile = JSON.parse(localStorage.getItem("profile"));
-      var roles = JSON.parse(localStorage.getItem("roles"));
-      return Promise.resolve(_objectSpread2(_objectSpread2({}, profile), {}, {
-        roles: roles
-      }));
-    },
-    impersonate: function impersonate(id) {
-      var requestURL = "".concat(apiUrl, "/users/impersonate/?id=").concat(id);
-      var request = new Request(requestURL, {
-        method: "POST",
-        headers: getHeaders()
-      });
-      return fetch(request).then(function (response) {
-        return response.json();
-      }).then(function (_ref3) {
-        var success = _ref3.success,
-            data = _ref3.data;
-
-        if (!success) {
-          throw new Error(data.message);
-        }
-
-        ["token", "roles", "username", "profile"].forEach(function (param) {
-          var toSaveParam = "admin_".concat(param);
-          localStorage.setItem(toSaveParam, localStorage.getItem(param));
-          localStorage.setItem(param, ["profile", "roles"].indexOf(param) !== -1 ? JSON.stringify(data[param]) : data[param]);
-        });
-        localStorage.setItem("impersonate", true);
-      });
-    },
-    stopImpersonate: function stopImpersonate() {
-      ["token", "roles", "username", "profile"].forEach(function (param) {
-        var savedParam = "admin_".concat(param);
-        localStorage.setItem(param, localStorage.getItem(savedParam));
-        localStorage.removeItem(savedParam);
-      });
-      localStorage.setItem("impersonate", false);
-      return Promise.resolve();
-    }
-  };
-};
-
 var createFilesParser = function createFilesParser() {
   return /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(data, fileFields) {
@@ -5977,7 +6523,9 @@ var fetchJson = function fetchJson(url) {
     }
 
     if (status < 200 || status >= 300) {
-      return Promise.reject(new HttpError(statusText, status, json));
+      var _json, _json$data, _json2, _json2$data;
+
+      return Promise.reject(new HttpError(((_json = json) === null || _json === void 0 ? void 0 : (_json$data = _json.data) === null || _json$data === void 0 ? void 0 : _json$data.message) || statusText, ((_json2 = json) === null || _json2 === void 0 ? void 0 : (_json2$data = _json2.data) === null || _json2$data === void 0 ? void 0 : _json2$data.code) || status, json));
     }
 
     return Promise.resolve({
@@ -6210,9 +6758,8 @@ var createDataProvider = function createDataProvider(_ref) {
     },
     post: function post(resource, params) {
       var url = "".concat(apiUrl, "/").concat(resource);
-      var body = params.body;
       var options = {
-        body: JSON.stringify(body),
+        body: JSON.stringify(params),
         method: "POST",
         headers: getHeaders()
       };
@@ -6224,8 +6771,7 @@ var createDataProvider = function createDataProvider(_ref) {
       });
     },
     get: function get(resource, params) {
-      var query = params.query;
-      var queryString = stringify(query);
+      var queryString = stringify(params);
       var url = "".concat(apiUrl, "/").concat(resource, "?").concat(queryString);
       var options = {
         method: "GET",
@@ -6305,4 +6851,4 @@ var useTabVisibiliy = function useTabVisibiliy(tab) {
   return visible;
 };
 
-export { AppBar, BackButton, Badge, ChipArrayField, CrudContext, CrudProvider, CrudResource, Datagrid, DateAgoField, DebouncedDateInput, DebouncedNumberInput, DebouncedTextInput, DeleteWithConfirmButton, EditButton, ExportToButton, FormTab, Group, GroupItem, GroupTitle, Input, LanguageMessageInput, Layout, LocalLoginForm, LoginPage, LongTextField, MarkAsReadedButton, MarkAsUnreadedButton, MediaField, MediaInput, Menu$1 as Menu, MenuGroup, MenuItem, NotificationField, NotificationList, ProgressField, InlineTextInput as RecordInput, ReferenceAutocompleteInput$1 as ReferenceAutocompleteInput, ReferenceCheckboxGroupInput, ReferenceListField, ReferenceAutocompleteInput as ReferenceSelectInput, ReferenceToolbar, Sidebar, SignupPage, SignupStepper, SpidLoginForm, SpidSignupForm, StateButton$1 as StateButton, StateButtonMenu, StateCollectionInput, StateField, StateInput, Toolbar, TransactionLogsField, TransactionNotesInput, TransactionNotesIsPrivateInput, Unprop, UserMenu, UserMenuItem, ValidationItem, ValidationSummary, WorkflowContext, WorkflowProvider, beep, convertFile, createAuthProvider, createDataFormatter, createDataProvider, createErrorMapper, createFilesParser, createI18nProvider, createManyFormatter, createManyParser, getHeaders, getToken, useAuthProvider, useCrud, useDataFormatter, useDataProvider, useDebounce, useFieldLabel, useI18nCatcher, useI18nLanguages, useI18nProvider, useManyFormatter, useManyParser, useSaveMutation, useTabVisibiliy as useTabVisibility, useToken, useWorkflow, useWorkflowInput };
+export { AppBar, BackButton, Badge, ProfileForm as BaseProfileForm, ChipArrayField, CrudContext, CrudProvider, CrudResource, Datagrid, DateAgoField, DebouncedDateInput, DebouncedNumberInput, DebouncedTextInput, DeleteWithConfirmButton, EditButton, Empty, ExportToButton, FormTab, Group, GroupItem, GroupTitle, ImpersonateUserButton, Input$1 as Input, LanguageMessageInput, Layout, LocalLoginForm, LoginPage, LongTextField, MarkAsReadedButton, MarkAsUnreadedButton, MediaField, MediaInput, Menu$1 as Menu, MenuGroup, MenuItem, NotificationField, NotificationList, ProfileForm, ProfilePage, ProgressField, InlineTextInput as RecordInput, ReferenceAutocompleteInput$1 as ReferenceAutocompleteInput, ReferenceCheckboxGroupInput, ReferenceListField, ReferenceAutocompleteInput as ReferenceSelectInput, ReferenceToolbar, ResetPasswordButton, ResetPasswordPage, Sidebar, SignupPage, SignupStepper, SpidLoginForm, SpidSignupForm, StateButton$1 as StateButton, StateButtonMenu, StateCollectionInput, StateField, StateInput, Toolbar, TransactionLogsField, TransactionNotesInput, TransactionNotesIsPrivateInput, Unprop, UserMenu, UserMenuItem, ValidationItem, ValidationSummary, WorkflowContext, WorkflowProvider, beep, convertFile, createAuthProvider, createDataFormatter, createDataProvider, createErrorMapper, createFilesParser, createI18nProvider, createManyFormatter, createManyParser, getHeaders, getToken, useAuthProvider, useCrud, useDataFormatter, useDataProvider, useDebounce, useFieldLabel, useI18nCatcher, useI18nLanguages, useI18nProvider, useManyFormatter, useManyParser, useSaveMutation, useTabVisibiliy as useTabVisibility, useToken, useWorkflow, useWorkflowInput };

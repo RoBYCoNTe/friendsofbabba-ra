@@ -9,6 +9,7 @@ import {
   FormHelperText,
   Switch,
   TextField,
+  Typography,
   makeStyles,
 } from "@material-ui/core";
 import React, {
@@ -25,6 +26,7 @@ import { WorkflowContext } from "../../data/workflow/WorkflowContext";
 import classnames from "classnames";
 import { get } from "lodash";
 
+const stopPropagation = (e) => e.stopPropagation();
 const useStyles = makeStyles((theme) => ({
   required: {},
 }));
@@ -85,8 +87,13 @@ const ConfirmMove = ({
     }
   );
   return (
-    <Dialog open={open}>
-      <DialogTitle>{translate("resources.workflow.move.title")}</DialogTitle>
+    <Dialog open={open} onClick={stopPropagation}>
+      <DialogTitle>
+        {translate("resources.workflow.move.title")}
+        <Typography variant="caption" display="block">
+          {state?.label}
+        </Typography>
+      </DialogTitle>
       <DialogContent>
         <DialogContentText
           className={classnames(needsNotes && classes.required)}

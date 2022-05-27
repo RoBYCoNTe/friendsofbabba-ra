@@ -5,6 +5,7 @@ import { Admin, Loading, Resource, RouteWithoutLayout } from "react-admin";
 import {
   CrudProvider,
   CrudResource,
+  ProfilePage,
   WorkflowProvider,
   createI18nProvider,
   useAuthProvider,
@@ -17,6 +18,8 @@ import { API_URL } from "./config";
 import Layout from "./component/Layout";
 import LoginPage from "./component/page/LoginPage";
 import React from "react";
+import ResetPasswordPage from "./component/page/ResetPasswordPage";
+import { Route } from "react-router-dom";
 import SignupPage from "./component/page/SignupPage";
 import humanResource from "./resource/human-resource";
 import localPartner from "./resource/local-partner";
@@ -64,6 +67,12 @@ const App = () => {
               path="/signup"
               component={SignupPage}
             />,
+            <RouteWithoutLayout
+              key="reset-password"
+              path="/reset-password"
+              component={ResetPasswordPage}
+            />,
+            <Route key="profile" path="/profile" component={ProfilePage} />,
           ]}
           dataProvider={dataProvider}
           authProvider={authProvider}
@@ -84,14 +93,14 @@ const App = () => {
           <Resource name="local-partners" {...localPartner} />
           <Resource name="human-resources" {...humanResource} />
 
-          <Resource name="roles" />
-          <Resource name="languages" />
           <Resource name="municipalities/provinces" />
           <Resource name="public-space-types" />
           <Resource name="public-space-media-types" />
           <Resource name="workflow/transactions/projects" />
           <Resource name="municipalities" group="admin" />
 
+          <Resource name="roles" />
+          <Resource name="languages" />
           <CrudResource name="users" group="admin" roles={["admin"]} />
           <CrudResource
             name="language-messages"

@@ -27,7 +27,7 @@ const removeScript = ({ id }) => {
   }
 };
 
-const RecaptchaInput = ({ siteKey, ...props }) => {
+const RecaptchaInput = ({ siteKey, reset, ...props }) => {
   const {
     input: { onChange },
   } = useInput({ ...props });

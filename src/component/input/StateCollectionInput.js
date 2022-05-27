@@ -45,19 +45,23 @@ const StateCollectionInput = ({
   }, [roles, record, workflow]);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleClick = (event) => {
-    event.stopPropagation();
-    event.preventDefault();
-    setAnchorEl(event.currentTarget);
+  const handleClick = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setAnchorEl(e.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleClose = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
     setAnchorEl(null);
     setState(null);
   };
 
   const handleChange = useCallback(
     (state) => (e) => {
+      e.stopPropagation();
+      e.preventDefault();
       setAnchorEl(null);
       setState(state);
     },

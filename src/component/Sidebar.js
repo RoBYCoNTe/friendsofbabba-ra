@@ -6,11 +6,15 @@ import {
   useMediaQuery,
 } from "@material-ui/core";
 import React, { useCallback } from "react";
+import { toggleSidebar, useGetIdentity, useTranslate } from "ra-core";
+import {
+  useIsImpersonating,
+  useUndoImpersonate,
+} from "../data/createAuthProvider";
 
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import PropTypes from "prop-types";
 import classnames from "classnames";
-import { toggleSidebar } from "ra-core";
 import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -61,6 +65,20 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0, 1),
     ...theme.mixins.toolbar,
   },
+  undoImpersonate: {
+    display: "block",
+    clear: "both",
+    marginTop: -theme.spacing(0.5),
+    fontSize: 12,
+    cursor: "pointer",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    color: theme.palette.secondary,
+    "&:hover": {
+      textDecoration: "underline",
+      color: theme.palette.primary.main,
+    },
+  },
 }));
 const Sidebar = ({
   children,
@@ -77,7 +95,18 @@ const Sidebar = ({
     [dispatch]
   );
   const isXSmall = useMediaQuery((theme) => theme.breakpoints.down("xs"));
-
+  const translate = useTranslate();
+  const { identity } = useGetIdentity();
+  const isImpersonating = useIsImpersonating();
+  const undoImpersonate = useUndoImpersonate();
+  const handleUndoClick = useCallback(
+    (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      undoImpersonate();
+    },
+    [undoImpersonate]
+  );
   return (
     <Drawer
       open={open}
@@ -107,6 +136,16 @@ const Sidebar = ({
           <Typography color="textSecondary" variant="caption">
             {appSubTitle} ({appVersion})
           </Typography>
+          {isImpersonating && isXSmall && (
+            <Typography
+              variant="body1"
+              display="block"
+              onClick={handleUndoClick}
+              className={classes.undoImpersonate}
+            >
+              {translate("ra.auth.impersonating.undo.short", identity)}
+            </Typography>
+          )}
         </div>
         <IconButton onClick={handleToggleSidebar}>
           <ChevronLeftIcon />

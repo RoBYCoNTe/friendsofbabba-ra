@@ -2,11 +2,22 @@ import { Box, Typography } from "@material-ui/core";
 import { MarkAsReadedButton, MarkAsUnreadedButton } from "../button/index.js";
 import React, { Fragment, useMemo } from "react";
 
+import { makeStyles } from "@material-ui/core/styles";
 import moment from "moment";
 import { useTranslate } from "ra-core";
 
+const useStyles = makeStyles((theme) => ({
+  content: {
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    display: "-webkit-box",
+    WebkitBoxOrient: "vertical",
+    whiteSpace: "break-spaces",
+  },
+}));
 const NotificationField = ({ record }) => {
   const translate = useTranslate();
+  const classes = useStyles();
   const readed = useMemo(
     () =>
       record?.readed
@@ -20,7 +31,9 @@ const NotificationField = ({ record }) => {
       <Typography variant="subtitle1">
         <Box fontWeight={"bold"}> {record?.title}</Box>
       </Typography>
-      <Typography variant="body1">{record?.content}</Typography>
+      <Typography variant="body1" className={classes.content}>
+        {record?.content}
+      </Typography>
       {readed && (
         <Typography variant="caption" display="block">
           {translate("resources.notifications.readed", { readed })}

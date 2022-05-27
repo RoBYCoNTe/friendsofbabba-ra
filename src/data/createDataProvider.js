@@ -172,17 +172,15 @@ const createDataProvider = ({
 
   post(resource, params) {
     const url = `${apiUrl}/${resource}`;
-    const { body } = params;
     const options = {
-      body: JSON.stringify(body),
+      body: JSON.stringify(params),
       method: "POST",
       headers: getHeaders(),
     };
     return fetchJson(url, options).then(({ json }) => ({ data: json }));
   },
   get(resource, params) {
-    const { query } = params;
-    const queryString = stringify(query);
+    const queryString = stringify(params);
     const url = `${apiUrl}/${resource}?${queryString}`;
     const options = {
       method: "GET",

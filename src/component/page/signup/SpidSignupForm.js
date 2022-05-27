@@ -16,7 +16,6 @@ import { clearSignResponse, getSignResponse } from "../login/SpidLoginForm";
 import PropTypes from "prop-types";
 import RecaptchaInput from "../../input/RecaptchaInput";
 import SpidSignupAccountStep from "./SpidSignupAccountStep";
-import SpidSignupRolesStep from "./SpidSignupRolesStep";
 import { makeStyles } from "@material-ui/core/styles";
 import useSaveMutation from "../../../data/useSaveMutation";
 
@@ -59,10 +58,12 @@ const SpidSignupForm = ({
   recaptchaSiteApiKey,
   ...props
 }) => {
+  const [timestamp, setTimestamp] = useState(Date.now());
   const classes = useStyles();
   const [initialValues, setInitialValues] = useState(null);
   const redirect = useRedirect();
   const search = getSignResponse();
+
   const save = useSaveMutation({
     resource,
     onSuccess: () => {
@@ -70,6 +71,9 @@ const SpidSignupForm = ({
         document.location.href = `#/login${search}`;
         document.location.reload();
       }, 100);
+    },
+    onError: () => {
+      setTimestamp(Date.now());
     },
   });
   const { load } = useMemo(
@@ -94,6 +98,8 @@ const SpidSignupForm = ({
     };
     doLoad();
   }, [search, load, redirect]);
+
+  console.info(children);
 
   return (
     <SignupStepperProvider>
@@ -123,9 +129,17 @@ const SpidSignupForm = ({
               >
                 <SignupStepper fullWidth>
                   <SpidSignupAccountStep title="General Infoes" fullWidth />
-                  <SpidSignupRolesStep title="Roles" fullWidth />
+                  {React.Children.map(children, (child) =>
+                    React.isValidElement(child)
+                      ? React.cloneElement(child, { ...props })
+                      : child
+                  )}
                 </SignupStepper>
-                <RecaptchaInput source="token" siteKey={recaptchaSiteApiKey} />
+                <RecaptchaInput
+                  key={timestamp}
+                  source="token"
+                  siteKey={recaptchaSiteApiKey}
+                />
               </SimpleForm>
             </Create>
           )}
@@ -142,6 +156,7 @@ SpidSignupForm.propTypes = {
   loadUrl: PropTypes.string,
   recaptchaSiteApiKey: PropTypes.string.isRequired,
   staticContext: PropTypes.object,
+  children: PropTypes.node,
 };
 SpidSignupForm.defaultProps = {
   resource: "spid",

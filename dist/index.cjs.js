@@ -5,6 +5,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 var core = require('@material-ui/core');
 var reactAdmin = require('react-admin');
 var React = require('react');
+var raCore = require('ra-core');
 var MenuIcon = require('@material-ui/icons/Menu');
 var PropTypes = require('prop-types');
 var Typography = require('@material-ui/core/Typography');
@@ -13,7 +14,6 @@ var IconButton = require('@material-ui/core/IconButton');
 var Menu$2 = require('@material-ui/core/Menu');
 var classnames = require('classnames');
 var styles$2 = require('@material-ui/core/styles');
-var raCore = require('ra-core');
 var reactRedux = require('react-redux');
 var CssBaseline = require('@material-ui/core/CssBaseline');
 var reactRouterDom = require('react-router-dom');
@@ -27,6 +27,7 @@ var ContentCreate = require('@material-ui/icons/Create');
 var ContentView = require('@material-ui/icons/Visibility');
 var lodash = require('lodash');
 var GetAppIcon = require('@material-ui/icons/GetApp');
+var VpnKeyIcon = require('@material-ui/icons/VpnKey');
 var EmailIcon = require('@material-ui/icons/Email');
 var moment = require('moment');
 var DraftsIcon = require('@material-ui/icons/Drafts');
@@ -47,6 +48,7 @@ var Divider = require('@material-ui/core/Divider');
 var ArrowDropDownIcon = require('@material-ui/icons/ArrowDropDown');
 var TableChart = require('@material-ui/icons/TableChart');
 var friendsofbabbaRa = require('friendsofbabba-ra');
+var Inbox = require('@material-ui/icons/Inbox');
 var jsonExport = require('jsonexport/dist');
 var polyglotI18nProvider = require('ra-i18n-polyglot');
 
@@ -88,6 +90,7 @@ var BackIcon__default = /*#__PURE__*/_interopDefaultLegacy(BackIcon);
 var ContentCreate__default = /*#__PURE__*/_interopDefaultLegacy(ContentCreate);
 var ContentView__default = /*#__PURE__*/_interopDefaultLegacy(ContentView);
 var GetAppIcon__default = /*#__PURE__*/_interopDefaultLegacy(GetAppIcon);
+var VpnKeyIcon__default = /*#__PURE__*/_interopDefaultLegacy(VpnKeyIcon);
 var EmailIcon__default = /*#__PURE__*/_interopDefaultLegacy(EmailIcon);
 var moment__default = /*#__PURE__*/_interopDefaultLegacy(moment);
 var DraftsIcon__default = /*#__PURE__*/_interopDefaultLegacy(DraftsIcon);
@@ -102,6 +105,7 @@ var TextField__default = /*#__PURE__*/_interopDefaultLegacy(TextField);
 var Divider__default = /*#__PURE__*/_interopDefaultLegacy(Divider);
 var ArrowDropDownIcon__default = /*#__PURE__*/_interopDefaultLegacy(ArrowDropDownIcon);
 var TableChart__default = /*#__PURE__*/_interopDefaultLegacy(TableChart);
+var Inbox__default = /*#__PURE__*/_interopDefaultLegacy(Inbox);
 var jsonExport__default = /*#__PURE__*/_interopDefaultLegacy(jsonExport);
 var polyglotI18nProvider__default = /*#__PURE__*/_interopDefaultLegacy(polyglotI18nProvider);
 
@@ -404,6 +408,180 @@ function _nonIterableRest() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
+function notifyToken(token) {
+  var event = new Event("login");
+  event.key = "token";
+  event.value = token;
+  document.dispatchEvent(event);
+}
+function getHeaders() {
+  var token = localStorage.getItem("token");
+  var headers = new Headers({
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: "Bearer ".concat(token)
+  });
+  return headers;
+}
+function getToken() {
+  return localStorage.getItem("token");
+}
+function useToken() {
+  var token = getToken();
+  var headers = getHeaders();
+  var headersMemo = React.useMemo(function () {
+    return headers;
+  }, [headers]);
+  return {
+    token: token,
+    headers: headersMemo
+  };
+}
+
+var useIsImpersonating = function useIsImpersonating() {
+  var impersonate = localStorage.getItem("impersonate");
+  return impersonate === "true";
+};
+var useDoImpersonate = function useDoImpersonate(id) {
+  var authProvider = raCore.useAuthProvider();
+  var redirect = raCore.useRedirect();
+  var notify = raCore.useNotify();
+  var handle = React.useCallback(function () {
+    return authProvider.impersonate(id).then(function () {
+      notify("ra.auth.sign_in_success", "info");
+      redirect("/");
+      setTimeout(function () {
+        return window.location.reload();
+      }, 1000);
+    }).catch(function () {
+      notify("ra.auth.sign_in_error", "warning");
+    });
+  }, [authProvider, notify, redirect, id]);
+  return handle;
+};
+var useUndoImpersonate = function useUndoImpersonate() {
+  var authProvider = raCore.useAuthProvider();
+  var redirect = raCore.useRedirect();
+  var notify = raCore.useNotify();
+  var handleImpersonateLogout = React.useCallback(function () {
+    return authProvider.stopImpersonate().then(function () {
+      redirect("/");
+      notify("ra.auth.sign_out_success", "info");
+      setTimeout(function () {
+        return document.location.reload();
+      }, 1000);
+    }).catch(function (error) {
+      return notify(error, "warning");
+    });
+  }, [authProvider, redirect, notify]);
+  return handleImpersonateLogout;
+};
+
+var createAuthProvider = function createAuthProvider(_ref) {
+  var apiUrl = _ref.apiUrl;
+  return {
+    login: function login(params) {
+      var username = params.username,
+          password = params.password;
+      var requestURL = "".concat(apiUrl, "/users/login");
+      var request = new Request(requestURL, {
+        method: "POST",
+        body: JSON.stringify({
+          username: username,
+          password: password
+        }),
+        headers: new Headers({
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        })
+      });
+      return fetch(request).then(function (response) {
+        return response.json();
+      }).then(function (_ref2) {
+        var data = _ref2.data,
+            success = _ref2.success;
+
+        if (!success) {
+          throw new Error(data.message);
+        }
+
+        localStorage.setItem("email", data.email);
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("roles", JSON.stringify(data.roles));
+        localStorage.setItem("profile", JSON.stringify(data.profile));
+        notifyToken(data.token);
+      });
+    },
+    logout: function logout() {
+      localStorage.removeItem("email");
+      localStorage.removeItem("token");
+      localStorage.removeItem("roles");
+      localStorage.removeItem("profile");
+      return Promise.resolve();
+    },
+    checkAuth: function checkAuth() {
+      return localStorage.getItem("token") ? Promise.resolve() : Promise.reject();
+    },
+    checkError: function checkError(error) {
+      if (error.status === 401 || error.status === 500) {
+        return Promise.reject(error === null || error === void 0 ? void 0 : error.message);
+      }
+
+      return Promise.resolve();
+    },
+    getPermissions: function getPermissions() {
+      var roles = JSON.parse(localStorage.getItem("roles"));
+      return Promise.resolve(function (v) {
+        return roles && roles.some(function (r) {
+          return v.includes(r.code);
+        });
+      });
+    },
+    getIdentity: function getIdentity() {
+      var profile = JSON.parse(localStorage.getItem("profile"));
+      var roles = JSON.parse(localStorage.getItem("roles"));
+      var email = localStorage.getItem("email");
+      return Promise.resolve(_objectSpread2(_objectSpread2({}, profile), {}, {
+        roles: roles,
+        email: email
+      }));
+    },
+    impersonate: function impersonate(id) {
+      var requestURL = "".concat(apiUrl, "/users/impersonate/?id=").concat(id);
+      var request = new Request(requestURL, {
+        method: "POST",
+        headers: getHeaders()
+      });
+      return fetch(request).then(function (response) {
+        return response.json();
+      }).then(function (_ref3) {
+        var success = _ref3.success,
+            data = _ref3.data;
+
+        if (!success) {
+          throw new Error(data.message);
+        }
+
+        ["token", "roles", "username", "profile", "email"].forEach(function (param) {
+          var toSaveParam = "admin_".concat(param);
+          localStorage.setItem(toSaveParam, localStorage.getItem(param));
+          localStorage.setItem(param, ["profile", "roles"].indexOf(param) !== -1 ? JSON.stringify(data[param]) : data[param]);
+        });
+        localStorage.setItem("impersonate", true);
+      });
+    },
+    stopImpersonate: function stopImpersonate() {
+      ["token", "roles", "username", "profile", "email"].forEach(function (param) {
+        var savedParam = "admin_".concat(param);
+        localStorage.setItem(param, localStorage.getItem(savedParam));
+        localStorage.removeItem(savedParam);
+      });
+      localStorage.setItem("impersonate", false);
+      return Promise.resolve();
+    }
+  };
+};
+
 var UserMenu = function UserMenu(_ref) {
   var logout = _ref.logout,
       children = _ref.children;
@@ -451,7 +629,7 @@ UserMenu.propTypes = {
   logout: PropTypes__default["default"].element.isRequired
 };
 
-var useStyles$k = styles$2.makeStyles(function (theme) {
+var useStyles$p = styles$2.makeStyles(function (theme) {
   return {
     title: {
       flexGrow: 1
@@ -490,6 +668,19 @@ var useStyles$k = styles$2.makeStyles(function (theme) {
     spacer: {
       flex: 1,
       flexGrow: 1
+    },
+    welcome: {
+      lineHeight: "1.2em"
+    },
+    undoImpersonate: {
+      display: "block",
+      clear: "both",
+      marginTop: -theme.spacing(0.5),
+      fontSize: 12,
+      cursor: "pointer",
+      "&:hover": {
+        textDecoration: "underline"
+      }
     }
   };
 });
@@ -501,11 +692,18 @@ var AppBar = function AppBar(_ref2) {
       location = _ref2.location,
       _ref2$userMenu = _ref2.userMenu,
       userMenu = _ref2$userMenu === void 0 ? UserMenu : _ref2$userMenu;
-  var classes = useStyles$k({
+  var classes = useStyles$p({
     drawerWidth: drawerWidth
   });
   var dispatch = reactRedux.useDispatch();
   var translate = reactAdmin.useTranslate();
+  var isImpersonating = useIsImpersonating();
+  var undoImpersonate = useUndoImpersonate();
+  var handleUndoClick = React.useCallback(function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+    undoImpersonate();
+  }, [undoImpersonate]);
   var isXSmall = core.useMediaQuery(function (theme) {
     return theme.breakpoints.down("xs");
   });
@@ -534,8 +732,15 @@ var AppBar = function AppBar(_ref2) {
   }), !isXSmall && /*#__PURE__*/React__default["default"].createElement("div", {
     className: classes.spacer
   }), !isXSmall && /*#__PURE__*/React__default["default"].createElement(Typography__default["default"], {
-    variant: "body1"
-  }, translate("app.welcome", identity)), /*#__PURE__*/React__default["default"].createElement(reactAdmin.LoadingIndicator, null), /*#__PURE__*/React__default["default"].createElement(userMenu, {
+    variant: "body1",
+    component: "div",
+    className: classes.welcome
+  }, translate("app.welcome", identity), isImpersonating && /*#__PURE__*/React__default["default"].createElement(Typography__default["default"], {
+    variant: "body1",
+    display: "block",
+    onClick: handleUndoClick,
+    className: classes.undoImpersonate
+  }, translate("ra.auth.impersonating.undo", identity))), /*#__PURE__*/React__default["default"].createElement(reactAdmin.LoadingIndicator, null), /*#__PURE__*/React__default["default"].createElement(userMenu, {
     logout: logout,
     location: location
   })));
@@ -548,18 +753,18 @@ AppBar.propTypes = {
   userMenu: PropTypes__default["default"].elementType
 };
 
-var _excluded$J = ["titleAccess", "children"];
+var _excluded$Q = ["titleAccess", "children"];
 
 var Badge = function Badge(_ref) {
   _ref.titleAccess;
       var children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded$J);
+      props = _objectWithoutProperties(_ref, _excluded$Q);
 
   return /*#__PURE__*/React__default["default"].createElement(core.Badge, props, children);
 };
 
-var _excluded$I = ["children", "open", "label"];
-var useStyles$j = core.makeStyles(function (theme) {
+var _excluded$P = ["children", "open", "label"];
+var useStyles$o = core.makeStyles(function (theme) {
   return {
     subHeader: {
       backgroundColor: theme.palette.background.paper,
@@ -574,9 +779,9 @@ var MenuGroup = function MenuGroup(_ref) {
   var children = _ref.children,
       open = _ref.open,
       label = _ref.label,
-      props = _objectWithoutProperties(_ref, _excluded$I);
+      props = _objectWithoutProperties(_ref, _excluded$P);
 
-  var classes = useStyles$j();
+  var classes = useStyles$o();
   return /*#__PURE__*/React__default["default"].createElement(core.List, {
     subheader: open ? /*#__PURE__*/React__default["default"].createElement(core.ListSubheader, {
       className: classes.subHeader
@@ -602,7 +807,7 @@ MenuGroup.propTypes = {
   group: PropTypes__default["default"].string
 };
 
-var _excluded$H = ["location", "badge", "to", "icon", "label", "sub", "onMenuClick", "permissions", "open"];
+var _excluded$O = ["location", "badge", "to", "icon", "label", "sub", "onMenuClick", "permissions", "open"];
 
 var isSelected = function isSelected(location, to) {
   var selected = location.pathname === to || location.pathname.indexOf("".concat(to, "?")) === 0 || location.pathname.indexOf("".concat(to, "/")) === 0;
@@ -619,7 +824,7 @@ var MenuItem = function MenuItem(_ref) {
       onMenuClick = _ref.onMenuClick;
       _ref.permissions;
       var open = _ref.open,
-      props = _objectWithoutProperties(_ref, _excluded$H);
+      props = _objectWithoutProperties(_ref, _excluded$O);
 
   return /*#__PURE__*/React__default["default"].createElement(core.ListItem, _extends({}, props, {
     button: true,
@@ -890,7 +1095,7 @@ var Menu$1 = compose(reactRouterDom.withRouter, reactRedux.connect(function (sta
   };
 }))(Menu);
 
-var useStyles$i = core.makeStyles(function (theme) {
+var useStyles$n = core.makeStyles(function (theme) {
   return {
     brand: {
       paddingLeft: theme.spacing(1),
@@ -939,7 +1144,21 @@ var useStyles$i = core.makeStyles(function (theme) {
       alignItems: "center",
       justifyContent: "flex-end",
       padding: theme.spacing(0, 1)
-    }, theme.mixins.toolbar)
+    }, theme.mixins.toolbar),
+    undoImpersonate: {
+      display: "block",
+      clear: "both",
+      marginTop: -theme.spacing(0.5),
+      fontSize: 12,
+      cursor: "pointer",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      color: theme.palette.secondary,
+      "&:hover": {
+        textDecoration: "underline",
+        color: theme.palette.primary.main
+      }
+    }
   };
 });
 
@@ -952,7 +1171,7 @@ var Sidebar = function Sidebar(_ref2) {
       appTitle = _ref2.appTitle,
       appSubTitle = _ref2.appSubTitle,
       appVersion = _ref2.appVersion;
-  var classes = useStyles$i({
+  var classes = useStyles$n({
     drawerWidth: drawerWidth
   });
   var dispatch = reactRedux.useDispatch();
@@ -962,6 +1181,18 @@ var Sidebar = function Sidebar(_ref2) {
   var isXSmall = core.useMediaQuery(function (theme) {
     return theme.breakpoints.down("xs");
   });
+  var translate = raCore.useTranslate();
+
+  var _useGetIdentity = raCore.useGetIdentity(),
+      identity = _useGetIdentity.identity;
+
+  var isImpersonating = useIsImpersonating();
+  var undoImpersonate = useUndoImpersonate();
+  var handleUndoClick = React.useCallback(function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+    undoImpersonate();
+  }, [undoImpersonate]);
   return /*#__PURE__*/React__default["default"].createElement(core.Drawer, {
     open: open,
     onClose: handleToggleSidebar,
@@ -982,7 +1213,12 @@ var Sidebar = function Sidebar(_ref2) {
   }, appTitle), /*#__PURE__*/React__default["default"].createElement(core.Typography, {
     color: "textSecondary",
     variant: "caption"
-  }, appSubTitle, " (", appVersion, ")")), /*#__PURE__*/React__default["default"].createElement(core.IconButton, {
+  }, appSubTitle, " (", appVersion, ")"), isImpersonating && isXSmall && /*#__PURE__*/React__default["default"].createElement(core.Typography, {
+    variant: "body1",
+    display: "block",
+    onClick: handleUndoClick,
+    className: classes.undoImpersonate
+  }, translate("ra.auth.impersonating.undo.short", identity))), /*#__PURE__*/React__default["default"].createElement(core.IconButton, {
     onClick: handleToggleSidebar
   }, /*#__PURE__*/React__default["default"].createElement(ChevronLeftIcon__default["default"], null))), React__default["default"].Children.map(children, function (child) {
     return /*#__PURE__*/React__default["default"].cloneElement(child, {
@@ -1001,7 +1237,7 @@ Sidebar.propTypes = {
   appVersion: PropTypes__default["default"].string
 };
 
-var _excluded$G = ["theme"];
+var _excluded$N = ["theme"];
 var LayoutContext = /*#__PURE__*/React__default["default"].createContext({
   drawerWidth: 0
 });
@@ -1157,7 +1393,7 @@ var EnhancedLayout = compose(reactRedux.connect(mapStateToProps, {} // Avoid con
 
 var Layout = function Layout(_ref2) {
   var themeOverride = _ref2.theme,
-      props = _objectWithoutProperties(_ref2, _excluded$G);
+      props = _objectWithoutProperties(_ref2, _excluded$N);
 
   var themeProp = React.useRef(themeOverride);
 
@@ -1194,8 +1430,8 @@ Layout.defaultProps = {
   drawerWidth: 240
 };
 
-var _excluded$F = ["className", "classes", "redirectTo", "icon", "label"];
-var useStyles$h = styles$2.makeStyles(function (theme) {
+var _excluded$M = ["className", "classes", "redirectTo", "icon", "label"];
+var useStyles$m = styles$2.makeStyles(function (theme) {
   return {
     menuItem: {
       color: theme.palette.text.secondary
@@ -1213,9 +1449,9 @@ var UserMenuItem = /*#__PURE__*/React__namespace.forwardRef(function UserMenuIte
       props.redirectTo;
       var icon = props.icon,
       label = props.label,
-      rest = _objectWithoutProperties(props, _excluded$F);
+      rest = _objectWithoutProperties(props, _excluded$M);
 
-  var classes = useStyles$h(props);
+  var classes = useStyles$m(props);
   return /*#__PURE__*/React__namespace.createElement(core.MenuItem, _extends({
     className: classnames__default["default"]("user-menu-item", classes.menuItem, className),
     ref: ref,
@@ -1231,13 +1467,13 @@ UserMenuItem.propTypes = {
   onClick: PropTypes__default["default"].func
 };
 
-var _excluded$E = ["resource", "baseRecord", "to"];
+var _excluded$L = ["resource", "baseRecord", "to"];
 
 var BackButton = function BackButton(_ref) {
   var resource = _ref.resource;
       _ref.baseRecord;
       var to = _ref.to,
-      props = _objectWithoutProperties(_ref, _excluded$E);
+      props = _objectWithoutProperties(_ref, _excluded$L);
 
   return /*#__PURE__*/React__default["default"].createElement(reactAdmin.Button, _extends({}, props, {
     component: reactRouterDom.Link,
@@ -1248,7 +1484,7 @@ var BackButton = function BackButton(_ref) {
   }), /*#__PURE__*/React__default["default"].createElement(BackIcon__default["default"], null));
 };
 
-var _excluded$D = ["redirect", "reference"];
+var _excluded$K = ["redirect", "reference"];
 /**
  *
  * @param {string} props.redirect - The redirect path after the delete action.
@@ -1261,7 +1497,7 @@ var _excluded$D = ["redirect", "reference"];
 var DeleteWithConfirmButton = function DeleteWithConfirmButton(_ref) {
   var redirect = _ref.redirect;
       _ref.reference;
-      var props = _objectWithoutProperties(_ref, _excluded$D);
+      var props = _objectWithoutProperties(_ref, _excluded$K);
 
   var translate = reactAdmin.useTranslate();
 
@@ -1559,12 +1795,12 @@ var WorkflowProvider = function WorkflowProvider(_ref) {
   }, children);
 };
 
-var _excluded$C = ["record", "resource"];
+var _excluded$J = ["record", "resource"];
 
 var EditButton = function EditButton(_ref) {
   var record = _ref.record,
       resource = _ref.resource,
-      props = _objectWithoutProperties(_ref, _excluded$C);
+      props = _objectWithoutProperties(_ref, _excluded$J);
 
   var _useContext = React.useContext(WorkflowContext),
       getWorkflow = _useContext.getWorkflow;
@@ -1596,36 +1832,6 @@ var EditButton = function EditButton(_ref) {
     record: record
   }, props));
 };
-
-function notifyToken(token) {
-  var event = new Event("login");
-  event.key = "token";
-  event.value = token;
-  document.dispatchEvent(event);
-}
-function getHeaders() {
-  var token = localStorage.getItem("token");
-  var headers = new Headers({
-    "Content-Type": "application/json",
-    Accept: "application/json",
-    Authorization: "Bearer ".concat(token)
-  });
-  return headers;
-}
-function getToken() {
-  return localStorage.getItem("token");
-}
-function useToken() {
-  var token = getToken();
-  var headers = getHeaders();
-  var headersMemo = React.useMemo(function () {
-    return headers;
-  }, [headers]);
-  return {
-    token: token,
-    headers: headersMemo
-  };
-}
 
 var load = /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(_ref) {
@@ -1847,14 +2053,14 @@ var ExportToXlsxButton = function ExportToXlsxButton(_ref, ref) {
 
 var ExportButton = /*#__PURE__*/React__default["default"].forwardRef(ExportToXlsxButton);
 
-var _excluded$B = ["exportTo", "label"];
+var _excluded$I = ["exportTo", "label"];
 
 var ExportToButton = function ExportToButton(_ref) {
   var _ref$exportTo = _ref.exportTo,
       exportTo = _ref$exportTo === void 0 ? ["csv", "xlsx"] : _ref$exportTo,
       _ref$label = _ref.label,
       label = _ref$label === void 0 ? "ra.action.export" : _ref$label,
-      props = _objectWithoutProperties(_ref, _excluded$B);
+      props = _objectWithoutProperties(_ref, _excluded$I);
 
   var _React$useState = React__default["default"].useState(null),
       _React$useState2 = _slicedToArray(_React$useState, 2),
@@ -1893,6 +2099,37 @@ var ExportToButton = function ExportToButton(_ref) {
   }))) : /*#__PURE__*/React__default["default"].createElement(ExportButton, _extends({}, props, {
     extension: exportTo[0]
   }));
+};
+
+var _excluded$H = ["label", "record"];
+
+var ImpersonateUserButton = function ImpersonateUserButton(_ref) {
+  var _ref$label = _ref.label,
+      label = _ref$label === void 0 ? "ra.auth.sign_in" : _ref$label,
+      record = _ref.record,
+      rest = _objectWithoutProperties(_ref, _excluded$H);
+
+  var _useState = React.useState(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      loading = _useState2[0],
+      setLoading = _useState2[1];
+
+  var doImpersonate = useDoImpersonate(record === null || record === void 0 ? void 0 : record.id);
+  var handleClick = React.useCallback(function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+    setLoading(true);
+    doImpersonate().then(function () {
+      return setLoading(false);
+    });
+  }, [doImpersonate, setLoading]);
+  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.Button, _extends({
+    disabled: loading,
+    color: "primary",
+    variant: "text",
+    label: label,
+    onClick: handleClick
+  }, rest), /*#__PURE__*/React__default["default"].createElement(VpnKeyIcon__default["default"], null));
 };
 
 var MarkAsReadedButton = function MarkAsReadedButton(_ref) {
@@ -1964,8 +2201,8 @@ var MarkAsUnreadedButton = function MarkAsUnreadedButton(_ref) {
   }, /*#__PURE__*/React__default["default"].createElement(DraftsIcon__default["default"], null));
 };
 
-var _excluded$A = ["handleSubmitWithRedirect", "small", "state", "pristine"];
-var useStyles$g = styles$2.makeStyles(function (theme) {
+var _excluded$G = ["handleSubmitWithRedirect", "small", "state", "pristine"];
+var useStyles$l = styles$2.makeStyles(function (theme) {
   var _theme$props, _theme$props$MuiButto;
 
   return {
@@ -1980,9 +2217,9 @@ var StateButton = function StateButton(_ref, ref) {
       _ref.small;
       var state = _ref.state;
       _ref.pristine;
-      var props = _objectWithoutProperties(_ref, _excluded$A);
+      var props = _objectWithoutProperties(_ref, _excluded$G);
 
-  var classes = useStyles$g();
+  var classes = useStyles$l();
   var form = reactFinalForm.useForm();
   var handleClick = React.useCallback(function () {
     form.change("state", state.code);
@@ -1999,8 +2236,8 @@ var StateButton = function StateButton(_ref, ref) {
 
 var StateButton$1 = /*#__PURE__*/React__default["default"].forwardRef(StateButton);
 
-var _excluded$z = ["states"];
-var useStyles$f = styles$2.makeStyles(function (theme) {
+var _excluded$F = ["states"];
+var useStyles$k = styles$2.makeStyles(function (theme) {
   var _theme$props, _theme$props$MuiButto;
 
   return {
@@ -2012,9 +2249,9 @@ var useStyles$f = styles$2.makeStyles(function (theme) {
 
 var StateButtonMenu = function StateButtonMenu(_ref) {
   var states = _ref.states,
-      props = _objectWithoutProperties(_ref, _excluded$z);
+      props = _objectWithoutProperties(_ref, _excluded$F);
 
-  var classes = useStyles$f();
+  var classes = useStyles$k();
   var translate = reactAdmin.useTranslate();
 
   var _React$useState = React__default["default"].useState(null),
@@ -2072,6 +2309,7 @@ var buttons = /*#__PURE__*/Object.freeze({
   RaDeleteButton: reactAdmin.DeleteButton,
   EditButton: EditButton,
   ExportToButton: ExportToButton,
+  ImpersonateUserButton: ImpersonateUserButton,
   BackButton: BackButton,
   StateButton: StateButton$1,
   StateButtonMenu: StateButtonMenu,
@@ -2080,11 +2318,11 @@ var buttons = /*#__PURE__*/Object.freeze({
   DeleteWithConfirmButton: DeleteWithConfirmButton
 });
 
-var _excluded$y = ["chipSource"];
+var _excluded$E = ["chipSource"];
 
 var ChipArrayField = function ChipArrayField(_ref) {
   var chipSource = _ref.chipSource,
-      props = _objectWithoutProperties(_ref, _excluded$y);
+      props = _objectWithoutProperties(_ref, _excluded$E);
 
   return /*#__PURE__*/React__default["default"].createElement(reactAdmin.ArrayField, props, /*#__PURE__*/React__default["default"].createElement(reactAdmin.SingleFieldList, null, /*#__PURE__*/React__default["default"].createElement(reactAdmin.ChipField, {
     source: chipSource
@@ -2110,8 +2348,8 @@ var DateAgoField = function DateAgoField(_ref) {
   }));
 };
 
-var _excluded$x = ["record", "source", "width", "minWidth", "maxWidth", "maxRows", "sortable", "basePath", "sortBy"];
-var useStyles$e = core.makeStyles(function (theme) {
+var _excluded$D = ["record", "source", "width", "minWidth", "maxWidth", "maxRows", "sortable", "basePath", "sortBy"];
+var useStyles$j = core.makeStyles(function (theme) {
   return {
     root: {
       overflow: "hidden",
@@ -2137,9 +2375,9 @@ var LongTextField = function LongTextField(_ref) {
       _ref.sortable;
       _ref.basePath;
       _ref.sortBy;
-      var props = _objectWithoutProperties(_ref, _excluded$x);
+      var props = _objectWithoutProperties(_ref, _excluded$D);
 
-  var classes = useStyles$e();
+  var classes = useStyles$j();
   return /*#__PURE__*/React__default["default"].createElement(core.Typography, _extends({}, props, {
     variant: "body2",
     title: lodash.get(record, source),
@@ -2170,9 +2408,22 @@ var MediaField = function MediaField(_ref) {
   }));
 };
 
+var useStyles$i = styles$2.makeStyles(function (theme) {
+  return {
+    content: {
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      display: "-webkit-box",
+      WebkitBoxOrient: "vertical",
+      whiteSpace: "break-spaces"
+    }
+  };
+});
+
 var NotificationField = function NotificationField(_ref) {
   var record = _ref.record;
   var translate = raCore.useTranslate();
+  var classes = useStyles$i();
   var readed = React.useMemo(function () {
     return record !== null && record !== void 0 && record.readed ? moment__default["default"](record === null || record === void 0 ? void 0 : record.readed).format(translate("app.date_format.long")) : false;
   }, [record === null || record === void 0 ? void 0 : record.readed, translate]);
@@ -2181,7 +2432,8 @@ var NotificationField = function NotificationField(_ref) {
   }, /*#__PURE__*/React__default["default"].createElement(core.Box, {
     fontWeight: "bold"
   }, " ", record === null || record === void 0 ? void 0 : record.title)), /*#__PURE__*/React__default["default"].createElement(core.Typography, {
-    variant: "body1"
+    variant: "body1",
+    className: classes.content
   }, record === null || record === void 0 ? void 0 : record.content), readed && /*#__PURE__*/React__default["default"].createElement(core.Typography, {
     variant: "caption",
     display: "block"
@@ -2194,7 +2446,7 @@ var NotificationField = function NotificationField(_ref) {
   }));
 };
 
-var useStyles$d = styles$2.makeStyles(function (theme) {
+var useStyles$h = styles$2.makeStyles(function (theme) {
   return {
     progress: {
       height: 20 + theme.spacing(1),
@@ -2211,7 +2463,7 @@ var useStyles$d = styles$2.makeStyles(function (theme) {
 var ProgressField = function ProgressField(_ref) {
   var record = _ref.record,
       source = _ref.source;
-  var classes = useStyles$d();
+  var classes = useStyles$h();
   return /*#__PURE__*/React__default["default"].createElement(core.Box, {
     display: "flex",
     justifyContent: "center",
@@ -2228,7 +2480,7 @@ var ProgressField = function ProgressField(_ref) {
   }, lodash.get(record, source, 0).toFixed(2), "%"));
 };
 
-var _excluded$w = ["removeRedirect", "reference", "target", "tab", "filter", "empty", "sorry", "create", "createLabel", "modify", "modifyLabel", "remove", "removeLabel", "additionalData", "mobileBreakpoint", "mobilePrimaryText", "mobileSecondaryText", "mobileTertiaryText", "mobileLinkType"];
+var _excluded$C = ["removeRedirect", "reference", "target", "tab", "filter", "empty", "sorry", "create", "createLabel", "modify", "modifyLabel", "remove", "removeLabel", "additionalData", "mobileBreakpoint", "mobilePrimaryText", "mobileSecondaryText", "mobileTertiaryText", "mobileLinkType"];
 var makeRedirect = function makeRedirect(_ref) {
   var resource = _ref.resource,
       record = _ref.record,
@@ -2240,7 +2492,7 @@ var makeRedirect = function makeRedirect(_ref) {
 
   return "/".concat(resource, "/").concat(record === null || record === void 0 ? void 0 : record.id);
 };
-var useStyles$c = styles$2.makeStyles(function (theme) {
+var useStyles$g = styles$2.makeStyles(function (theme) {
   return {
     toolbar: {
       padding: theme.spacing(1)
@@ -2288,9 +2540,9 @@ var ReferenceListField = function ReferenceListField(_ref2) {
       mobileTertiaryText = _ref2$mobileTertiaryT === void 0 ? null : _ref2$mobileTertiaryT,
       _ref2$mobileLinkType = _ref2.mobileLinkType,
       mobileLinkType = _ref2$mobileLinkType === void 0 ? false : _ref2$mobileLinkType,
-      props = _objectWithoutProperties(_ref2, _excluded$w);
+      props = _objectWithoutProperties(_ref2, _excluded$C);
 
-  var classes = useStyles$c();
+  var classes = useStyles$g();
   var resource = props.resource,
       record = props.record;
 
@@ -2381,14 +2633,14 @@ ReferenceListField.propTypes = {
   children: PropTypes__default["default"].node.isRequired
 };
 
-var _excluded$v = ["label", "record", "resource"];
+var _excluded$B = ["label", "record", "resource"];
 
 var StateField = function StateField(_ref) {
   var _ref$label = _ref.label,
       label = _ref$label === void 0 ? "app.label.workflow.state" : _ref$label,
       record = _ref.record,
       toResolve = _ref.resource,
-      props = _objectWithoutProperties(_ref, _excluded$v);
+      props = _objectWithoutProperties(_ref, _excluded$B);
 
   var _useContext = React.useContext(WorkflowContext),
       getWorkflow = _useContext.getWorkflow;
@@ -2422,7 +2674,7 @@ var useFieldLabel = function useFieldLabel(_ref) {
   };
 };
 
-var useStyles$b = core.makeStyles(function (theme) {
+var useStyles$f = core.makeStyles(function (theme) {
   return {
     root: {
       display: "-webkit-box",
@@ -2450,7 +2702,7 @@ var TransactionNotesField = function TransactionNotesField(_ref) {
       _ref$maxRows = _ref.maxRows,
       maxRows = _ref$maxRows === void 0 ? 3 : _ref$maxRows,
       component = _ref.component;
-  var classes = useStyles$b();
+  var classes = useStyles$f();
   var fieldLabel = useFieldLabel({
     resource: "transactions"
   });
@@ -2505,13 +2757,13 @@ TransactionNotesField.propTypes = {
   maxRows: PropTypes__default["default"].number
 };
 
-var _excluded$u = ["fullWidth", "addLabel"],
+var _excluded$A = ["fullWidth", "addLabel"],
     _excluded2$4 = ["admin", "label"];
 
 var PaginationWrapper = function PaginationWrapper(_ref) {
   _ref.fullWidth;
       _ref.addLabel;
-      var props = _objectWithoutProperties(_ref, _excluded$u);
+      var props = _objectWithoutProperties(_ref, _excluded$A);
 
   return /*#__PURE__*/React__default["default"].createElement(reactAdmin.Pagination, props);
 };
@@ -2616,7 +2868,7 @@ var fields = /*#__PURE__*/Object.freeze({
   useFieldLabel: useFieldLabel
 });
 
-var _excluded$t = ["classes", "label", "value", "icon", "className", "syncWithLocation"];
+var _excluded$z = ["classes", "label", "value", "icon", "className", "syncWithLocation"];
 
 var FormTabHeader = function FormTabHeader(_ref) {
   var classes = _ref.classes,
@@ -2625,7 +2877,7 @@ var FormTabHeader = function FormTabHeader(_ref) {
       icon = _ref.icon,
       className = _ref.className,
       syncWithLocation = _ref.syncWithLocation,
-      rest = _objectWithoutProperties(_ref, _excluded$t);
+      rest = _objectWithoutProperties(_ref, _excluded$z);
 
   var translate = raCore.useTranslate();
   var location = reactRouterDom.useLocation();
@@ -2670,7 +2922,7 @@ var UseFormStateOptions = {
   }
 };
 
-var _excluded$s = ["basePath", "className", "classes", "contentClassName", "children", "hidden", "icon", "intent", "label", "margin", "path", "record", "resource", "variant", "value"];
+var _excluded$y = ["basePath", "className", "classes", "contentClassName", "children", "hidden", "icon", "intent", "label", "margin", "path", "record", "resource", "variant", "value"];
 var hiddenStyle = {
   display: "none"
 };
@@ -2691,7 +2943,7 @@ var FormTab = function FormTab(props) {
       resource = props.resource,
       variant = props.variant,
       value = props.value,
-      rest = _objectWithoutProperties(props, _excluded$s);
+      rest = _objectWithoutProperties(props, _excluded$y);
 
   var renderHeader = function renderHeader() {
     return /*#__PURE__*/React__namespace.createElement(FormTabHeader, _extends({
@@ -2729,7 +2981,7 @@ var FormTab = function FormTab(props) {
   return intent === "header" ? renderHeader() : renderContent();
 };
 
-var _excluded$r = ["children", "spacing", "wrapper"];
+var _excluded$x = ["children", "spacing", "wrapper"];
 
 var Group = function Group(_ref) {
   var children = _ref.children,
@@ -2737,7 +2989,7 @@ var Group = function Group(_ref) {
       spacing = _ref$spacing === void 0 ? 2 : _ref$spacing,
       _ref$wrapper = _ref.wrapper,
       wrapper = _ref$wrapper === void 0 ? false : _ref$wrapper,
-      props = _objectWithoutProperties(_ref, _excluded$r);
+      props = _objectWithoutProperties(_ref, _excluded$x);
 
   return !wrapper ? /*#__PURE__*/React__default["default"].createElement(core.Grid, {
     container: true,
@@ -2749,7 +3001,7 @@ var Group = function Group(_ref) {
   });
 };
 
-var _excluded$q = ["children", "lg", "md", "sm", "xs", "spacing", "block"];
+var _excluded$w = ["children", "lg", "md", "sm", "xs", "spacing", "block"];
 
 var GroupItem = function GroupItem(_ref) {
   var children = _ref.children,
@@ -2763,7 +3015,7 @@ var GroupItem = function GroupItem(_ref) {
       xs = _ref$xs === void 0 ? 12 : _ref$xs,
       spacing = _ref.spacing;
       _ref.block;
-      var props = _objectWithoutProperties(_ref, _excluded$q);
+      var props = _objectWithoutProperties(_ref, _excluded$w);
 
   return /*#__PURE__*/React__default["default"].createElement(core.Grid, {
     item: true,
@@ -2777,7 +3029,7 @@ var GroupItem = function GroupItem(_ref) {
   }));
 };
 
-var useStyles$a = styles$2.makeStyles(function (theme) {
+var useStyles$e = styles$2.makeStyles(function (theme) {
   return {
     title: {
       margin: theme.spacing(1),
@@ -2799,7 +3051,7 @@ var GroupTitle = function GroupTitle(_ref) {
       _ref$divider = _ref.divider,
       divider = _ref$divider === void 0 ? true : _ref$divider,
       color = _ref.color;
-  var classes = useStyles$a();
+  var classes = useStyles$e();
   return /*#__PURE__*/React__default["default"].createElement(React.Fragment, null, /*#__PURE__*/React__default["default"].createElement(core.Typography, {
     color: color,
     classes: {
@@ -2820,8 +3072,8 @@ var GroupTitle = function GroupTitle(_ref) {
   }, subTitle));
 };
 
-var _excluded$p = ["backRedirect", "backReferenceTarget", "backReference", "backTab", "canSave", "canGoBack", "onSuccess"];
-var useStyles$9 = styles$2.makeStyles(function (theme) {
+var _excluded$v = ["backRedirect", "backReferenceTarget", "backReference", "backTab", "canSave", "canGoBack", "onSuccess"];
+var useStyles$d = styles$2.makeStyles(function (theme) {
   return {
     toolbar: {
       "& .MuiButton-root": {
@@ -2842,9 +3094,9 @@ var ReferenceToolbar = function ReferenceToolbar(_ref) {
       _ref$canGoBack = _ref.canGoBack,
       canGoBack = _ref$canGoBack === void 0 ? true : _ref$canGoBack,
       onSuccess = _ref.onSuccess,
-      props = _objectWithoutProperties(_ref, _excluded$p);
+      props = _objectWithoutProperties(_ref, _excluded$v);
 
-  var classes = useStyles$9();
+  var classes = useStyles$d();
   var record = props.record;
   var referenceId = lodash.get(record, backReferenceTarget, 0);
   var backUrl = React.useMemo(function () {
@@ -2863,8 +3115,8 @@ var ReferenceToolbar = function ReferenceToolbar(_ref) {
   }));
 };
 
-var _excluded$o = ["children", "mutationMode", "validating", "maxButtonsToDisplay"];
-var useStyles$8 = styles$2.makeStyles(function (theme) {
+var _excluded$u = ["children", "mutationMode", "validating", "maxButtonsToDisplay"];
+var useStyles$c = styles$2.makeStyles(function (theme) {
   return {
     toolbar: {
       "& .MuiButton-root": {
@@ -2880,10 +3132,10 @@ var Toolbar = function Toolbar(_ref) {
       _ref.validating;
       var _ref$maxButtonsToDisp = _ref.maxButtonsToDisplay,
       maxButtonsToDisplay = _ref$maxButtonsToDisp === void 0 ? 1 : _ref$maxButtonsToDisp,
-      props = _objectWithoutProperties(_ref, _excluded$o);
+      props = _objectWithoutProperties(_ref, _excluded$u);
 
   var form = reactFinalForm.useForm();
-  var classes = useStyles$8();
+  var classes = useStyles$c();
   var handleSubmitWithRedirect = props.handleSubmitWithRedirect,
       record = props.record;
 
@@ -2947,11 +3199,11 @@ var Toolbar = function Toolbar(_ref) {
   }), /*#__PURE__*/React__default["default"].createElement(BackButton, null));
 };
 
-var _excluded$n = ["children"];
+var _excluded$t = ["children"];
 
 var Unprop = function Unprop(_ref) {
   var children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded$n);
+      props = _objectWithoutProperties(_ref, _excluded$t);
 
   return React__default["default"].Children.map(children, function (child) {
     return /*#__PURE__*/React__default["default"].isValidElement(child) ? /*#__PURE__*/React__default["default"].cloneElement(child, _objectSpread2(_objectSpread2({}, props), child.props)) : child;
@@ -2968,7 +3220,7 @@ var parseField = function parseField(field) {
   };
 };
 
-var useStyles$7 = styles$2.makeStyles(function (theme) {
+var useStyles$b = styles$2.makeStyles(function (theme) {
   return {
     subheaderRoot: {
       padding: theme.spacing(1),
@@ -3002,7 +3254,7 @@ var ValidationItem = function ValidationItem(_ref) {
       number = _parseField.number,
       name = _parseField.name;
 
-  var classes = useStyles$7();
+  var classes = useStyles$b();
   return typeof error === "string" ? /*#__PURE__*/React__default["default"].createElement(core.ListItem, {
     dense: true,
     disableGutters: true,
@@ -3043,7 +3295,7 @@ var ValidationItem = function ValidationItem(_ref) {
   }));
 };
 
-var _excluded$m = ["action", "children", "classes", "className", "closeText", "color", "icon", "iconMapping", "onClose", "role", "severity", "variant", "elevation"];
+var _excluded$s = ["action", "children", "classes", "className", "closeText", "color", "icon", "iconMapping", "onClose", "role", "severity", "variant", "elevation"];
 var styles = function styles(theme) {
   var getColor = theme.palette.type === "light" ? styles$2.darken : styles$2.lighten;
   var getBackgroundColor = theme.palette.type === "light" ? styles$2.lighten : styles$2.darken;
@@ -3214,7 +3466,7 @@ var Alert = /*#__PURE__*/React__namespace.forwardRef(function Alert(props, ref) 
       variant = _props$variant === void 0 ? "standard" : _props$variant,
       _props$elevation = props.elevation,
       elevation = _props$elevation === void 0 ? 0 : _props$elevation,
-      other = _objectWithoutProperties(props, _excluded$m);
+      other = _objectWithoutProperties(props, _excluded$s);
 
   return /*#__PURE__*/React__namespace.createElement(Paper__default["default"], _extends({
     role: role,
@@ -3417,7 +3669,7 @@ var useValidationSummary = function useValidationSummary() {
   }, [submitErrors, formContext, values, source, group]);
 };
 
-var useStyles$6 = styles$2.makeStyles(function (theme) {
+var useStyles$a = styles$2.makeStyles(function (theme) {
   return {
     progress: {
       margin: theme.spacing(1)
@@ -3461,7 +3713,7 @@ var ValidationSummary = function ValidationSummary(_ref2) {
       showWhenNoErrors = _ref2$showWhenNoError === void 0 ? true : _ref2$showWhenNoError,
       resource = _ref2.resource,
       children = _ref2.children;
-  var classes = useStyles$6();
+  var classes = useStyles$a();
   var translate = raCore.useTranslate();
 
   var _useValidationSummary = useValidationSummary({
@@ -3560,7 +3812,7 @@ function useDebounce(value, delay) {
   return debouncedValue;
 }
 
-var _excluded$l = ["margin", "variant", "fullWidth", "maxLength", "multiline", "format", "rows", "disabled", "InputProps", "InputLabelProps"],
+var _excluded$r = ["margin", "variant", "fullWidth", "maxLength", "multiline", "format", "rows", "disabled", "InputProps", "InputLabelProps"],
     _excluded2$3 = ["name", "onChange"];
 
 var DebouncedTextInput = function DebouncedTextInput(_ref) {
@@ -3576,7 +3828,7 @@ var DebouncedTextInput = function DebouncedTextInput(_ref) {
       disabled = _ref.disabled,
       InputProps = _ref.InputProps,
       InputLabelProps = _ref.InputLabelProps,
-      props = _objectWithoutProperties(_ref, _excluded$l);
+      props = _objectWithoutProperties(_ref, _excluded$r);
 
   var className = props.className,
       source = props.source,
@@ -3797,12 +4049,12 @@ var useWorkflowInput = function useWorkflowInput(_ref) {
   };
 };
 
-var _excluded$k = ["component", "disabled"];
+var _excluded$q = ["component", "disabled"];
 
-var Input = function Input(_ref) {
+var Input$1 = function Input(_ref) {
   var component = _ref.component;
       _ref.disabled;
-      var props = _objectWithoutProperties(_ref, _excluded$k);
+      var props = _objectWithoutProperties(_ref, _excluded$q);
 
   var _useMemo = React.useMemo(function () {
     var resource = lodash.get(props, "resource", component.props.resource);
@@ -3915,8 +4167,8 @@ var LanguageMessageInput = function LanguageMessageInput(props) {
   })));
 };
 
-var _excluded$j = ["title", "disabled"];
-var useStyles$5 = styles$2.makeStyles(function (theme) {
+var _excluded$p = ["title", "disabled"];
+var useStyles$9 = styles$2.makeStyles(function (theme) {
   return {
     labeled: {
       padding: theme.spacing(1)
@@ -3930,9 +4182,9 @@ var useStyles$5 = styles$2.makeStyles(function (theme) {
 var MediaInput = function MediaInput(_ref) {
   var title = _ref.title,
       disabled = _ref.disabled,
-      props = _objectWithoutProperties(_ref, _excluded$j);
+      props = _objectWithoutProperties(_ref, _excluded$p);
 
-  var classes = useStyles$5();
+  var classes = useStyles$9();
 
   if (disabled) {
     var value = lodash.get(props.record, props.source);
@@ -3959,11 +4211,11 @@ var MediaInput = function MediaInput(_ref) {
   }));
 };
 
-var _excluded$i = ["optionText"];
+var _excluded$o = ["optionText"];
 
 var ReferenceAutocompleteInput$1 = function ReferenceAutocompleteInput(_ref) {
   var optionText = _ref.optionText,
-      props = _objectWithoutProperties(_ref, _excluded$i);
+      props = _objectWithoutProperties(_ref, _excluded$o);
 
   return /*#__PURE__*/React__default["default"].createElement(reactAdmin.ReferenceInput, props, /*#__PURE__*/React__default["default"].createElement(reactAdmin.AutocompleteInput, {
     optionText: optionText
@@ -4004,11 +4256,11 @@ var useManyParser = function useManyParser() {
   return memoizedFn;
 };
 
-var _excluded$h = ["optionText"];
+var _excluded$n = ["optionText"];
 
 var ReferenceCheckboxGroupInput = function ReferenceCheckboxGroupInput(_ref) {
   var optionText = _ref.optionText,
-      props = _objectWithoutProperties(_ref, _excluded$h);
+      props = _objectWithoutProperties(_ref, _excluded$n);
 
   var parse = useManyParser();
   var format = useManyFormatter();
@@ -4020,18 +4272,22 @@ var ReferenceCheckboxGroupInput = function ReferenceCheckboxGroupInput(_ref) {
   }));
 };
 
-var _excluded$g = ["optionText"];
+var _excluded$m = ["optionText"];
 
 var ReferenceAutocompleteInput = function ReferenceAutocompleteInput(_ref) {
   var optionText = _ref.optionText,
-      props = _objectWithoutProperties(_ref, _excluded$g);
+      props = _objectWithoutProperties(_ref, _excluded$m);
 
   return /*#__PURE__*/React__default["default"].createElement(reactAdmin.ReferenceInput, props, /*#__PURE__*/React__default["default"].createElement(reactAdmin.SelectInput, {
     optionText: optionText
   }));
 };
 
-var useStyles$4 = core.makeStyles(function (theme) {
+var stopPropagation = function stopPropagation(e) {
+  return e.stopPropagation();
+};
+
+var useStyles$8 = core.makeStyles(function (theme) {
   return {
     required: {}
   };
@@ -4046,7 +4302,7 @@ var ConfirmMove = function ConfirmMove(_ref) {
       record = _ref.record,
       state = _ref.state,
       onCancel = _ref.onCancel;
-  var classes = useStyles$4();
+  var classes = useStyles$8();
   var refresh = reactAdmin.useRefresh();
   var notify = reactAdmin.useNotify();
 
@@ -4105,8 +4361,12 @@ var ConfirmMove = function ConfirmMove(_ref) {
       loading = _useUpdate2[1].loading;
 
   return /*#__PURE__*/React__default["default"].createElement(core.Dialog, {
-    open: open
-  }, /*#__PURE__*/React__default["default"].createElement(core.DialogTitle, null, translate("resources.workflow.move.title")), /*#__PURE__*/React__default["default"].createElement(core.DialogContent, null, /*#__PURE__*/React__default["default"].createElement(core.DialogContentText, {
+    open: open,
+    onClick: stopPropagation
+  }, /*#__PURE__*/React__default["default"].createElement(core.DialogTitle, null, translate("resources.workflow.move.title"), /*#__PURE__*/React__default["default"].createElement(core.Typography, {
+    variant: "caption",
+    display: "block"
+  }, state === null || state === void 0 ? void 0 : state.label)), /*#__PURE__*/React__default["default"].createElement(core.DialogContent, null, /*#__PURE__*/React__default["default"].createElement(core.DialogContentText, {
     className: classnames__default["default"](needsNotes && classes.required)
   }, translate("resources.workflow.move.message" + (needsNotes ? ".required" : ""))), /*#__PURE__*/React__default["default"].createElement(core.TextField, {
     autoFocus: true,
@@ -4198,19 +4458,23 @@ var StateCollectionInput = function StateCollectionInput(_ref) {
       anchorEl = _React$useState2[0],
       setAnchorEl = _React$useState2[1];
 
-  var handleClick = function handleClick(event) {
-    event.stopPropagation();
-    event.preventDefault();
-    setAnchorEl(event.currentTarget);
+  var handleClick = function handleClick(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    setAnchorEl(e.currentTarget);
   };
 
-  var handleClose = function handleClose() {
+  var handleClose = function handleClose(e) {
+    e.stopPropagation();
+    e.preventDefault();
     setAnchorEl(null);
     setState(null);
   };
 
   var handleChange = React.useCallback(function (state) {
     return function (e) {
+      e.stopPropagation();
+      e.preventDefault();
       setAnchorEl(null);
       setState(state);
     };
@@ -4260,12 +4524,12 @@ var StateCollectionInput = function StateCollectionInput(_ref) {
   }));
 };
 
-var _excluded$f = ["filter"];
+var _excluded$l = ["filter"];
 
 var StateInput = function StateInput(_ref) {
   var _ref$filter = _ref.filter,
       filter = _ref$filter === void 0 ? undefined : _ref$filter,
-      props = _objectWithoutProperties(_ref, _excluded$f);
+      props = _objectWithoutProperties(_ref, _excluded$l);
 
   var _useContext = React.useContext(WorkflowContext),
       getWorkflow = _useContext.getWorkflow;
@@ -4306,14 +4570,14 @@ var TransactionNotesInput = function TransactionNotesInput(props) {
   }));
 };
 
-var _excluded$e = ["label", "helperText", "admin"];
+var _excluded$k = ["label", "helperText", "admin"];
 
 var TransactionNotesIsPrivateInput = function TransactionNotesIsPrivateInput(_ref) {
   var label = _ref.label,
       helperText = _ref.helperText,
       _ref$admin = _ref.admin,
       admin = _ref$admin === void 0 ? false : _ref$admin,
-      props = _objectWithoutProperties(_ref, _excluded$e);
+      props = _objectWithoutProperties(_ref, _excluded$k);
 
   var fieldLabel = useFieldLabel({
     resource: "transactions"
@@ -4338,7 +4602,7 @@ var inputs = /*#__PURE__*/Object.freeze({
   DebouncedDateInput: DebouncedDateInput,
   DebouncedNumberInput: DebouncedNumberInput,
   DebouncedTextInput: DebouncedTextInput,
-  Input: Input,
+  Input: Input$1,
   LanguageMessageInput: LanguageMessageInput,
   MediaInput: MediaInput,
   NullableBooleanInput: reactAdmin.NullableBooleanInput,
@@ -4356,13 +4620,13 @@ var inputs = /*#__PURE__*/Object.freeze({
   TransactionNotesIsPrivateInput: TransactionNotesIsPrivateInput
 });
 
-var _excluded$d = ["children", "evenOdd"];
+var _excluded$j = ["children", "evenOdd"];
 
 var getWidthToSubtract = function getWidthToSubtract(w) {
   return w + (window.innerWidth - document.documentElement.clientWidth);
 };
 
-var useStyles$3 = core.makeStyles(function (theme) {
+var useStyles$7 = core.makeStyles(function (theme) {
   return {
     container: function container(_ref) {
       var sidebarOpen = _ref.sidebarOpen,
@@ -4387,7 +4651,7 @@ var Datagrid = function Datagrid(_ref3) {
   var children = _ref3.children,
       _ref3$evenOdd = _ref3.evenOdd,
       evenOdd = _ref3$evenOdd === void 0 ? true : _ref3$evenOdd,
-      props = _objectWithoutProperties(_ref3, _excluded$d);
+      props = _objectWithoutProperties(_ref3, _excluded$j);
 
   var _useContext = React.useContext(LayoutContext),
       drawerWidth = _useContext.drawerWidth;
@@ -4395,7 +4659,7 @@ var Datagrid = function Datagrid(_ref3) {
   var sidebarOpen = reactRedux.useSelector(function (state) {
     return state.admin.ui.sidebarOpen;
   });
-  var classes = useStyles$3({
+  var classes = useStyles$7({
     sidebarOpen: sidebarOpen,
     drawerWidth: drawerWidth
   });
@@ -4443,7 +4707,7 @@ var lists = /*#__PURE__*/Object.freeze({
   NotificationList: NotificationList
 });
 
-var _excluded$c = ["component", "componentProps", "components", "addLabel", "sortBy"];
+var _excluded$i = ["component", "componentProps", "components", "addLabel", "sortBy"];
 
 var Component = function Component(_ref) {
   var component = _ref.component,
@@ -4452,7 +4716,7 @@ var Component = function Component(_ref) {
       _ref$addLabel = _ref.addLabel,
       addLabel = _ref$addLabel === void 0 ? true : _ref$addLabel;
       _ref.sortBy;
-      var props = _objectWithoutProperties(_ref, _excluded$c);
+      var props = _objectWithoutProperties(_ref, _excluded$i);
 
   var Component = lodash.get(components, component);
 
@@ -4491,13 +4755,13 @@ var useCustomComponents = function useCustomComponents(resource) {
   }, [resources, resource]);
 };
 
-var _excluded$b = ["tabs"],
+var _excluded$h = ["tabs"],
     _excluded2$2 = ["componentProps"],
     _excluded3$1 = ["fullWidth"];
 
 var TabbedForm = function TabbedForm(_ref) {
   var tabs = _ref.tabs,
-      props = _objectWithoutProperties(_ref, _excluded$b);
+      props = _objectWithoutProperties(_ref, _excluded$h);
 
   var _useContext = React.useContext(CrudContext),
       getForm = _useContext.getForm;
@@ -4530,7 +4794,7 @@ var TabbedForm = function TabbedForm(_ref) {
           fullWidth = _ref3$componentProps.fullWidth,
           restComponentProps = _objectWithoutProperties(_ref3$componentProps, _excluded3$1);
 
-      return form !== null && form !== void 0 && form.useWorkflow && workflow !== null && useWorkflow === true ? /*#__PURE__*/React__default["default"].createElement(Input, {
+      return form !== null && form !== void 0 && form.useWorkflow && workflow !== null && useWorkflow === true ? /*#__PURE__*/React__default["default"].createElement(Input$1, {
         key: source,
         source: source,
         fullWidth: true,
@@ -4652,7 +4916,7 @@ var useSaveMutation = function useSaveMutation(_ref) {
   return save;
 };
 
-var _excluded$a = ["fullWidth"];
+var _excluded$g = ["fullWidth"];
 
 var Form = function Form(_ref) {
   var _form$inputs;
@@ -4707,7 +4971,7 @@ var Form = function Form(_ref) {
         useWorkflow = _ref2.useWorkflow,
         _ref2$componentProps = _ref2.componentProps,
         fullWidth = _ref2$componentProps.fullWidth,
-        restComponentProps = _objectWithoutProperties(_ref2$componentProps, _excluded$a);
+        restComponentProps = _objectWithoutProperties(_ref2$componentProps, _excluded$g);
 
     return form !== null && form !== void 0 && form.useWorkflow && workflow !== null && useWorkflow === true ? /*#__PURE__*/React__default["default"].createElement(reactAdmin.InputHelperText, {
       key: source,
@@ -4746,14 +5010,14 @@ var Create = function Create(props) {
   return /*#__PURE__*/React__default["default"].createElement(reactAdmin.Edit, props, /*#__PURE__*/React__default["default"].createElement(Form, null));
 };
 
-var _excluded$9 = ["grid", "customComponents"],
+var _excluded$f = ["grid", "customComponents"],
     _excluded2$1 = ["className", "exporter", "filters"],
     _excluded3 = ["label", "component", "componentProps"];
 
 var Actions = function Actions(_ref) {
   var grid = _ref.grid,
       customComponents = _ref.customComponents,
-      props = _objectWithoutProperties(_ref, _excluded$9);
+      props = _objectWithoutProperties(_ref, _excluded$f);
 
   var className = props.className,
       exporter = props.exporter,
@@ -4839,14 +5103,14 @@ Actions.defaultProps = {
   }
 };
 
-var _excluded$8 = ["grid", "customComponents"];
+var _excluded$e = ["grid", "customComponents"];
 
 var BulkActionButtons = function BulkActionButtons(_ref) {
   var _grid$bulkActionButto;
 
   var grid = _ref.grid,
       customComponents = _ref.customComponents,
-      props = _objectWithoutProperties(_ref, _excluded$8);
+      props = _objectWithoutProperties(_ref, _excluded$e);
 
   return /*#__PURE__*/React__default["default"].createElement(React.Fragment, null, grid === null || grid === void 0 ? void 0 : (_grid$bulkActionButto = grid.bulkActionButtons) === null || _grid$bulkActionButto === void 0 ? void 0 : _grid$bulkActionButto.map(function (_ref2, index) {
     var component = _ref2.component,
@@ -4859,6 +5123,73 @@ var BulkActionButtons = function BulkActionButtons(_ref) {
     }));
   }), (grid === null || grid === void 0 ? void 0 : grid.canDelete) !== false && /*#__PURE__*/React__default["default"].createElement(reactAdmin.BulkDeleteButton, props));
 };
+
+var _excluded$d = ["grid"];
+
+var Empty = function Empty(_ref) {
+  var grid = _ref.grid,
+      props = _objectWithoutProperties(_ref, _excluded$d);
+
+  var _useListContext = raCore.useListContext(props),
+      basePath = _useListContext.basePath,
+      hasCreate = _useListContext.hasCreate;
+
+  var resource = raCore.useResourceContext(props);
+  var classes = useStyles$6(props);
+  var translate = raCore.useTranslate();
+  var getResourceLabel = raCore.useGetResourceLabel();
+  var resourceName = translate("resources.".concat(resource, ".forcedCaseName"), {
+    smart_count: 0,
+    _: getResourceLabel(resource, 0)
+  });
+  var emptyMessage = translate("ra.page.empty", {
+    name: resourceName
+  });
+  var inviteMessage = translate("ra.page.invite");
+  return /*#__PURE__*/React__namespace.createElement(React__namespace.Fragment, null, /*#__PURE__*/React__namespace.createElement("div", {
+    className: classes.message
+  }, /*#__PURE__*/React__namespace.createElement(Inbox__default["default"], {
+    className: classes.icon
+  }), /*#__PURE__*/React__namespace.createElement(core.Typography, {
+    variant: "h4",
+    paragraph: true
+  }, translate("resources.".concat(resource, ".empty"), {
+    _: emptyMessage
+  })), hasCreate && (grid === null || grid === void 0 ? void 0 : grid.canCreate) !== false && /*#__PURE__*/React__namespace.createElement(core.Typography, {
+    variant: "body1"
+  }, translate("resources.".concat(resource, ".invite"), {
+    _: inviteMessage
+  }))), hasCreate && (grid === null || grid === void 0 ? void 0 : grid.canCreate) !== false && /*#__PURE__*/React__namespace.createElement("div", {
+    className: classes.toolbar
+  }, /*#__PURE__*/React__namespace.createElement(reactAdmin.CreateButton, {
+    variant: "contained",
+    basePath: basePath,
+    label: translate("resources.".concat(resource, ".create"), {
+      _: "ra.action.create"
+    })
+  })));
+};
+
+var useStyles$6 = styles$2.makeStyles(function (theme) {
+  return {
+    message: {
+      textAlign: "center",
+      opacity: theme.palette.type === "light" ? 0.5 : 0.8,
+      margin: "0 1em",
+      color: theme.palette.type === "light" ? "inherit" : theme.palette.text.primary
+    },
+    icon: {
+      width: "9em",
+      height: "9em"
+    },
+    toolbar: {
+      textAlign: "center",
+      marginTop: "2em"
+    }
+  };
+}, {
+  name: "RaEmpty"
+});
 
 var exporter = function exporter(grid, data, translate) {
   var columns = ((grid === null || grid === void 0 ? void 0 : grid.columns) || []).filter(function (c) {
@@ -4883,7 +5214,7 @@ var exporter = function exporter(grid, data, translate) {
   });
 };
 
-var _excluded$7 = ["source", "component", "componentProps"];
+var _excluded$c = ["source", "component", "componentProps"];
 
 var List = function List(props) {
   var _grid$filters, _grid$columns;
@@ -4923,6 +5254,9 @@ var List = function List(props) {
     } : false,
     filterDefaultValues: grid.filterDefaultValues || {},
     sort: grid === null || grid === void 0 ? void 0 : grid.sort,
+    empty: /*#__PURE__*/React__namespace.createElement(Empty, {
+      grid: grid
+    }),
     perPage: grid === null || grid === void 0 ? void 0 : grid.perPage,
     bulkActionButtons: /*#__PURE__*/React__namespace.createElement(BulkActionButtons, {
       grid: grid,
@@ -4932,7 +5266,7 @@ var List = function List(props) {
       var source = _ref.source,
           component = _ref.component,
           componentProps = _ref.componentProps,
-          props = _objectWithoutProperties(_ref, _excluded$7);
+          props = _objectWithoutProperties(_ref, _excluded$c);
 
       return /*#__PURE__*/React__namespace.createElement(Component, _extends({}, props, {
         key: source,
@@ -5023,7 +5357,7 @@ var createCrud = function createCrud(_ref) {
   };
 };
 
-var _excluded$6 = ["icon", "roles", "group", "options", "workflow", "components"];
+var _excluded$b = ["icon", "roles", "group", "options", "workflow", "components"];
 var defaultIcon = TableChart__default["default"];
 var defaultGroup = "dashboard";
 
@@ -5034,7 +5368,7 @@ var CrudResource = function CrudResource(_ref) {
       options = _ref.options;
       _ref.workflow;
       var components = _ref.components,
-      props = _objectWithoutProperties(_ref, _excluded$6);
+      props = _objectWithoutProperties(_ref, _excluded$b);
 
   var crudProps = React.useMemo(function () {
     return createCrud({
@@ -5067,12 +5401,65 @@ CrudResource.defaultProps = {
   workflow: true
 };
 
+var _excluded$a = ["children"];
+
+var BaseProfileForm = function BaseProfileForm(_ref) {
+  var children = _ref.children,
+      props = _objectWithoutProperties(_ref, _excluded$a);
+
+  var notify = reactAdmin.useNotify();
+  var save = useSaveMutation(_objectSpread2(_objectSpread2({}, props), {}, {
+    resource: "users/profile",
+    redirect: "/",
+    onSuccess: function onSuccess(_ref2) {
+      var _ref2$data = _ref2.data,
+          email = _ref2$data.email,
+          profile = _ref2$data.profile;
+      localStorage.setItem("profile", JSON.stringify(_objectSpread2({
+        email: email
+      }, profile)));
+      notify("ra.message.profile_updated");
+    }
+  }));
+  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.SimpleForm, _extends({}, props, {
+    toolbar: /*#__PURE__*/React__default["default"].createElement(reactAdmin.Toolbar, null, /*#__PURE__*/React__default["default"].createElement(reactAdmin.SaveButton, null)),
+    save: save
+  }), React__default["default"].Children.map(children, function (child) {
+    return /*#__PURE__*/React__default["default"].isValidElement(child) ? /*#__PURE__*/React__default["default"].cloneElement(child, _objectSpread2({}, props)) : child;
+  }));
+};
+
+var _excluded$9 = ["formData"];
+
+var ProfileForm = function ProfileForm(props) {
+  return /*#__PURE__*/React__default["default"].createElement(BaseProfileForm, props, /*#__PURE__*/React__default["default"].createElement(DebouncedTextInput, {
+    source: "email",
+    validate: [raCore.required(), raCore.email()]
+  }), /*#__PURE__*/React__default["default"].createElement(DebouncedTextInput, {
+    source: "profile.name",
+    validate: raCore.required(),
+    maxLength: 50
+  }), /*#__PURE__*/React__default["default"].createElement(DebouncedTextInput, {
+    source: "profile.surname",
+    validate: raCore.required(),
+    maxLength: 50
+  }), /*#__PURE__*/React__default["default"].createElement(raCore.FormDataConsumer, null, function (_ref) {
+    var formData = _ref.formData,
+        props = _objectWithoutProperties(_ref, _excluded$9);
+
+    return formData.auth === "local" && /*#__PURE__*/React__default["default"].createElement(DebouncedTextInput, _extends({}, props, {
+      type: "password",
+      source: "password"
+    }));
+  }));
+};
+
 var LocalLoginForm = function LocalLoginForm(props) {
   return /*#__PURE__*/React__default["default"].createElement(reactAdmin.LoginForm, props);
 };
 
-var _excluded$5 = ["logo", "children"];
-var useStyles$2 = styles$2.makeStyles(function (theme) {
+var _excluded$8 = ["logo", "children"];
+var useStyles$5 = styles$2.makeStyles(function (theme) {
   return {
     main: {
       overflow: "hidden",
@@ -5090,11 +5477,11 @@ var useStyles$2 = styles$2.makeStyles(function (theme) {
 var LoginPage = function LoginPage(_ref) {
   var logo = _ref.logo,
       children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded$5);
+      props = _objectWithoutProperties(_ref, _excluded$8);
 
   var location = props.location;
   var search = location.search;
-  var classes = useStyles$2();
+  var classes = useStyles$5();
   var theme = styles$2.useTheme();
   var action = React.useMemo(function () {
     if (search) {
@@ -5121,12 +5508,339 @@ LoginPage.propTypes = {
   logo: PropTypes__default["default"].element
 };
 
-var _excluded$4 = ["staticContext", "children"];
+var _excluded$7 = ["children", "staticContext", "title"];
+
+var ProfilePage = function ProfilePage(_ref) {
+  var _ref$children = _ref.children,
+      children = _ref$children === void 0 ? /*#__PURE__*/React__default["default"].createElement(ProfileForm, null) : _ref$children;
+      _ref.staticContext;
+      var _ref$title = _ref.title,
+      title = _ref$title === void 0 ? "ra.page.profile.title" : _ref$title,
+      props = _objectWithoutProperties(_ref, _excluded$7);
+
+  return /*#__PURE__*/React__default["default"].createElement(reactAdmin.Edit, _extends({}, props, {
+    id: "profile",
+    title: title,
+    resource: "users",
+    basePath: "users"
+  }), /*#__PURE__*/React__default["default"].isValidElement(children) ? /*#__PURE__*/React__default["default"].cloneElement(children, _objectSpread2({}, props)) : children);
+};
+
+ProfilePage.propTypes = {
+  children: PropTypes__default["default"].element,
+  title: PropTypes__default["default"].oneOfType([PropTypes__default["default"].string, PropTypes__default["default"].element])
+};
+
+var useStyles$4 = styles$2.makeStyles(function (theme) {
+  return {
+    button: {
+      margin: theme.spacing(1),
+      width: "calc(100% - ".concat(theme.spacing(2), "px)")
+    }
+  };
+});
+
+var ResetPasswordButton = function ResetPasswordButton(_ref) {
+  var _ref$href = _ref.href,
+      href = _ref$href === void 0 ? "/#/reset-password" : _ref$href,
+      _ref$color = _ref.color,
+      color = _ref$color === void 0 ? "primary" : _ref$color,
+      _ref$variant = _ref.variant,
+      variant = _ref$variant === void 0 ? "outlined" : _ref$variant,
+      _ref$label = _ref.label,
+      label = _ref$label === void 0 ? "ra.auth.reset_password" : _ref$label;
+  var classes = useStyles$4();
+  var translate = raCore.useTranslate();
+  return /*#__PURE__*/React__default["default"].createElement(Button__default["default"], {
+    className: classes.button,
+    href: href,
+    color: color,
+    type: "button",
+    variant: variant
+  }, translate(label));
+};
+
+var _excluded$6 = ["siteKey", "reset"];
+
+var addScript = function addScript(_ref) {
+  var src = _ref.src,
+      id = _ref.id,
+      onLoad = _ref.onLoad;
+  var existing = document.getElementById(id);
+
+  if (existing) {
+    return existing;
+  } else {
+    var script = document.createElement("script");
+    script.src = src;
+    script.id = id;
+    script.async = true;
+
+    script.onload = function () {
+      if (onLoad) {
+        onLoad();
+      }
+    };
+
+    document.body.appendChild(script);
+    return script;
+  }
+};
+
+var removeScript = function removeScript(_ref2) {
+  var id = _ref2.id;
+  var script = document.getElementById(id);
+
+  if (script) {
+    document.body.removeChild(script);
+  }
+};
+
+var RecaptchaInput = function RecaptchaInput(_ref3) {
+  var siteKey = _ref3.siteKey;
+      _ref3.reset;
+      var props = _objectWithoutProperties(_ref3, _excluded$6);
+
+  var _useInput = raCore.useInput(_objectSpread2({}, props)),
+      onChange = _useInput.input.onChange;
+
+  React.useEffect(function () {
+    addScript({
+      src: "https://www.google.com/recaptcha/api.js?render=".concat(siteKey),
+      id: "recaptcha-api",
+      onLoad: function onLoad() {
+        // eslint-disable-next-line no-undef
+        grecaptcha.ready(function () {
+          // eslint-disable-next-line no-undef
+          grecaptcha.execute(siteKey, {
+            action: "submit"
+          }).then(onChange);
+        });
+      }
+    });
+    return function () {
+      return removeScript({
+        id: "recaptcha-api"
+      });
+    };
+  }, [siteKey, onChange]);
+  return null;
+};
+
+var useResetPassword = function useResetPassword() {
+  var dataProvider = raCore.useDataProvider();
+  var handler = React.useCallback(function (_ref) {
+    var account = _ref.account,
+        token = _ref.token;
+    return dataProvider.post("users/reset-password", {
+      account: account,
+      token: token
+    });
+  }, [dataProvider]);
+  return handler;
+};
+
+var _excluded$5 = ["meta", "input"];
+var useStyles$3 = styles$2.makeStyles(function (theme) {
+  return {
+    form: {
+      padding: "0 1em 1em 1em"
+    },
+    input: {
+      marginTop: theme.spacing(2),
+      marginBottom: theme.spacing(2)
+    },
+    button: {
+      width: "100%",
+      display: "block",
+      clear: "both",
+      marginTop: theme.spacing(1)
+    },
+    icon: {
+      marginRight: theme.spacing(1)
+    }
+  };
+}, {
+  name: "RaResetPasswordForm"
+});
+
+var Input = function Input(_ref) {
+  var _ref$meta = _ref.meta,
+      touched = _ref$meta.touched,
+      error = _ref$meta.error,
+      inputProps = _ref.input,
+      props = _objectWithoutProperties(_ref, _excluded$5);
+
+  return /*#__PURE__*/React__namespace.createElement(core.TextField, _extends({
+    error: !!(touched && error),
+    helperText: touched && error
+  }, inputProps, props, {
+    fullWidth: true
+  }));
+};
+
+var ResetPasswordForm = function ResetPasswordForm(_ref2) {
+  var recaptchaSiteApiKey = _ref2.recaptchaSiteApiKey,
+      _ref2$redirectTo = _ref2.redirectTo,
+      redirectTo = _ref2$redirectTo === void 0 ? "/login" : _ref2$redirectTo;
+
+  var _useSafeSetState = raCore.useSafeSetState(false),
+      _useSafeSetState2 = _slicedToArray(_useSafeSetState, 2),
+      loading = _useSafeSetState2[0],
+      setLoading = _useSafeSetState2[1];
+
+  var resetPassword = useResetPassword();
+  var translate = raCore.useTranslate();
+  var redirect = raCore.useRedirect();
+  var notify = raCore.useNotify();
+  var classes = useStyles$3();
+
+  var validate = function validate(values) {
+    var errors = {
+      account: undefined
+    };
+
+    if (!values.account) {
+      errors.account = translate("ra.validation.required");
+    }
+
+    return errors;
+  };
+
+  var _React$useState = React__namespace.useState(Date.now()),
+      _React$useState2 = _slicedToArray(_React$useState, 2),
+      timestamp = _React$useState2[0],
+      setTimestamp = _React$useState2[1];
+
+  var submit = function submit(values) {
+    setLoading(true);
+    resetPassword(values).then(function (_ref3) {
+      var data = _ref3.data;
+      setLoading(false);
+      setTimestamp(Date.now());
+      notify(data === null || data === void 0 ? void 0 : data.message, {
+        variant: "info"
+      });
+      redirect(redirectTo);
+    }).catch(function (error) {
+      setLoading(false);
+      setTimestamp(Date.now());
+      notify(error === null || error === void 0 ? void 0 : error.message, {
+        type: "warning"
+      });
+    });
+  };
+
+  return /*#__PURE__*/React__namespace.createElement(reactFinalForm.Form, {
+    onSubmit: submit,
+    validate: validate,
+    render: function render(_ref4) {
+      var handleSubmit = _ref4.handleSubmit;
+      return /*#__PURE__*/React__namespace.createElement("form", {
+        onSubmit: handleSubmit,
+        noValidate: true
+      }, /*#__PURE__*/React__namespace.createElement("div", {
+        className: classes.form
+      }, /*#__PURE__*/React__namespace.createElement("div", {
+        className: classes.input
+      }, /*#__PURE__*/React__namespace.createElement(reactFinalForm.Field, {
+        autoFocus: true,
+        id: "account",
+        name: "account",
+        component: Input,
+        label: translate("ra.auth.account"),
+        disabled: loading
+      }), /*#__PURE__*/React__namespace.createElement(reactFinalForm.Field, {
+        id: "token",
+        key: timestamp,
+        name: "token",
+        source: "token",
+        component: RecaptchaInput,
+        siteKey: recaptchaSiteApiKey
+      })), /*#__PURE__*/React__namespace.createElement(core.Button, {
+        variant: "contained",
+        type: "submit",
+        color: "primary",
+        disabled: loading,
+        className: classes.button
+      }, loading && /*#__PURE__*/React__namespace.createElement(core.CircularProgress, {
+        className: classes.icon,
+        size: 18,
+        thickness: 2
+      }), translate("ra.auth.password_reset.button")), /*#__PURE__*/React__namespace.createElement(core.Button, {
+        className: classes.button,
+        href: "/#/login",
+        color: "primary",
+        type: "button",
+        disabled: loading
+      }, "\u2190", translate("ra.auth.back_to_login"))));
+    }
+  });
+};
+
+ResetPasswordForm.propTypes = {
+  redirectTo: PropTypes__default["default"].string
+};
+
+var _excluded$4 = ["logo", "children"];
+var useStyles$2 = styles$2.makeStyles(function (theme) {
+  return {
+    main: {
+      overflow: "hidden",
+      minHeight: "98vh",
+      backgroundImage: "none",
+      backgroundColor: theme.palette.background.default,
+      "& [class*=MuiAvatar-root]": {
+        display: "none",
+        visibility: "hidden"
+      }
+    }
+  };
+});
+
+var ResetPasswordPage = function ResetPasswordPage(_ref) {
+  var logo = _ref.logo,
+      _ref$children = _ref.children,
+      children = _ref$children === void 0 ? /*#__PURE__*/React__default["default"].createElement(ResetPasswordForm, null) : _ref$children,
+      props = _objectWithoutProperties(_ref, _excluded$4);
+
+  var location = props.location;
+  var search = location.search;
+  var classes = useStyles$2();
+  var theme = styles$2.useTheme();
+  var action = React.useMemo(function () {
+    if (search) {
+      var params = new URLSearchParams(search);
+      return params.get("action");
+    }
+
+    return null;
+  }, [search]);
+  return /*#__PURE__*/React__default["default"].createElement(core.ThemeProvider, {
+    theme: theme
+  }, /*#__PURE__*/React__default["default"].createElement(reactAdmin.Login, {
+    backgroundImage: "",
+    classes: classes
+  }, logo, React__default["default"].Children.map(children, function (child) {
+    return /*#__PURE__*/React__default["default"].isValidElement(child) ? /*#__PURE__*/React__default["default"].cloneElement(child, _objectSpread2({
+      action: action
+    }, props)) : child;
+  })));
+};
+
+ResetPasswordPage.propTypes = {
+  action: PropTypes__default["default"].string,
+  logo: PropTypes__default["default"].element,
+  recaptchaSiteApiKey: PropTypes__default["default"].string.isRequired,
+  children: PropTypes__default["default"].oneOfType([PropTypes__default["default"].arrayOf(PropTypes__default["default"].node), PropTypes__default["default"].node])
+};
+
+var _excluded$3 = ["staticContext", "children"];
 
 var SignupPage = function SignupPage(_ref) {
   _ref.staticContext;
       var children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded$4);
+      props = _objectWithoutProperties(_ref, _excluded$3);
 
   var theme = styles$2.useTheme();
   return /*#__PURE__*/React__default["default"].createElement(core.ThemeProvider, {
@@ -5136,7 +5850,7 @@ var SignupPage = function SignupPage(_ref) {
   }), /*#__PURE__*/React__default["default"].createElement(raUiMaterialui.Notification, null));
 };
 
-var _excluded$3 = ["children"];
+var _excluded$2 = ["children"];
 var SignupStepperContext = /*#__PURE__*/React__default["default"].createContext({
   activeStep: 0,
   isLastStep: false
@@ -5149,7 +5863,7 @@ var SignupStepperProvider = function SignupStepperProvider(_ref) {
       activeStep = _React$useState2[0],
       setActiveStep = _React$useState2[1];
 
-  var _React$useState3 = React__default["default"].useState(false),
+  var _React$useState3 = React__default["default"].useState(React__default["default"].Children.toArray(children).length === 1),
       _React$useState4 = _slicedToArray(_React$useState3, 2),
       isLastStep = _React$useState4[0],
       setIsLastStep = _React$useState4[1];
@@ -5166,7 +5880,7 @@ var SignupStepperProvider = function SignupStepperProvider(_ref) {
 
 var SignupStepper = function SignupStepper(_ref2) {
   var children = _ref2.children,
-      props = _objectWithoutProperties(_ref2, _excluded$3);
+      props = _objectWithoutProperties(_ref2, _excluded$2);
 
   var form = reactFinalForm.useForm();
 
@@ -5207,7 +5921,7 @@ var SignupStepper = function SignupStepper(_ref2) {
     activeStep: activeStep,
     orientation: "vertical"
   }, React__default["default"].Children.map(children, function (field, index) {
-    return /*#__PURE__*/React__default["default"].createElement(core.Step, {
+    return /*#__PURE__*/React__default["default"].isValidElement(field) ? /*#__PURE__*/React__default["default"].createElement(core.Step, {
       key: index
     }, /*#__PURE__*/React__default["default"].createElement(core.StepLabel, null, field.props.title || field.props.source), /*#__PURE__*/React__default["default"].createElement(core.StepContent, {
       TransitionProps: {
@@ -5218,7 +5932,7 @@ var SignupStepper = function SignupStepper(_ref2) {
       onClick: handleBack
     }, "\u2190 ", translate("ra.action.back")), activeStep < children.length - 1 && /*#__PURE__*/React__default["default"].createElement(core.Button, {
       onClick: handleNext
-    }, translate("ra.action.next"), " \u2192")));
+    }, translate("ra.action.next"), " \u2192"))) : undefined;
   }));
 };
 
@@ -5232,6 +5946,7 @@ var useStyles$1 = styles$2.makeStyles(function (theme) {
 });
 var setLoggedIn = function setLoggedIn(_ref) {
   var data = _ref.data;
+  localStorage.setItem("email", data.email);
   localStorage.setItem("token", data.token);
   localStorage.setItem("roles", JSON.stringify(data.roles));
   localStorage.setItem("username", data.username);
@@ -5352,6 +6067,7 @@ var SpidLoginForm = function SpidLoginForm(_ref3) {
     onClick: stopPropagation,
     component: "a",
     color: "primary",
+    type: "button",
     variant: "contained",
     href: login,
     fullWidth: true
@@ -5370,72 +6086,6 @@ SpidLoginForm.propTypes = {
 SpidLoginForm.defaultProps = {
   signup: false,
   redirectUrl: "/"
-};
-
-var _excluded$2 = ["siteKey"];
-
-var addScript = function addScript(_ref) {
-  var src = _ref.src,
-      id = _ref.id,
-      onLoad = _ref.onLoad;
-  var existing = document.getElementById(id);
-
-  if (existing) {
-    return existing;
-  } else {
-    var script = document.createElement("script");
-    script.src = src;
-    script.id = id;
-    script.async = true;
-
-    script.onload = function () {
-      if (onLoad) {
-        onLoad();
-      }
-    };
-
-    document.body.appendChild(script);
-    return script;
-  }
-};
-
-var removeScript = function removeScript(_ref2) {
-  var id = _ref2.id;
-  var script = document.getElementById(id);
-
-  if (script) {
-    document.body.removeChild(script);
-  }
-};
-
-var RecaptchaInput = function RecaptchaInput(_ref3) {
-  var siteKey = _ref3.siteKey,
-      props = _objectWithoutProperties(_ref3, _excluded$2);
-
-  var _useInput = raCore.useInput(_objectSpread2({}, props)),
-      onChange = _useInput.input.onChange;
-
-  React.useEffect(function () {
-    addScript({
-      src: "https://www.google.com/recaptcha/api.js?render=".concat(siteKey),
-      id: "recaptcha-api",
-      onLoad: function onLoad() {
-        // eslint-disable-next-line no-undef
-        grecaptcha.ready(function () {
-          // eslint-disable-next-line no-undef
-          grecaptcha.execute(siteKey, {
-            action: "submit"
-          }).then(onChange);
-        });
-      }
-    });
-    return function () {
-      return removeScript({
-        id: "recaptcha-api"
-      });
-    };
-  }, [siteKey, onChange]);
-  return null;
 };
 
 var _excluded$1 = ["record", "initialValues"];
@@ -5484,17 +6134,6 @@ var SpidSignupAccountStep = function SpidSignupAccountStep(_ref) {
   })));
 };
 
-var SpidSignupRolesStep = function SpidSignupRolesStep(_ref) {
-  var props = _extends({}, _ref);
-
-  return /*#__PURE__*/React__default["default"].createElement(React.Fragment, null, /*#__PURE__*/React__default["default"].createElement(ReferenceCheckboxGroupInput, _extends({}, props, {
-    source: "roles",
-    reference: "roles",
-    optionText: "name",
-    validate: raCore.required()
-  })));
-};
-
 var _excluded = ["basePath"],
     _excluded2 = ["apiUrl", "loadUrl", "staticContext", "children", "logo", "title", "subTitle", "resource", "recaptchaSiteApiKey"];
 
@@ -5540,20 +6179,25 @@ var SpidSignupForm = function SpidSignupForm(_ref3) {
   var apiUrl = _ref3.apiUrl,
       loadUrl = _ref3.loadUrl;
       _ref3.staticContext;
-      _ref3.children;
-      var logo = _ref3.logo,
+      var children = _ref3.children,
+      logo = _ref3.logo,
       title = _ref3.title,
       subTitle = _ref3.subTitle,
       resource = _ref3.resource,
       recaptchaSiteApiKey = _ref3.recaptchaSiteApiKey,
       props = _objectWithoutProperties(_ref3, _excluded2);
 
+  var _useState = React.useState(Date.now()),
+      _useState2 = _slicedToArray(_useState, 2),
+      timestamp = _useState2[0],
+      setTimestamp = _useState2[1];
+
   var classes = useStyles();
 
-  var _useState = React.useState(null),
-      _useState2 = _slicedToArray(_useState, 2),
-      initialValues = _useState2[0],
-      setInitialValues = _useState2[1];
+  var _useState3 = React.useState(null),
+      _useState4 = _slicedToArray(_useState3, 2),
+      initialValues = _useState4[0],
+      setInitialValues = _useState4[1];
 
   var redirect = reactAdmin.useRedirect();
   var search = getSignResponse();
@@ -5564,6 +6208,9 @@ var SpidSignupForm = function SpidSignupForm(_ref3) {
         document.location.href = "#/login".concat(search);
         document.location.reload();
       }, 100);
+    },
+    onError: function onError() {
+      setTimestamp(Date.now());
     }
   });
 
@@ -5620,6 +6267,7 @@ var SpidSignupForm = function SpidSignupForm(_ref3) {
 
     doLoad();
   }, [search, load, redirect]);
+  console.info(children);
   return /*#__PURE__*/React__default["default"].createElement(SignupStepperProvider, null, /*#__PURE__*/React__default["default"].createElement(core.Grid, {
     container: true,
     justifyContent: "center",
@@ -5647,10 +6295,10 @@ var SpidSignupForm = function SpidSignupForm(_ref3) {
   }, /*#__PURE__*/React__default["default"].createElement(SpidSignupAccountStep, {
     title: "General Infoes",
     fullWidth: true
-  }), /*#__PURE__*/React__default["default"].createElement(SpidSignupRolesStep, {
-    title: "Roles",
-    fullWidth: true
+  }), React__default["default"].Children.map(children, function (child) {
+    return /*#__PURE__*/React__default["default"].isValidElement(child) ? /*#__PURE__*/React__default["default"].cloneElement(child, _objectSpread2({}, props)) : child;
   })), /*#__PURE__*/React__default["default"].createElement(RecaptchaInput, {
+    key: timestamp,
     source: "token",
     siteKey: recaptchaSiteApiKey
   }))))));
@@ -5663,7 +6311,8 @@ SpidSignupForm.propTypes = {
   apiUrl: PropTypes__default["default"].string,
   loadUrl: PropTypes__default["default"].string,
   recaptchaSiteApiKey: PropTypes__default["default"].string.isRequired,
-  staticContext: PropTypes__default["default"].object
+  staticContext: PropTypes__default["default"].object,
+  children: PropTypes__default["default"].node
 };
 SpidSignupForm.defaultProps = {
   resource: "spid"
@@ -5824,107 +6473,6 @@ var convertFile = /*#__PURE__*/function () {
   };
 }();
 
-var createAuthProvider = function createAuthProvider(_ref) {
-  var apiUrl = _ref.apiUrl;
-  return {
-    login: function login(params) {
-      var username = params.username,
-          password = params.password;
-      var requestURL = "".concat(apiUrl, "/users/login");
-      var request = new Request(requestURL, {
-        method: "POST",
-        body: JSON.stringify({
-          username: username,
-          password: password
-        }),
-        headers: new Headers({
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        })
-      });
-      return fetch(request).then(function (response) {
-        return response.json();
-      }).then(function (_ref2) {
-        var data = _ref2.data,
-            success = _ref2.success;
-
-        if (!success) {
-          throw new Error(data.message);
-        }
-
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("roles", JSON.stringify(data.roles));
-        localStorage.setItem("profile", JSON.stringify(data.profile));
-        notifyToken(data.token);
-      });
-    },
-    logout: function logout() {
-      localStorage.removeItem("token");
-      localStorage.removeItem("roles");
-      localStorage.removeItem("profile");
-      return Promise.resolve();
-    },
-    checkAuth: function checkAuth() {
-      return localStorage.getItem("token") ? Promise.resolve() : Promise.reject();
-    },
-    checkError: function checkError(error) {
-      if (error.status === 401 || error.status === 500) {
-        return Promise.reject(error === null || error === void 0 ? void 0 : error.message);
-      }
-
-      return Promise.resolve();
-    },
-    getPermissions: function getPermissions() {
-      var roles = JSON.parse(localStorage.getItem("roles"));
-      return Promise.resolve(function (v) {
-        return roles && roles.some(function (r) {
-          return v.includes(r.code);
-        });
-      });
-    },
-    getIdentity: function getIdentity() {
-      var profile = JSON.parse(localStorage.getItem("profile"));
-      var roles = JSON.parse(localStorage.getItem("roles"));
-      return Promise.resolve(_objectSpread2(_objectSpread2({}, profile), {}, {
-        roles: roles
-      }));
-    },
-    impersonate: function impersonate(id) {
-      var requestURL = "".concat(apiUrl, "/users/impersonate/?id=").concat(id);
-      var request = new Request(requestURL, {
-        method: "POST",
-        headers: getHeaders()
-      });
-      return fetch(request).then(function (response) {
-        return response.json();
-      }).then(function (_ref3) {
-        var success = _ref3.success,
-            data = _ref3.data;
-
-        if (!success) {
-          throw new Error(data.message);
-        }
-
-        ["token", "roles", "username", "profile"].forEach(function (param) {
-          var toSaveParam = "admin_".concat(param);
-          localStorage.setItem(toSaveParam, localStorage.getItem(param));
-          localStorage.setItem(param, ["profile", "roles"].indexOf(param) !== -1 ? JSON.stringify(data[param]) : data[param]);
-        });
-        localStorage.setItem("impersonate", true);
-      });
-    },
-    stopImpersonate: function stopImpersonate() {
-      ["token", "roles", "username", "profile"].forEach(function (param) {
-        var savedParam = "admin_".concat(param);
-        localStorage.setItem(param, localStorage.getItem(savedParam));
-        localStorage.removeItem(savedParam);
-      });
-      localStorage.setItem("impersonate", false);
-      return Promise.resolve();
-    }
-  };
-};
-
 var createFilesParser = function createFilesParser() {
   return /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(data, fileFields) {
@@ -6034,7 +6582,9 @@ var fetchJson = function fetchJson(url) {
     }
 
     if (status < 200 || status >= 300) {
-      return Promise.reject(new raCore.HttpError(statusText, status, json));
+      var _json, _json$data, _json2, _json2$data;
+
+      return Promise.reject(new raCore.HttpError(((_json = json) === null || _json === void 0 ? void 0 : (_json$data = _json.data) === null || _json$data === void 0 ? void 0 : _json$data.message) || statusText, ((_json2 = json) === null || _json2 === void 0 ? void 0 : (_json2$data = _json2.data) === null || _json2$data === void 0 ? void 0 : _json2$data.code) || status, json));
     }
 
     return Promise.resolve({
@@ -6267,9 +6817,8 @@ var createDataProvider = function createDataProvider(_ref) {
     },
     post: function post(resource, params) {
       var url = "".concat(apiUrl, "/").concat(resource);
-      var body = params.body;
       var options = {
-        body: JSON.stringify(body),
+        body: JSON.stringify(params),
         method: "POST",
         headers: getHeaders()
       };
@@ -6281,8 +6830,7 @@ var createDataProvider = function createDataProvider(_ref) {
       });
     },
     get: function get(resource, params) {
-      var query = params.query;
-      var queryString$1 = queryString.stringify(query);
+      var queryString$1 = queryString.stringify(params);
       var url = "".concat(apiUrl, "/").concat(resource, "?").concat(queryString$1);
       var options = {
         method: "GET",
@@ -6421,6 +6969,7 @@ Object.defineProperty(exports, 'TextInput', {
 exports.AppBar = AppBar;
 exports.BackButton = BackButton;
 exports.Badge = Badge;
+exports.BaseProfileForm = ProfileForm;
 exports.ChipArrayField = ChipArrayField;
 exports.CrudContext = CrudContext;
 exports.CrudProvider = CrudProvider;
@@ -6432,12 +6981,14 @@ exports.DebouncedNumberInput = DebouncedNumberInput;
 exports.DebouncedTextInput = DebouncedTextInput;
 exports.DeleteWithConfirmButton = DeleteWithConfirmButton;
 exports.EditButton = EditButton;
+exports.Empty = Empty;
 exports.ExportToButton = ExportToButton;
 exports.FormTab = FormTab;
 exports.Group = Group;
 exports.GroupItem = GroupItem;
 exports.GroupTitle = GroupTitle;
-exports.Input = Input;
+exports.ImpersonateUserButton = ImpersonateUserButton;
+exports.Input = Input$1;
 exports.LanguageMessageInput = LanguageMessageInput;
 exports.Layout = Layout;
 exports.LocalLoginForm = LocalLoginForm;
@@ -6452,6 +7003,8 @@ exports.MenuGroup = MenuGroup;
 exports.MenuItem = MenuItem;
 exports.NotificationField = NotificationField;
 exports.NotificationList = NotificationList;
+exports.ProfileForm = ProfileForm;
+exports.ProfilePage = ProfilePage;
 exports.ProgressField = ProgressField;
 exports.RecordInput = InlineTextInput;
 exports.ReferenceAutocompleteInput = ReferenceAutocompleteInput$1;
@@ -6459,6 +7012,8 @@ exports.ReferenceCheckboxGroupInput = ReferenceCheckboxGroupInput;
 exports.ReferenceListField = ReferenceListField;
 exports.ReferenceSelectInput = ReferenceAutocompleteInput;
 exports.ReferenceToolbar = ReferenceToolbar;
+exports.ResetPasswordButton = ResetPasswordButton;
+exports.ResetPasswordPage = ResetPasswordPage;
 exports.Sidebar = Sidebar;
 exports.SignupPage = SignupPage;
 exports.SignupStepper = SignupStepper;
