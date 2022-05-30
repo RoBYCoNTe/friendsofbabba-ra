@@ -1,7 +1,7 @@
 import { Button } from "react-admin";
 import React, { Fragment } from "react";
 
-import GetAppIcon from "@material-ui/icons/GetApp";
+import { GetApp as GetAppIcon } from "@material-ui/icons";
 import Menu from "@material-ui/core/Menu";
 import ExportButton from "./ExportButton";
 

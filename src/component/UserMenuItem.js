@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { ListItemIcon, MenuItem } from "@material-ui/core";
 
-import ExitIcon from "@material-ui/icons/PowerSettingsNew";
+import { PowerSettingsNew as ExitIcon } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import classnames from "classnames";

@@ -3,7 +3,7 @@ import React, { createElement, useEffect, useRef, useState } from "react";
 import { createStyles, withStyles } from "@material-ui/core/styles";
 
 import AppBar from "./AppBar";
-import CssBaseline from "@material-ui/core/CssBaseline";
+import { CssBaseline } from "@material-ui/core";
 import Menu from "./Menu";
 import PropTypes from "prop-types";
 import Sidebar from "./Sidebar";

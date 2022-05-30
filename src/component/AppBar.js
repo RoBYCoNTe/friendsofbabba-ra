@@ -6,10 +6,10 @@ import {
   useUndoImpersonate,
 } from "../data/createAuthProvider";
 
-import MenuIcon from "@material-ui/icons/Menu";
+import { Menu as MenuIcon } from "@material-ui/icons";
 import { AppBar as MuiAppBar } from "@material-ui/core";
 import PropTypes from "prop-types";
-import Typography from "@material-ui/core/Typography";
+import { Typography } from "@material-ui/core";
 import UserMenu from "./UserMenu";
 import classnames from "classnames";
 import { makeStyles } from "@material-ui/core/styles";

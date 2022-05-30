@@ -1,6 +1,5 @@
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import IconButton from "@material-ui/core/IconButton";
-import Menu from "@material-ui/core/Menu";
+import { AccountCircle } from "@material-ui/icons";
+import { Menu, IconButton } from "@material-ui/core";
 import PropTypes from "prop-types";
 import React from "react";
 

@@ -1,4 +1,4 @@
-import BackIcon from "@material-ui/icons/ArrowBack";
+import { ArrowBack as BackIcon } from "@material-ui/icons";
 import { Button } from "react-admin";
 import { Link } from "react-router-dom";
 import React from "react";

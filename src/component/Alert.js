@@ -9,8 +9,7 @@ import {
 } from "@material-ui/icons";
 import { darken, lighten, withStyles } from "@material-ui/core/styles";
 
-import IconButton from "@material-ui/core/IconButton";
-import Paper from "@material-ui/core/Paper";
+import { IconButton, Paper } from "@material-ui/core";
 import PropTypes from "prop-types";
 import { capitalize } from "@material-ui/core/utils";
 import clsx from "clsx";

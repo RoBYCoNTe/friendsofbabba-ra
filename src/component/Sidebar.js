@@ -12,7 +12,7 @@ import {
   useUndoImpersonate,
 } from "../data/createAuthProvider";
 
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import { ChevronLeft as ChevronLeftIcon } from "@material-ui/icons";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 import { useDispatch } from "react-redux";
