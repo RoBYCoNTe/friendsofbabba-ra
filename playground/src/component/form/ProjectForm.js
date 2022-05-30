@@ -12,7 +12,7 @@ import {
   ValidationSummary,
   useFieldLabel,
   useSaveMutation,
-} from "friendsofbabba-ra";
+} from "ra-friendsofbabba";
 import { LocalPartnersField, PublicSpacesField } from "../field";
 import React, { useEffect, useState } from "react";
 import { TabbedForm, useGetIdentity } from "react-admin";

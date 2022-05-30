@@ -6,7 +6,7 @@ import {
   MediaInput,
   useFieldLabel,
   useWorkflowInput,
-} from "friendsofbabba-ra";
+} from "ra-friendsofbabba";
 
 import MembershipTypeInput from "./MembershipTypeInput";
 import { useCallback } from "react";

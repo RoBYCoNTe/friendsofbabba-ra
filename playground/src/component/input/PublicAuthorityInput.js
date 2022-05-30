@@ -6,7 +6,7 @@ import {
   MediaInput,
   useFieldLabel,
   useWorkflowInput,
-} from "friendsofbabba-ra";
+} from "ra-friendsofbabba";
 
 import { BooleanInput } from "react-admin";
 import MunicipalityInput from "./MunicipalityInput";

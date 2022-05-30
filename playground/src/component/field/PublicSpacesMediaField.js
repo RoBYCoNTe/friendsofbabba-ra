@@ -5,7 +5,7 @@ import {
   ReferenceListField,
   TextField,
   useFieldLabel,
-} from "friendsofbabba-ra";
+} from "ra-friendsofbabba";
 import React, { Fragment } from "react";
 
 const PublicSpacesMediaField = ({ ...props }) => {

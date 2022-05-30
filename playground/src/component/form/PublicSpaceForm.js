@@ -2,7 +2,7 @@ import {
   ReferenceToolbar,
   useFieldLabel,
   useSaveMutation,
-} from "friendsofbabba-ra";
+} from "ra-friendsofbabba";
 
 import PublicSpaceTab1 from "./tab/PublicSpaceTab1";
 import PublicSpaceTab2 from "./tab/PublicSpaceTab2";

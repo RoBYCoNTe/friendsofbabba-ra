@@ -1,6 +1,6 @@
 import * as Icons from "@material-ui/icons";
 
-import { UserMenu as FobUserMenu, UserMenuItem } from "friendsofbabba-ra";
+import { UserMenu as FobUserMenu, UserMenuItem } from "ra-friendsofbabba";
 
 import React from "react";
 

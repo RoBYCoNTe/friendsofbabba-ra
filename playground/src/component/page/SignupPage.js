@@ -3,7 +3,7 @@ import {
   DebouncedTextInput,
   SignupPage as FobSignupPage,
   SpidSignupForm,
-} from "friendsofbabba-ra";
+} from "ra-friendsofbabba";
 
 import { Fragment } from "react";
 

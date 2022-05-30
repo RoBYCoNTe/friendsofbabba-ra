@@ -1,4 +1,4 @@
-import { CrudContext, Menu as FobMenu } from "friendsofbabba-ra";
+import { CrudContext, Menu as FobMenu } from "ra-friendsofbabba";
 import React, { useContext, useMemo } from "react";
 
 const Menu = (props) => {

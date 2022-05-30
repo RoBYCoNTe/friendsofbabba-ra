@@ -6,7 +6,7 @@ import {
   ReferenceListField,
   useFieldLabel,
   useWorkflowInput,
-} from "friendsofbabba-ra";
+} from "ra-friendsofbabba";
 import React, { Fragment } from "react";
 
 const HumanResourcesField = ({ ...props }) => {

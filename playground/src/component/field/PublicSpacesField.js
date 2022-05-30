@@ -7,7 +7,7 @@ import {
   TextField,
   useFieldLabel,
   useWorkflowInput,
-} from "friendsofbabba-ra";
+} from "ra-friendsofbabba";
 import React, { Fragment } from "react";
 
 const PublicSpacesField = ({ ...props }) => {

@@ -1,4 +1,4 @@
-import { AppBar as FobAppBar } from "friendsofbabba-ra";
+import { AppBar as FobAppBar } from "ra-friendsofbabba";
 import React from "react";
 import UserMenu from "./UserMenu";
 

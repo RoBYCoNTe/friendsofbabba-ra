@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 
-import { DebouncedTextInput } from "friendsofbabba-ra";
+import { DebouncedTextInput } from "ra-friendsofbabba";
 import PropTypes from "prop-types";
 import PublicSpaceTypeInput from "./PublicSpaceTypeInput";
 import { get } from "lodash";

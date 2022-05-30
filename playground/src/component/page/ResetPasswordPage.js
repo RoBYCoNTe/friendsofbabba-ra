@@ -1,4 +1,4 @@
-import { ResetPasswordPage as FobResetPasswordPage } from "friendsofbabba-ra";
+import { ResetPasswordPage as FobResetPasswordPage } from "ra-friendsofbabba";
 import { RECAPTCHA_SITE_KEY } from "../../config";
 import React from "react";
 

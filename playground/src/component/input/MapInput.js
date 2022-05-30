@@ -19,9 +19,9 @@ import { divIcon } from "leaflet";
 import { get } from "lodash";
 import { makeStyles } from "@material-ui/styles";
 import { renderToString } from "react-dom/server";
-import { useFieldLabel } from "friendsofbabba-ra";
+import { useFieldLabel } from "ra-friendsofbabba";
 import { useSelector } from "react-redux";
-import { useTabVisibility } from "friendsofbabba-ra";
+import { useTabVisibility } from "ra-friendsofbabba";
 
 const useStyles = makeStyles((theme) => ({
   map: {

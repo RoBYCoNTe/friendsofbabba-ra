@@ -5,7 +5,7 @@ import {
   ReferenceToolbar,
   useFieldLabel,
   useSaveMutation,
-} from "friendsofbabba-ra";
+} from "ra-friendsofbabba";
 
 import { MembershipTypeInput } from "../input";
 import React from "react";

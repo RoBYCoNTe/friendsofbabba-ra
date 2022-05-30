@@ -2,7 +2,7 @@ import {
   MediaInput,
   ReferenceToolbar,
   useSaveMutation,
-} from "friendsofbabba-ra";
+} from "ra-friendsofbabba";
 import { SimpleForm, required } from "react-admin";
 
 import PublicSpaceMediaTypeInput from "../input/PublicSpaceMediaTypeInput";

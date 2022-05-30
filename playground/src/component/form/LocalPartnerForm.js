@@ -6,7 +6,7 @@ import {
   ReferenceToolbar,
   useFieldLabel,
   useSaveMutation,
-} from "friendsofbabba-ra";
+} from "ra-friendsofbabba";
 import { SimpleForm, required } from "react-admin";
 
 const LocalPartnerForm = (props) => {

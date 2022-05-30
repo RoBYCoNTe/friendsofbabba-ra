@@ -1,4 +1,4 @@
-import { DebouncedNumberInput } from "friendsofbabba-ra";
+import { DebouncedNumberInput } from "ra-friendsofbabba";
 import { InputAdornment } from "@material-ui/core";
 import React from "react";
 

@@ -7,7 +7,7 @@ import {
   MediaInput,
   useFieldLabel,
   useWorkflowInput,
-} from "friendsofbabba-ra";
+} from "ra-friendsofbabba";
 import React, { useCallback, useMemo } from "react";
 
 import DayOfWeekInput from "./DayOfWeekInput";

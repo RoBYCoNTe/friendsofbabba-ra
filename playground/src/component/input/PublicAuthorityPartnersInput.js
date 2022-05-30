@@ -5,7 +5,7 @@ import {
   required,
   useInput,
 } from "react-admin";
-import { Group, GroupItem, GroupTitle, useFieldLabel } from "friendsofbabba-ra";
+import { Group, GroupItem, GroupTitle, useFieldLabel } from "ra-friendsofbabba";
 import React, { useMemo } from "react";
 
 import MunicipalityInput from "./MunicipalityInput";

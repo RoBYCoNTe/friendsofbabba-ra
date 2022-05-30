@@ -15,7 +15,7 @@ import {
   StateCollectionInput,
   StateInput,
   useFieldLabel,
-} from "friendsofbabba-ra";
+} from "ra-friendsofbabba";
 
 import MunicipalityInput from "../input/MunicipalityInput";
 import ProvinceInput from "../input/ProvinceInput";

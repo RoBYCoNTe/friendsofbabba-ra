@@ -7,7 +7,7 @@ import {
   GroupTitle,
   ValidationSummary,
   useFieldLabel,
-} from "friendsofbabba-ra";
+} from "ra-friendsofbabba";
 
 import { InputAdornment } from "@material-ui/core";
 import React from "react";

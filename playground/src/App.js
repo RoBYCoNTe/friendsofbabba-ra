@@ -12,7 +12,7 @@ import {
   useDataProvider,
   useI18nCatcher,
   useI18nLanguages,
-} from "friendsofbabba-ra";
+} from "ra-friendsofbabba";
 
 import { API_URL } from "./config";
 import Layout from "./component/Layout";

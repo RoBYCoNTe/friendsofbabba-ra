@@ -9,7 +9,7 @@ import {
   MediaInput,
   ValidationSummary,
   useFieldLabel,
-} from "friendsofbabba-ra";
+} from "ra-friendsofbabba";
 import React, { useCallback, useMemo } from "react";
 
 import MapInput from "../../input/MapInput";

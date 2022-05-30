@@ -1,7 +1,7 @@
 import { APP_SUB_TITLE, APP_TITLE, APP_VERSION, DRAWER_WIDTH } from "../config";
 
 import AppBar from "./AppBar";
-import { Layout as FobLayout } from "friendsofbabba-ra";
+import { Layout as FobLayout } from "ra-friendsofbabba";
 import Menu from "./Menu";
 import React from "react";
 

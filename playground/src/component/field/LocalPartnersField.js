@@ -7,7 +7,7 @@ import {
   TextField,
   useFieldLabel,
   useWorkflowInput,
-} from "friendsofbabba-ra";
+} from "ra-friendsofbabba";
 
 import { Fragment } from "react";
 

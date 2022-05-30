@@ -1,4 +1,4 @@
-import { FormTab, ValidationSummary } from "friendsofbabba-ra";
+import { FormTab, ValidationSummary } from "ra-friendsofbabba";
 
 import PublicSpacesMediaField from "../../field/PublicSpacesMediaField";
 import React from "react";
