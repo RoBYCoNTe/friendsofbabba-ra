@@ -8,7 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "friendsofbabba-ra": "file:..",
     "leaflet-geosearch": "^3.6.0",
-    "moment": "^2.29.1",
+    "moment": "^2.29.3",
     "ra-core": "file:../node_modules/ra-core",
     "ra-data-fakerest": "^3.19.10",
     "ra-i18n-polyglot": "^3.19.10",

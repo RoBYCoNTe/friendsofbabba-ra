@@ -1,4 +1,4 @@
-import { BooleanInput, minValue, required } from "react-admin";
+import { BooleanInput, required } from "react-admin";
 import {
   DebouncedDateInput,
   DebouncedTextInput,
