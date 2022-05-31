@@ -1,5 +1,6 @@
 import AppBar from "./AppBar";
 import Badge from "./Badge";
+import Brand from "./Brand";
 import Layout from "./Layout";
 import Menu from "./Menu";
 import MenuGroup from "./MenuGroup";
@@ -19,6 +20,7 @@ export * from "./page/index.js";
 export {
   AppBar,
   Badge,
+  Brand,
   Layout,
   Menu,
   MenuGroup,

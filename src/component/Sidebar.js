@@ -12,6 +12,7 @@ import {
   useUndoImpersonate,
 } from "../data/createAuthProvider";
 
+import Brand from "./Brand";
 import { ChevronLeft as ChevronLeftIcon } from "@material-ui/icons";
 import PropTypes from "prop-types";
 import classnames from "classnames";
@@ -26,14 +27,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "flex-start",
     justifyContent: "center",
-  },
-  title: {
-    fontWeight: "bold",
-    color: theme.palette.text.primary,
-    marginBottom: theme.spacing(-0.5),
-    "&:hover": {
-      color: theme.palette.primary.main,
-    },
   },
   drawer: {
     zIndex: 10,
@@ -80,13 +73,26 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
+
+/**
+ * The Sidebar renders custom sidebar using drawer component.
+ * @param {Object} props
+ * @param {String} props.title Title to display
+ * @param {String} props.subTitle Subtitle to display
+ * @param {String} props.logo Logo to display
+ * @param {String} props.menu Menu to display
+ * @param {String} props.appBar AppBar to display
+ * @param {Element} props.brand Brand to display, if you pass brand it will override title, subTitle and logo
+ * @returns
+ */
 const Sidebar = ({
   children,
   open,
+  logo,
   drawerWidth,
-  appTitle,
-  appSubTitle,
-  appVersion,
+  title,
+  subTitle,
+  brand,
 }) => {
   const classes = useStyles({ drawerWidth });
   const dispatch = useDispatch();
@@ -125,17 +131,11 @@ const Sidebar = ({
     >
       <div className={classes.toolbar}>
         <div className={classes.brand}>
-          <Typography
-            className={classes.title}
-            href="/"
-            variant="h6"
-            color="inherit"
-          >
-            {appTitle}
-          </Typography>
-          <Typography color="textSecondary" variant="caption">
-            {appSubTitle} ({appVersion})
-          </Typography>
+          {brand && React.isValidElement(brand) ? (
+            brand
+          ) : (
+            <Brand logo={logo} title={title} subTitle={subTitle} />
+          )}
           {isImpersonating && isXSmall && (
             <Typography
               variant="body1"
@@ -163,11 +163,11 @@ const Sidebar = ({
 Sidebar.propTypes = {
   children: PropTypes.node,
   open: PropTypes.bool.isRequired,
-  config: PropTypes.object,
   drawerWidth: PropTypes.number.isRequired,
-  appName: PropTypes.string,
-  appSubTitle: PropTypes.string,
-  appVersion: PropTypes.string,
+
+  logo: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  subTitle: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
 };
 
 export default Sidebar;

@@ -72,9 +72,8 @@ the mini drawer):
 | Prop name   | Type   | Default     | Description             |
 | ----------- | ------ | ----------- | ----------------------- |
 | drawerWidth | number | 240         | the width of the drawer |
-| appTitle    | string | React-Admin | the title of the app    |
-| appSubTitle | string | Material-UI | the subtitle of the app |
-| appVersion  | string | 1.0.0       | the version of the app  |
+| title       | string | React-Admin | the title of the app    |
+| subTitle    | string | Material-UI | the subtitle of the app |
 
 If you want to override them you can do it as follow:
 
@@ -82,12 +81,7 @@ If you want to override them you can do it as follow:
 import { Layout } from "ra-friendsofbabba";
 import { Admin, Resource } from "react-admin";
 const MyLayout = (props) => (
-  <Layout
-    {...props}
-    drawerWidth={300}
-    appTitle="My App"
-    appSubTitle="My Subtitle"
-  />
+  <Layout {...props} drawerWidth={300} title="My App" subtitle="My Subtitle" />
 );
 const App = () => (
   <Admin layout={MyLayout}>

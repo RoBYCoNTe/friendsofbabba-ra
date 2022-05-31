@@ -76,11 +76,9 @@ class LayoutWithoutTheme extends React.Component {
       notification = Notification,
       open,
       sidebar = Sidebar,
+      logo,
       title,
-
-      appTitle,
-      appSubTitle,
-      appVersion,
+      subTitle,
 
       drawerWidth,
       location,
@@ -93,9 +91,9 @@ class LayoutWithoutTheme extends React.Component {
           <CssBaseline />
           {createElement(sidebar, {
             open,
-            appTitle,
-            appSubTitle,
-            appVersion,
+            logo,
+            title,
+            subTitle,
             drawerWidth,
             children: createElement(menu, {
               open,
@@ -144,6 +142,9 @@ const EnhancedLayout = compose(
   withStyles(styles, { name: "RaLayout" })
 )(LayoutWithoutTheme);
 
+/**
+ * The Layout renders custom layout with left sidebar inside a drawer menu.
+ */
 const Layout = ({ theme: themeOverride, ...props }) => {
   const themeProp = useRef(themeOverride);
   const [theme, setTheme] = useState(() => createTheme(themeOverride));
@@ -164,17 +165,33 @@ const Layout = ({ theme: themeOverride, ...props }) => {
 
 Layout.propTypes = {
   theme: PropTypes.object,
-  appTitle: PropTypes.string.isRequired,
-  appSubTitle: PropTypes.string,
-  appVersion: PropTypes.string,
+  /**
+   * Logo to display in the sidebar.
+   * @type {Element | String}
+   **/
+  logo: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
+  /**
+   * Title to display in the sidebar.
+   * @type {Element | String}
+   **/
+  title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
+  /**
+   * Subtitle to display in the sidebar.
+   * @type {Element | String}
+   **/
+  subTitle: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
+  /**
+   * Width of the drawer menu.
+   * @type {Number}
+   **/
   drawerWidth: PropTypes.number,
 };
 
 Layout.defaultProps = {
   theme: defaultTheme,
-  appTitle: "React Admin",
-  appSubTitle: "Material-UI",
-  appVersion: "1.0.0",
+  logo: undefined,
+  title: "React-Admin",
+  subTitle: "Material-UI",
   drawerWidth: 240,
 };
 
