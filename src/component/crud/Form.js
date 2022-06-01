@@ -1,7 +1,7 @@
 import * as fields from "../field/index.js";
 import * as inputs from "../input/index.js";
 
-import { InputHelperText, Loading, SimpleForm } from "react-admin";
+import { Loading, SimpleForm } from "react-admin";
 import React, { useContext, useMemo } from "react";
 
 import Component from "./Component";
@@ -65,7 +65,7 @@ const Form = ({ ...props }) => {
           componentProps: { fullWidth, ...restComponentProps },
         }) =>
           form?.useWorkflow && workflow !== null && useWorkflow === true ? (
-            <InputHelperText
+            <Input
               key={source}
               source={source}
               fullWidth

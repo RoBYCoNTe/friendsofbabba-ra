@@ -73,6 +73,17 @@ const App = () => {
             group="dashboard"
             icon={Icons.NotificationImportant}
           />
+          <CrudResource
+            name="blog-posts"
+            group="blog"
+            icon={Icons.DockOutlined}
+          />
+          <Resource name="workflow/transactions/blog-posts" />
+          <CrudResource
+            name="blog-categories"
+            group="blog"
+            icon={Icons.CategoryOutlined}
+          />
 
           <Resource name="roles" />
           <Resource name="languages" />

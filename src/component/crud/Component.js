@@ -1,7 +1,7 @@
-import React from "react";
-import { get } from "lodash";
 import { Labeled } from "react-admin";
+import React from "react";
 import { Typography } from "@material-ui/core";
+import { get } from "lodash";
 
 const Component = ({
   component,
@@ -12,7 +12,6 @@ const Component = ({
   ...props
 }) => {
   const Component = get(components, component);
-
   if (!Component) {
     return addLabel ? (
       <Labeled label={props.label} source={props.source} fullWidth>

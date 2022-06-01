@@ -42,6 +42,6 @@ export default BackButton;
 const BackButtonProps = BackButton;
 
 BackButtonProps.propTypes = {
-  resource: PropTypes.string.isRequired,
+  resource: PropTypes.string,
   to: PropTypes.string,
 };
