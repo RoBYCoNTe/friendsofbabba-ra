@@ -21,11 +21,6 @@ import React from "react";
 import ResetPasswordPage from "./component/page/ResetPasswordPage";
 import { Route } from "react-router-dom";
 import SignupPage from "./component/page/SignupPage";
-import humanResource from "./resource/human-resource";
-import localPartner from "./resource/local-partner";
-import project from "./resource/project";
-import publicSpace from "./resource/public-space";
-import publicSpacesMedia from "./resource/public-spaces-media";
 import theme from "./theme";
 
 const App = () => {
@@ -37,15 +32,7 @@ const App = () => {
 
   const dataProvider = useDataProvider({
     apiUrl,
-    fileFields: [
-      "activity_plan.civil_agreement_media",
-      "private_agreement_media",
-      "media_collection",
-      "media",
-      "operational_contact.curriculum_media",
-      "public_authority.expression_of_interest_media",
-      "support_and_commitments_letter_media",
-    ],
+    fileFields: ["media_collection", "media"],
   });
   const authProvider = useAuthProvider({ apiUrl });
   if (languages?.loading) {
@@ -86,18 +73,6 @@ const App = () => {
             group="dashboard"
             icon={Icons.NotificationImportant}
           />
-
-          <Resource name="projects" {...project} />
-          <Resource name="public-spaces" {...publicSpace} />
-          <Resource name="public-spaces-media" {...publicSpacesMedia} />
-          <Resource name="local-partners" {...localPartner} />
-          <Resource name="human-resources" {...humanResource} />
-
-          <Resource name="municipalities/provinces" />
-          <Resource name="public-space-types" />
-          <Resource name="public-space-media-types" />
-          <Resource name="workflow/transactions/projects" />
-          <Resource name="municipalities" group="admin" />
 
           <Resource name="roles" />
           <Resource name="languages" />

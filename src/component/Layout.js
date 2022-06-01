@@ -165,25 +165,9 @@ const Layout = ({ theme: themeOverride, ...props }) => {
 
 Layout.propTypes = {
   theme: PropTypes.object,
-  /**
-   * Logo to display in the sidebar.
-   * @type {Element | String}
-   **/
   logo: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
-  /**
-   * Title to display in the sidebar.
-   * @type {Element | String}
-   **/
   title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
-  /**
-   * Subtitle to display in the sidebar.
-   * @type {Element | String}
-   **/
   subTitle: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
-  /**
-   * Width of the drawer menu.
-   * @type {Number}
-   **/
   drawerWidth: PropTypes.number,
 };
 

@@ -1,10 +1,10 @@
 import React, { useCallback } from "react";
 
-import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
-import Button from "@material-ui/core/Button";
-import DoubleArrowIcon from "@material-ui/icons/DoubleArrow";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
+import { ArrowForwardIos as ArrowForwardIosIcon } from "@material-ui/icons";
+import { Button } from "@material-ui/core";
+import { DoubleArrow as DoubleArrowIcon } from "@material-ui/icons";
+import { Menu } from "@material-ui/core";
+import { MenuItem } from "@material-ui/core";
 import StateButton from "./StateButton";
 import { makeStyles } from "@material-ui/core/styles";
 import { useTranslate } from "react-admin";

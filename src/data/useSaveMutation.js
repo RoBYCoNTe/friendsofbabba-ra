@@ -3,6 +3,16 @@ import { useMutation, useNotify, useRedirect, useRefresh } from "ra-core";
 import createErrorMapper from "./cakephp/createErrorMapper";
 import { useCallback } from "react";
 
+/**
+ *
+ * @param {Object} props
+ * @param {Function} props.onSuccess
+ * @param {Function} props.onFailure
+ * @param {Function} props.errorMapper
+ * @param {Function} props.transform
+ * @param {String} props.type - mutation type
+ * @returns
+ */
 const useSaveMutation = ({
   basePath,
   errorMapper = createErrorMapper(),

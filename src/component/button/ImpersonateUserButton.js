@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 
 import { Button } from "react-admin";
-import VpnKeyIcon from "@material-ui/icons/VpnKey";
+import { VpnKey as VpnKeyIcon } from "@material-ui/icons";
 import { useDoImpersonate } from "../../data/createAuthProvider";
 
 const ImpersonateUserButton = ({

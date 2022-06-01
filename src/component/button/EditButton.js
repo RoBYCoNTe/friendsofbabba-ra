@@ -1,10 +1,22 @@
 import { EditButton as RaEditButton, useGetIdentity } from "react-admin";
 import React, { useContext, useMemo } from "react";
 
-import ContentCreate from "@material-ui/icons/Create";
-import ContentView from "@material-ui/icons/Visibility";
+import { Create as ContentCreate } from "@material-ui/icons";
+import { Visibility as ContentView } from "@material-ui/icons";
 import { WorkflowContext } from "../../data/workflow/WorkflowContext";
 
+/**
+ * Renders Edit button connected to the workflow. The button is able to
+ * check if user has required permissions and based on this can show "View"
+ * or "Edit" label on the button itself.
+ *
+ * This button can be used inside list or show views.
+ * To use this button you have to configure WorkflowContext into your app.
+ *
+ * @param {Object} props
+ *
+ * @returns {React.ReactElement}
+ */
 const EditButton = ({ record, resource, ...props }) => {
   const { getWorkflow } = useContext(WorkflowContext);
   const { loaded, loading, identity } = useGetIdentity();

@@ -7,12 +7,19 @@ import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 
 /**
+ * Renders a delete button that ask for confirmation before deleting the record.
  *
+ * @example
+ * <Datagrid>
+ *     <DeleteWithConfirmButton redirect="/list" />
+ * </Datagrid>
+ *
+ * @param {Object} props
  * @param {string} props.redirect - The redirect path after the delete action.
  * @param {string} props.reference - The reference to the resource to delete.
  * @param {string} props.title - The title of the delete dialog.
  * @param {string} props.content - The message of the delete dialog.
- * @returns
+ * @returns {React.ReactElement}
  */
 const DeleteWithConfirmButton = ({ redirect, reference, ...props }) => {
   const translate = useTranslate();
@@ -47,12 +54,14 @@ const DeleteWithConfirmButton = ({ redirect, reference, ...props }) => {
   );
 };
 
-DeleteWithConfirmButton.propTypes = {
+export default DeleteWithConfirmButton;
+
+const DeleteWithConfirmButtonProps = DeleteWithConfirmButton;
+
+DeleteWithConfirmButtonProps.propTypes = {
   redirect: PropTypes.string,
   reference: PropTypes.string,
   record: PropTypes.object,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   content: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
 };
-
-export default DeleteWithConfirmButton;

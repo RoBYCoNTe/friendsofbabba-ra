@@ -7,9 +7,7 @@
         "root": ["./src"],
         "alias": {
           "test": "./test",
-          "underscore": "lodash",
-          "data": "./data",
-          "data/cakephp": "./data/cakephp"
+          "underscore": "lodash"
         }
       }
     ]

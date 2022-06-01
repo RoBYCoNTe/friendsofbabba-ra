@@ -1,9 +1,9 @@
-import { Button } from "react-admin";
 import React, { Fragment } from "react";
 
-import { GetApp as GetAppIcon } from "@material-ui/icons";
-import Menu from "@material-ui/core/Menu";
+import { Button } from "react-admin";
 import ExportButton from "./ExportButton";
+import { GetApp as GetAppIcon } from "@material-ui/icons";
+import { Menu } from "@material-ui/core";
 
 const ExportToButton = ({
   exportTo = ["csv", "xlsx"],

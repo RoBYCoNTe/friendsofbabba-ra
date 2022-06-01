@@ -6,7 +6,7 @@ import {
 import React, { useCallback, useEffect, useRef } from "react";
 
 import { InputHelperText } from "ra-ui-materialui";
-import TextField from "@material-ui/core/TextField";
+import {TextField} from "@material-ui/core";
 import { get } from "lodash";
 import useDebounce from "../../util/useDebounce";
 import { useFormState } from "react-final-form";

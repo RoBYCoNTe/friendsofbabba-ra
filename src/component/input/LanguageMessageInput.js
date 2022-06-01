@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 
-import Divider from "@material-ui/core/Divider";
+import { Divider } from "@material-ui/core";
 import RecordInput from "./RecordInput";
 import { TextField } from "react-admin";
 

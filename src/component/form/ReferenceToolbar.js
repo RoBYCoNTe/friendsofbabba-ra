@@ -9,13 +9,18 @@ import BackButton from "../button/BackButton";
 import { get } from "lodash";
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles((theme) => ({
-  toolbar: {
-    "& .MuiButton-root": {
-      marginRight: theme.spacing(1),
+const useStyles = makeStyles(
+  (theme) => (
+    {
+      toolbar: {
+        "& .MuiButton-root": {
+          marginRight: theme.spacing(1),
+        },
+      },
     },
-  },
-}));
+    { name: "FobReferenceToolbar" }
+  )
+);
 const ReferenceToolbar = ({
   backRedirect,
   backReferenceTarget,

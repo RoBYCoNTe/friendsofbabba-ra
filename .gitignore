@@ -25,4 +25,5 @@ yarn-error.log*
 
 # playground/*
 dist/*
+!dist/declarations.d.ts
 public/*
