@@ -9,7 +9,7 @@ import React from "react";
  * foo
  * @param {Object} props
  * @param {string|null} props.to The URL to navigate to.
- * @param {string} props.resource The label of the button.
+ * @param {string|null} props.resource The label of the button.
  *
  * @example
  * // This button redirects to /customer-list
