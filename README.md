@@ -1,5 +1,7 @@
 # FriendsOfBabba/RA 🥧 - React Admin extended components
 
+**This library is compatible with React Admin v3.x**
+
 I'm a big fan of [react-admin](https://github.com/marmelab/react-admin) and
 I've built a simple layout using [Mini drawer variant](https://v4.mui.com/components/drawers/).
 The layout has a simple navigation bar and a drawer with a navigation menu and
