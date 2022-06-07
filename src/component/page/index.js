@@ -1,4 +1,4 @@
-import BaseProfileForm from "./profile/ProfileForm";
+import BaseProfileForm from "./profile/BaseProfileForm";
 import LocalLoginForm from "./login/LocalLoginForm";
 import LoginPage from "./LoginPage";
 import ProfileForm from "./profile/ProfileForm";

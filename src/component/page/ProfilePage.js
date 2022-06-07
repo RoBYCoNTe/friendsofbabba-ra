@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import React from "react";
 
 const ProfilePage = ({
-  children = <ProfileForm />,
+  children,
   staticContext,
   title = "ra.page.profile.title",
   ...props
@@ -28,5 +28,7 @@ ProfilePage.propTypes = {
   children: PropTypes.element,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
 };
-
+// ProfilePage.defaultProps = {
+//   children: <ProfileForm />,
+// };
 export default ProfilePage;

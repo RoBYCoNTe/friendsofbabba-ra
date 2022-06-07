@@ -5,7 +5,6 @@ import { Admin, Loading, Resource, RouteWithoutLayout } from "react-admin";
 import {
   CrudProvider,
   CrudResource,
-  ProfilePage,
   WorkflowProvider,
   createI18nProvider,
   useAuthProvider,
@@ -17,6 +16,7 @@ import {
 import { API_URL } from "./config";
 import Layout from "./component/Layout";
 import LoginPage from "./component/page/LoginPage";
+import ProfilePage from "./component/page/ProfilePage";
 import React from "react";
 import ResetPasswordPage from "./component/page/ResetPasswordPage";
 import { Route } from "react-router-dom";

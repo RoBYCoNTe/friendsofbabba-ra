@@ -2,7 +2,6 @@ import { FormDataConsumer, email, required } from "ra-core";
 
 import BaseProfileForm from "./BaseProfileForm";
 import DebouncedTextInput from "../../input/DebouncedTextInput";
-import { PasswordInput } from "react-admin";
 import React from "react";
 
 const ProfileForm = (props) => (
