@@ -9,7 +9,12 @@ import { Fragment } from "react";
 
 const AdditionalStep = (props) => (
   <Fragment>
-    <DebouncedTextInput {...props} fullWidth source="profile.birth_province" />
+    <DebouncedTextInput
+      {...props}
+      fullWidth
+      source="profile.birth_province"
+      maxLength={2}
+    />
   </Fragment>
 );
 const SignupPage = (props) => (

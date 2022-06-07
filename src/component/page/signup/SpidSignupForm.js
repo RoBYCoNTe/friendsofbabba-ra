@@ -5,6 +5,7 @@ import {
   SimpleForm,
   Toolbar,
   useRedirect,
+  useTranslate,
 } from "react-admin";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import SignupStepper, {
@@ -63,6 +64,7 @@ const SpidSignupForm = ({
   const [initialValues, setInitialValues] = useState(null);
   const redirect = useRedirect();
   const search = getSignResponse();
+  const translate = useTranslate();
 
   const save = useSaveMutation({
     resource,
@@ -99,8 +101,6 @@ const SpidSignupForm = ({
     doLoad();
   }, [search, load, redirect]);
 
-  console.info(children);
-
   return (
     <SignupStepperProvider>
       <Grid container justifyContent="center" className={classes.root}>
@@ -128,7 +128,10 @@ const SpidSignupForm = ({
                 toolbar={<SignupToolbar />}
               >
                 <SignupStepper fullWidth>
-                  <SpidSignupAccountStep title="General Infoes" fullWidth />
+                  <SpidSignupAccountStep
+                    title={translate("resources.spid.steps.general")}
+                    fullWidth
+                  />
                   {React.Children.map(children, (child) =>
                     React.isValidElement(child)
                       ? React.cloneElement(child, { ...props })
