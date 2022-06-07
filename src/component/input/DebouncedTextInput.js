@@ -6,7 +6,7 @@ import {
 import React, { useCallback, useEffect, useRef } from "react";
 
 import { InputHelperText } from "ra-ui-materialui";
-import {TextField} from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { get } from "lodash";
 import useDebounce from "../../util/useDebounce";
 import { useFormState } from "react-final-form";
@@ -21,6 +21,7 @@ const DebouncedTextInput = ({
   format,
   rows,
   disabled,
+  delay = 500,
   InputProps,
   InputLabelProps,
   ...props
@@ -56,12 +57,12 @@ const DebouncedTextInput = ({
       return;
     }
     if (formValue && formValue !== null) {
-      didUpdateValue.current = true;
+      // didUpdateValue.current = true;
       setValue(formValue);
     }
   }, [formValue]);
   const handleChange = useCallback((evt) => setValue(evt.target.value), []);
-  const debouncedValue = useDebounce(value, 500);
+  const debouncedValue = useDebounce(value, delay);
   const didMountChange = useRef(false);
 
   useEffect(() => {
