@@ -1,3 +1,5 @@
+import Alert from "./Alert";
+import AlertTitle from "./AlertTitle";
 import AppBar from "./AppBar";
 import Badge from "./Badge";
 import Brand from "./Brand";
@@ -18,6 +20,8 @@ export * from "./crud/index.js";
 export * from "./page/index.js";
 
 export {
+  Alert,
+  AlertTitle,
   AppBar,
   Badge,
   Brand,
