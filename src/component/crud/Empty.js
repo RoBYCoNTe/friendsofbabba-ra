@@ -12,7 +12,21 @@ import Inbox from "@material-ui/icons/Inbox";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-const Empty = ({ grid, ...props }) => {
+/**
+ * Empty component for the List view when there is no data to display.
+ *
+ * @param {Object} props
+ * @param {Object} props.grid
+ *  Grid configuration used to render the Empty.
+ *  Generally this prop is passed by Crud when rendering lists using backend
+ *  descriptors and is not necessary when using it as your own component.
+ * @param {Boolean} props.create
+ *  Set to false to disable the creation button.
+ *  This param is useful to force CreateButton to be disabled.
+ *
+ * @returns {React.Component}
+ */
+const Empty = ({ grid, create = true, ...props }) => {
   const { basePath, hasCreate } = useListContext(props);
   const resource = useResourceContext(props);
   const classes = useStyles(props);
@@ -36,7 +50,7 @@ const Empty = ({ grid, ...props }) => {
             _: emptyMessage,
           })}
         </Typography>
-        {hasCreate && grid?.canCreate !== false && (
+        {create && hasCreate && grid?.canCreate !== false && (
           <Typography variant="body1">
             {translate(`resources.${resource}.invite`, {
               _: inviteMessage,
@@ -44,7 +58,7 @@ const Empty = ({ grid, ...props }) => {
           </Typography>
         )}
       </div>
-      {hasCreate && grid?.canCreate !== false && (
+      {create && hasCreate && grid?.canCreate !== false && (
         <div className={classes.toolbar}>
           <CreateButton
             variant="contained"

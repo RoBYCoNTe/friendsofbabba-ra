@@ -94,6 +94,13 @@ const App = () => {
             roles={["admin"]}
             icon={Icons.FlagOutlined}
           />
+          <CrudResource name="commands" group="admin" roles={["admin"]} />
+          <CrudResource name="command-logs" group="admin" roles={["admin"]} />
+          <CrudResource
+            name="command-log-rows"
+            group="admin"
+            roles={["admin"]}
+          />
         </Admin>
       </CrudProvider>
     </WorkflowProvider>
