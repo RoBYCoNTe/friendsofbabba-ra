@@ -10,16 +10,14 @@ import { get } from "lodash";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(
-  (theme) => (
-    {
-      toolbar: {
-        "& .MuiButton-root": {
-          marginRight: theme.spacing(1),
-        },
+  (theme) => ({
+    toolbar: {
+      "& .MuiButton-root": {
+        marginRight: theme.spacing(1),
       },
     },
-    { name: "FobReferenceToolbar" }
-  )
+  }),
+  { name: "FobReferenceToolbar" }
 );
 const ReferenceToolbar = ({
   backRedirect,
