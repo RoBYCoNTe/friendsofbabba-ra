@@ -47,7 +47,7 @@ const ReferenceToolbar = ({
       <SaveButton
         redirect={backUrl}
         disabled={!canSave}
-        onSuccess={onSuccess ? onSuccess(backUrl) : undefined}
+        onSuccess={onSuccess ? () => onSuccess(backUrl) : undefined}
       />
       {canGoBack && <BackButton to={backUrl} />}
       {record?.id > 0 && <DeleteWithConfirmButton redirect={backUrl} />}
