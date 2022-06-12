@@ -15,10 +15,14 @@ import PropTypes from "prop-types";
  * </Datagrid>
  *
  * @param {Object} props
- * @param {string} props.redirect - The redirect path after the delete action.
- * @param {string} props.reference - The reference to the resource to delete.
- * @param {string} props.title - The title of the delete dialog.
- * @param {string} props.content - The message of the delete dialog.
+ * @param {string} props.redirect
+ *  The redirect path after the delete action.
+ * @param {string} props.reference
+ *  The reference to the resource to delete.
+ * @param {string} props.title
+ *  The title of the delete dialog.
+ * @param {string} props.content
+ *  The message of the delete dialog.
  * @returns {React.ReactElement}
  */
 const DeleteWithConfirmButton = ({ redirect, reference, ...props }) => {

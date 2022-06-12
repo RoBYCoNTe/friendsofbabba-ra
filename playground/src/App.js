@@ -21,6 +21,7 @@ import React from "react";
 import ResetPasswordPage from "./component/page/ResetPasswordPage";
 import { Route } from "react-router-dom";
 import SignupPage from "./component/page/SignupPage";
+import blogPostComment from "./resource/blog-post-comment";
 import theme from "./theme";
 
 const App = () => {
@@ -69,20 +70,22 @@ const App = () => {
           })}
         >
           <CrudResource
-            name="notifications"
-            group="dashboard"
-            icon={Icons.NotificationImportant}
-          />
-          <CrudResource
             name="blog-posts"
             group="blog"
             icon={Icons.DockOutlined}
           />
           <Resource name="workflow/transactions/blog-posts" />
+          <Resource name="blog-post-comments" {...blogPostComment} />
           <CrudResource
             name="blog-categories"
             group="blog"
             icon={Icons.CategoryOutlined}
+          />
+
+          <CrudResource
+            name="notifications"
+            group="dashboard"
+            icon={Icons.NotificationImportant}
           />
 
           <Resource name="roles" />

@@ -40,6 +40,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/**
+ * Render a list of referenced records.
+ *
+ * @param {Object} props
+ * @param {Function|String} props.removeRedirect - Function or string to redirect to after delete
+ * @param {String} props.reference - The reference to the related records
+ * @param {String} props.target - The target column containing the foreign key.
+ * @param {Number} props.tab - The tab to redirect to.
+ * @param {Object} props.filter - The filter to apply to the list of related records.
+ * @returns
+ */
 const ReferenceListField = ({
   removeRedirect,
   reference,

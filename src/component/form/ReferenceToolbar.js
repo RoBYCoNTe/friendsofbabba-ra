@@ -10,16 +10,14 @@ import { get } from "lodash";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(
-  (theme) => (
-    {
-      toolbar: {
-        "& .MuiButton-root": {
-          marginRight: theme.spacing(1),
-        },
+  (theme) => ({
+    toolbar: {
+      "& .MuiButton-root": {
+        marginRight: theme.spacing(1),
       },
     },
-    { name: "FobReferenceToolbar" }
-  )
+  }),
+  { name: "FobReferenceToolbar" }
 );
 const ReferenceToolbar = ({
   backRedirect,
@@ -49,7 +47,7 @@ const ReferenceToolbar = ({
       <SaveButton
         redirect={backUrl}
         disabled={!canSave}
-        onSuccess={onSuccess ? onSuccess(backUrl) : undefined}
+        onSuccess={onSuccess ? () => onSuccess(backUrl) : undefined}
       />
       {canGoBack && <BackButton to={backUrl} />}
       {record?.id > 0 && <DeleteWithConfirmButton redirect={backUrl} />}
