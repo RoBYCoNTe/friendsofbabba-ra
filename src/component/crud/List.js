@@ -32,7 +32,10 @@ const List = (props) => {
     useMediaQuery((theme) =>
       theme.breakpoints.down(grid?.mobileBreakpoint ?? "sm")
     ) && grid.mobilePrimaryText != null;
-
+  const hasBulkActionButtons = React.useMemo(
+    () => grid?.bulkActionButtons?.length > 0 || grid?.canDelete !== false,
+    [grid?.bulkActionButtons, grid?.canDelete]
+  );
   if (loading) {
     return <Loading />;
   }
@@ -57,7 +60,11 @@ const List = (props) => {
       empty={<Empty grid={grid} />}
       perPage={grid?.perPage}
       bulkActionButtons={
-        <BulkActionButtons grid={grid} customComponents={customComponents} />
+        hasBulkActionButtons ? (
+          <BulkActionButtons grid={grid} customComponents={customComponents} />
+        ) : (
+          false
+        )
       }
       filters={
         grid?.filters ? (
