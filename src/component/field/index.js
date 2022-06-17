@@ -1,4 +1,10 @@
-import { BooleanField, ChipField, DateField, TextField } from "react-admin";
+import {
+  BooleanField,
+  ChipField,
+  DateField,
+  EmailField,
+  TextField,
+} from "react-admin";
 
 import ChipArrayField from "./ChipArrayField";
 import DateAgoField from "./DateAgoField";
@@ -17,6 +23,7 @@ export {
   DateAgoField,
   ChipField,
   DateField,
+  EmailField,
   NotificationField,
   ProgressField,
   ReferenceListField,

@@ -72,6 +72,12 @@ const FilterForm = {
     "& .filter-field > div:last-child": {
       width: theme.spacing(1),
     },
+    [theme.breakpoints.down("sm")]: {
+      display: "block",
+      "& .filter-field, & .filter-field > .MuiFormControl-root": {
+        width: "100%",
+      },
+    },
   },
 };
 
