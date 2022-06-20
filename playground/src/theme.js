@@ -109,6 +109,13 @@ export default createTheme(theme, {
     RaEdit: Form,
     RaFilterForm: FilterForm,
     RaTabbedForm: TabbedForm,
+    RaCheckboxGroupInput: {
+      root: {
+        "& .MuiFormLabel-root": {
+          padding: theme.spacing(1),
+        },
+      },
+    },
     // RaTopToolbar: TopToolbar,
     // FobToolbar: FobToolbar,
   },

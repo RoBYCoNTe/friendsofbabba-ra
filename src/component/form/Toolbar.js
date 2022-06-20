@@ -8,11 +8,13 @@ import React, { useCallback, useContext, useMemo } from "react";
 
 import BackButton from "../button/BackButton";
 import Component from "../crud/Component";
+import { DeleteWithConfirmButton } from "../index";
 import StateButton from "../button/StateButton";
 import StateButtonMenu from "../button/StateButtonMenu";
 import { WorkflowContext } from "../../data/workflow/WorkflowContext";
 import { get } from "lodash";
 import { makeStyles } from "@material-ui/core/styles";
+import useBackUrl from "./useBackUrl";
 import { useForm } from "react-final-form";
 
 const useStyles = makeStyles(
@@ -34,6 +36,10 @@ const useStyles = makeStyles(
  * @returns {JSX.Element}
  */
 const Toolbar = ({
+  backRedirect,
+  backReferenceTarget,
+  backReference,
+  backTab = 1,
   children,
   buttons = [],
   buttonComponents,
@@ -47,6 +53,13 @@ const Toolbar = ({
 }) => {
   const form = useForm();
   const classes = useStyles({ useWorkflow });
+  const backUrl = useBackUrl({
+    backRedirect,
+    backReferenceTarget,
+    backReference,
+    backTab,
+    ...props,
+  });
   const { handleSubmitWithRedirect, record } = props;
   const { loading, loaded, identity } = useGetIdentity();
   const roles = useMemo(
@@ -82,6 +95,7 @@ const Toolbar = ({
         <SaveButton
           {...props}
           color="primary"
+          redirect={backUrl}
           handleSubmitWithRedirect={
             useWorkflow ? handleClick : handleSubmitWithRedirect
           }
@@ -109,15 +123,17 @@ const Toolbar = ({
           <Component
             key={index}
             component={component}
-            componentProps={{ ...props, ...componentProps }}
+            componentProps={{ backUrl, ...props, ...componentProps }}
             components={{
               ...buttonComponents,
               ...customComponents,
             }}
           />
         ))}
-      {!useWorkflow && !useCustomButtons && <DeleteButton />}
-      {(useWorkflow || !useCustomButtons) && <BackButton />}
+      {!useWorkflow && !useCustomButtons && record?.id > 0 && (
+        <DeleteWithConfirmButton redirect={backUrl} />
+      )}
+      {(useWorkflow || !useCustomButtons) && <BackButton to={backUrl} />}
     </RaToolbar>
   );
 };

@@ -1,5 +1,5 @@
-import { ReferenceToolbar, useSaveMutation } from "ra-friendsofbabba";
 import { SimpleForm, TextInput, useRedirect } from "react-admin";
+import { Toolbar, useSaveMutation } from "ra-friendsofbabba";
 
 import React from "react";
 
@@ -18,7 +18,7 @@ const BlogPostComment = ({ create = false, ...props }) => {
         ...props?.record,
       }}
       toolbar={
-        <ReferenceToolbar
+        <Toolbar
           backTab={0}
           backReferenceTarget="blog_post_id"
           backReference="blog-posts"

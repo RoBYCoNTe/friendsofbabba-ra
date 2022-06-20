@@ -11,6 +11,7 @@ import Input from "../input/Input";
 import TabbedForm from "../form/TabbedForm";
 import Toolbar from "../form/Toolbar";
 import { WorkflowContext } from "../../data/workflow/WorkflowContext";
+import useBackUrl from "../form/useBackUrl.js";
 import useCustomComponents from "./useCustomComponents";
 import useSaveMutation from "../../data/useSaveMutation";
 
@@ -26,11 +27,11 @@ const Form = ({ ...props }) => {
     [props.resource, getWorkflow, form]
   );
   const customComponents = useCustomComponents(props.resource);
-
+  const backUrl = useBackUrl({ ...props, ...form?.toolbar?.componentProps });
   const save = useSaveMutation({
     ...props,
     refresh: form?.refresh,
-    redirect: form?.redirect,
+    redirect: backUrl || form?.redirect,
   });
   if (loading) {
     return <Loading />;
@@ -44,12 +45,19 @@ const Form = ({ ...props }) => {
       {...props}
       save={save}
       toolbar={
-        <Toolbar
-          useWorkflow={form?.useWorkflow}
-          useCustomButtons={form?.useCustomButtons}
-          buttons={form?.buttons}
-          buttonComponents={buttons}
-          customComponents={customComponents}
+        <Component
+          component={form?.toolbar?.component}
+          componentProps={{
+            useWorkflow: form?.useWorkflow,
+            useCustomButtons: form?.useCustomButtons,
+            buttons: form?.buttons,
+            ...form?.toolbar?.componentProps,
+          }}
+          components={{
+            Toolbar,
+            ...buttons,
+            ...customComponents,
+          }}
         />
       }
       initialValues={form?.initialValues}
@@ -85,7 +93,16 @@ const Form = ({ ...props }) => {
                   label={label}
                   fullWidth={fullWidth}
                   component={component}
-                  componentProps={{ fullWidth, ...restComponentProps }}
+                  componentProps={{
+                    fullWidth,
+                    components: {
+                      ...fields,
+                      ...inputs,
+                      ...components,
+                      ...customComponents,
+                    },
+                    ...restComponentProps,
+                  }}
                   components={{
                     ...fields,
                     ...inputs,
@@ -102,7 +119,16 @@ const Form = ({ ...props }) => {
               label={label}
               fullWidth={fullWidth}
               component={component}
-              componentProps={{ fullWidth, ...restComponentProps }}
+              componentProps={{
+                fullWidth,
+                components: {
+                  ...fields,
+                  ...inputs,
+                  ...components,
+                  ...customComponents,
+                },
+                ...restComponentProps,
+              }}
               components={{
                 ...fields,
                 ...inputs,

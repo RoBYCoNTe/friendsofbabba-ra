@@ -21,7 +21,6 @@ import React from "react";
 import ResetPasswordPage from "./component/page/ResetPasswordPage";
 import { Route } from "react-router-dom";
 import SignupPage from "./component/page/SignupPage";
-import blogPostComment from "./resource/blog-post-comment";
 import theme from "./theme";
 
 const App = () => {
@@ -75,7 +74,11 @@ const App = () => {
             icon={Icons.DockOutlined}
           />
           <Resource name="workflow/transactions/blog-posts" />
-          <Resource name="blog-post-comments" {...blogPostComment} />
+          <CrudResource
+            name="blog-post-comments"
+            group="blog"
+            icon={Icons.Textsms}
+          />
           <CrudResource
             name="blog-categories"
             group="blog"
