@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
     width: `calc(100% - ${theme.spacing(2)}px)`,
   },
 }));
-const ResetPasswordButton = ({
+const ResetPasswordLinkButton = ({
   href = "/#/reset-password",
   color = "primary",
   variant = "outlined",
@@ -29,4 +29,4 @@ const ResetPasswordButton = ({
     </Button>
   );
 };
-export default ResetPasswordButton;
+export default ResetPasswordLinkButton;

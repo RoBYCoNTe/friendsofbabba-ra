@@ -87,6 +87,21 @@ const TabbedForm = {
   },
 };
 
+// const TopToolbar = {
+//   root: {
+//     [theme.breakpoints.up("md")]: {
+//       width: "70%",
+//       minWidth: "960px",
+//       margin: "1em auto",
+//     },
+//   },
+// };
+// const FobToolbar = {
+//   toolbar: {
+//     paddingLeft: theme.spacing(2),
+//   },
+// };
+
 export default createTheme(theme, {
   overrides: {
     RaList: List,
@@ -94,5 +109,7 @@ export default createTheme(theme, {
     RaEdit: Form,
     RaFilterForm: FilterForm,
     RaTabbedForm: TabbedForm,
+    // RaTopToolbar: TopToolbar,
+    // FobToolbar: FobToolbar,
   },
 });

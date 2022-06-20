@@ -1,3 +1,4 @@
+import * as buttons from "../button/index.js";
 import * as fields from "../field/index.js";
 import * as inputs from "../input/index.js";
 
@@ -42,7 +43,15 @@ const Form = ({ ...props }) => {
     <Component
       {...props}
       save={save}
-      toolbar={form?.useWorkflow ? <Toolbar /> : undefined}
+      toolbar={
+        <Toolbar
+          useWorkflow={form?.useWorkflow}
+          useCustomButtons={form?.useCustomButtons}
+          buttons={form?.buttons}
+          buttonComponents={buttons}
+          customComponents={customComponents}
+        />
+      }
       initialValues={form?.initialValues}
       sanitizeEmptyValues={form?.sanitizeEmptyValues}
       warnWhenUnsavedChanges={form?.warnWhenUnsavedChanges}

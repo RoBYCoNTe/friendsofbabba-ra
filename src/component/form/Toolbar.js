@@ -1,7 +1,13 @@
-import { Toolbar as RaToolbar, SaveButton, useGetIdentity } from "react-admin";
+import {
+  DeleteButton,
+  Toolbar as RaToolbar,
+  SaveButton,
+  useGetIdentity,
+} from "react-admin";
 import React, { useCallback, useContext, useMemo } from "react";
 
 import BackButton from "../button/BackButton";
+import Component from "../crud/Component";
 import StateButton from "../button/StateButton";
 import StateButtonMenu from "../button/StateButtonMenu";
 import { WorkflowContext } from "../../data/workflow/WorkflowContext";
@@ -9,22 +15,38 @@ import { get } from "lodash";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-final-form";
 
-const useStyles = makeStyles((theme) => ({
-  toolbar: {
-    "& .MuiButton-root": {
-      marginRight: theme.spacing(1),
+const useStyles = makeStyles(
+  (theme) => ({
+    toolbar: {
+      "& .MuiButton-root": {
+        marginRight: theme.spacing(1),
+      },
+      justifyContent: ({ useWorkflow }) =>
+        useWorkflow ? "flex-start" : "space-between",
     },
-  },
-}));
+  }),
+  { name: "FobToolbar" }
+);
+
+/**
+ *
+ * @param {Object} props
+ * @returns {JSX.Element}
+ */
 const Toolbar = ({
   children,
+  buttons = [],
+  buttonComponents,
+  customComponents,
   mutationMode,
   validating,
+  useWorkflow,
+  useCustomButtons = false,
   maxButtonsToDisplay = 1,
   ...props
 }) => {
   const form = useForm();
-  const classes = useStyles();
+  const classes = useStyles({ useWorkflow });
   const { handleSubmitWithRedirect, record } = props;
   const { loading, loaded, identity } = useGetIdentity();
   const roles = useMemo(
@@ -33,8 +55,8 @@ const Toolbar = ({
   );
   const { getWorkflow } = useContext(WorkflowContext);
   const workflow = useMemo(
-    () => getWorkflow(props.resource),
-    [getWorkflow, props.resource]
+    () => (useWorkflow ? getWorkflow(props.resource) : null),
+    [getWorkflow, useWorkflow, props.resource]
   );
   const { states, save } = useMemo(() => {
     const save =
@@ -56,11 +78,13 @@ const Toolbar = ({
 
   return (
     <RaToolbar {...props} classes={classes}>
-      {save && (
+      {((!useWorkflow && !useCustomButtons) || save) && (
         <SaveButton
           {...props}
           color="primary"
-          handleSubmitWithRedirect={handleClick}
+          handleSubmitWithRedirect={
+            useWorkflow ? handleClick : handleSubmitWithRedirect
+          }
           disabled={props.saving}
         />
       )}
@@ -80,8 +104,20 @@ const Toolbar = ({
         React.Children.map(children, (child, key) =>
           React.cloneElement(child, { ...props, key })
         )}
-
-      <BackButton />
+      {buttons &&
+        buttons.map(({ component, componentProps }, index) => (
+          <Component
+            key={index}
+            component={component}
+            componentProps={{ ...props, ...componentProps }}
+            components={{
+              ...buttonComponents,
+              ...customComponents,
+            }}
+          />
+        ))}
+      {!useWorkflow && !useCustomButtons && <DeleteButton />}
+      {(useWorkflow || !useCustomButtons) && <BackButton />}
     </RaToolbar>
   );
 };

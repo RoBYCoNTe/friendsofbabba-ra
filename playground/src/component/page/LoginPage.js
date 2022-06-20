@@ -1,7 +1,7 @@
 import {
   LoginPage as FobLoginPage,
   LocalLoginForm,
-  ResetPasswordButton,
+  ResetPasswordLinkButton,
   SpidLoginForm,
 } from "ra-friendsofbabba";
 
@@ -12,7 +12,7 @@ const LoginPage = (props) => (
   <FobLoginPage {...props}>
     <LocalLoginForm />
     <SpidLoginForm apiUrl={API_URL} signup="#/signup" />
-    <ResetPasswordButton />
+    <ResetPasswordLinkButton />
   </FobLoginPage>
 );
 export default LoginPage;
