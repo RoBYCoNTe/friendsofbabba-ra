@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import { validateJson } from "../createAuthProvider";
+
 const useWorkflow = ({ apiUrl }) => {
   const [{ loaded, loading, data }, setData] = useState({
     loading: false,
@@ -18,6 +20,7 @@ const useWorkflow = ({ apiUrl }) => {
       headers,
     })
       .then((response) => response.json())
+      .then(validateJson)
       .then(({ data }) => setData({ loaded: true, loading: false, data }));
   };
 

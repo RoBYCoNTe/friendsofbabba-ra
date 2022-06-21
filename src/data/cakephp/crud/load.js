@@ -1,3 +1,5 @@
+import { validateJson } from "../../createAuthProvider";
+
 const load = async ({ apiUrl, token }) => {
   let headers = new Headers();
   headers.append("Accept", "application/json");
@@ -8,6 +10,7 @@ const load = async ({ apiUrl, token }) => {
     headers,
   })
     .then((response) => response.json())
+    .then(validateJson)
     .then(({ data }) => data);
 };
 export default load;

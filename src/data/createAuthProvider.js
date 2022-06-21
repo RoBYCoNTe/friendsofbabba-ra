@@ -3,6 +3,21 @@ import { useAuthProvider, useNotify, useRedirect } from "ra-core";
 
 import { useCallback } from "react";
 
+export const clearAuth = () => {
+  ["token", "roles", "username", "profile", "email"].forEach((param) => {
+    localStorage.removeItem(`admin_${param}`);
+    localStorage.removeItem(param);
+  });
+};
+
+export const validateJson = (data) => {
+  if (!data?.success && data?.data?.code === 401) {
+    clearAuth();
+    document.location.reload();
+  }
+  return data;
+};
+
 export const useIsImpersonating = () => {
   const impersonate = localStorage.getItem("impersonate");
   return impersonate === "true";
@@ -74,10 +89,7 @@ const createAuthProvider = ({ apiUrl }) => ({
       });
   },
   logout: () => {
-    localStorage.removeItem("email");
-    localStorage.removeItem("token");
-    localStorage.removeItem("roles");
-    localStorage.removeItem("profile");
+    clearAuth();
     return Promise.resolve();
   },
   checkAuth: () =>
