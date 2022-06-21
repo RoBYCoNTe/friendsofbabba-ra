@@ -2,6 +2,7 @@ import {
   Datagrid,
   EditButton,
   Labeled,
+  Pagination,
   ReferenceManyField,
   SimpleList,
   TopToolbar,
@@ -145,6 +146,7 @@ const ReferenceListField = ({
             reference={reference}
             target={target}
             filter={{ [target]: record?.id, ...filter }}
+            pagination={<Pagination />}
           >
             {isMobile &&
             mobileBreakpoint !== false &&
