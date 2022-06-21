@@ -2,14 +2,13 @@ import {
   Datagrid,
   EditButton,
   Labeled,
-  Pagination,
+  Pagination as RaPagination,
   ReferenceManyField,
   SimpleList,
   TopToolbar,
   useInput,
   useTranslate,
 } from "react-admin";
-import React, { Fragment } from "react";
 import { Typography, useMediaQuery } from "@material-ui/core";
 
 import { Button } from "@material-ui/core";
@@ -18,6 +17,8 @@ import DeleteWithConfirmButton from "../button/DeleteWithConfirmButton";
 import { FormHelperText } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import React from "react";
+import { get } from "lodash";
 import { makeStyles } from "@material-ui/core/styles";
 import { stringify } from "query-string";
 
@@ -28,20 +29,42 @@ export const makeRedirect = ({ resource, record, tab }) => {
   return `/${resource}/${record?.id}`;
 };
 
-const useStyles = makeStyles((theme) => ({
-  toolbar: {
-    padding: theme.spacing(1),
-  },
-  sorry: {
-    padding: theme.spacing(1),
-  },
-  empty: {
-    padding: theme.spacing(1),
-  },
-  error: {
-    padding: theme.spacing(1),
-  },
-}));
+const Wrapper = ({ children }) => children;
+
+const evaluate = (prop, record) =>
+  typeof prop === "function" ? prop(record) : get(record, prop);
+const useStyles = makeStyles(
+  (theme) => ({
+    toolbar: {},
+    sorry: {
+      padding: theme.spacing(1),
+      paddingTop: 0,
+      paddingBottom: 0,
+    },
+    empty: {
+      padding: theme.spacing(1),
+      paddingTop: theme.spacing(0.5),
+      paddingBottom: theme.spacing(0.5),
+    },
+    error: {
+      padding: theme.spacing(1),
+    },
+    label: {
+      "& .MuiFormLabel-root": {
+        padding: theme.spacing(1),
+      },
+      "& .MuiCardContent-root:first-child": {
+        padding: theme.spacing(1),
+        paddingTop: 0,
+        paddingBottom: 0,
+      },
+    },
+  }),
+  { name: "FobReferenceListField" }
+);
+
+const Pagination = (props) =>
+  props?.total > 0 ? <Pagination {...props} /> : null;
 
 /**
  * Render a list of referenced records.
@@ -108,8 +131,14 @@ const ReferenceListField = ({
   additionalData,
   mobileBreakpoint,
   mobilePrimaryText = null,
+  mobilePrimaryComponent = null,
+  mobilePrimaryComponentProps = null,
   mobileSecondaryText = null,
+  mobileSecondaryComponent = null,
+  mobileSecondaryComponentProps = null,
   mobileTertiaryText = null,
+  mobileTertiaryComponent = null,
+  mobileTertiaryComponentProps = null,
   mobileLinkType = false,
   columns = [],
   components,
@@ -129,9 +158,13 @@ const ReferenceListField = ({
     removeRedirect = makeRedirect({ resource, record, tab });
   }
   return (
-    <Labeled {...props}>
+    <Labeled
+      label={props?.label}
+      className={classes.label}
+      fullWidth={props?.fullWidth}
+    >
       {record?.id > 0 ? (
-        <Fragment>
+        <>
           <ReferenceManyField
             {...props}
             empty={
@@ -152,9 +185,48 @@ const ReferenceListField = ({
             mobileBreakpoint !== false &&
             mobilePrimaryText !== null ? (
               <SimpleList
-                primaryText={mobilePrimaryText}
-                secondaryText={mobileSecondaryText}
-                tertiaryText={mobileTertiaryText}
+                primaryText={(record) =>
+                  mobilePrimaryComponent ? (
+                    <Component
+                      record={record}
+                      source={mobilePrimaryText}
+                      componentProps={mobilePrimaryComponentProps}
+                      component={mobilePrimaryComponent}
+                      components={components}
+                    />
+                  ) : (
+                    get(record, mobilePrimaryText)
+                  )
+                }
+                secondaryText={(record) =>
+                  mobileSecondaryComponent ? (
+                    <Component
+                      record={record}
+                      source={mobileSecondaryText}
+                      component={mobileSecondaryComponent}
+                      componentProps={{
+                        ...mobileSecondaryComponentProps,
+                        addLabel: false,
+                      }}
+                      components={components}
+                    />
+                  ) : (
+                    get(record, mobileSecondaryText)
+                  )
+                }
+                tertiaryText={(record) =>
+                  mobileTertiaryComponent ? (
+                    <Component
+                      record={record}
+                      source={mobileTertiaryText}
+                      component={mobileTertiaryComponent}
+                      componentProps={mobileTertiaryComponentProps}
+                      components={components}
+                    />
+                  ) : (
+                    get(record, mobileTertiaryText)
+                  )
+                }
                 linkType={mobileLinkType}
               />
             ) : (
@@ -217,13 +289,15 @@ const ReferenceListField = ({
               </Button>
             </TopToolbar>
           )}
-        </Fragment>
+        </>
       ) : React.isValidElement(sorry) ? (
         React.cloneElement(sorry, { key: "sorry" })
       ) : (
-        <Typography className={classes.sorry} key="sorry">
-          {translate(sorry)}
-        </Typography>
+        <Wrapper>
+          <Typography className={classes.sorry} key="sorry">
+            {translate(sorry)}
+          </Typography>
+        </Wrapper>
       )}
     </Labeled>
   );
@@ -237,9 +311,28 @@ ReferenceListField.propTypes = {
     PropTypes.func,
   ]),
   mobileBreakpoint: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  mobilePrimaryText: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-  mobileSecondaryText: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-  mobileTertiaryText: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+  mobilePrimaryText: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.func,
+    PropTypes.string,
+  ]),
+  mobilePrimaryComponent: PropTypes.string,
+  mobilePrimaryComponentProps: PropTypes.object,
+  mobileSecondaryText: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.func,
+    PropTypes.string,
+  ]),
+  mobileSecondaryComponent: PropTypes.string,
+  mobileSecondaryComponentProps: PropTypes.object,
+  mobileTertiaryText: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.func,
+    PropTypes.string,
+  ]),
+  mobileTertiaryComponent: PropTypes.string,
+  mobileTertiaryComponentProps: PropTypes.object,
+
   mobileLinkType: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   additionalData: PropTypes.object,
   removeRedirect: PropTypes.string,
