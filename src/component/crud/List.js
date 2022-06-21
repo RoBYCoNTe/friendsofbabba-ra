@@ -15,7 +15,7 @@ import {
 import Actions from "./Actions";
 import BulkActionButtons from "./BulkActionButtons.js";
 import Component from "./Component";
-import { CrudContext } from "ra-friendsofbabba";
+import { CrudContext } from "../../data/cakephp/crud/CrudContext";
 import Datagrid from "../list/Datagrid";
 import Empty from "./Empty.js";
 import exporter from "./exporter";

@@ -1,14 +1,9 @@
-import {
-  DeleteButton,
-  Toolbar as RaToolbar,
-  SaveButton,
-  useGetIdentity,
-} from "react-admin";
+import { Toolbar as RaToolbar, SaveButton, useGetIdentity } from "react-admin";
 import React, { useCallback, useContext, useMemo } from "react";
 
 import BackButton from "../button/BackButton";
 import Component from "../crud/Component";
-import { DeleteWithConfirmButton } from "../index";
+import DeleteWithConfirmButton from "../button/DeleteWithConfirmButton";
 import StateButton from "../button/StateButton";
 import StateButtonMenu from "../button/StateButtonMenu";
 import { WorkflowContext } from "../../data/workflow/WorkflowContext";

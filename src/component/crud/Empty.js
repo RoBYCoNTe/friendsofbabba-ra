@@ -8,7 +8,7 @@ import {
 } from "ra-core";
 
 import { CreateButton } from "react-admin";
-import Inbox from "@material-ui/icons/Inbox";
+import { Inbox } from "@material-ui/icons";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 

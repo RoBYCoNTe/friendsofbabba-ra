@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 
 import PropTypes from "prop-types";
 import { Resource } from "react-admin";
-import TableChart from "@material-ui/icons/TableChart";
+import { TableChart } from "@material-ui/icons";
 import createCrud from "./createCrud";
 
 const defaultIcon = TableChart;

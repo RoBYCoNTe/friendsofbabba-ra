@@ -1,5 +1,5 @@
-import DashboardIcon from "@material-ui/icons/Dashboard";
-import get from "lodash/get";
+import { Dashboard } from "@material-ui/icons";
+import { get } from "lodash";
 
 const createMenuItem = (item, badges, translate) => ({
   localize: item.options.localize,
@@ -26,7 +26,7 @@ const createGroups = ({
           {
             path: "/",
             name: "dashboard",
-            icon: DashboardIcon,
+            icon: Dashboard,
             options: {
               group: translate("menu.groups.dashboard"),
             },

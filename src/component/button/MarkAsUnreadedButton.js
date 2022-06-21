@@ -7,7 +7,7 @@ import {
 } from "react-admin";
 import React, { useCallback } from "react";
 
-import DraftsIcon from "@material-ui/icons/Drafts";
+import { Drafts } from "@material-ui/icons";
 
 const MarkAsUnreadedButton = ({ selectedIds = [] }) => {
   const refresh = useRefresh();
@@ -43,7 +43,7 @@ const MarkAsUnreadedButton = ({ selectedIds = [] }) => {
       disabled={loading}
       onClick={handleUpdateMany}
     >
-      <DraftsIcon />
+      <Drafts />
     </Button>
   );
 };

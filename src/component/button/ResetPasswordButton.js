@@ -7,7 +7,7 @@ import {
 } from "react-admin";
 import React, { Fragment, useState } from "react";
 
-import RotateLeftIcon from "@material-ui/icons/RotateLeft";
+import { RotateLeft } from "@material-ui/icons";
 import { get } from "lodash";
 
 /**
@@ -67,7 +67,7 @@ const ResetPasswordButton = ({ record }) => {
         color="primary"
         label={translate("resources.users.buttons.reset")}
       >
-        <RotateLeftIcon />
+        <RotateLeft />
       </Button>
     </Fragment>
   );

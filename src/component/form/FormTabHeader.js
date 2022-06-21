@@ -3,7 +3,7 @@ import * as React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useFormContext, useFormGroup, useTranslate } from "ra-core";
 
-import MuiTab from "@material-ui/core/Tab";
+import { Tab as MuiTab } from "@material-ui/core";
 import classnames from "classnames";
 import { get } from "lodash";
 import { isValidElement } from "react";

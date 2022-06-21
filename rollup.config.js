@@ -26,14 +26,18 @@ const config = [
     external: Object.keys(pkg.peerDependencies || {}).concat(
       "@material-ui/core",
       "@material-ui/core/styles",
+      "@material-ui/core/utils",
       "@material-ui/icons",
       "@material-ui/styles",
       "classnames",
+      "clsx",
+      "jsonexport/dist",
       "lodash",
       "moment",
       "prop-types",
       "query-string",
       "ra-i18n-polyglot",
+      "ra-ui-materialui",
       "react-final-form",
       "react-redux",
       "react-router-dom"

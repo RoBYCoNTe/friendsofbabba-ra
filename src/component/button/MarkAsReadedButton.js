@@ -7,7 +7,7 @@ import {
 } from "react-admin";
 import React, { useCallback } from "react";
 
-import EmailIcon from "@material-ui/icons/Email";
+import { Email } from "@material-ui/icons";
 import moment from "moment";
 
 const MarkAsReadedButton = ({ selectedIds = [] }) => {
@@ -44,7 +44,7 @@ const MarkAsReadedButton = ({ selectedIds = [] }) => {
       disabled={loading}
       onClick={handleUpdateMany}
     >
-      <EmailIcon />
+      <Email />
     </Button>
   );
 };

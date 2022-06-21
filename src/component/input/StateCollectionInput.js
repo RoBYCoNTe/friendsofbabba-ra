@@ -1,7 +1,7 @@
 import { Button, Menu, MenuItem } from "@material-ui/core";
 import React, { useCallback, useContext, useMemo, useState } from "react";
 
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import { ArrowDropDown } from "@material-ui/icons";
 import ConfirmMove from "../form/ConfirmMove";
 import LongTextField from "../field/LongTextField";
 import StateField from "../field/StateField";
@@ -76,7 +76,7 @@ const StateCollectionInput = ({
     <div>
       <Button
         disableElevation
-        endIcon={<ArrowDropDownIcon />}
+        endIcon={<ArrowDropDown />}
         color="primary"
         variant="contained"
         aria-controls="simple-menu"
