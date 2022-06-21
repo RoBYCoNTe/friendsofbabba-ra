@@ -37,8 +37,7 @@ const Toolbar = ({
   backTab = 1,
   children,
   buttons = [],
-  buttonComponents,
-  customComponents,
+  components = [],
   mutationMode,
   validating,
   useWorkflow,
@@ -117,12 +116,10 @@ const Toolbar = ({
         buttons.map(({ component, componentProps }, index) => (
           <Component
             key={index}
+            addLabel={false}
             component={component}
-            componentProps={{ backUrl, ...props, ...componentProps }}
-            components={{
-              ...buttonComponents,
-              ...customComponents,
-            }}
+            componentProps={{ ...props, ...componentProps }}
+            components={components}
           />
         ))}
       {!useWorkflow && !useCustomButtons && record?.id > 0 && (

@@ -39,12 +39,6 @@ const Form = ({ ...props }) => {
   if (form === false || form === null) {
     return null;
   }
-
-  console.info({
-    formRedirect: form?.redirect,
-    backUrl,
-  });
-
   return (
     <Component
       {...props}
@@ -56,6 +50,10 @@ const Form = ({ ...props }) => {
             useWorkflow: form?.useWorkflow,
             useCustomButtons: form?.useCustomButtons,
             buttons: form?.buttons,
+            components: {
+              ...buttons,
+              ...customComponents,
+            },
             ...form?.toolbar?.componentProps,
           }}
           components={{
