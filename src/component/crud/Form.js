@@ -31,7 +31,7 @@ const Form = ({ ...props }) => {
   const save = useSaveMutation({
     ...props,
     refresh: form?.refresh,
-    redirect: backUrl || form?.redirect,
+    redirect: form?.redirect !== null ? form?.redirect : backUrl,
   });
   if (loading) {
     return <Loading />;
@@ -39,6 +39,11 @@ const Form = ({ ...props }) => {
   if (form === false || form === null) {
     return null;
   }
+
+  console.info({
+    formRedirect: form?.redirect,
+    backUrl,
+  });
 
   return (
     <Component
@@ -63,7 +68,7 @@ const Form = ({ ...props }) => {
       initialValues={form?.initialValues}
       sanitizeEmptyValues={form?.sanitizeEmptyValues}
       warnWhenUnsavedChanges={form?.warnWhenUnsavedChanges}
-      redirect={form?.redirect}
+      redirect={form?.redirect !== null ? form?.redirect : backUrl}
       component={form?.component}
       componentProps={form?.componentProps}
       components={{
