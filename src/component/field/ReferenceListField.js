@@ -7,6 +7,7 @@ import {
   SimpleList,
   TopToolbar,
   useInput,
+  useListPaginationContext,
   useTranslate,
 } from "react-admin";
 import { Typography, useMediaQuery } from "@material-ui/core";
@@ -29,12 +30,36 @@ export const makeRedirect = ({ resource, record, tab }) => {
   return `/${resource}/${record?.id}`;
 };
 
+// I want to avoid any kind of problem related to injected props.
 const Wrapper = ({ children }) => children;
 
-const evaluate = (prop, record) =>
-  typeof prop === "function" ? prop(record) : get(record, prop);
+const Pagination = (props) => {
+  // We have to handle this situation to avoid problems
+  // with multiple "empty message strings" provided by react-admin
+  // I've to create a PR to the primary project?
+  const { total } = useListPaginationContext(props);
+  if (total === 0) {
+    return null;
+  }
+  return <RaPagination {...props} />;
+};
+
 const useStyles = makeStyles(
   (theme) => ({
+    root: {
+      "& .MuiFormLabel-root": {
+        padding: theme.spacing(1),
+      },
+      "& .MuiCardContent-root:first-child": {
+        padding: theme.spacing(1),
+        paddingTop: 0,
+        paddingBottom: 0,
+      },
+      "& .MuiTablePagination-toolbar > .MuiTablePagination-input > div": {
+        // Fix alignment of the input with consecutive pagination buttons
+        paddingTop: theme.spacing(1),
+      },
+    },
     toolbar: {},
     sorry: {
       padding: theme.spacing(1),
@@ -49,22 +74,9 @@ const useStyles = makeStyles(
     error: {
       padding: theme.spacing(1),
     },
-    label: {
-      "& .MuiFormLabel-root": {
-        padding: theme.spacing(1),
-      },
-      "& .MuiCardContent-root:first-child": {
-        padding: theme.spacing(1),
-        paddingTop: 0,
-        paddingBottom: 0,
-      },
-    },
   }),
   { name: "FobReferenceListField" }
 );
-
-const Pagination = (props) =>
-  props?.total > 0 ? <Pagination {...props} /> : null;
 
 /**
  * Render a list of referenced records.
@@ -160,7 +172,7 @@ const ReferenceListField = ({
   return (
     <Labeled
       label={props?.label}
-      className={classes.label}
+      className={classes.root}
       fullWidth={props?.fullWidth}
     >
       {record?.id > 0 ? (
