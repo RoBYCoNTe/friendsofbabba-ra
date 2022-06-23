@@ -26,7 +26,7 @@ import { makeStyles } from "@material-ui/core/styles";
  *
  * @returns {React.Component}
  */
-const Empty = ({ grid, create = true, ...props }) => {
+const ListEmpty = ({ grid, create = true, ...props }) => {
   const { basePath, hasCreate } = useListContext(props);
   const resource = useResourceContext(props);
   const classes = useStyles(props);
@@ -91,7 +91,7 @@ const useStyles = makeStyles(
       marginTop: "2em",
     },
   }),
-  { name: "RaEmpty" }
+  { name: "FobListEmpty" }
 );
 
-export default Empty;
+export default ListEmpty;

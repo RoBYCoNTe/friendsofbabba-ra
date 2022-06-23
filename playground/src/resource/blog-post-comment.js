@@ -1,6 +1,6 @@
 import { Create, Edit, useTranslate } from "react-admin";
 
-import { BlogPostComment } from "../component";
+import { BlogPostCommentForm } from "../component";
 
 const BlogPostCommentTitle = ({ record }) => {
   const translate = useTranslate();
@@ -11,13 +11,13 @@ const BlogPostCommentTitle = ({ record }) => {
 };
 const BlogPostCommentCreate = (props) => (
   <Create {...props}>
-    <BlogPostComment create />
+    <BlogPostCommentForm create />
   </Create>
 );
 
 const BlogPostCommentEdit = (props) => (
   <Edit {...props} title={<BlogPostCommentTitle />}>
-    <BlogPostComment />
+    <BlogPostCommentForm />
   </Edit>
 );
 

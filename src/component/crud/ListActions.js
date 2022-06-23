@@ -20,7 +20,7 @@ import Component from "./Component";
 import ExportToButton from "../button/ExportToButton";
 import PropTypes from "prop-types";
 
-const Actions = ({ grid, customComponents, ...props }) => {
+const ListActions = ({ grid, customComponents, ...props }) => {
   const { className, exporter, filters: filtersProp, ...rest } = props;
   const {
     currentSort,
@@ -97,7 +97,7 @@ const Actions = ({ grid, customComponents, ...props }) => {
   );
 };
 
-Actions.propTypes = {
+ListActions.propTypes = {
   basePath: PropTypes.string,
   className: PropTypes.string,
   currentSort: PropTypes.any,
@@ -113,9 +113,9 @@ Actions.propTypes = {
   total: PropTypes.number,
 };
 
-Actions.defaultProps = {
+ListActions.defaultProps = {
   selectedIds: [],
   onUnselectItems: () => null,
 };
 
-export default Actions;
+export default ListActions;

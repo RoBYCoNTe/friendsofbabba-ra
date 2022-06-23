@@ -2,47 +2,24 @@ import {
   Datagrid,
   EditButton,
   Labeled,
-  Pagination as RaPagination,
   ReferenceManyField,
-  SimpleList,
-  TopToolbar,
   useInput,
-  useListPaginationContext,
-  useTranslate,
 } from "react-admin";
-import { Typography, useMediaQuery } from "@material-ui/core";
+import { Fragment, useMemo } from "react";
 
-import { Button } from "@material-ui/core";
 import Component from "../crud/Component";
 import DeleteWithConfirmButton from "../button/DeleteWithConfirmButton";
-import { FormHelperText } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import EmptyMessage from "./reference-list/EmptyMessage";
+import Pagination from "./reference-list/Pagination";
 import PropTypes from "prop-types";
 import React from "react";
-import { get } from "lodash";
+import SimpleList from "../crud/SimpleList";
+import Sorry from "./reference-list/SorryMessage";
+import Toolbar from "./reference-list/Toolbar";
+import ValidationError from "./reference-list/ValidationError";
 import { makeStyles } from "@material-ui/core/styles";
-import { stringify } from "query-string";
-
-export const makeRedirect = ({ resource, record, tab }) => {
-  if (tab > 0) {
-    return `/${resource}/${record?.id}/${tab}`;
-  }
-  return `/${resource}/${record?.id}`;
-};
-
-// I want to avoid any kind of problem related to injected props.
-const Wrapper = ({ children }) => children;
-
-const Pagination = (props) => {
-  // We have to handle this situation to avoid problems
-  // with multiple "empty message strings" provided by react-admin
-  // I've to create a PR to the primary project?
-  const { total } = useListPaginationContext(props);
-  if (total === 0) {
-    return null;
-  }
-  return <RaPagination {...props} />;
-};
+import useMakeRedirect from "./reference-list/useMakeRedirect";
+import { useMediaQuery } from "@material-ui/core";
 
 const useStyles = makeStyles(
   (theme) => ({
@@ -79,81 +56,150 @@ const useStyles = makeStyles(
 );
 
 /**
- * Render a list of referenced records.
+ * Render list of records related to the current record.
+ * Use `ReferenceManyField` inside to retrieve and display data.
+ * This component can be customized in many ways, please referer to the
+ * current documentation to understand how to use it.
  *
  * @param {Object} props
- * @param {Function|String} props.removeRedirect
- *  Function or string to redirect to after delete
- * @param {String} props.reference
- *  The reference to the related records
- * @param {String} props.target
- *  The target column containing the foreign key.
- * @param {Number} props.tab
- *  The tab to redirect to.
- * @param {Object} props.filter
- *  The filter to apply to the list of related records.
- * @param {Object} props.empty
- *  Message to display when there are no related records.
- * @param {Function|Component|String} props.sorry
- *  Message to display when there is no valid record for which to display the list.
- *  This can happen when the record is new and you have to explain why users can't see the list of related records
- *  or cannot add new referenced record.
+ * @param {Object|null} props.additionalData
+ *  Additional data to pass to referenced record's form when creating a new record.
+ * @param {Array|null} props.columns
+ *  List of dynamic columns to render inside this component.
+ *  This prop is used by the Crud Engine to automatically render dynamic columns.
+ *  You should not use this prop directly and specify children instead.
+ *
+ * @param {Object} props.components
+ *  Components to use for rendering the list of referenced records.
+ *  This prop is used by the Crud Engine to automatically render dynamic columns.
+ *  This prop is used too by SimpleList, in mobile view, to render dynamic columns.
+ *
  * @param {Boolean} props.create
- *  Indicates if the user can create new referenced records.
+ *  Whether to display the create button.
+ *
  * @param {String} props.createLabel
- *  Label to display on the button to create a new referenced record.
- * @param {Boolean} props.modify
- *  Indicates if the user can modify existing referenced records.
- * @param {String} props.modifyLabel
- *  Label to display on the button to modify a referenced record.
- * @param {Boolean} props.remove
- *  Indicates if the user can remove existing referenced records.
- * @param {String} props.removeLabel
- *  Label to display on the button to remove a referenced record.
+ *  Label to use for the create button.
+ *
+ * @param {String|Function|JSX.Element} props.empty
+ *  Message to display when there are no records to display.
+ *
+ * @param {Object} props.filter
+ *  Filter to apply to the list of referenced records.
+ *
  * @param {String} props.mobileBreakpoint
- *  The breakpoint at which the list should be displayed in a mobile view.
- * @param {Function} props.mobilePrimaryText
- *  The text to display in list when displayed in a mobile view.
- * @param {Function} props.mobileSecondaryText
- *  The text to display in list when displayed in a mobile view.
- * @param {Function} props.mobileTertiaryText
- *  The actions to display in list when displayed in a mobile view.
- * @param {String|Boolean} props.mobileLinkType
- *  The type of link to display in list when displayed in a mobile view.
+ *  Breakpoint at which the list of referenced records is displayed
+ *  in a mobile view (SimpleList).
  *
- * @param {Array} props.columns
- *  List of columns to display in the list.
+ * @param {String|Boolean|Function} props.linkType
+ *  The type of link to use for the list.
+ *  It can be:
+ *   - a function referencing record: `(record, id) => link`;
+ *   - false to disable links: `false`;
+ *   - static string;
  *
+ * @param {String} props.mobilePrimaryText
+ *  Name of the primary source to display.
+ *  If no component is provided (`primaryComponent`),
+ *  the primary source will be displayed as a string.
+ *
+ * @param {String} props.mobilePrimaryComponent
+ *  Name of the primary component to display.
+ *  If specified, the component will receive the primary source as a prop
+ *  and will be responsible for rendering the primary source.
+ *
+ * @param {Object|null} props.mobilePrimaryComponentProps
+ *  Additional props to pass to the primary component.
+ *
+ * @param {String|null} props.mobileSecondaryText
+ *  Name of the secondary source to display.
+ *  If no component is provided (`secondaryComponent`),
+ *  the secondary source will be displayed as a string.
+ *
+ * @param {String|null} props.mobileSecondaryComponent
+ *  Name of the secondary component to display.
+ *  If specified, the component will receive the secondary source as a prop
+ *  and will be responsible for rendering the secondary source.
+ *
+ * @param {Object|null} props.mobileSecondaryComponentProps
+ *  Additional props to pass to the secondary component.
+ *
+ * @param {String|null} props.mobileTertiaryText
+ *  Name of the tertiary source to display.
+ *  If no component is provided (`tertiaryComponent`),
+ *  the tertiary source will be displayed as a string.
+ *
+ * @param {String|null} props.mobileTertiaryComponent
+ *  Name of the tertiary component to display.
+ *  If specified, the component will receive the tertiary source as a prop
+ *  and will be responsible for rendering the tertiary source.
+ *
+ * @param {Object|null} props.mobileTertiaryComponentProps
+ *  Additional props to pass to the tertiary component.
+ *
+ * @param {Boolean} props.modify
+ *  Whether to display the modify button.
+ *
+ * @param {String} props.modifyLabel
+ *  Label to use for the modify button.
+ *
+ * @param {String} props.reference
+ *  Referenced records resource name.
+ *
+ * @param {Boolean} props.remove
+ *  Whether to display the remove button.
+ *
+ * @param {String} props.removeLabel
+ *  Label to use for the remove button.
+ *
+ * @param {String|null} props.removeRedirect
+ *  Default redirect to use after removing a referenced record.
+ *  This is a string, if not specified is automatically generated based on
+ *  current opened record and specified tab.
+ *
+ * @param {String|Function|JSX.Element} props.sorry
+ *  Message to display when the list of referenced records is inside newly created record.
+ *
+ * @param {Number} props.tab
+ *  Tab index where this field is located.
+ *  Tab is used to generate default redirect to use after removing a referenced record.
+ *
+ * @param {String} props.target
+ *  Target column to filter with current record primary key.
+ *  Suppose you are retrieving blog-post-comments, your target column should be `blog_post_id`.
+ *
+ * @param {Object} props.record
+ *  Current record (used for many things).
+
  * @returns {JSX.Element}
  */
 const ReferenceListField = ({
-  removeRedirect,
-  reference,
-  target,
-  tab = 0,
-  filter,
-  empty = "ra.no_results",
-  sorry = "ra.reference_list.sorry",
+  additionalData,
+  columns = [],
+  components = {},
   create = true,
   createLabel = "ra.action.create",
-  modify = true,
-  modifyLabel = "ra.action.edit",
-  remove = true,
-  removeLabel = "ra.action.delete",
-  additionalData,
+  empty = "ra.no_results",
+  filter,
   mobileBreakpoint,
-  mobilePrimaryText = null,
+  mobileLinkType = false,
   mobilePrimaryComponent = null,
   mobilePrimaryComponentProps = null,
-  mobileSecondaryText = null,
+  mobilePrimaryText = null,
   mobileSecondaryComponent = null,
   mobileSecondaryComponentProps = null,
-  mobileTertiaryText = null,
+  mobileSecondaryText = null,
   mobileTertiaryComponent = null,
   mobileTertiaryComponentProps = null,
-  mobileLinkType = false,
-  columns = [],
-  components,
+  mobileTertiaryText = null,
+  modify = true,
+  modifyLabel = "ra.action.edit",
+  reference,
+  remove = true,
+  removeLabel = "ra.action.delete",
+  removeRedirect,
+  sorry = "ra.reference_list.sorry",
+  tab = 0,
+  target,
   ...props
 }) => {
   const classes = useStyles();
@@ -161,33 +207,28 @@ const ReferenceListField = ({
   const {
     meta: { submitError },
   } = useInput({ ...props });
-  const translate = useTranslate();
   const isMobile = useMediaQuery((theme) =>
     theme.breakpoints.down(mobileBreakpoint ?? "sm")
   );
-
-  if (!removeRedirect) {
-    removeRedirect = makeRedirect({ resource, record, tab });
-  }
+  const parentRecordExists = useMemo(() => record?.id > 0, [record?.id]);
+  const removeRedir = useMakeRedirect({
+    resource,
+    record,
+    tab,
+    defaultRedirect: removeRedirect,
+  });
   return (
     <Labeled
+      {...props}
       label={props?.label}
       className={classes.root}
       fullWidth={props?.fullWidth}
     >
-      {record?.id > 0 ? (
-        <>
+      {parentRecordExists > 0 ? (
+        <Fragment>
           <ReferenceManyField
             {...props}
-            empty={
-              React.isValidElement(empty) ? (
-                React.cloneElement(empty, { key: "empty" })
-              ) : (
-                <Typography className={classes.empty} key="empty">
-                  {translate(empty)}
-                </Typography>
-              )
-            }
+            empty={<EmptyMessage classes={classes} emptyText={empty} />}
             reference={reference}
             target={target}
             filter={{ [target]: record?.id, ...filter }}
@@ -197,49 +238,17 @@ const ReferenceListField = ({
             mobileBreakpoint !== false &&
             mobilePrimaryText !== null ? (
               <SimpleList
-                primaryText={(record) =>
-                  mobilePrimaryComponent ? (
-                    <Component
-                      record={record}
-                      source={mobilePrimaryText}
-                      componentProps={mobilePrimaryComponentProps}
-                      component={mobilePrimaryComponent}
-                      components={components}
-                    />
-                  ) : (
-                    get(record, mobilePrimaryText)
-                  )
-                }
-                secondaryText={(record) =>
-                  mobileSecondaryComponent ? (
-                    <Component
-                      record={record}
-                      source={mobileSecondaryText}
-                      component={mobileSecondaryComponent}
-                      componentProps={{
-                        ...mobileSecondaryComponentProps,
-                        addLabel: false,
-                      }}
-                      components={components}
-                    />
-                  ) : (
-                    get(record, mobileSecondaryText)
-                  )
-                }
-                tertiaryText={(record) =>
-                  mobileTertiaryComponent ? (
-                    <Component
-                      record={record}
-                      source={mobileTertiaryText}
-                      component={mobileTertiaryComponent}
-                      componentProps={mobileTertiaryComponentProps}
-                      components={components}
-                    />
-                  ) : (
-                    get(record, mobileTertiaryText)
-                  )
-                }
+                primarySource={mobilePrimaryText}
+                primaryComponent={mobilePrimaryComponent}
+                primaryComponentProps={mobilePrimaryComponentProps}
+                secondarySource={mobileSecondaryText}
+                secondaryComponent={mobileSecondaryComponent}
+                secondaryComponentProps={mobileSecondaryComponentProps}
+                tertiarySource={mobileTertiaryText}
+                tertiaryComponent={mobileTertiaryComponent}
+                tertiaryComponentProps={mobileTertiaryComponentProps}
                 linkType={mobileLinkType}
+                components={components}
               />
             ) : (
               <Datagrid>
@@ -248,68 +257,28 @@ const ReferenceListField = ({
                     ? React.cloneElement(field, { key: index })
                     : null
                 )}
-                {columns.map(
-                  ({
-                    source,
-                    label,
-                    sortable,
-                    component,
-                    sortBy,
-                    componentProps,
-                  }) => (
-                    <Component
-                      key={source}
-                      {...(component.indexOf("Button") === -1
-                        ? { source, label, sortable, sortBy, addLabel: false }
-                        : {})}
-                      component={component}
-                      componentProps={componentProps}
-                      components={components}
-                    />
-                  )
-                )}
+                {Component.mapColumns(columns, components)}
                 {modify && <EditButton />}
-                {remove && (
-                  <DeleteWithConfirmButton redirect={removeRedirect} />
-                )}
+                {remove && <DeleteWithConfirmButton redirect={removeRedir} />}
               </Datagrid>
             )}
           </ReferenceManyField>
-          {submitError && typeof submitError === "string" && (
-            <FormHelperText error className={classes.error}>
-              {submitError}
-            </FormHelperText>
+          <ValidationError submitError={submitError} classes={classes} />
+          {create && parentRecordExists > 0 && (
+            <Toolbar
+              {...{
+                additionalData,
+                createLabel,
+                record,
+                reference,
+                resource,
+                target,
+              }}
+            />
           )}
-          {create && record?.id > 0 && (
-            <TopToolbar resource={resource} className={classes.toolbar}>
-              <Button
-                component={Link}
-                disableElevation
-                variant="outlined"
-                color="primary"
-                to={{
-                  pathname: `/${reference}/create`,
-                  search: stringify({
-                    source: JSON.stringify({
-                      [target]: record?.id,
-                      ...additionalData,
-                    }),
-                  }),
-                }}
-              >
-                {translate(createLabel)}
-              </Button>
-            </TopToolbar>
-          )}
-        </>
-      ) : React.isValidElement(sorry) ? (
-        React.cloneElement(sorry, { key: "sorry" })
+        </Fragment>
       ) : (
-        <Wrapper>
-          <Typography className={classes.sorry} key="sorry">
-            {translate(sorry)}
-          </Typography>
-        </Wrapper>
+        <Sorry sorryText={sorry} classes={classes} />
       )}
     </Labeled>
   );

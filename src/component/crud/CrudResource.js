@@ -8,6 +8,32 @@ import createCrud from "./createCrud";
 const defaultIcon = TableChart;
 const defaultGroup = "dashboard";
 
+/**
+ * Create a CRUD resource ready to be used in a react-admin.
+ *
+ * @param {Object} props
+ *
+ * @param {JSX.Element} props.icon
+ *  The icon to use for the resource.
+ *  Icon is displayed in the sidebar.
+ *
+ * @param {String} props.roles
+ *  The roles that can access the resource.
+ *  If not defined, the resource is accessible to all roles.
+ *
+ * @param {String} props.group
+ *  The group to display the resource in the sidebar.
+ *  If not defined, the resource is displayed in the "dashboard" group.
+ *
+ * @param {String} props.name
+ *  The name of the resource.
+ *
+ * @param {Object} props.components
+ *  List of custom components usable in the resource.
+ *
+ * @param {Boolean|null} props.workflow
+ *  If true, the resource will be handled by the workflow.
+ */
 const CrudResource = ({
   icon,
   roles,

@@ -5,7 +5,7 @@ import React, { Fragment } from "react";
 import { BulkDeleteButton } from "react-admin";
 import Component from "./Component";
 
-const BulkActionButtons = ({ grid, customComponents, ...props }) => (
+const ListBulkActionButtons = ({ grid, customComponents, ...props }) => (
   <Fragment>
     {grid?.bulkActionButtons?.map(({ component, componentProps }, index) => (
       <Component
@@ -19,4 +19,4 @@ const BulkActionButtons = ({ grid, customComponents, ...props }) => (
     {grid?.canDelete !== false && <BulkDeleteButton {...props} />}
   </Fragment>
 );
-export default BulkActionButtons;
+export default ListBulkActionButtons;

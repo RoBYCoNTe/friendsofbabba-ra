@@ -1,4 +1,5 @@
+import Component from "./Component";
 import CrudResource from "./CrudResource";
-import Empty from "./Empty";
+import ListEmpty from "./ListEmpty";
 
-export { CrudResource, Empty };
+export { Component, CrudResource, ListEmpty };
