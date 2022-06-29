@@ -7,7 +7,6 @@ import { stringify } from "query-string";
 const createDataProvider = ({
   apiUrl,
   fileFields = [],
-
   filesParser = createFilesParser(),
   prepareData = (data) => defaultPrepareData(data),
 }) => ({

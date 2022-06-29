@@ -23,7 +23,7 @@ const config = [
       del({ targets: ["dist/*.js"] }),
       generateDeclarations(),
     ],
-    external: Object.keys(pkg.peerDependencies || {}).concat(
+    external: Object.keys(pkg.peerDependencies || {}).concat([
       "@material-ui/core",
       "@material-ui/core/styles",
       "@material-ui/core/utils",
@@ -41,8 +41,8 @@ const config = [
       "react-error-boundary",
       "react-final-form",
       "react-redux",
-      "react-router-dom"
-    ),
+      "react-router-dom",
+    ]),
   },
   {
     // Build the TypeScript definitions for javascript files.

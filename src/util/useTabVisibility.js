@@ -7,10 +7,14 @@ const useTabVisibiliy = (tab) => {
   const [visible, setVisible] = useState(false);
   useEffect(() => {
     const args = pathname.split("/");
-    if ((tab === 0 && args.length === 3) || pathname.endsWith(`/${tab}`)) {
+    if (
+      (tab === 0 && args.length === 3) ||
+      (args.length === 4 && pathname.endsWith(`/${tab}`))
+    ) {
       setVisible(true);
     }
   }, [pathname, tab]);
+
   return visible;
 };
 export default useTabVisibiliy;
