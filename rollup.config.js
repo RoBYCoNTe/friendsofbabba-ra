@@ -38,6 +38,7 @@ const config = [
       "query-string",
       "ra-i18n-polyglot",
       "ra-ui-materialui",
+      "react-error-boundary",
       "react-final-form",
       "react-redux",
       "react-router-dom"

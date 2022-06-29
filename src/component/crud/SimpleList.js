@@ -89,6 +89,9 @@ const SimpleList = ({
   components,
   ...props
 }) => {
+  if (props?.total <= 0 && props?.empty) {
+    return props?.empty;
+  }
   return (
     <RaSimpleList
       {...props}

@@ -89,14 +89,16 @@ const List = (props) => {
         <SimpleList
           linkType={grid?.mobileLinkType}
           primarySource={grid?.mobilePrimaryText}
-          primaryComponent={grid?.mobilePrimaryComponent}
-          primaryComponentProps={grid?.mobilePrimaryComponentProps}
+          primaryComponent={grid?.mobilePrimaryComponent?.component}
+          primaryComponentProps={grid?.mobilePrimaryComponent?.componentProps}
           secondarySource={grid?.mobileSecondaryText}
-          secondaryComponent={grid?.mobileSecondaryComponent}
-          secondaryComponentProps={grid?.mobileSecondaryComponentProps}
+          secondaryComponent={grid?.mobileSecondaryComponent?.component}
+          secondaryComponentProps={
+            grid?.mobileSecondaryComponent?.componentProps
+          }
           tertiarySource={grid?.mobileTertiaryText}
-          tertiaryComponent={grid?.mobileTertiaryComponent}
-          tertiaryComponentProps={grid?.mobileTertiaryComponentProps}
+          tertiaryComponent={grid?.mobileTertiaryComponent?.component}
+          tertiaryComponentProps={grid?.mobileTertiaryComponent?.componentProps}
           components={{
             ...fields,
             ...inputs,

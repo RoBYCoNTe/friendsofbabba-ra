@@ -4,8 +4,8 @@ import { useTranslate } from "react-admin";
 
 const SorryMessage = ({ sorryText, classes }) => {
   const translate = useTranslate();
-  return React.isValidElement(sorry) ? (
-    React.cloneElement(sorry, { key: "sorry" })
+  return React.isValidElement(sorryText) ? (
+    React.cloneElement(sorryText, { key: "sorry" })
   ) : (
     <Typography className={classes.sorry} key="sorry">
       {translate(sorryText)}
