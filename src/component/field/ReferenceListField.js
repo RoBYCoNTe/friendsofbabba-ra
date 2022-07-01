@@ -17,6 +17,7 @@ import SimpleList from "../crud/SimpleList";
 import Sorry from "./reference-list/SorryMessage";
 import Toolbar from "./reference-list/Toolbar";
 import ValidationError from "./reference-list/ValidationError";
+import { get } from "lodash";
 import { makeStyles } from "@material-ui/core/styles";
 import useMakeRedirect from "./reference-list/useMakeRedirect";
 import { useMediaQuery } from "@material-ui/core";
@@ -169,7 +170,11 @@ const useStyles = makeStyles(
  *
  * @param {Object} props.record
  *  Current record (used for many things).
-
+ *
+ * @param {String} props.foreignKey
+ *  Foreign key to use to filter the list of referenced records.
+ *  Default is `id`.
+ *  Suppose you are retrieving blog-post-comments, your foreign key should be `id`.
  * @returns {JSX.Element}
  */
 const ReferenceListField = ({
@@ -200,6 +205,7 @@ const ReferenceListField = ({
   sorry = "ra.reference_list.sorry",
   tab = 0,
   target,
+  foreignKey = "id",
   ...props
 }) => {
   const classes = useStyles();
@@ -217,70 +223,74 @@ const ReferenceListField = ({
     tab,
     defaultRedirect: removeRedirect,
   });
-  return (
+  const content =
+    parentRecordExists > 0 ? (
+      <Fragment>
+        <ReferenceManyField
+          {...props}
+          empty={<EmptyMessage classes={classes} emptyText={empty} />}
+          reference={reference}
+          target={target}
+          filter={{ [target]: get(record, foreignKey), ...filter }}
+          pagination={<Pagination />}
+        >
+          {isMobile &&
+          mobileBreakpoint !== false &&
+          mobilePrimaryText !== null ? (
+            <SimpleList
+              primarySource={mobilePrimaryText}
+              primaryComponent={mobilePrimaryComponent}
+              primaryComponentProps={mobilePrimaryComponentProps}
+              secondarySource={mobileSecondaryText}
+              secondaryComponent={mobileSecondaryComponent}
+              secondaryComponentProps={mobileSecondaryComponentProps}
+              tertiarySource={mobileTertiaryText}
+              tertiaryComponent={mobileTertiaryComponent}
+              tertiaryComponentProps={mobileTertiaryComponentProps}
+              linkType={mobileLinkType}
+              components={components}
+            />
+          ) : (
+            <Datagrid>
+              {React.Children.map(props.children, (field, index) =>
+                React.isValidElement(field)
+                  ? React.cloneElement(field, { key: index })
+                  : null
+              )}
+              {Component.mapColumns(columns, components)}
+              {modify && <EditButton />}
+              {remove && <DeleteWithConfirmButton redirect={removeRedir} />}
+            </Datagrid>
+          )}
+        </ReferenceManyField>
+        <ValidationError submitError={submitError} classes={classes} />
+        {create && parentRecordExists > 0 && (
+          <Toolbar
+            {...{
+              additionalData,
+              createLabel,
+              record,
+              reference,
+              resource,
+              target,
+            }}
+          />
+        )}
+      </Fragment>
+    ) : (
+      <Sorry sorryText={sorry} classes={classes} />
+    );
+  return props?.addLabel !== false ? (
     <Labeled
       {...props}
       label={props?.label}
       className={classes.root}
       fullWidth={props?.fullWidth}
     >
-      {parentRecordExists > 0 ? (
-        <Fragment>
-          <ReferenceManyField
-            {...props}
-            empty={<EmptyMessage classes={classes} emptyText={empty} />}
-            reference={reference}
-            target={target}
-            filter={{ [target]: record?.id, ...filter }}
-            pagination={<Pagination />}
-          >
-            {isMobile &&
-            mobileBreakpoint !== false &&
-            mobilePrimaryText !== null ? (
-              <SimpleList
-                primarySource={mobilePrimaryText}
-                primaryComponent={mobilePrimaryComponent}
-                primaryComponentProps={mobilePrimaryComponentProps}
-                secondarySource={mobileSecondaryText}
-                secondaryComponent={mobileSecondaryComponent}
-                secondaryComponentProps={mobileSecondaryComponentProps}
-                tertiarySource={mobileTertiaryText}
-                tertiaryComponent={mobileTertiaryComponent}
-                tertiaryComponentProps={mobileTertiaryComponentProps}
-                linkType={mobileLinkType}
-                components={components}
-              />
-            ) : (
-              <Datagrid>
-                {React.Children.map(props.children, (field, index) =>
-                  React.isValidElement(field)
-                    ? React.cloneElement(field, { key: index })
-                    : null
-                )}
-                {Component.mapColumns(columns, components)}
-                {modify && <EditButton />}
-                {remove && <DeleteWithConfirmButton redirect={removeRedir} />}
-              </Datagrid>
-            )}
-          </ReferenceManyField>
-          <ValidationError submitError={submitError} classes={classes} />
-          {create && parentRecordExists > 0 && (
-            <Toolbar
-              {...{
-                additionalData,
-                createLabel,
-                record,
-                reference,
-                resource,
-                target,
-              }}
-            />
-          )}
-        </Fragment>
-      ) : (
-        <Sorry sorryText={sorry} classes={classes} />
-      )}
+      {content}
     </Labeled>
+  ) : (
+    content
   );
 };
 

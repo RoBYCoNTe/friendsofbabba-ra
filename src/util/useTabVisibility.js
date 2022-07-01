@@ -12,6 +12,8 @@ const useTabVisibiliy = (tab) => {
       (args.length === 4 && pathname.endsWith(`/${tab}`))
     ) {
       setVisible(true);
+    } else {
+      setVisible(false);
     }
   }, [pathname, tab]);
 

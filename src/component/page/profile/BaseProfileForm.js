@@ -8,6 +8,10 @@ import {
 import React from "react";
 import useSaveMutation from "../../../data/useSaveMutation";
 
+const sanitizeInputProps = (props) => {
+  const { saving, save, mutationMode, ...inputProps } = props;
+  return inputProps;
+};
 const BaseProfileForm = ({ children, ...props }) => {
   const notify = useNotify();
   const save = useSaveMutation({
@@ -31,7 +35,9 @@ const BaseProfileForm = ({ children, ...props }) => {
     >
       {React.Children.map(children, (child) =>
         React.isValidElement(child)
-          ? React.cloneElement(child, { ...props })
+          ? React.cloneElement(child, {
+              ...sanitizeInputProps(props),
+            })
           : child
       )}
     </SimpleForm>

@@ -11,14 +11,17 @@ const getWidthToSubtract = (w) => {
 
 const useStyles = makeStyles((theme) => ({
   container: ({ sidebarOpen, drawerWidth }) => ({
+    borderRadius: theme.shape.borderRadius,
+    overflowX: "auto",
+    overflowY: "hidden",
     maxWidth: `calc(100vw - ${
       sidebarOpen
         ? getWidthToSubtract(drawerWidth + theme.spacing(6) - 1)
         : getWidthToSubtract(58 + theme.spacing(6) - 1)
     }px)`,
-    borderRadius: theme.shape.borderRadius,
-    overflowX: "auto",
-    overflowY: "hidden",
+    [theme.breakpoints.down("sm")]: {
+      maxWidth: `calc(100vw - ${theme.spacing(6)}px)`,
+    },
     [theme.breakpoints.down("xs")]: {
       width: "100vw",
       maxWidth: "100vw",

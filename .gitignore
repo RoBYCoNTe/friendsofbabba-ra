@@ -28,5 +28,5 @@ dist/*
 !dist/declarations.d.ts
 public/*
 
-TODO: remove this file
+# TODO: remove this file
 playground-workbench

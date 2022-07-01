@@ -7,6 +7,7 @@ import {
 } from "@material-ui/core";
 import React, { useCallback } from "react";
 import { toggleSidebar, useGetIdentity, useTranslate } from "ra-core";
+import { useDispatch, useSelector } from "react-redux";
 import {
   useIsImpersonating,
   useUndoImpersonate,
@@ -16,7 +17,6 @@ import Brand from "./Brand";
 import { ChevronLeft as ChevronLeftIcon } from "@material-ui/icons";
 import PropTypes from "prop-types";
 import classnames from "classnames";
-import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   brand: {
@@ -100,7 +100,8 @@ const Sidebar = ({
     () => dispatch(toggleSidebar()),
     [dispatch]
   );
-  const isXSmall = useMediaQuery((theme) => theme.breakpoints.down("xs"));
+  const isSidebarOpen = useSelector((state) => state?.admin?.ui?.sidebarOpen);
+  const isXSmall = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const translate = useTranslate();
   const { identity } = useGetIdentity();
   const isImpersonating = useIsImpersonating();
@@ -131,11 +132,12 @@ const Sidebar = ({
     >
       <div className={classes.toolbar}>
         <div className={classes.brand}>
-          {brand && React.isValidElement(brand) ? (
-            brand
-          ) : (
-            <Brand logo={logo} title={title} subTitle={subTitle} />
-          )}
+          {isSidebarOpen &&
+            (brand && React.isValidElement(brand) ? (
+              brand
+            ) : (
+              <Brand logo={logo} title={title} subTitle={subTitle} />
+            ))}
           {isImpersonating && isXSmall && (
             <Typography
               variant="body1"

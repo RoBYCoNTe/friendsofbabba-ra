@@ -1,5 +1,5 @@
-import React, { useMemo } from "react";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { createTheme, makeStyles } from "@material-ui/core/styles";
 
 import { Login } from "react-admin";
 import PasswordForm from "./password/ResetPasswordForm";
@@ -19,12 +19,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ResetPasswordPage = ({ logo, children = <PasswordForm />, ...props }) => {
+const ResetPasswordPage = ({
+  logo,
+  themeOverride,
+  children = <PasswordForm />,
+  ...props
+}) => {
+  const themeProp = useRef(themeOverride);
+  const [theme, setTheme] = useState(() => createTheme(themeOverride));
+  useEffect(() => {
+    if (themeProp.current !== themeOverride) {
+      themeProp.current = themeOverride;
+      setTheme(createTheme(themeOverride));
+    }
+  }, [themeOverride, themeProp, theme, setTheme]);
   const { location } = props;
   const { search } = location;
 
   const classes = useStyles();
-  const theme = useTheme();
   const action = useMemo(() => {
     if (search) {
       const params = new URLSearchParams(search);
@@ -35,11 +47,11 @@ const ResetPasswordPage = ({ logo, children = <PasswordForm />, ...props }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Login backgroundImage="" classes={classes}>
+      <Login backgroundImage="" theme={theme} classes={classes}>
         {logo}
         {React.Children.map(children, (child) =>
           React.isValidElement(child)
-            ? React.cloneElement(child, { action, ...props })
+            ? React.cloneElement(child, { action, theme, ...props })
             : child
         )}
       </Login>

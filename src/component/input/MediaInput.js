@@ -20,6 +20,7 @@ const MediaInput = ({ title, disabled, ...props }) => {
   if (disabled) {
     const value = get(props.record, props.source);
     const files = value ? (Array.isArray(value) ? value : [value]) : [];
+
     return (
       <Labeled {...props} className={classes.labeled}>
         <Fragment>

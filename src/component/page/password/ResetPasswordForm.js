@@ -45,7 +45,11 @@ const Input = ({
   />
 );
 
-const ResetPasswordForm = ({ recaptchaSiteApiKey, redirectTo = "/login" }) => {
+const ResetPasswordForm = ({
+  recaptchaSiteApiKey,
+  theme,
+  redirectTo = "/login",
+}) => {
   const [loading, setLoading] = useSafeSetState(false);
   const resetPassword = useResetPassword();
   const translate = useTranslate();
@@ -77,7 +81,7 @@ const ResetPasswordForm = ({ recaptchaSiteApiKey, redirectTo = "/login" }) => {
         notify(error?.message, { type: "warning" });
       });
   };
-
+  console.info("theme:", theme);
   return (
     <Form
       onSubmit={submit}
@@ -93,6 +97,7 @@ const ResetPasswordForm = ({ recaptchaSiteApiKey, redirectTo = "/login" }) => {
                 component={Input}
                 label={translate("ra.auth.account")}
                 disabled={loading}
+                theme={theme}
               />
               <Field
                 id="token"
@@ -109,9 +114,11 @@ const ResetPasswordForm = ({ recaptchaSiteApiKey, redirectTo = "/login" }) => {
               color="primary"
               disabled={loading}
               className={classes.button}
+              theme={theme}
             >
               {loading && (
                 <CircularProgress
+                  theme={theme}
                   className={classes.icon}
                   size={18}
                   thickness={2}
@@ -125,6 +132,7 @@ const ResetPasswordForm = ({ recaptchaSiteApiKey, redirectTo = "/login" }) => {
               color="primary"
               type="button"
               disabled={loading}
+              theme={theme}
             >
               &larr;
               {translate("ra.auth.back_to_login")}
