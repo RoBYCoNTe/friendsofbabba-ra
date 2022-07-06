@@ -23,6 +23,7 @@ const MenuItem = ({
   onMenuClick,
   permissions,
   open,
+  localize,
   ...props
 }) => {
   return (
