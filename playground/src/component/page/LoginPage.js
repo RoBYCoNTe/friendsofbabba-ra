@@ -7,9 +7,10 @@ import {
 
 import { API_URL } from "../../config";
 import React from "react";
+import theme from "../../theme";
 
 const LoginPage = (props) => (
-  <FobLoginPage {...props}>
+  <FobLoginPage {...props} themeOverride={theme}>
     <LocalLoginForm />
     <SpidLoginForm apiUrl={API_URL} signup="#/signup" />
     <ResetPasswordLinkButton />

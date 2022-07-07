@@ -32,7 +32,7 @@ const App = () => {
 
   const dataProvider = useDataProvider({
     apiUrl,
-    fileFields: ["media_collection", "media"],
+    fileFields: ["media_collection", "media", "thumbnail"],
   });
   const authProvider = useAuthProvider({ apiUrl });
   if (languages?.loading) {

@@ -1,5 +1,3 @@
-import "./theme.css";
-
 import { createTheme } from "@material-ui/core/styles";
 
 const theme = createTheme({
@@ -9,7 +7,7 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: "Titillium Web, sans-serif",
+    fontFamily: "Be Vietnam Pro",
     fontSize: 15,
   },
 });
@@ -56,12 +54,35 @@ const Form = {
   main: {
     width: "70%",
     minWidth: "960px",
+    maxWidth: "1024px",
     margin: "1em auto",
     [theme.breakpoints.down("md")]: {
       minWidth: "100%",
     },
     "& p.MuiFormHelperText-root span": {
       display: "none",
+    },
+    "& .MuiButtonBase-root.MuiTab-root": {
+      maxWidth: 150,
+      fontSize: 14,
+    },
+  },
+};
+
+const Toolbar = {
+  toolbar: {
+    zIndex: 1000,
+    "& .MuiButtonBase-root.MuiButton-root > span": {
+      [theme.breakpoints.down("xs")]: {
+        maxWidth: 100,
+        textOverflow: "ellipsis",
+        lineClamp: 1,
+        WebkitLineClamp: 1,
+        overflow: "hidden",
+        display: "-webkit-box",
+        WebkitBoxOrient: "vertical",
+        whiteSpace: "break-spaces",
+      },
     },
   },
 };
@@ -72,35 +93,19 @@ const FilterForm = {
     "& .filter-field > div:last-child": {
       width: theme.spacing(1),
     },
-    [theme.breakpoints.down("sm")]: {
-      display: "block",
-      "& .filter-field, & .filter-field > .MuiFormControl-root": {
-        width: "100%",
-      },
-    },
   },
 };
 
+const RaAutocompleteSuggestionItem = {
+  suggestionText: {
+    fontWeight: "bold",
+  },
+};
 const TabbedForm = {
   errorTabButton: {
     color: `${theme.palette.error.main} !important`,
   },
 };
-
-// const TopToolbar = {
-//   root: {
-//     [theme.breakpoints.up("md")]: {
-//       width: "70%",
-//       minWidth: "960px",
-//       margin: "1em auto",
-//     },
-//   },
-// };
-// const FobToolbar = {
-//   toolbar: {
-//     paddingLeft: theme.spacing(2),
-//   },
-// };
 
 export default createTheme(theme, {
   overrides: {
@@ -109,14 +114,7 @@ export default createTheme(theme, {
     RaEdit: Form,
     RaFilterForm: FilterForm,
     RaTabbedForm: TabbedForm,
-    RaCheckboxGroupInput: {
-      root: {
-        "& .MuiFormLabel-root": {
-          padding: theme.spacing(1),
-        },
-      },
-    },
-    // RaTopToolbar: TopToolbar,
-    // FobToolbar: FobToolbar,
+    FobToolbar: Toolbar,
+    RaAutocompleteSuggestionItem,
   },
 });
