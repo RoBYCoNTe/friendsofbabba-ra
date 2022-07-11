@@ -1,7 +1,8 @@
-import React, { useMemo } from "react";
+import { Button, CircularProgress, Collapse } from "@material-ui/core";
+import { ExpandLess, ExpandMore } from "@material-ui/icons";
+import React, { useCallback, useMemo, useState } from "react";
 
 import Alert from "../Alert";
-import { CircularProgress } from "@material-ui/core";
 import Group from "./Group";
 import GroupItem from "./GroupItem";
 import GroupTitle from "./GroupTitle";
@@ -52,6 +53,7 @@ const ValidationSummary = ({
   children,
 }) => {
   const classes = useStyles();
+  const [expanded, setExpanded] = useState(false);
   const translate = useTranslate();
   const { errorsCount, errorKeys, errorMap, loading, mode } =
     useValidationSummary({ source });
@@ -67,6 +69,10 @@ const ValidationSummary = ({
           : "success",
     }),
     [errorsCount, loading, mode, message, title]
+  );
+  const toggleExpand = useCallback(
+    () => setExpanded((expanded) => !expanded),
+    []
   );
 
   if (resource == null || (errorsCount === 0 && !showWhenNoErrors)) {
@@ -94,22 +100,36 @@ const ValidationSummary = ({
             </GroupItem>
           </Group>
         )}
-        <Group>
-          <GroupItem lg={10} md={11} sm={12}>
-            <List dense component="nav" color="error">
-              {errorKeys.map((field) => (
-                <ValidationItem
-                  key={field}
-                  field={field}
-                  error={errorMap[field]}
-                  resource={resource}
-                  translate={translate}
-                  component={children}
-                />
-              ))}
-            </List>
-          </GroupItem>
-        </Group>
+        <Collapse in={expanded}>
+          <Group>
+            <GroupItem lg={10} md={11} sm={12}>
+              <List dense component="nav" color="error">
+                {errorKeys.map((field) => (
+                  <ValidationItem
+                    key={field}
+                    field={field}
+                    error={errorMap[field]}
+                    resource={resource}
+                    translate={translate}
+                    component={children}
+                  />
+                ))}
+              </List>
+            </GroupItem>
+          </Group>
+        </Collapse>
+        {!loading && errorKeys.length > 0 && (
+          <Button
+            onClick={toggleExpand}
+            endIcon={expanded ? <ExpandLess /> : <ExpandMore />}
+          >
+            {translate(
+              `ra.validation_summary.button.${
+                expanded ? "expand_less" : "expand_more"
+              }`
+            )}
+          </Button>
+        )}
       </Group>
     </Alert>
   );

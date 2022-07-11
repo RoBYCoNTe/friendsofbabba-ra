@@ -26,9 +26,7 @@ const useStyles = makeStyles(
 );
 
 /**
- *
  * @param {Object} props
- * @returns {JSX.Element}
  */
 const Toolbar = ({
   backRedirect,
@@ -43,6 +41,7 @@ const Toolbar = ({
   useWorkflow,
   useCustomButtons = false,
   maxButtonsToDisplay = 1,
+  stateFilter,
   ...props
 }) => {
   const form = useForm();
@@ -71,7 +70,10 @@ const Toolbar = ({
     const states = (workflow && workflow.getNextStates(roles, record)) || [];
     return { states, save };
   }, [workflow, record, roles]);
-
+  const statesToDisplay = useMemo(
+    () => (stateFilter ? states.filter(stateFilter) : states),
+    [states, stateFilter]
+  );
   const handleClick = useCallback(() => {
     form.change(
       "state",
@@ -96,11 +98,15 @@ const Toolbar = ({
           disabled={props.saving}
         />
       )}
-      {states.length > maxButtonsToDisplay && (
-        <StateButtonMenu states={states} {...props} disabled={props.saving} />
+      {statesToDisplay.length > maxButtonsToDisplay && (
+        <StateButtonMenu
+          states={statesToDisplay}
+          {...props}
+          disabled={props.saving}
+        />
       )}
-      {states.length <= maxButtonsToDisplay &&
-        states.map((state) => (
+      {statesToDisplay.length <= maxButtonsToDisplay &&
+        statesToDisplay.map((state) => (
           <StateButton
             key={get(state, "code")}
             state={state}
