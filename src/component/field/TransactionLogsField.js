@@ -33,7 +33,7 @@ const TransactionLogsField = ({ admin = false, label, ...props }) => {
     () => getWorkflow(props.resource),
     [getWorkflow, props.resource]
   );
-  if (!workflow || !props.record) {
+  if (!workflow || !props.record || props?.record?.id <= 0) {
     return null;
   }
 

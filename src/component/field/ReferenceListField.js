@@ -223,63 +223,62 @@ const ReferenceListField = ({
     tab,
     defaultRedirect: removeRedirect,
   });
-  const content =
-    parentRecordExists > 0 ? (
-      <Fragment>
-        <ReferenceManyField
-          {...props}
-          empty={<EmptyMessage classes={classes} emptyText={empty} />}
-          reference={reference}
-          target={target}
-          filter={{ [target]: get(record, foreignKey), ...filter }}
-          pagination={<Pagination />}
-        >
-          {isMobile &&
-          mobileBreakpoint !== false &&
-          mobilePrimaryText !== null ? (
-            <SimpleList
-              primarySource={mobilePrimaryText}
-              primaryComponent={mobilePrimaryComponent}
-              primaryComponentProps={mobilePrimaryComponentProps}
-              secondarySource={mobileSecondaryText}
-              secondaryComponent={mobileSecondaryComponent}
-              secondaryComponentProps={mobileSecondaryComponentProps}
-              tertiarySource={mobileTertiaryText}
-              tertiaryComponent={mobileTertiaryComponent}
-              tertiaryComponentProps={mobileTertiaryComponentProps}
-              linkType={mobileLinkType}
-              components={components}
-            />
-          ) : (
-            <Datagrid>
-              {React.Children.map(props.children, (field, index) =>
-                React.isValidElement(field)
-                  ? React.cloneElement(field, { key: index })
-                  : null
-              )}
-              {Component.mapColumns(columns, components)}
-              {modify && <EditButton />}
-              {remove && <DeleteWithConfirmButton redirect={removeRedir} />}
-            </Datagrid>
-          )}
-        </ReferenceManyField>
-        <ValidationError submitError={submitError} classes={classes} />
-        {create && parentRecordExists > 0 && (
-          <Toolbar
-            {...{
-              additionalData,
-              createLabel,
-              record,
-              reference,
-              resource,
-              target,
-            }}
+  const content = parentRecordExists ? (
+    <Fragment>
+      <ReferenceManyField
+        {...props}
+        empty={<EmptyMessage classes={classes} emptyText={empty} />}
+        reference={reference}
+        target={target}
+        filter={{ [target]: get(record, foreignKey), ...filter }}
+        pagination={<Pagination />}
+      >
+        {isMobile &&
+        mobileBreakpoint !== false &&
+        mobilePrimaryText !== null ? (
+          <SimpleList
+            primarySource={mobilePrimaryText}
+            primaryComponent={mobilePrimaryComponent}
+            primaryComponentProps={mobilePrimaryComponentProps}
+            secondarySource={mobileSecondaryText}
+            secondaryComponent={mobileSecondaryComponent}
+            secondaryComponentProps={mobileSecondaryComponentProps}
+            tertiarySource={mobileTertiaryText}
+            tertiaryComponent={mobileTertiaryComponent}
+            tertiaryComponentProps={mobileTertiaryComponentProps}
+            linkType={mobileLinkType}
+            components={components}
           />
+        ) : (
+          <Datagrid>
+            {React.Children.map(props.children, (field, index) =>
+              React.isValidElement(field)
+                ? React.cloneElement(field, { key: index })
+                : null
+            )}
+            {Component.mapColumns(columns, components)}
+            {modify && <EditButton />}
+            {remove && <DeleteWithConfirmButton redirect={removeRedir} />}
+          </Datagrid>
         )}
-      </Fragment>
-    ) : (
-      <Sorry sorryText={sorry} classes={classes} />
-    );
+      </ReferenceManyField>
+      <ValidationError submitError={submitError} classes={classes} />
+      {create && parentRecordExists > 0 && (
+        <Toolbar
+          {...{
+            additionalData,
+            createLabel,
+            record,
+            reference,
+            resource,
+            target,
+          }}
+        />
+      )}
+    </Fragment>
+  ) : (
+    <Sorry sorryText={sorry} classes={classes} />
+  );
   return props?.addLabel !== false ? (
     <Labeled
       {...props}

@@ -1,4 +1,4 @@
-import { getHeaders, getToken, useToken } from "./authHeaders";
+import { getHeaders, getToken, useRoles, useToken } from "./authHeaders";
 
 import convertFile from "./convertFile";
 import createAuthProvider from "./createAuthProvider";
@@ -13,6 +13,7 @@ export * from "./workflow/index.js";
 export {
   getHeaders,
   getToken,
+  useRoles,
   useToken,
   convertFile,
   createAuthProvider,

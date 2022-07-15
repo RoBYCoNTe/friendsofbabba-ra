@@ -6,6 +6,7 @@ import Toolbar from "./Toolbar";
 import Unprop from "./Unprop";
 import ValidationItem from "./ValidationItem";
 import ValidationSummary from "./ValidationSummary";
+import useBackUrl from "./useBackUrl";
 
 export {
   FormTab,
@@ -16,4 +17,5 @@ export {
   Unprop,
   ValidationItem,
   ValidationSummary,
+  useBackUrl,
 };

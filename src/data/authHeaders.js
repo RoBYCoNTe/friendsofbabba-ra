@@ -1,5 +1,9 @@
 import { useMemo } from "react";
 
+export function useRoles() {
+  const roles = JSON.parse(localStorage.getItem("roles") || "[]") || [];
+  return roles;
+}
 export function notifyToken(token) {
   var event = new Event("login");
   event.key = "token";

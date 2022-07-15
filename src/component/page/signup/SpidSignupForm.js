@@ -35,6 +35,10 @@ const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.default,
     height: "98vh",
+    "& .create-page > div": {
+      minWidth: "auto",
+      maxWidth: "auto",
+    },
   },
 }));
 
@@ -104,7 +108,7 @@ const SpidSignupForm = ({
   return (
     <SignupStepperProvider>
       <Grid container justifyContent="center" className={classes.root}>
-        <Grid item lg={5} md={8} sm={10} xs={12}>
+        <Grid item lg={6} md={6} sm={8} xs={12}>
           {logo}
           {React.isValidElement(title) ? (
             title
