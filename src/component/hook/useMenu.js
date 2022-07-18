@@ -5,7 +5,7 @@ const { usePermissions, getResources, useTranslate } = require("ra-core");
 const { useMemo } = require("react");
 const { shallowEqual } = require("react-redux");
 
-const useMenu = ({ order, hasDashboard, badges, items = [] }) => {
+const useMenu = ({ order, hasDashboard, badges, items = [], identity }) => {
   const translate = useTranslate();
   const { loaded, permissions } = usePermissions();
   const resources = useSelector(getResources, shallowEqual);
@@ -20,6 +20,7 @@ const useMenu = ({ order, hasDashboard, badges, items = [] }) => {
             hasDashboard,
             items,
             translate,
+            identity,
           })
         : [],
     [

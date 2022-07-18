@@ -24,7 +24,7 @@ const Menu = ({
 }) => {
   const { loading, loaded, identity } = useGetIdentity();
   const { permissions } = usePermissions();
-  const menu = useMenu({ order, hasDashboard, badges, items });
+  const menu = useMenu({ order, hasDashboard, badges, items, identity });
   const translate = useTranslate();
   if (
     loading ||

@@ -22,6 +22,7 @@ const createGroups = ({
   hasDashboard,
   items = [],
   translate,
+  identity,
 }) => {
   let groups = (
     hasDashboard
@@ -48,11 +49,12 @@ const createGroups = ({
         },
       }))
     )
-    .filter(
-      (item) =>
-        permissions &&
-        (item.options.roles === undefined ||
-          item.options.roles.filter((role) => permissions(role)).length > 0)
+    .filter((item) =>
+      item.options.accessible
+        ? item.options.accessible(identity, permissions)
+        : permissions &&
+          (item.options.roles === undefined ||
+            item.options.roles.filter((role) => permissions(role)).length > 0)
     )
     .reduce((groups, resource) => {
       let groupName = resource.options ? resource.options.group : "";
