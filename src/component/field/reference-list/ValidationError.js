@@ -3,9 +3,11 @@ import React from "react";
 
 const ValidationError = ({ classes, submitError }) =>
   (submitError && typeof submitError === "string" && (
-    <FormHelperText error className={classes.error}>
-      {submitError}
-    </FormHelperText>
+    <FormHelperText
+      error
+      className={classes.error}
+      dangerouslySetInnerHTML={{ __html: submitError }}
+    />
   )) ||
   null;
 

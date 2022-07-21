@@ -62,7 +62,7 @@ const ValidationItem = ({ resource, field, error, translate, component }) => {
           </ListItemAvatar>
           <ListItemText
             primary={translate(`errors.${resource}.${name}`, { number })}
-            secondary={error}
+            secondary={<span dangerouslySetInnerHTML={{ __html: error }} />}
           />
         </Fragment>
       )}
