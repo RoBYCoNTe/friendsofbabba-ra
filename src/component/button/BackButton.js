@@ -20,7 +20,13 @@ import React from "react";
  *
  * @returns {React.ReactElement}
  */
-const BackButton = ({ resource, baseRecord, to, ...props }) => {
+const BackButton = ({
+  resource,
+  baseRecord,
+  to,
+  label = "ra.action.back",
+  ...props
+}) => {
   return (
     <Button
       {...props}
@@ -30,7 +36,7 @@ const BackButton = ({ resource, baseRecord, to, ...props }) => {
           pathname: `/${resource}`,
         }
       }
-      label={"ra.action.back"}
+      label={label}
     >
       <BackIcon />
     </Button>

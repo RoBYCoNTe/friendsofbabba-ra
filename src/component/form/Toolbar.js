@@ -40,6 +40,7 @@ const Toolbar = ({
   validating,
   useWorkflow,
   useCustomButtons = false,
+  useBackButton = true,
   maxButtonsToDisplay = 1,
   stateFilter,
   ...props
@@ -131,7 +132,9 @@ const Toolbar = ({
       {!useWorkflow && !useCustomButtons && record?.id > 0 && (
         <DeleteWithConfirmButton redirect={backUrl} />
       )}
-      {(useWorkflow || !useCustomButtons) && <BackButton to={backUrl} />}
+      {(useWorkflow || !useCustomButtons) && useBackButton && (
+        <BackButton to={backUrl} />
+      )}
     </RaToolbar>
   );
 };
