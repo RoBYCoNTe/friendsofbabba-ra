@@ -25,18 +25,16 @@ const GroupTitle = ({ title, subTitle, divider = true, color }) => {
         classes={{ root: classes.title }}
         variant="h6"
         gutterBottom
-      >
-        {title}
-      </Typography>
+        dangerouslySetInnerHTML={{ __html: title }}
+      />
       {divider && <Divider classes={{ root: classes.spacer }} />}
       {subTitle && (
         <Typography
           color={color}
           classes={{ root: classes.subTitle }}
           variant="body1"
-        >
-          {subTitle}
-        </Typography>
+          dangerouslySetInnerHTML={{ __html: subTitle }}
+        />
       )}
     </Fragment>
   );
