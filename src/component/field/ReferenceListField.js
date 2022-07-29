@@ -1,13 +1,8 @@
-import {
-  Datagrid,
-  EditButton,
-  Labeled,
-  ReferenceManyField,
-  useInput,
-} from "react-admin";
+import { EditButton, Labeled, ReferenceManyField, useInput } from "react-admin";
 import { Fragment, useMemo } from "react";
 
 import Component from "../crud/Component";
+import { Datagrid } from "../index";
 import DeleteWithConfirmButton from "../button/DeleteWithConfirmButton";
 import EmptyMessage from "./reference-list/EmptyMessage";
 import Pagination from "./reference-list/Pagination";
@@ -250,7 +245,7 @@ const ReferenceListField = ({
             components={components}
           />
         ) : (
-          <Datagrid>
+          <Datagrid inner>
             {React.Children.map(props.children, (field, index) =>
               React.isValidElement(field)
                 ? React.cloneElement(field, { key: index })
