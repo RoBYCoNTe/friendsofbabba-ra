@@ -3,8 +3,8 @@ import React, { useCallback } from "react";
 import { lighten, useTheme } from "@material-ui/core/styles";
 
 import Datagrid from "./Datagrid";
-
-const handleRowClick = (id, basePath, record) => record?.resource;
+import moment from "moment";
+import { useDataProvider } from "react-admin";
 
 const NotificationList = ({ ...props }) => {
   const theme = useTheme();
@@ -21,6 +21,20 @@ const NotificationList = ({ ...props }) => {
         : lighten(theme.palette.warning.light, 0.8),
     }),
     [theme]
+  );
+  const dataProvider = useDataProvider();
+  const handleRowClick = useCallback(
+    (id, basePath, record) => {
+      dataProvider.update("notifications", {
+        id: record.id,
+        data: {
+          ...record,
+          readed: moment().format(),
+        },
+      });
+      return record?.resource;
+    },
+    [dataProvider]
   );
   return (
     <Datagrid
