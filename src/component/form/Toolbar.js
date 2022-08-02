@@ -41,6 +41,7 @@ const Toolbar = ({
   useWorkflow,
   useCustomButtons = false,
   useBackButton = true,
+  useDeleteButton = true,
   maxButtonsToDisplay = 1,
   stateFilter,
   ...props
@@ -129,9 +130,10 @@ const Toolbar = ({
             components={components}
           />
         ))}
-      {!useWorkflow && !useCustomButtons && record?.id > 0 && (
-        <DeleteWithConfirmButton redirect={backUrl} />
-      )}
+      {!useWorkflow &&
+        !useCustomButtons &&
+        useDeleteButton &&
+        record?.id > 0 && <DeleteWithConfirmButton redirect={backUrl} />}
       {(useWorkflow || !useCustomButtons) && useBackButton && (
         <BackButton to={backUrl} />
       )}
