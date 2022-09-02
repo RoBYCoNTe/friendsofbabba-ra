@@ -1,5 +1,5 @@
-import { FileInput, InputHelperText, Labeled } from "react-admin";
-import React, { Fragment } from "react";
+import { FileInput, InputHelperText, Labeled, useNotify } from "react-admin";
+import React, { Fragment, useCallback } from "react";
 
 import { FormHelperText } from "@material-ui/core";
 import MediaField from "../field/MediaField";
@@ -17,6 +17,14 @@ const useStyles = makeStyles((theme) => ({
 
 const MediaInput = ({ title, disabled, ...props }) => {
   const classes = useStyles();
+  const notify = useNotify();
+  const handleRejection = useCallback(
+    () =>
+      props?.multiple
+        ? notify("ra.message.files_rejected", { type: "error" })
+        : notify("ra.message.file_rejected", { type: "error" }),
+    [props?.multiple, notify]
+  );
   if (disabled) {
     const value = get(props.record, props.source);
     const files = value ? (Array.isArray(value) ? value : [value]) : [];
@@ -44,7 +52,13 @@ const MediaInput = ({ title, disabled, ...props }) => {
     );
   }
   return (
-    <FileInput {...props}>
+    <FileInput
+      {...props}
+      options={{
+        onDropRejected: handleRejection,
+        ...props?.options,
+      }}
+    >
       <MediaField source="filepath" title={title} />
     </FileInput>
   );
