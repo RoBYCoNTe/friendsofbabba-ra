@@ -2,7 +2,7 @@ import { EditButton, Labeled, ReferenceManyField, useInput } from "react-admin";
 import { Fragment, useMemo } from "react";
 
 import Component from "../crud/Component";
-import { Datagrid } from "../index";
+import Datagrid from "../list/Datagrid";
 import DeleteWithConfirmButton from "../button/DeleteWithConfirmButton";
 import EmptyMessage from "./reference-list/EmptyMessage";
 import Pagination from "./reference-list/Pagination";
