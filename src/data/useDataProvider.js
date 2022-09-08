@@ -18,7 +18,7 @@ const useDataProvider = ({
 }) => {
   const memoizedFn = useMemo(
     () => createDataProvider({ apiUrl, fileFields, filesParser }),
-    [apiUrl, fileFields]
+    [apiUrl, fileFields, filesParser]
   );
   return memoizedFn;
 };

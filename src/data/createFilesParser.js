@@ -28,6 +28,25 @@ const parseFiles = async (data, fileFields) => {
   return Promise.resolve(data);
 };
 
+const parse = async (data, fileFields) => {
+  for (var prop in data) {
+    if (data.hasOwnProperty(prop)) {
+      const isProbableFile = fileFields.indexOf(prop) !== -1;
+      if (isProbableFile) {
+        data = await parse(data, [prop]);
+      } else if (Array.isArray(data[prop])) {
+        data[prop] = await Promise.all(
+          data[prop].map((item) => parse(item, fileFields))
+        );
+      } else if (typeof data[prop] === "object") {
+        data[prop] = await parse(data[prop], fileFields);
+      }
+    } else {
+      data[prop] = await parse(data[prop], fileFields);
+    }
+  }
+  return Promise.resolve(data);
+};
 /**
  * Return function that will be used, before every POST/PATCH/PUT request,
  * to check if the data contains files and if so, parse them.
@@ -42,25 +61,6 @@ const parseFiles = async (data, fileFields) => {
  * @returns {Promise<Object>}
  *  Return input data with files parsed.
  */
-const createFilesParser = () => async (data, fileFields) => {
-  const localParser = createFilesParser();
-  for (var prop in data) {
-    if (data.hasOwnProperty(prop)) {
-      const isProbableFile = fileFields.indexOf(prop) !== -1;
-      if (isProbableFile) {
-        data = await parseFiles(data, [prop]);
-      } else if (Array.isArray(data[prop])) {
-        data[prop] = await Promise.all(
-          data[prop].map((item) => localParser(item, fileFields))
-        );
-      } else if (typeof data[prop] === "object") {
-        data[prop] = await localParser(data[prop], fileFields);
-      }
-    } else {
-      data[prop] = await localParser(data[prop], fileFields);
-    }
-  }
-  return Promise.resolve(data);
-};
+const createFilesParser = () => parse;
 
 export default createFilesParser;
