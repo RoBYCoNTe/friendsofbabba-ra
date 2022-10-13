@@ -2,10 +2,8 @@ import React, { useContext, useMemo } from "react";
 
 import Alert from "../Alert";
 import AlertTitle from "../AlertTitle";
-import PropTypes from "prop-types";
 import { Typography } from "@material-ui/core";
 import { WorkflowContext } from "../../data/workflow/WorkflowContext";
-import { get } from "lodash";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -13,6 +11,33 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
   },
 }));
+
+/**
+ * Allow to display the state of a workflow based on the current record.
+ * This field display the 'name' and 'description' of current state inside an alert.
+ *
+ * You can customize few options, if you want to use just the informations
+ * necessary to work with the workflow, you can use the 'WorkflowContext' (inside a form)
+ * like in the example shown below.
+ *
+ * @example
+ * import { useWorkflow, WorkflowContext } from "ra-friendsofbabba";
+ * const { getWorkflow } = useContext(WorkflowContext);
+ * const workflow = useMemo(() => getWorkflow(resource), [resource, getWorkflow] );
+ * const state = useMemo(() => (workflow && workflow.getState(record)) || undefined, [record, workflow]);
+ *
+ * // The state object contains many properties like: name,
+ * // label and description that you can use
+ * // for your own purpose.
+ *
+ * @param {Object} props
+ * @param {String} props.resource The resource for which load the workflow.
+ * @param {String} props.severity Severity of the associated allert.
+ * @param {String} props.variant Variant of the associated allert.
+ * @param {Number} props.elevation Elevation of the associated allert.
+ * @param {Object} props.record The record for which display the state.
+ * @returns {React.Component}
+ */
 const StateInfoField = ({
   resource,
   severity = "info",
@@ -27,13 +52,7 @@ const StateInfoField = ({
     [resource, getWorkflow]
   );
   const state = useMemo(
-    () =>
-      (workflow &&
-        workflow.getState({
-          ...record,
-          transaction: get(record, "transaction", record),
-        })) ||
-      undefined,
+    () => (workflow && workflow.getState(record)) || undefined,
     [record, workflow]
   );
   return (
@@ -43,10 +62,4 @@ const StateInfoField = ({
     </Alert>
   );
 };
-
-StateInfoField.propTypes = {
-  ...Alert.propTypes,
-  resource: PropTypes.string.isRequired,
-};
-
 export default StateInfoField;
