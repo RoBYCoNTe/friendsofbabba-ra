@@ -14,22 +14,24 @@ import NotificationField from "./NotificationField";
 import ProgressField from "./ProgressField";
 import ReferenceListField from "./ReferenceListField";
 import StateField from "./StateField";
+import StateInfoField from "./StateInfoField";
 import TransactionLogsField from "./TransactionLogsField";
 import useFieldLabel from "./useFieldLabel";
 
 export {
   BooleanField,
   ChipArrayField,
-  DateAgoField,
   ChipField,
+  DateAgoField,
   DateField,
   EmailField,
+  LongTextField,
+  MediaField,
   NotificationField,
   ProgressField,
   ReferenceListField,
-  LongTextField,
-  MediaField,
   StateField,
+  StateInfoField,
   TextField,
   TransactionLogsField,
   useFieldLabel,

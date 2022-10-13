@@ -65,10 +65,9 @@ class Workflow {
       return [];
     }
     let possibleStates = [];
-    if (record.transaction) {
-      const state = this.states.find(
-        (state) => state.code === record.transaction.state
-      );
+    const stateCode = record?.state || record?.transaction?.state;
+    if (stateCode) {
+      const state = this.states.find((state) => state.code === stateCode);
       possibleStates = Object.keys(state.transitions).map((code) =>
         this.states.find((s) => s.code === code)
       );
@@ -89,9 +88,10 @@ class Workflow {
     if (!record || !state) {
       return false;
     }
-    if (record.transaction) {
+    const stateCode = record?.state || record?.transaction?.state;
+    if (stateCode) {
       const currentState = this.states.find(
-        (state) => state.code === record.transaction.state
+        (state) => state.code === stateCode
       );
       if (currentState && currentState.transitions[state.code]) {
         return currentState.transitions[state.code].notesRequired;
@@ -101,11 +101,11 @@ class Workflow {
   }
 
   getState(record) {
-    const transaction = record.transaction;
-    if (!transaction) {
+    const state = record?.state || record?.transaction?.state;
+    if (!state) {
       return null;
     }
-    return this.states.find((s) => s.code === transaction.state);
+    return this.states.find((s) => s.code === state);
   }
   getStateByCode(code) {
     return this.states.find((s) => s.code === code);
