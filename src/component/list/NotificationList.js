@@ -1,6 +1,6 @@
 import { DateAgoField, NotificationField } from "../field/index.js";
-import React, { useCallback } from "react";
-import { lighten, useTheme } from "@material-ui/core/styles";
+import React, { memo, useCallback, useMemo } from "react";
+import { darken, lighten, useTheme } from "@material-ui/core/styles";
 
 import Datagrid from "./Datagrid";
 import moment from "moment";
@@ -8,19 +8,28 @@ import { useDataProvider } from "react-admin";
 
 const NotificationList = ({ ...props }) => {
   const theme = useTheme();
+
+  const { type, colorize, density } = useMemo(
+    () => ({
+      type: theme.palette.type,
+      colorize: theme.palette.type === "dark" ? darken : lighten,
+      density: theme.palette.type === "dark" ? 0.5 : 0.9,
+    }),
+    [theme.palette.type]
+  );
   const handleRowStyle = useCallback(
     (record) => ({
       marginLeft: -2,
       borderLeftWidth: 2,
       borderLeftStyle: "solid",
       borderLeftColor: record?.readed
-        ? lighten(theme.palette.primary.light, 0.9)
-        : theme.palette.warning.light,
+        ? colorize(theme.palette.primary[type], density)
+        : theme.palette.secondary[type],
       backgroundColor: record?.readed
-        ? lighten(theme.palette.primary.light, 0.9)
-        : lighten(theme.palette.warning.light, 0.8),
+        ? colorize(theme.palette.primary[type], density)
+        : colorize(theme.palette.secondary[type], density),
     }),
-    [theme]
+    [theme, type, colorize, density]
   );
   const dataProvider = useDataProvider();
   const handleRowClick = useCallback(

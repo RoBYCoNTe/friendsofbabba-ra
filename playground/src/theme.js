@@ -1,6 +1,10 @@
 import { createTheme } from "@material-ui/core/styles";
 
+const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)");
 const theme = createTheme({
+  palette: {
+    type: prefersDarkMode.matches ? "dark" : "light",
+  },
   props: {
     MuiButton: {
       disableElevation: true,
