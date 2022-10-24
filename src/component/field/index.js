@@ -16,6 +16,7 @@ import ReferenceListField from "./ReferenceListField";
 import StateField from "./StateField";
 import StateInfoField from "./StateInfoField";
 import TransactionLogsField from "./TransactionLogsField";
+import TransactionNotesField from "./TransactionNotesField";
 import useFieldLabel from "./useFieldLabel";
 
 export {
@@ -34,6 +35,7 @@ export {
   StateInfoField,
   TextField,
   TransactionLogsField,
+  TransactionNotesField,
   useFieldLabel,
 };
 

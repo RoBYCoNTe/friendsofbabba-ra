@@ -1,8 +1,17 @@
-import { ChipField } from "react-admin";
 import React, { useContext, useMemo } from "react";
 
+import { Chip } from "@material-ui/core";
+import LongTextField from "./LongTextField";
+import { WorkflowContext } from "../../index";
 import { get } from "lodash";
-import { WorkflowContext } from "../../data/workflow/WorkflowContext";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  chip: {
+    padding: theme.spacing(1),
+    height: "100%",
+  },
+}));
 
 const StateField = ({
   label = "app.label.workflow.state",
@@ -10,6 +19,7 @@ const StateField = ({
   resource: toResolve,
   ...props
 }) => {
+  const classes = useStyles();
   const { getWorkflow } = useContext(WorkflowContext);
   const resource = useMemo(
     () => toResolve.replace("workflow/transactions/", ""),
@@ -32,12 +42,17 @@ const StateField = ({
   );
 
   return (
-    <ChipField
-      {...props}
-      label={label}
-      source="name"
-      record={state}
+    <Chip
+      className={classes.chip}
       color="primary"
+      label={
+        <LongTextField
+          variant="body2"
+          maxWidth={200}
+          record={state}
+          source="name"
+        />
+      }
     />
   );
 };
