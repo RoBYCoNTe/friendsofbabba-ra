@@ -11,7 +11,7 @@ const Input = ({ component, disabled, ...props }) => {
     return { resource, source, record };
   }, [props, component]);
 
-  const { visible, disable } = useWorkflowInput({
+  const { visible, disabled: disable } = useWorkflowInput({
     ...props,
     resource,
     source,
