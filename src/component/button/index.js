@@ -7,6 +7,7 @@ import {
 import BackButton from "./BackButton";
 import DeleteWithConfirmButton from "./DeleteWithConfirmButton";
 import EditButton from "./EditButton";
+import ExportButton from "./ExportButton";
 import ExportToButton from "./ExportToButton";
 import ImpersonateUserButton from "./ImpersonateUserButton";
 import MarkAsReadedButton from "./MarkAsReadedButton";
@@ -20,6 +21,7 @@ export {
   DeleteButton,
   DeleteWithConfirmButton,
   EditButton,
+  ExportButton,
   ExportToButton,
   ImpersonateUserButton,
   MarkAsReadedButton,
