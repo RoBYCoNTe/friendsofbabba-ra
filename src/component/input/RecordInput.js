@@ -4,7 +4,7 @@ import { TextField } from "@material-ui/core";
 import { get } from "lodash";
 import { useDataProvider } from "react-admin";
 
-const InlineTextInput = ({ source, record, resource, minWidth = 300 }) => {
+const RecordInput = ({ source, record, resource, minWidth = 300 }) => {
   const [value, setValue] = useState(get(record, source, ""));
   const [updating, setUpdating] = useState(false);
   const handleChange = useCallback((evt) => setValue(evt.target.value), []);
@@ -22,6 +22,7 @@ const InlineTextInput = ({ source, record, resource, minWidth = 300 }) => {
           data: {
             ...record,
             [source]: value,
+            _changed: source,
           },
         })
         .then(() => setUpdating(false));
@@ -59,4 +60,4 @@ const InlineTextInput = ({ source, record, resource, minWidth = 300 }) => {
   );
 };
 
-export default InlineTextInput;
+export default RecordInput;
