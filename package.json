@@ -31,7 +31,7 @@
     "autoprefixer": "10.4.5"
   },
   "scripts": {
-    "build": "rollup -c",
+    "build": "rollup -c --waitForBundleInput",
     "build-watch": "rollup -c -w",
     "start-playground": "cd playground && npm run start",
     "start-wb-playground": "cd playground-workbench && npm run start",
