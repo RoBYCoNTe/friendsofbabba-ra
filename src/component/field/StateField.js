@@ -2,7 +2,7 @@ import React, { useContext, useMemo } from "react";
 
 import { Chip } from "@material-ui/core";
 import LongTextField from "./LongTextField";
-import { WorkflowContext } from "../../index";
+import { WorkflowContext } from "data/workflow/WorkflowContext";
 import { get } from "lodash";
 import { makeStyles } from "@material-ui/core/styles";
 

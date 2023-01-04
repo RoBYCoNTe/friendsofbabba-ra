@@ -1,4 +1,4 @@
-import React, { Fragment, useMemo } from "react";
+import React, { Fragment, useCallback, useMemo } from "react";
 import { TextField, makeStyles } from "@material-ui/core";
 import { useInput, useTranslate } from "react-admin";
 
@@ -39,21 +39,24 @@ const DateTimeInput = (props) => {
   } = useInput(props);
   const { date, time } = useMemo(() => getDateAndTime(value), [value]);
   const stopTimeChange = !value || value === null;
-  const handleChange = (part, e) => {
-    let { date, time } = getDateAndTime(value);
-    switch (part) {
-      case "date":
-        date = e.target.value;
-        break;
-      case "time":
-        time = e.target.value;
-        break;
-      default:
-        break;
-    }
-    let dateAndTime = [date, time].join(" ");
-    onChange(dateAndTime);
-  };
+  const handleChange = useCallback(
+    (part) => (e) => {
+      let { date, time } = getDateAndTime(value);
+      switch (part) {
+        case "date":
+          date = e.target.value;
+          break;
+        case "time":
+          time = e.target.value;
+          break;
+        default:
+          break;
+      }
+      let dateAndTime = [date, time].join(" ");
+      onChange(dateAndTime);
+    },
+    [value, onChange]
+  );
   const label = props.label || props.source;
   const translate = useTranslate();
   return (
@@ -71,7 +74,7 @@ const DateTimeInput = (props) => {
         required={isRequired}
         classes={{ root: classes.leftInput }}
         value={date}
-        onChange={handleChange.bind(this, "date")}
+        onChange={handleChange("date")}
         {...rest}
       />
       <TextField
@@ -81,7 +84,7 @@ const DateTimeInput = (props) => {
         required={isRequired}
         classes={{ root: classes.rightInput }}
         value={time}
-        onChange={stopTimeChange ? null : handleChange.bind(this, "time")}
+        onChange={stopTimeChange ? null : handleChange("time")}
         {...rest}
       />
     </Fragment>
