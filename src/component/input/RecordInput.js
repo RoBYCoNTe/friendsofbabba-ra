@@ -40,6 +40,7 @@ const RecordInput = ({ source, record, resource, minWidth = 300 }) => {
         data: {
           ...record,
           [source]: value,
+          _changed: source,
         },
       })
       .then(() => setUpdating(false));

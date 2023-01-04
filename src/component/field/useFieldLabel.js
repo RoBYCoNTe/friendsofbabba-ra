@@ -4,7 +4,7 @@ const useFieldLabel = ({ resource }) => {
   const t = useTranslate();
   return (field, translate = true) => {
     const label = `resources.${resource}.fields.${field}`;
-    return translate ? t(label) : label;
+    return translate ? t(label, { _: label }) : label;
   };
 };
 

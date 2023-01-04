@@ -1,7 +1,6 @@
 import {
   BooleanInput,
   DateInput,
-  DateTimeInput,
   NullableBooleanInput,
   NumberInput,
   SearchInput,
@@ -9,6 +8,11 @@ import {
   TextInput,
 } from "react-admin";
 
+import Autocomplete from "./Autocomplete";
+import AutocompleteArrayInput from "./AutocompleteArrayInput";
+import AutocompleteInput from "./AutocompleteInput";
+import DateRangeInput from "./DateRangeInput";
+import DateTimeInput from "./DateTimeInput";
 import DebouncedDateInput from "./DebouncedDateInput";
 import DebouncedNumberInput from "./DebouncedNumberInput";
 import DebouncedTextInput from "./DebouncedTextInput";
@@ -25,8 +29,12 @@ import TransactionNotesInput from "./TransactionNotesInput";
 import TransactionNotesIsPrivateInput from "./TransactionNotesIsPrivateInput";
 
 export {
+  Autocomplete,
+  AutocompleteInput,
+  AutocompleteArrayInput,
   BooleanInput,
   DateInput,
+  DateRangeInput,
   DateTimeInput,
   DebouncedDateInput,
   DebouncedNumberInput,

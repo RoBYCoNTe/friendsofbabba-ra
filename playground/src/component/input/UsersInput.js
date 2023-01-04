@@ -1,12 +1,15 @@
-import { AutocompleteArrayInput, ReferenceArrayInput } from "react-admin";
-import { useManyFormatter, useManyParser } from "ra-friendsofbabba";
+import {
+  AutocompleteArrayInput,
+  useManyFormatter,
+  useManyParser,
+} from "ra-friendsofbabba";
 
 import React from "react";
+import { ReferenceArrayInput } from "react-admin";
 
 const UsersInput = (props) => {
   const manyFormatter = useManyFormatter();
   const manyParser = useManyParser();
-
   return (
     <ReferenceArrayInput
       {...props}
@@ -15,7 +18,7 @@ const UsersInput = (props) => {
       parse={manyParser}
       fullWidth
     >
-      <AutocompleteArrayInput optionText="name" />
+      <AutocompleteArrayInput optionText="name" helperText="Hello, World!" />
     </ReferenceArrayInput>
   );
 };

@@ -7,12 +7,17 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   progress: {
     height: 20 + theme.spacing(1),
-    width: "100%",
+    width: 100,
     borderRadius: theme.spacing(0.5),
   },
   label: {
-    position: "absolute",
+    position: "relative",
     color: theme.palette.primary.contrastText,
+    display: "block",
+    float: "left",
+    marginLeft: -100,
+    width: 100,
+    textAlign: "center",
   },
 }));
 
@@ -28,6 +33,7 @@ const ProgressField = ({ record, source }) => {
         color={get(record, source) >= 100 ? "primary" : "secondary"}
         value={get(record, source)}
       />
+
       <Typography className={classes.label}>
         {get(record, source, 0).toFixed(2)}%
       </Typography>

@@ -1,6 +1,6 @@
-import { AutocompleteInput, ReferenceInput } from "react-admin";
-
+import AutocompleteInput from "component/input/AutocompleteInput";
 import React from "react";
+import { ReferenceInput } from "react-admin";
 
 const ReferenceAutocompleteInput = ({ optionText, helperText, ...props }) => (
   <ReferenceInput {...props}>
