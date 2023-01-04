@@ -1,6 +1,7 @@
 import {
   Datagrid,
   DateField,
+  Labeled,
   Pagination,
   ReferenceManyField,
   SimpleList,
@@ -10,7 +11,7 @@ import React, { useContext, useMemo } from "react";
 
 import StateField from "./StateField";
 import TransactionNotesField from "./TransactionNotesField";
-import { WorkflowContext } from "../../data/workflow/WorkflowContext";
+import { WorkflowContext } from "data/workflow/WorkflowContext";
 import { get } from "lodash";
 import useFieldLabel from "./useFieldLabel";
 import { useMediaQuery } from "@material-ui/core";
@@ -37,7 +38,7 @@ const TransactionLogsField = ({ admin = false, label, ...props }) => {
     return null;
   }
 
-  return (
+  const content = (
     <ReferenceManyField
       perPage={5}
       pagination={<PaginationWrapper />}
@@ -95,6 +96,13 @@ const TransactionLogsField = ({ admin = false, label, ...props }) => {
         </Datagrid>
       )}
     </ReferenceManyField>
+  );
+  return props?.addLabel !== false ? (
+    <Labeled {...props} label={props?.label} fullWidth={props?.fullWidth}>
+      {content}
+    </Labeled>
+  ) : (
+    content
   );
 };
 

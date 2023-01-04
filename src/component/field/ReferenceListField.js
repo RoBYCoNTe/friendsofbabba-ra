@@ -20,9 +20,9 @@ import { useMediaQuery } from "@material-ui/core";
 const useStyles = makeStyles(
   (theme) => ({
     root: {
-      "& .MuiFormLabel-root": {
-        padding: theme.spacing(1),
-      },
+      // "& .MuiFormLabel-root": {
+      //   padding: theme.spacing(1),
+      // },
       "& .MuiCardContent-root:first-child": {
         padding: theme.spacing(1),
         paddingTop: 0,
@@ -35,12 +35,12 @@ const useStyles = makeStyles(
     },
     toolbar: {},
     sorry: {
-      padding: theme.spacing(1),
+      padding: theme.spacing(2),
       paddingTop: 0,
       paddingBottom: 0,
     },
     empty: {
-      padding: theme.spacing(1),
+      padding: theme.spacing(2),
       paddingTop: theme.spacing(0.5),
       paddingBottom: theme.spacing(0.5),
     },
@@ -252,13 +252,15 @@ const ReferenceListField = ({
                 : null
             )}
             {Component.mapColumns(columns, components)}
-            {modify && <EditButton />}
-            {remove && <DeleteWithConfirmButton redirect={removeRedir} />}
+            {!props.disabled && modify && <EditButton />}
+            {!props.disabled && remove && (
+              <DeleteWithConfirmButton redirect={removeRedir} />
+            )}
           </Datagrid>
         )}
       </ReferenceManyField>
       <ValidationError submitError={submitError} classes={classes} />
-      {create && parentRecordExists > 0 && (
+      {!props.disabled && create && parentRecordExists > 0 && (
         <Toolbar
           {...{
             additionalData,

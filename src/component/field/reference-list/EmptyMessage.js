@@ -7,7 +7,7 @@ const EmptyMessage = ({ classes, emptyText }) => {
   return React.isValidElement(emptyText) ? (
     React.cloneElement(emptyText, { key: "empty" })
   ) : (
-    <Typography className={classes.empty} key="empty">
+    <Typography className={classes.empty} key="empty" variant="body2">
       {translate(emptyText)}
     </Typography>
   );

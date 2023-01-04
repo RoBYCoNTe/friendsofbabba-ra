@@ -2,6 +2,7 @@ import {
   FieldTitle,
   InputHelperText,
   useInput,
+  useResourceContext,
   useTranslate,
 } from "react-admin";
 import React, { useCallback, useMemo } from "react";
@@ -71,7 +72,8 @@ const AutocompleteArrayInput = ({
   );
   const { label, help } = useMemo(() => {
     const label = getFieldLabel(props?.source);
-    const help = translate(helperText, { _: helperText });
+    const help =
+      helperText !== null ? translate(helperText, { _: helperText }) : null;
     return { label, help };
   }, [props?.source, helperText]);
 

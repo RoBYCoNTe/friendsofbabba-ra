@@ -18,7 +18,7 @@ const UsersInput = (props) => {
       parse={manyParser}
       fullWidth
     >
-      <AutocompleteArrayInput optionText="name" helperText="Hello, World!" />
+      <AutocompleteArrayInput resource={props?.resource} optionText="name" />
     </ReferenceArrayInput>
   );
 };

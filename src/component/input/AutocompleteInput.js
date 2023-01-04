@@ -59,7 +59,8 @@ const AutocompleteInput = ({
   );
   const { label, help } = useMemo(() => {
     const label = getFieldLabel(props?.source);
-    const help = translate(helperText, { _: helperText });
+    const help =
+      helperText !== null ? translate(helperText, { _: helperText }) : null;
     return { label, help };
   }, [props?.source, helperText]);
   const handleTextChange = useDebouncedCallback(
@@ -81,7 +82,7 @@ const AutocompleteInput = ({
           onChange={handleTextChange}
           helperText={
             <InputHelperText
-              helperText={help}
+              helperText={help || ""}
               touched={touched}
               error={submitError}
             />

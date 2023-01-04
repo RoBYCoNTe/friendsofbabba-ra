@@ -3,19 +3,19 @@ import React, { Fragment, useCallback } from "react";
 
 import { FormHelperText } from "@material-ui/core";
 import MediaField from "../field/MediaField";
+import Typography from "@material-ui/core/Typography";
 import { get } from "lodash";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
-  labeled: {
-    padding: theme.spacing(1),
-  },
-  list: {
-    margin: theme.spacing(1),
+  root: {
+    padding: theme.spacing(2),
+    paddingTop: theme.spacing(0.5),
+    paddingBottom: theme.spacing(0.5),
   },
 }));
 
-const MediaInput = ({ title, disabled, ...props }) => {
+const MediaInput = ({ title, disabled, empty = "Empty", ...props }) => {
   const classes = useStyles();
   const notify = useNotify();
   const handleRejection = useCallback(
@@ -30,7 +30,7 @@ const MediaInput = ({ title, disabled, ...props }) => {
     const files = value ? (Array.isArray(value) ? value : [value]) : [];
 
     return (
-      <Labeled {...props} className={classes.labeled}>
+      <Labeled {...props}>
         <Fragment>
           {files.map((file, index) => (
             <MediaField
@@ -40,6 +40,14 @@ const MediaInput = ({ title, disabled, ...props }) => {
               title={title}
             />
           ))}
+          {files.length === 0 && disabled && empty && (
+            <Typography
+              key="empty"
+              variant="body2"
+              classes={classes}
+              dangerouslySetInnerHTML={{ __html: empty }}
+            />
+          )}
           <FormHelperText>
             <InputHelperText
               touched={false}

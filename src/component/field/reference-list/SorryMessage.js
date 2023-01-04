@@ -7,7 +7,7 @@ const SorryMessage = ({ sorryText, classes }) => {
   return React.isValidElement(sorryText) ? (
     React.cloneElement(sorryText, { key: "sorry" })
   ) : (
-    <Typography className={classes.sorry} key="sorry">
+    <Typography className={classes.sorry} key="sorry" variant="body2">
       {translate(sorryText)}
     </Typography>
   );
