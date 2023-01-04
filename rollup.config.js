@@ -55,7 +55,7 @@ const config = [
     // Build the TypeScript definitions for javascript files.
     // This task can be done only after generateDeclarations() call that
     // will generate required files for standard definitions.
-    input: "dist/index.d.ts",
+    input: "./dist/index.d.ts",
     output: [{ file: "dist/types.d.ts", format: "es" }],
     plugins: [dts()],
   },
