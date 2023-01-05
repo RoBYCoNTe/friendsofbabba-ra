@@ -251,7 +251,9 @@ const ReferenceListField = ({
                 ? React.cloneElement(field, { key: index })
                 : null
             )}
-            {Component.mapColumns(columns, components)}
+            {Component.mapColumns(columns, components, {
+              disabled: props.disabled,
+            })}
             {!props.disabled && modify && <EditButton />}
             {!props.disabled && remove && (
               <DeleteWithConfirmButton redirect={removeRedir} />
