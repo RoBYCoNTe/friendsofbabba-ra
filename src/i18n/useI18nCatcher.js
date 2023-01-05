@@ -45,9 +45,14 @@ const useI18nCatcher = ({ apiUrl, loading }) => {
       ) {
         message = message.replace("Warning: Missing translation for key: ", "");
         message = message.split('"').join("").trim();
-        if (message.indexOf(" ") !== -1) {
+        if (
+          message === null ||
+          message.indexOf(" ") !== -1 ||
+          message.indexOf(".") === -1
+        ) {
           return;
         }
+
         const lc = localStorage.getItem("locale") || locale;
         putMessage(apiUrl, lc, message);
         return;
