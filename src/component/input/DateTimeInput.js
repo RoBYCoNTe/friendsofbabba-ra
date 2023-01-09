@@ -1,6 +1,6 @@
+import { FieldTitle, useInput, useTranslate } from "react-admin";
 import React, { Fragment, useCallback, useMemo } from "react";
 import { TextField, makeStyles } from "@material-ui/core";
-import { useInput, useTranslate } from "react-admin";
 
 import { get } from "lodash";
 
@@ -62,7 +62,7 @@ const DateTimeInput = (props) => {
   return (
     <Fragment>
       <TextField
-        label={label}
+        label={<FieldTitle label={label} isRequired={isRequired} />}
         variant="filled"
         type="date"
         error={!!(touched && (error || submitError))}

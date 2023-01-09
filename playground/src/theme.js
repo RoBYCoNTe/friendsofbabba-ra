@@ -97,6 +97,16 @@ const FilterForm = {
     "& .filter-field > div:last-child": {
       width: theme.spacing(1),
     },
+    "& .filter-field .MuiAutocomplete-root": {
+      marginBottom: theme.spacing(0.7),
+      minWidth: 250,
+    },
+    [theme.breakpoints.down("sm")]: {
+      display: "block",
+      "& .filter-field, & .filter-field > .MuiFormControl-root": {
+        width: "100%",
+      },
+    },
   },
 };
 
