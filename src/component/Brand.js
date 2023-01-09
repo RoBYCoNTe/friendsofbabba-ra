@@ -65,7 +65,7 @@ const Brand = ({
 
         {subTitle ? (
           React.isValidElement(subTitle) ? (
-            title
+            subTitle
           ) : (
             <Typography color="textSecondary" variant="caption">
               {subTitle}
