@@ -1,16 +1,10 @@
-import {
-  FieldTitle,
-  InputHelperText,
-  useInput,
-  useTranslate,
-} from "react-admin";
+import { FieldTitle, InputHelperText, useInput } from "react-admin";
 import React, { useCallback, useMemo } from "react";
 import { TextField, makeStyles } from "@material-ui/core";
 
 import Autocomplete from "./Autocomplete";
 import { get } from "lodash";
 import useDebouncedCallback from "util/useDebouncedCallback";
-import useFieldLabel from "component/field/useFieldLabel";
 import { useFormState } from "react-final-form";
 
 const useStyles = makeStyles((theme) => ({
@@ -29,8 +23,6 @@ const AutocompleteInput = ({
   ...props
 }) => {
   const formState = useFormState({ subscription: { values: true } });
-  const translate = useTranslate();
-  const getFieldLabel = useFieldLabel(props);
   const classes = useStyles();
   const {
     input: { name, onChange, ...rest },
@@ -57,12 +49,7 @@ const AutocompleteInput = ({
     },
     [optionText]
   );
-  const { label, help } = useMemo(() => {
-    const label = getFieldLabel(props?.source);
-    const help =
-      helperText !== null ? translate(helperText, { _: helperText }) : null;
-    return { label, help };
-  }, [props?.source, helperText]);
+
   const handleTextChange = useDebouncedCallback(
     (e) => setFilter(e.target.value),
     1000
@@ -82,13 +69,19 @@ const AutocompleteInput = ({
           onChange={handleTextChange}
           helperText={
             <InputHelperText
-              helperText={help || ""}
+              helperText={helperText || ""}
               touched={touched}
               error={submitError}
             />
           }
           required={isRequired}
-          label={<FieldTitle label={label} isRequired={isRequired} />}
+          label={
+            <FieldTitle
+              label={props?.label}
+              source={props?.source}
+              resource={props?.resource}
+            />
+          }
           variant={"filled"}
           {...params}
         />

@@ -57,12 +57,18 @@ const DateTimeInput = (props) => {
     },
     [value, onChange]
   );
-  const label = props.label || props.source;
   const translate = useTranslate();
   return (
     <Fragment>
       <TextField
-        label={<FieldTitle label={label} isRequired={isRequired} />}
+        {...rest}
+        label={
+          <FieldTitle
+            label={props?.label}
+            source={props?.source}
+            resource={props?.resource}
+          />
+        }
         variant="filled"
         type="date"
         error={!!(touched && (error || submitError))}
@@ -75,7 +81,6 @@ const DateTimeInput = (props) => {
         classes={{ root: classes.leftInput }}
         value={date}
         onChange={handleChange("date")}
-        {...rest}
       />
       <TextField
         variant="filled"

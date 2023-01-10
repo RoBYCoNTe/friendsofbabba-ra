@@ -1,10 +1,4 @@
-import {
-  FieldTitle,
-  InputHelperText,
-  useInput,
-  useResourceContext,
-  useTranslate,
-} from "react-admin";
+import { FieldTitle, InputHelperText, useInput } from "react-admin";
 import React, { useCallback, useMemo } from "react";
 import { TextField, makeStyles } from "@material-ui/core";
 
@@ -13,7 +7,6 @@ import createManyFormatter from "data/cakephp/createManyFormatter";
 import createManyParser from "data/cakephp/createManyParser";
 import { get } from "lodash";
 import useDebouncedCallback from "util/useDebouncedCallback";
-import useFieldLabel from "component/field/useFieldLabel";
 import { useFormState } from "react-final-form";
 
 const useStyles = makeStyles(
@@ -39,8 +32,6 @@ const AutocompleteArrayInput = ({
   ...props
 }) => {
   const formState = useFormState({ subscription: { values: true } });
-  const translate = useTranslate();
-  const getFieldLabel = useFieldLabel(props);
   const classes = useStyles();
   const {
     input: { name, onChange, ...rest },
@@ -70,12 +61,6 @@ const AutocompleteArrayInput = ({
     (e) => setFilter(e.target.value),
     1000
   );
-  const { label, help } = useMemo(() => {
-    const label = getFieldLabel(props?.source);
-    const help =
-      helperText !== null ? translate(helperText, { _: helperText }) : null;
-    return { label, help };
-  }, [props?.source, helperText]);
 
   return (
     <Autocomplete
@@ -93,14 +78,19 @@ const AutocompleteArrayInput = ({
           onChange={handleTextChange}
           helperText={
             <InputHelperText
-              helperText={help}
+              helperText={helperText}
               touched={touched}
               error={submitError}
             />
           }
           required={isRequired}
           label={
-            <FieldTitle {...props} label={label} isRequired={isRequired} />
+            <FieldTitle
+              {...props}
+              label={props?.label}
+              source={props?.source}
+              resource={props?.resource}
+            />
           }
           variant={"filled"}
           {...params}

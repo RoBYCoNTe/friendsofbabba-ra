@@ -1,5 +1,10 @@
-import { Component, useSaveMutation } from "ra-friendsofbabba";
-import { SimpleForm, useRedirect } from "react-admin";
+import {
+  Component,
+  DateTimeInput,
+  ReferenceAutocompleteInput,
+  useSaveMutation,
+} from "ra-friendsofbabba";
+import { SimpleForm, required, useRedirect } from "react-admin";
 
 import BlogPostCommentsField from "../field/BlogPostCommentsField";
 import React from "react";
@@ -27,6 +32,8 @@ const BlogPostForm = ({ create = false, ...props }) => {
         addLabel={false}
         fullWidth
       />
+      <ReferenceAutocompleteInput source="author_id" />
+      <DateTimeInput source="published" validate={required()} />
     </SimpleForm>
   );
 };
