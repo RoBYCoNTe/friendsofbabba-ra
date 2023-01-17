@@ -31,9 +31,11 @@ const NotificationField = ({ record }) => {
       <Typography variant="subtitle1">
         <Box fontWeight={"bold"}> {record?.title}</Box>
       </Typography>
-      <Typography variant="body1" className={classes.content}>
-        {record?.content}
-      </Typography>
+      <Typography
+        variant="body1"
+        className={classes.content}
+        dangerouslySetInnerHTML={{ __html: record?.content }}
+      />
       {readed && (
         <Typography variant="caption" display="block">
           {translate("resources.notifications.readed", { readed })}
