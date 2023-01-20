@@ -4,6 +4,7 @@ import { useForm, useFormState } from "react-final-form";
 
 import DebouncedTextInput from "./DebouncedTextInput";
 import RefreshIcon from "@material-ui/icons/Refresh";
+import useDebounce from "util/useDebounce";
 
 const slugify = (str) =>
   str
@@ -21,17 +22,20 @@ const validate = (value) => {
 };
 const SlugInput = ({ dependency, ...props }) => {
   const form = useForm();
-  const { values } = useFormState({ subscription: { values: true } });
+  const { values, touched } = useFormState({
+    subscription: { values: true, touched: true },
+  });
   useEffect(() => {
-    if (dependency && values[dependency] && !values[props.source]) {
+    if (dependency && values[dependency] && !touched[props.source]) {
       form.change(props.source, slugify(values[dependency]));
     }
-  }, [dependency, form, props.source, values]);
+  }, [dependency, form, props.source, values[dependency], touched]);
+
   const handleSlugify = useCallback(() => {
     if (values[dependency]) {
       form.change(props.source, slugify(values[dependency]));
     }
-  }, [dependency, form, props.source, values]);
+  }, [dependency, form, props.source, values[dependency], touched]);
   return (
     <DebouncedTextInput
       {...props}
