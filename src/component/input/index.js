@@ -23,6 +23,7 @@ import RecordInput from "./RecordInput";
 import ReferenceAutocompleteInput from "./ReferenceAutocompleteInput";
 import ReferenceCheckboxGroupInput from "./ReferenceCheckboxGroupInput";
 import ReferenceSelectInput from "./ReferenceSelectInput";
+import SlugInput from "./SlugInput";
 import StateArrayInput from "./StateArrayInput";
 import StateCollectionInput from "./StateCollectionInput";
 import StateInput from "./StateInput";
@@ -31,8 +32,8 @@ import TransactionNotesIsPrivateInput from "./TransactionNotesIsPrivateInput";
 
 export {
   Autocomplete,
-  AutocompleteInput,
   AutocompleteArrayInput,
+  AutocompleteInput,
   BooleanInput,
   DateInput,
   DateRangeInput,
@@ -51,9 +52,10 @@ export {
   ReferenceSelectInput,
   SearchInput,
   SelectInput,
+  SlugInput,
+  StateArrayInput,
   StateCollectionInput,
   StateInput,
-  StateArrayInput,
   TextInput,
   TransactionNotesInput,
   TransactionNotesIsPrivateInput,
