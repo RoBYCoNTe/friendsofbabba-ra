@@ -30,7 +30,7 @@ export function createFilterOptions(config = {}) {
   return (options, { inputValue, getOptionLabel }) => {
     let input = trim ? inputValue.trim() : inputValue;
     if (ignoreCase) {
-      input = input.toLowerCase();
+      input = input?.toLowerCase();
     }
     if (ignoreAccents) {
       input = stripDiacritics(input);
@@ -39,7 +39,7 @@ export function createFilterOptions(config = {}) {
     const filteredOptions = options.filter((option) => {
       let candidate = (stringify || getOptionLabel)(option);
       if (ignoreCase) {
-        candidate = candidate.toLowerCase();
+        candidate = candidate?.toLowerCase();
       }
       if (ignoreAccents) {
         candidate = stripDiacritics(candidate);
@@ -437,7 +437,9 @@ export default function useAutocomplete(props) {
 
           // The portion of the selected suggestion that has not been typed by the user,
           // a completion string, appears inline after the input cursor in the textbox.
-          const index = option.toLowerCase().indexOf(inputValue.toLowerCase());
+          const index = option
+            ?.toLowerCase()
+            .indexOf(inputValue?.toLowerCase());
           if (index === 0 && inputValue.length > 0) {
             inputRef.current.setSelectionRange(
               inputValue.length,
