@@ -23,13 +23,14 @@ const LongTextField = ({
   sortable,
   basePath,
   sortBy,
+  variant = "body2",
   ...props
 }) => {
   const classes = useStyles();
   return (
     <Typography
       {...props}
-      variant="body2"
+      variant={variant}
       title={get(record, source)}
       className={classes.root}
       style={{
