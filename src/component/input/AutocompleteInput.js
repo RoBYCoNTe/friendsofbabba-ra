@@ -32,7 +32,7 @@ const AutocompleteInput = ({
   const hasError = (error || submitError) && (touched || submitFailed);
   const selectedValue = useMemo(() => {
     const filteredData = choices?.filter(
-      (c) => formState?.values?.[props?.source] === get(c, optionValue)
+      (c) => get(formState?.values, props?.source) === get(c, optionValue)
     );
     return filteredData?.length > 0 ? filteredData[0] : null;
   }, [formState, props?.source, choices]);

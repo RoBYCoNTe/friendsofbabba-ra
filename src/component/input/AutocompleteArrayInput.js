@@ -41,7 +41,7 @@ const AutocompleteArrayInput = ({
   const hasError = (error || submitError) && (touched || submitFailed);
 
   const selectedValues = useMemo(() => {
-    const ids = format(formState?.values?.[props?.source] || []);
+    const ids = format(get(formState?.values, props?.source, []));
     return choices.filter((c) => ids.indexOf(c.id) !== -1);
   }, [formState, props, choices]);
 
