@@ -16,6 +16,7 @@ import DateTimeInput from "./DateTimeInput";
 import DebouncedDateInput from "./DebouncedDateInput";
 import DebouncedNumberInput from "./DebouncedNumberInput";
 import DebouncedTextInput from "./DebouncedTextInput";
+import ImageInput from "./ImageInput";
 import Input from "./Input";
 import LanguageMessageInput from "./LanguageMessageInput";
 import MediaInput from "./MediaInput";
@@ -27,6 +28,7 @@ import SlugInput from "./SlugInput";
 import StateArrayInput from "./StateArrayInput";
 import StateCollectionInput from "./StateCollectionInput";
 import StateInput from "./StateInput";
+import TimeInput from "./TimeInput";
 import TransactionNotesInput from "./TransactionNotesInput";
 import TransactionNotesIsPrivateInput from "./TransactionNotesIsPrivateInput";
 
@@ -41,6 +43,7 @@ export {
   DebouncedDateInput,
   DebouncedNumberInput,
   DebouncedTextInput,
+  ImageInput,
   Input,
   LanguageMessageInput,
   MediaInput,
@@ -57,6 +60,7 @@ export {
   StateCollectionInput,
   StateInput,
   TextInput,
+  TimeInput,
   TransactionNotesInput,
   TransactionNotesIsPrivateInput,
 };

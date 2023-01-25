@@ -15,7 +15,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MediaInput = ({ title, disabled, empty = "Empty", ...props }) => {
+const MediaInput = ({
+  title,
+  disabled,
+  empty = "Empty",
+  FieldComponent = MediaField,
+  ...props
+}) => {
   const classes = useStyles();
   const notify = useNotify();
   const handleRejection = useCallback(
@@ -33,7 +39,7 @@ const MediaInput = ({ title, disabled, empty = "Empty", ...props }) => {
       <Labeled {...props}>
         <Fragment>
           {files.map((file, index) => (
-            <MediaField
+            <FieldComponent
               key={index}
               record={file}
               source="filepath"
@@ -67,7 +73,7 @@ const MediaInput = ({ title, disabled, empty = "Empty", ...props }) => {
         ...props?.options,
       }}
     >
-      <MediaField source="filepath" title={title} />
+      <FieldComponent source="filepath" title={title} />
     </FileInput>
   );
 };

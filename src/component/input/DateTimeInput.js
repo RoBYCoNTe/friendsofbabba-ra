@@ -5,7 +5,7 @@ import { TextField, makeStyles } from "@material-ui/core";
 import { get } from "lodash";
 
 const useStyles = makeStyles((theme) => ({
-  leftInput: {
+  leftInput_filled: {
     "& .MuiInputBase-root": {
       borderTopRightRadius: 0,
     },
@@ -16,11 +16,22 @@ const useStyles = makeStyles((theme) => ({
     },
     marginBottom: theme.spacing(1),
   },
-  rightInput: {
+  leftInput_outlined: {
+    "& label": {
+      width: "90%",
+      overflow: "visible",
+      transform: `translate(12px, 10px) scale(0.75)`,
+    },
+    marginBottom: theme.spacing(1),
+  },
+  rightInput_filled: {
     "& .MuiInputBase-root": {
       borderTopLeftRadius: 0,
     },
     marginBottom: theme.spacing(1),
+  },
+  rightInput_outlined: {
+    marginLeft: theme.spacing(1),
   },
 }));
 const getDateAndTime = (value) => {
@@ -30,7 +41,7 @@ const getDateAndTime = (value) => {
   const time = get(dateAndTime, "[1]", "").substr(0, 5);
   return { date, time };
 };
-const DateTimeInput = (props) => {
+const DateTimeInput = ({ variant = "filled", margin = "dense", ...props }) => {
   const classes = useStyles();
   const {
     input: { name, onChange, value, ...rest },
@@ -69,7 +80,8 @@ const DateTimeInput = (props) => {
             resource={props?.resource}
           />
         }
-        variant="filled"
+        variant={variant}
+        margin={margin}
         type="date"
         error={!!(touched && (error || submitError))}
         helperText={
@@ -78,16 +90,22 @@ const DateTimeInput = (props) => {
             (submitError && translate(submitError)))
         }
         required={isRequired}
-        classes={{ root: classes.leftInput }}
+        classes={{ root: classes[`leftInput_${variant}`] }}
         value={date}
         onChange={handleChange("date")}
+        InputLabelProps={{
+          shrink: true,
+        }}
       />
       <TextField
-        variant="filled"
+        variant={variant}
+        margin={margin}
         type="time"
         error={!!(touched && (error || submitError))}
         required={isRequired}
-        classes={{ root: classes.rightInput }}
+        classes={{
+          root: classes[`rightInput_${variant}`],
+        }}
         value={time}
         onChange={stopTimeChange ? null : handleChange("time")}
         {...rest}

@@ -29,6 +29,8 @@ const AutocompleteArrayInput = ({
   format = createManyFormatter(),
   helperText,
   disabled,
+  variant = "filled",
+  margin = "dense",
   ...props
 }) => {
   const formState = useFormState({ subscription: { values: true } });
@@ -75,6 +77,8 @@ const AutocompleteArrayInput = ({
       renderInput={(params) => (
         <TextField
           error={hasError}
+          margin={margin}
+          variant={variant}
           onChange={handleTextChange}
           helperText={
             <InputHelperText
@@ -92,7 +96,6 @@ const AutocompleteArrayInput = ({
               resource={props?.resource}
             />
           }
-          variant={"filled"}
           {...params}
         />
       )}

@@ -65,7 +65,7 @@ const List = (props) => {
       }
       filters={
         grid?.filters ? (
-          <Filter>
+          <Filter variant={grid?.filterVariant} margin={grid?.filterMargin}>
             {Component.mapFilters(grid.filters, {
               ...inputs,
               ...customComponents,

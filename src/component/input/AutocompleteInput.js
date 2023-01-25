@@ -20,6 +20,8 @@ const AutocompleteInput = ({
   className,
   setFilter,
   disabled,
+  variant = "filled",
+  margin = "dense",
   ...props
 }) => {
   const formState = useFormState({ subscription: { values: true } });
@@ -66,6 +68,8 @@ const AutocompleteInput = ({
       renderInput={(params) => (
         <TextField
           error={hasError}
+          margin={margin}
+          variant={variant}
           onChange={handleTextChange}
           helperText={
             <InputHelperText
@@ -82,7 +86,6 @@ const AutocompleteInput = ({
               resource={props?.resource}
             />
           }
-          variant={"filled"}
           {...params}
         />
       )}
