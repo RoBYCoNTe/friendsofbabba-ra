@@ -7,6 +7,7 @@ import {
 } from "react-admin";
 
 import ChipArrayField from "./ChipArrayField";
+import CoverField from "./CoverField";
 import DateAgoField from "./DateAgoField";
 import LongTextField from "./LongTextField";
 import MediaField from "./MediaField";
@@ -22,6 +23,7 @@ import useFieldLabel from "./useFieldLabel";
 export {
   BooleanField,
   ChipArrayField,
+  CoverField,
   ChipField,
   DateAgoField,
   DateField,
