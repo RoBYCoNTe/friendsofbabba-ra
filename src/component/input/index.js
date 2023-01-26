@@ -21,6 +21,7 @@ import Input from "./Input";
 import LanguageMessageInput from "./LanguageMessageInput";
 import MediaInput from "./MediaInput";
 import RecordInput from "./RecordInput";
+import ReferenceAutocompleteArrayInput from "./ReferenceAutocompleteArrayInput";
 import ReferenceAutocompleteInput from "./ReferenceAutocompleteInput";
 import ReferenceCheckboxGroupInput from "./ReferenceCheckboxGroupInput";
 import ReferenceSelectInput from "./ReferenceSelectInput";
@@ -50,6 +51,7 @@ export {
   NullableBooleanInput,
   NumberInput,
   RecordInput,
+  ReferenceAutocompleteArrayInput,
   ReferenceAutocompleteInput,
   ReferenceCheckboxGroupInput,
   ReferenceSelectInput,
