@@ -7,6 +7,8 @@ import { get } from "lodash";
 import useDebouncedCallback from "util/useDebouncedCallback";
 import { useFormState } from "react-final-form";
 
+const defaultParse = (value) => value;
+const defaultFormat = (value) => value;
 const useStyles = makeStyles((theme) => ({
   root: {
     marginBottom: theme.spacing(1),
@@ -22,6 +24,8 @@ const AutocompleteInput = ({
   disabled,
   variant = "filled",
   margin = "dense",
+  parse = defaultParse,
+  format = defaultFormat,
   ...props
 }) => {
   const formState = useFormState({ subscription: { values: true } });
@@ -36,11 +40,11 @@ const AutocompleteInput = ({
     const filteredData = choices?.filter(
       (c) => get(formState?.values, props?.source) === get(c, optionValue)
     );
-    return filteredData?.length > 0 ? filteredData[0] : null;
+    return format(filteredData?.length > 0 ? filteredData[0] : null);
   }, [formState, props?.source, choices]);
   const handleChange = useCallback((_, values) => {
     const id = get(values, optionValue);
-    onChange(id);
+    onChange(parse(id));
   });
 
   const handleOptionLabel = useCallback(

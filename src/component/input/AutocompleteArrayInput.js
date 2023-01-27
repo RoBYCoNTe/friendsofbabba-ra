@@ -48,7 +48,7 @@ const AutocompleteArrayInput = ({
   }, [formState, props, choices]);
 
   const handleChange = useCallback((_, values) => {
-    const ids = format(values);
+    const ids = parse(values);
     onChange(ids);
   }, []);
 
