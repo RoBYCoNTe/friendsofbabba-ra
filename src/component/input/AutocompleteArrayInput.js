@@ -25,7 +25,7 @@ const AutocompleteArrayInput = ({
   choices,
   optionText = "name",
   setFilter,
-  parse = createManyParser(),
+  parse = createManyFormatter(),
   format = createManyFormatter(),
   helperText,
   disabled,
