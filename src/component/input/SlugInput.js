@@ -26,7 +26,11 @@ const SlugInput = ({ dependency, ...props }) => {
   });
   useEffect(() => {
     if (dependency && values[dependency] && !touched[props.source]) {
-      form.change(props.source, slugify(values[dependency]));
+      const slug = slugify(values[dependency]);
+      if (slug !== values[props.source]) {
+        console.info(slug, "!==", values[props.source]);
+        form.change(props.source, slug);
+      }
     }
   }, [dependency, form, props.source, values[dependency], touched]);
 
