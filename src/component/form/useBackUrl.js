@@ -19,10 +19,9 @@ const useBackUrl = ({
   record,
 }) => {
   const referenceId = get(record, backReferenceTarget, 0);
-
   return useMemo(
     () =>
-      referenceId === 0
+      referenceId === null || referenceId === 0
         ? backRedirect
         : backTab > 0
         ? `/${backReference}/${referenceId}/${backTab}`

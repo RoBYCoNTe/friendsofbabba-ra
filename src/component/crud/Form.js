@@ -28,10 +28,11 @@ const Form = ({ ...props }) => {
   );
   const customComponents = useCustomComponents(props.resource);
   const backUrl = useBackUrl({ ...props, ...form?.toolbar?.componentProps });
+
   const save = useSaveMutation({
     ...props,
     refresh: form?.refresh,
-    redirect: form?.redirect !== null ? form?.redirect : backUrl,
+    redirect: backUrl || form?.redirect,
   });
   if (loading) {
     return <Loading />;

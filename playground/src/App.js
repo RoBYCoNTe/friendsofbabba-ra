@@ -73,6 +73,7 @@ const App = () => {
             group="blog"
             icon={Icons.DockOutlined}
           />
+          <CrudResource name="blog-post-taxonomies" group="blog" />
           <CrudResource
             name="tickets"
             group="dashboard"
