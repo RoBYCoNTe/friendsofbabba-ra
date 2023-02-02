@@ -28,7 +28,6 @@ const SlugInput = ({ dependency, ...props }) => {
     if (dependency && values[dependency] && !touched[props.source]) {
       const slug = slugify(values[dependency]);
       if (slug !== values[props.source]) {
-        console.info(slug, "!==", values[props.source]);
         form.change(props.source, slug);
       }
     }
