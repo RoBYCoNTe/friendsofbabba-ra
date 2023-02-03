@@ -198,6 +198,7 @@ const ReferenceListField = ({
   removeLabel = "ra.action.delete",
   removeRedirect,
   sorry = "ra.reference_list.sorry",
+  displaySorry = true,
   tab = 0,
   target,
   foreignKey = "id",
@@ -218,6 +219,10 @@ const ReferenceListField = ({
     tab,
     defaultRedirect: removeRedirect,
   });
+  if (!parentRecordExists && sorry === false) {
+    return null;
+  }
+
   const content = parentRecordExists ? (
     <Fragment>
       <ReferenceManyField
@@ -298,6 +303,7 @@ ReferenceListField.propTypes = {
     PropTypes.string,
     PropTypes.element,
     PropTypes.func,
+    PropTypes.bool,
   ]),
   mobileBreakpoint: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   mobilePrimaryText: PropTypes.oneOfType([
