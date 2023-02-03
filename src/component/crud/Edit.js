@@ -6,6 +6,7 @@ import { CrudContext } from "../../data/cakephp/crud/CrudContext";
 import Form from "./Form";
 import FormActions from "./FormActions";
 import { Edit as RaEdit } from "react-admin";
+import Title from "./Title.js";
 import useCustomComponents from "./useCustomComponents";
 
 const Create = (props) => {
@@ -18,6 +19,7 @@ const Create = (props) => {
   return (
     <RaEdit
       {...props}
+      title={<Title content={form?.titles?.edit || form?.title} />}
       actions={
         form?.actions?.length > 0 ? (
           <FormActions
