@@ -7,11 +7,9 @@ import RefreshIcon from "@material-ui/icons/Refresh";
 
 const slugify = (str) =>
   str
-    ?.toLowerCase()
-    .trim()
-    .replace(/[^\w\s-]/g, "")
-    .replace(/[\s_-]+/g, "-")
-    .replace(/^-+|-+$/g, "");
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)+/g, "");
 
 const validate = (value) => {
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value)) {
