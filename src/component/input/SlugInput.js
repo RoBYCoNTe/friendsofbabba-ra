@@ -5,11 +5,15 @@ import { useForm, useFormState } from "react-final-form";
 import DebouncedTextInput from "./DebouncedTextInput";
 import RefreshIcon from "@material-ui/icons/Refresh";
 
-const slugify = (str) =>
+const defaultSlugify = (str) =>
   str
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)+/g, "");
+    .toString() // Cast to string
+    .toLowerCase() // Convert the string to lowercase letters
+    .trim() // Remove whitespace from both sides of a string
+    .replace(/\s+/g, "-") // Replace spaces with -
+    .replace(/&/g, "-y-") // Replace & with 'and'
+    .replace(/[^\w\-]+/g, "") // Remove all non-word chars
+    .replace(/\-\-+/g, "-"); // Replace multiple - with single -
 
 const validate = (value) => {
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value)) {
@@ -17,7 +21,7 @@ const validate = (value) => {
   }
   return undefined;
 };
-const SlugInput = ({ dependency, ...props }) => {
+const SlugInput = ({ dependency, slugify = defaultSlugify, ...props }) => {
   const form = useForm();
   const { values, touched } = useFormState({
     subscription: { values: true, touched: true },
