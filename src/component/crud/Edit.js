@@ -16,10 +16,15 @@ const Create = (props) => {
     () => getForm(props.resource),
     [props.resource, getForm]
   );
+  const hasTitle = useMemo(() => form?.titles?.edit || form?.title, [form]);
   return (
     <RaEdit
       {...props}
-      title={<Title content={form?.titles?.edit || form?.title} />}
+      title={
+        hasTitle ? (
+          <Title content={form?.titles?.edit || form?.title} />
+        ) : undefined
+      }
       actions={
         form?.actions?.length > 0 ? (
           <FormActions

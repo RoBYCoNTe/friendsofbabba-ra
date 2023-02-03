@@ -11,10 +11,15 @@ const Create = (props) => {
     () => getForm(props.resource),
     [props.resource, getForm]
   );
+  const hasTitle = useMemo(() => form?.titles?.create || form?.title, [form]);
   return (
     <RaCreate
       {...props}
-      title={<Title content={form?.titles?.create || form?.title} />}
+      title={
+        hasTitle ? (
+          <Title content={form?.titles?.create || form?.title} />
+        ) : undefined
+      }
     >
       <Form />
     </RaCreate>
