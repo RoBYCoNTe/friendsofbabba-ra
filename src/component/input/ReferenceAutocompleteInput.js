@@ -2,9 +2,18 @@ import AutocompleteInput from "component/input/AutocompleteInput";
 import React from "react";
 import { ReferenceInput } from "react-admin";
 
-const ReferenceAutocompleteInput = ({ optionText, helperText, ...props }) => (
+const ReferenceAutocompleteInput = ({
+  optionText,
+  optionValue,
+  helperText,
+  ...props
+}) => (
   <ReferenceInput {...props}>
-    <AutocompleteInput optionText={optionText} helperText={helperText} />
+    <AutocompleteInput
+      optionText={optionText}
+      optionValue={optionValue}
+      helperText={helperText}
+    />
   </ReferenceInput>
 );
 export default ReferenceAutocompleteInput;

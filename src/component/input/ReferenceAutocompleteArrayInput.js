@@ -9,6 +9,7 @@ import { ReferenceArrayInput } from "react-admin";
 
 const ReferenceAutocompleteArrayInput = ({
   optionText,
+  optionValue,
   helperText,
   ...props
 }) => {
@@ -23,6 +24,7 @@ const ReferenceAutocompleteArrayInput = ({
     >
       <AutocompleteArrayInput
         optionText={optionText}
+        optionValue={optionValue}
         helperText={helperText}
         resource={props.resource}
       />
