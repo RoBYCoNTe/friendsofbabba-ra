@@ -75,7 +75,7 @@ const DateTimeInput = ({
   );
   const translate = useTranslate();
   return (
-    <div className={className}>
+    <Fragment>
       <TextField
         {...rest}
         label={
@@ -115,7 +115,7 @@ const DateTimeInput = ({
         onChange={stopTimeChange ? null : handleChange("time")}
         {...rest}
       />
-    </div>
+    </Fragment>
   );
 };
 
