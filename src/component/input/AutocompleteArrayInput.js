@@ -24,6 +24,7 @@ const useStyles = makeStyles(
 const AutocompleteArrayInput = ({
   choices,
   optionText = "name",
+  optionValue = "id",
   setFilter,
   parse = createManyFormatter(),
   format = createManyFormatter(),
@@ -44,7 +45,7 @@ const AutocompleteArrayInput = ({
 
   const selectedValues = useMemo(() => {
     const ids = format(get(formState?.values, props?.source, []));
-    return choices.filter((c) => ids.indexOf(c.id) !== -1);
+    return choices.filter((c) => ids.indexOf(get(c, optionValue)) !== -1);
   }, [formState, props, choices]);
 
   const handleChange = useCallback((_, values) => {
