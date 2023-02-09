@@ -44,14 +44,22 @@ const AutocompleteArrayInput = ({
   const hasError = (error || submitError) && (touched || submitFailed);
 
   const selectedValues = useMemo(() => {
-    const ids = format(get(formState?.values, props?.source, []));
-    return choices.filter((c) => ids.indexOf(get(c, optionValue)) !== -1);
-  }, [formState, props, choices]);
+    const rawValues = get(formState?.values, props?.source, []);
+    const ids = format(rawValues);
+    const selectedValues = choices.filter(
+      (c) => ids.indexOf(get(c, optionValue)) !== -1
+    );
+    return selectedValues;
+  }, [formState, props, choices, format, optionValue]);
 
-  const handleChange = useCallback((_, values) => {
-    const ids = parse(values);
-    onChange(ids);
-  }, []);
+  const handleChange = useCallback(
+    (_, values) => {
+      const ids = parse(values);
+
+      onChange(ids);
+    },
+    [onChange, parse]
+  );
 
   const handleOptionLabel = useCallback(
     (option) =>
