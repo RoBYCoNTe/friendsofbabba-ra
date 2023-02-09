@@ -41,7 +41,12 @@ const getDateAndTime = (value) => {
   const time = get(dateAndTime, "[1]", "").substr(0, 5);
   return { date, time };
 };
-const DateTimeInput = ({ variant = "filled", margin = "dense", ...props }) => {
+const DateTimeInput = ({
+  variant = "filled",
+  margin = "dense",
+  className,
+  ...props
+}) => {
   const classes = useStyles();
   const {
     input: { name, onChange, value, ...rest },
@@ -70,7 +75,7 @@ const DateTimeInput = ({ variant = "filled", margin = "dense", ...props }) => {
   );
   const translate = useTranslate();
   return (
-    <Fragment>
+    <div className={className}>
       <TextField
         {...rest}
         label={
@@ -110,7 +115,7 @@ const DateTimeInput = ({ variant = "filled", margin = "dense", ...props }) => {
         onChange={stopTimeChange ? null : handleChange("time")}
         {...rest}
       />
-    </Fragment>
+    </div>
   );
 };
 
