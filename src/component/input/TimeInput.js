@@ -6,9 +6,6 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    "& .MuiInputBase-root": {
-      borderTopRightRadius: 0,
-    },
     "& label": {
       width: "90%",
       overflow: "visible",
