@@ -34,7 +34,8 @@ const TransactionLogsField = ({ admin = false, label, ...props }) => {
     () => getWorkflow(props.resource),
     [getWorkflow, props.resource]
   );
-  if (!workflow || !props.record || props?.record?.id <= 0) {
+  const id = useMemo(() => get(props, "record.id", 0), [props]);
+  if (!workflow || id === 0) {
     return null;
   }
 
