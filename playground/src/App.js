@@ -68,7 +68,15 @@ const App = () => {
             locale: "it",
           })}
         >
-          <CrudResource name="posts" group="blog" icon={Icons.DockOutlined} />
+          <CrudResource
+            name="posts"
+            group="blog"
+            icon={Icons.DockOutlined}
+            options={{
+              label: "Aliases",
+              order: 1,
+            }}
+          />
           <CrudResource
             name="blog-posts"
             group="blog"

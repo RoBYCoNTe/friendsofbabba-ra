@@ -6,12 +6,14 @@ const createMenuItem = (item, badges, translate) => ({
   badge: get(badges, `${item.name}`, null),
   order: get(item, "options.order", 0),
   label:
-    item?.options?.localize === false
+    item?.options?.label ||
+    (item?.options?.localize === false
       ? item.name
-      : translate(`menu.items.${item.name}`),
+      : translate(`menu.items.${item.name}`)),
   icon: item.icon,
   sub: item.options?.sub || item.sub,
   to: item.path || `/${item.name}`,
+  order: item.options?.order || 100,
 });
 
 const createGroups = ({
