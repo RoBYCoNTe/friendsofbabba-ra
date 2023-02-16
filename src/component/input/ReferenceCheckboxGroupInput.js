@@ -1,9 +1,8 @@
 import { CheckboxGroupInput, ReferenceArrayInput } from "react-admin";
+import { createManyFormatter, createManyParser } from "../../index";
 
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import useManyFormatter from "../../data/cakephp/useManyFormatter";
-import useManyParser from "../../data/cakephp/useManyParser";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -12,9 +11,12 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-const ReferenceCheckboxGroupInput = ({ optionText, ...props }) => {
-  const parse = useManyParser();
-  const format = useManyFormatter();
+const ReferenceCheckboxGroupInput = ({
+  optionText,
+  parse = createManyParser(),
+  format = createManyFormatter(),
+  ...props
+}) => {
   const classes = useStyles();
   return (
     <ReferenceArrayInput {...props} parse={parse} format={format}>
