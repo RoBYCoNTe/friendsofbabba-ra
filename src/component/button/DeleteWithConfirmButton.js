@@ -52,9 +52,11 @@ const DeleteWithConfirmButton = ({ redirect, reference, ...props }) => {
     // To avoid problems with this situation we have to return an empty component in this case.
     return null;
   }
+
   return (
     <RaDeleteWithConfirmButton
       {...props}
+      key={redirect}
       redirect={redirect}
       confirmTitle={confirmTitle}
       confirmContent={confirmContent}
