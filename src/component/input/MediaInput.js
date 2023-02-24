@@ -44,6 +44,7 @@ const MediaInput = ({
               record={file}
               source="filepath"
               title={title}
+              disabled={disabled}
             />
           ))}
           {files.length === 0 && disabled && empty && (
