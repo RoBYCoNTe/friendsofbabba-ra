@@ -1,0 +1,95 @@
+{
+  "name": "ra-friendsofbabba",
+  "files": [
+    "dist/index.cjs.js",
+    "dist/index.esm.js",
+    "dist/types.d.ts"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "version": "1.0.0",
+  "private": false,
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/types.d.ts",
+  "typings": "dist/types.d.ts",
+  "source": "src/index.js",
+  "dependencies": {
+    "@iconify/react": "^4.1.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "classnames": "^2.3.2",
+    "framer-motion": "^10.10.0",
+    "moment": "^2.29.4",
+    "react-error-boundary": "^4.0.3",
+    "react-scripts": "5.0.1",
+    "simplebar-react": "^3.2.3",
+    "web-vitals": "^2.1.4"
+  },
+  "overrides": {
+    "autoprefixer": "10.4.5"
+  },
+  "scripts": {
+    "build": "rollup -c --waitForBundleInput",
+    "build-watch": "rollup -c -w",
+    "start-playground": "cd playground && npm run start",
+    "start-wb-playground": "cd playground-workbench && npm run start",
+    "i-all": "npm i && cd playground && npm i",
+    "dev": "npm-run-all --parallel build-watch start-playground",
+    "clear-node-modules": "rm -rf node_modules && rm -rf playground/node_modules",
+    "clear-pkg-lock": "rm -rf package-lock.json && rm -rf playground/package-lock.json",
+    "clear-all": "npm-run-all --parallel clear-node-modules clear-pkg-lock",
+    "build-types": "npx tsc -d --declarationDir dist/types --declarationMap --emitDeclarationOnly",
+    "build-and-publish": "npm run build && npm publish"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.5",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "@mui/icons-material": "^5.11.11",
+    "@mui/material": "^5.11.15",
+    "@rollup/plugin-babel": "^5.3.1",
+    "@rollup/plugin-node-resolve": "^15.0.2",
+    "@rollup/plugin-replace": "^4.0.0",
+    "@rollup/plugin-typescript": "^8.3.2",
+    "@types/prop-types": "^15.7.5",
+    "@types/react": "^18.0.33",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "npm-run-all": "^4.1.5",
+    "rollup": "^2.68.0",
+    "rollup-plugin-delete": "^2.0.0",
+    "rollup-plugin-dts": "^4.2.2",
+    "rollup-plugin-generate-declarations": "^1.1.1",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-strip-prop-types": "^1.0.3",
+    "typescript": "^4.7.2"
+  },
+  "peerDependencies": {
+    "@mui/material": "^5.11.15",
+    "react": "^18.2.0",
+    "react-admin": "^4.9.0",
+    "react-dom": "^18.2.0"
+  }
+}
