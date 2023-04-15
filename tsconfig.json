@@ -1,6 +1,9 @@
 {
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*"
+  ],
   "compilerOptions": {
+    "moduleResolution": "node",
     "jsx": "react",
     "target": "ES6",
     "allowJs": true,
