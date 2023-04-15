@@ -34,7 +34,7 @@
   },
   "scripts": {
     "build": "rollup -c --waitForBundleInput",
-    "build-watch": "rollup -c -w",
+    "build-watch": "NODE_ENV=development rollup -c -w",
     "start-playground": "cd playground && npm run start",
     "start-wb-playground": "cd playground-workbench && npm run start",
     "i-all": "npm i && cd playground && npm i",

@@ -16,15 +16,14 @@ const DateAgoField = () => {
 	const record = useRecordContext();
 	const locale = useLocale();
 	const fromNow = useMemo(() => {
-		require(`moment/locale/${locale}`);
 		moment.locale(locale);
 		return moment(record?.created).fromNow();
 	}, [record?.created, locale]);
 	return (
 		<Fragment>
-			<Typography variant="caption">{fromNow}</Typography>
-			<br />
 			<DateField record={record} source="created" addLabel={false} showTime />
+			<br />
+			<Typography variant="caption">{fromNow}</Typography>
 		</Fragment>
 	);
 };

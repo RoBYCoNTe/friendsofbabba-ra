@@ -1,5 +1,7 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
+
 import {
   AppBar,
   Box,
@@ -8,10 +10,10 @@ import {
 } from '@mui/material';
 
 import { HEADER } from './config';
-import Menu from './menu/horizontal/MenuHorizontal';
+import DefaultMenu from './menu/horizontal/MenuHorizontal';
 import { bgBlur } from './utils/cssStyles';
 
-const Shadow = ({ sx, ...other }) => {
+const Shadow = ({ menu: Menu = DefaultMenu, sx, ...other }) => {
 	return (
 		<Box
 			sx={{
@@ -55,6 +57,10 @@ const SidebarHorizontal = () => {
 			<Shadow />
 		</AppBar>
 	);
+};
+
+SidebarHorizontal.propTypes = {
+	menu: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
 };
 
 export default SidebarHorizontal;

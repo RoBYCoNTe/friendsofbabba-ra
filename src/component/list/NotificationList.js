@@ -3,9 +3,6 @@ import React, {
   useMemo,
 } from 'react';
 
-import moment from 'moment';
-import { useDataProvider } from 'react-admin';
-
 import {
   darken,
   lighten,
@@ -33,32 +30,19 @@ const NotificationList = ({ ...props }) => {
 	);
 	const handleRowStyle = useCallback(
 		(record) => ({
-			marginLeft: -2,
-			borderLeftWidth: 2,
-			borderLeftStyle: "solid",
-			borderLeftColor: record?.readed
-				? colorize(theme.palette.primary[mode], density)
-				: theme.palette.secondary[mode],
+			// marginLeft: -2,
+			// borderRightWidth: 2,
+			// borderRightStyle: "solid",
+			// borderLeftColor: record?.readed
+			// 	? colorize(theme.palette.primary[mode], density)
+			// 	: theme.palette.secondary[mode],
 			backgroundColor: record?.readed
 				? colorize(theme.palette.primary[mode], density)
 				: colorize(theme.palette.secondary[mode], density),
 		}),
 		[theme, mode, colorize, density]
 	);
-	const dataProvider = useDataProvider();
-	const handleRowClick = useCallback(
-		(id, basePath, record) => {
-			dataProvider.update("notifications", {
-				id: record.id,
-				data: {
-					...record,
-					readed: moment().format(),
-				},
-			});
-			return record?.resource;
-		},
-		[dataProvider]
-	);
+
 	return (
 		<Datagrid
 			{...props}
@@ -68,7 +52,6 @@ const NotificationList = ({ ...props }) => {
 					actions={[<MarkAsReadedButton />, <MarkAsUnreadedButton />]}
 				/>
 			}
-			rowClick={handleRowClick}
 			rowStyle={handleRowStyle}
 		>
 			<NotificationField source="notification" sortable={false} />

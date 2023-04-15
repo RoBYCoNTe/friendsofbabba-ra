@@ -1,5 +1,7 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
+
 import {
   Box,
   Stack,
@@ -7,11 +9,11 @@ import {
 
 import { NAV } from './config';
 import Logo from './Logo';
-import Menu from './menu/mini/MenuMini';
+import DefaultMenu from './menu/mini/MenuMini';
 import SidebarToggleButton from './SidebarToggleButton';
 import { hideScrollbarX } from './utils/cssStyles';
 
-const SidebarMini = () => {
+const SidebarMini = ({ menu: Menu = DefaultMenu }) => {
 	return (
 		<Box
 			component="nav"
@@ -41,6 +43,10 @@ const SidebarMini = () => {
 			</Stack>
 		</Box>
 	);
+};
+
+SidebarMini.propTypes = {
+	menu: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
 };
 
 export default SidebarMini;

@@ -30,7 +30,7 @@ import {
 import Iconify from './Iconify';
 
 // components
-require("moment/locale/it"); // importa il locale italiano
+// require("moment/locale/it"); // importa il locale italiano
 // ----------------------------------------------------------------------
 
 const NotificationsPopover = () => {

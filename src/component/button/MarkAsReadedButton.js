@@ -37,8 +37,6 @@ const MarkAsReadedButton = () => {
 	);
 	const handleUpdateMany = useCallback(
 		(e) => {
-			e.stopPropagation();
-			e.preventDefault();
 			updateMany();
 		},
 		[updateMany]
@@ -47,7 +45,7 @@ const MarkAsReadedButton = () => {
 	return (
 		<Button
 			label="resources.notifications.buttons.mark_as_readed"
-			disabled={loading}
+			disabled={loading || record?.readed}
 			onClick={handleUpdateMany}
 		>
 			<Email />

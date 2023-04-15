@@ -1,10 +1,9 @@
 import { useMemo } from 'react';
 
+import { get } from 'lodash';
 import { useResourceContext } from 'react-admin';
 
 import { useCrudContext } from '../../data/cakephp/crud/CrudContext';
-
-const { get } = require("lodash");
 
 const useCustomComponents = () => {
 	const { components } = useCrudContext();

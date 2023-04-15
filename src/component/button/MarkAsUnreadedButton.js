@@ -47,7 +47,7 @@ const MarkAsUnreadedButton = () => {
 		<Button
 			color="secondary"
 			label="resources.notifications.buttons.mark_as_unreaded"
-			disabled={isLoading}
+			disabled={isLoading || (record && !record?.readed)}
 			onClick={handleUpdateMany}
 		>
 			<Drafts />

@@ -1,23 +1,27 @@
-import React from "react";
+import React from 'react';
 
 import {
-	Admin,
-	createI18nProvider,
-	CrudProvider,
-	CrudResource,
-	Layout,
-	LoginPage,
-	useAuthProvider,
-	useDataProvider,
-	useI18nCatcher,
-	useI18nLanguages,
-} from "ra-friendsofbabba";
-import { QueryClient } from "react-query";
+  Admin,
+  createI18nProvider,
+  CrudProvider,
+  CrudResource,
+  Layout,
+  LoginPage,
+  useAuthProvider,
+  useDataProvider,
+  useI18nCatcher,
+  useI18nLanguages,
+} from 'ra-friendsofbabba';
+import { QueryClient } from 'react-query';
 
-import * as Components from "./component";
-import { API_URL, FILE_FIELDS, fobConfig } from "./config";
-import resources from "./resources";
-import theme from "./theme";
+import * as Components from './component';
+import {
+  API_URL,
+  FILE_FIELDS,
+  fobConfig,
+} from './config';
+import resources from './resources';
+import theme from './theme';
 
 const App = () => {
 	const apiUrl = API_URL;

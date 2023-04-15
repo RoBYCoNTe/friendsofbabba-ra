@@ -3,6 +3,7 @@ export { default as AppBar } from './AppBar';
 export { HEADER, ICON, NAV } from './config';
 export { default as Iconify } from './Iconify';
 export { default as Layout } from './Layout';
+export { default as LayoutView } from './LayoutView';
 export { default as Logo } from './Logo';
 export { default as NotificationsPopover } from './NotificationsPopover';
 export { default as ScrollToTop } from './ScrollToTop';

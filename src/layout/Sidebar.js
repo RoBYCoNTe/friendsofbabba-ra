@@ -22,6 +22,8 @@ import { useFobContext } from '../context';
 import { NAV } from './config';
 import useResponsive from './hooks/useResponsive';
 import Logo from './Logo';
+import MenuVertical from './menu/vertical/MenuVertical';
+import MenuVerticalBottom from './menu/vertical/MenuVerticalBottom';
 import SidebarToggleButton from './SidebarToggleButton';
 
 // ----------------------------------------------------------------------
@@ -34,12 +36,17 @@ const StyledAccount = styled("div")(({ theme }) => ({
 	backgroundColor: alpha(theme.palette.grey[500], 0.12),
 }));
 
-const Sidebar = ({ openNav, onCloseNav }) => {
+const Sidebar = ({
+	openNav,
+	onCloseNav,
+	menu: Menu = MenuVertical,
+	menuBottom: MenuBottom = MenuVerticalBottom,
+}) => {
 	const { pathname } = useLocation();
 	const theme = useTheme();
 	const isDesktop = useResponsive("up", "lg");
 	const { data: identity, isLoading } = useGetIdentity();
-	const { menuGroups, menu: Menu, menuBottom: MenuBottom } = useFobContext();
+	const { menuGroups } = useFobContext();
 
 	useEffect(() => {
 		if (openNav) {
@@ -138,6 +145,8 @@ const Sidebar = ({ openNav, onCloseNav }) => {
 Sidebar.propTypes = {
 	openNav: PropTypes.bool,
 	onCloseNav: PropTypes.func,
+	menu: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
+	menuBottom: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
 };
 
 export default Sidebar;

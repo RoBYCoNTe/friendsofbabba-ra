@@ -5,11 +5,7 @@ import React, {
   useMemo,
 } from 'react';
 
-import PropTypes from 'prop-types';
-
 import useLocalStorage from '../layout/hooks/useLocalStorage';
-import MenuVertical from '../layout/menu/vertical/MenuVertical';
-import MenuVerticalBottom from '../layout/menu/vertical/MenuVerticalBottom';
 
 const FobContext = createContext();
 const defaultSettings = {
@@ -58,14 +54,7 @@ const FobProvider = ({ children, ...props }) => {
 };
 
 FobProvider.defaultProps = {
-	menu: MenuVertical,
-	menuBottom: MenuVerticalBottom,
 	settings: defaultSettings,
-};
-
-FobProvider.propTypes = {
-	menu: PropTypes.func,
-	menuBottom: PropTypes.func,
 };
 
 const useFobContext = () => useContext(FobContext);

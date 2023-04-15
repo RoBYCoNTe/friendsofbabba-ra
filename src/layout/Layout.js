@@ -1,24 +1,22 @@
 import React, { useState } from 'react';
 
-import {
-  Error,
-  Inspector,
-  SkipNavigationButton,
-} from 'react-admin';
-import { ErrorBoundary } from 'react-error-boundary';
+import PropTypes from 'prop-types';
+import { SkipNavigationButton } from 'react-admin';
 
-import {
-  Container,
-  styled,
-} from '@mui/material';
+import { styled } from '@mui/material';
 
 import { useFobContext } from '../context';
-import AppBar from './AppBar';
+import DefaultAppBar from './AppBar';
 import { HEADER } from './config';
 import useResponsive from './hooks/useResponsive';
+import DefaultLayoutView from './LayoutView';
+import DefaultMenuHorizontal from './menu/horizontal/MenuHorizontal';
+import DefaultMenuMini from './menu/mini/MenuMini';
+import DefaultMenu from './menu/vertical/MenuVertical';
+import DefaultMenuBottom from './menu/vertical/MenuVerticalBottom';
 import DefaultSidebar from './Sidebar';
-import SidebarHorizontal from './SidebarHorizontal';
-import SidebarMini from './SidebarMini';
+import DefaultSidebarHorizontal from './SidebarHorizontal';
+import DefaultSidebarMini from './SidebarMini';
 
 const StyledRoot = styled("div")(({ theme, horizontal }) => ({
 	display: "flex",
@@ -27,56 +25,18 @@ const StyledRoot = styled("div")(({ theme, horizontal }) => ({
 	paddingTop: horizontal && HEADER.H_MOBILE,
 }));
 
-const Main = styled("div")(({ theme }) => ({
-	flexGrow: 1,
-	overflow: "auto",
-	minHeight: "100%",
-	paddingTop: HEADER.H_MOBILE + 24,
-	paddingBottom: theme.spacing(10),
-	[theme.breakpoints.up("lg")]: {
-		paddingTop: HEADER.H_DASHBOARD_DESKTOP + 24,
-		paddingLeft: theme.spacing(2),
-		paddingRight: theme.spacing(2),
-	},
-}));
-
-const LayoutView = ({ errorComponent, title, children }) => {
-	const { themeStretch } = useFobContext();
-	const [errorInfo, setErrorInfo] = useState(null);
-	const handleError = (error, info) => {
-		setErrorInfo(info);
-	};
-
-	return (
-		<Main>
-			<Container maxWidth={themeStretch ? false : "xl"}>
-				<ErrorBoundary
-					onError={handleError}
-					fallbackRender={({ error, resetErrorBoundary }) => (
-						<Error
-							error={error}
-							errorComponent={errorComponent}
-							errorInfo={errorInfo}
-							resetErrorBoundary={resetErrorBoundary}
-							title={title}
-						/>
-					)}
-				>
-					{children}
-				</ErrorBoundary>
-				<Inspector />
-			</Container>
-		</Main>
-	);
-};
-
 const Layout = ({ children, ...props }) => {
 	const {
-		className,
-		dashboard,
 		error: errorComponent,
-		menu: Menu,
+		menu: Menu = DefaultMenu,
+		menuBottom: MenuBottom = DefaultMenuBottom,
+		menuMini: MenuMini = DefaultMenuMini,
+		menuHorizontal: MenuHorizontal = DefaultMenuHorizontal,
+		appBar: AppBar = DefaultAppBar,
 		sidebar: Sidebar = DefaultSidebar,
+		sidebarMini: SidebarMini = DefaultSidebarMini,
+		sidebarHorizontal: SidebarHorizontal = DefaultSidebarHorizontal,
+		layoutView: LayoutView = DefaultLayoutView,
 		title,
 		...rest
 	} = props;
@@ -92,14 +52,25 @@ const Layout = ({ children, ...props }) => {
 		setOpen(false);
 	};
 
-	const renderNavVertical = <Sidebar openNav={open} onCloseNav={handleClose} />;
+	const renderNavVertical = (
+		<Sidebar
+			openNav={open}
+			onCloseNav={handleClose}
+			menu={Menu}
+			menuBottom={MenuBottom}
+		/>
+	);
 
 	if (isNavHorizontal) {
 		return (
 			<StyledRoot {...rest} horizontal={isNavHorizontal && isDesktop}>
 				<SkipNavigationButton />
 				<AppBar onOpenNav={handleOpen} />
-				{isDesktop ? <SidebarHorizontal /> : renderNavVertical}
+				{isDesktop ? (
+					<SidebarHorizontal menu={MenuHorizontal} />
+				) : (
+					renderNavVertical
+				)}
 				<LayoutView errorComponent={errorComponent} title={title}>
 					{children}
 				</LayoutView>
@@ -112,7 +83,7 @@ const Layout = ({ children, ...props }) => {
 			<StyledRoot {...rest}>
 				<SkipNavigationButton />
 				<AppBar onOpenNav={handleOpen} />
-				{isDesktop ? <SidebarMini /> : renderNavVertical}
+				{isDesktop ? <SidebarMini menu={MenuMini} /> : renderNavVertical}
 				<LayoutView errorComponent={errorComponent} title={title}>
 					{children}
 				</LayoutView>
@@ -124,12 +95,28 @@ const Layout = ({ children, ...props }) => {
 		<StyledRoot {...rest}>
 			<SkipNavigationButton />
 			<AppBar onOpenNav={() => setOpen(true)} />
-			<Sidebar openNav={open} onCloseNav={() => setOpen(false)} />
+			<Sidebar
+				openNav={open}
+				onCloseNav={handleClose}
+				menu={Menu}
+				menuBottom={MenuBottom}
+			/>
 			<LayoutView errorComponent={errorComponent} title={title}>
 				{children}
 			</LayoutView>
 		</StyledRoot>
 	);
+};
+
+Layout.propTypes = {
+	menu: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
+	menuBottom: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
+	menuMini: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
+	menuHorizontal: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
+	appBar: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
+	sidebar: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
+	sidebarMini: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
+	layoutView: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
 };
 
 export default Layout;
