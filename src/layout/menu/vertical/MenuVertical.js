@@ -16,7 +16,7 @@ import { StyledVerticalSubheader } from './styles';
 const MenuVertical = ({ sx, ...other }) => {
 	const translate = useTranslate();
 	const { menuGroups } = useFobContext();
-	const { menu, isLoading } = useMenu({ groups: menuGroups });
+	const { menu, isLoading } = useMenu({ menuGroups });
 
 	if (isLoading) {
 		return null;

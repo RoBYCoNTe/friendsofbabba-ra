@@ -9,7 +9,7 @@ import {
 import { useCrudContext } from '../data';
 import createGroups from './createGroups';
 
-const useMenu = ({ hasDashboard, groups }) => {
+const useMenu = ({ hasDashboard, menuGroups }) => {
 	const resources = useResourceDefinitions();
 	const { isLoading: loadingIdentity, data: identity } = useGetIdentity();
 	const { permissions } = usePermissions();
@@ -39,7 +39,7 @@ const useMenu = ({ hasDashboard, groups }) => {
 		}
 
 		const groups = createGroups({
-			groups,
+			menuGroups,
 			resources,
 			permissions,
 			badges,
@@ -50,7 +50,7 @@ const useMenu = ({ hasDashboard, groups }) => {
 	}, [
 		loadingIdentity,
 		identity,
-		groups,
+		menuGroups,
 		resources,
 		permissions,
 		badges,

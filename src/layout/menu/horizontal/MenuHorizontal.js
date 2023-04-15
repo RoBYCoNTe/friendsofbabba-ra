@@ -9,7 +9,7 @@ import MenuHorizontalList from './MenuHorizontalList';
 
 const MenuHorizontal = ({ sx, ...other }) => {
 	const { menuGroups } = useFobContext();
-	const { menu, isLoading } = useMenu({ groups: menuGroups });
+	const { menu, isLoading } = useMenu({ menuGroups });
 	if (isLoading) {
 		return null;
 	}
