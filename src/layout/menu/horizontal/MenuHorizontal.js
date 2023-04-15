@@ -2,12 +2,14 @@ import React, { Fragment } from 'react';
 
 import { Stack } from '@mui/material';
 
-import { useMenu } from '../../../hook';
+import { useFobContext } from '../../../context/FobContext';
+import useMenu from '../../../hook/useMenu';
 import { hideScrollbarY } from '../../utils/cssStyles';
 import MenuHorizontalList from './MenuHorizontalList';
 
 const MenuHorizontal = ({ sx, ...other }) => {
-	const { menu, isLoading } = useMenu();
+	const { menuGroups } = useFobContext();
+	const { menu, isLoading } = useMenu({ groups: menuGroups });
 	if (isLoading) {
 		return null;
 	}

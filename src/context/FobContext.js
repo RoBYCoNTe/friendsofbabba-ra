@@ -7,11 +7,9 @@ import React, {
 
 import PropTypes from 'prop-types';
 
-import {
-  MenuVertical,
-  MenuVerticalBottom,
-  useLocalStorage,
-} from '../layout';
+import useLocalStorage from '../layout/hooks/useLocalStorage';
+import MenuVertical from '../layout/menu/vertical/MenuVertical';
+import MenuVerticalBottom from '../layout/menu/vertical/MenuVerticalBottom';
 
 const FobContext = createContext();
 const defaultSettings = {

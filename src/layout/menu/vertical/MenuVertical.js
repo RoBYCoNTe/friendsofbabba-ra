@@ -8,13 +8,15 @@ import {
   Stack,
 } from '@mui/material';
 
-import { useMenu } from '../../../hook';
+import { useFobContext } from '../../../context/FobContext';
+import useMenu from '../../../hook/useMenu';
 import MenuVerticalList from './MenuVerticalList';
 import { StyledVerticalSubheader } from './styles';
 
 const MenuVertical = ({ sx, ...other }) => {
 	const translate = useTranslate();
-	const { menu, isLoading } = useMenu();
+	const { menuGroups } = useFobContext();
+	const { menu, isLoading } = useMenu({ groups: menuGroups });
 
 	if (isLoading) {
 		return null;

@@ -6,15 +6,13 @@ import {
   useResourceDefinitions,
 } from 'react-admin';
 
-import { useFobContext } from '../context';
 import { useCrudContext } from '../data';
 import createGroups from './createGroups';
 
-const useMenu = (hasDashboard) => {
+const useMenu = ({ hasDashboard, groups }) => {
 	const resources = useResourceDefinitions();
 	const { isLoading: loadingIdentity, data: identity } = useGetIdentity();
 	const { permissions } = usePermissions();
-	const { menuGroups } = useFobContext();
 	const { data } = useCrudContext();
 	const badges = useMemo(
 		() =>
@@ -41,7 +39,7 @@ const useMenu = (hasDashboard) => {
 		}
 
 		const groups = createGroups({
-			menuGroups,
+			groups,
 			resources,
 			permissions,
 			badges,
@@ -52,7 +50,7 @@ const useMenu = (hasDashboard) => {
 	}, [
 		loadingIdentity,
 		identity,
-		menuGroups,
+		groups,
 		resources,
 		permissions,
 		badges,

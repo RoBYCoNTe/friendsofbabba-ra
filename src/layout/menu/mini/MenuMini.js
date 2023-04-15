@@ -10,11 +10,13 @@ import {
   Stack,
 } from '@mui/material';
 
-import { useMenu } from '../../../hook';
+import { useFobContext } from '../../../context/FobContext';
+import useMenu from '../../../hook/useMenu';
 import MenuMiniList from './MenuMiniList';
 
 const MenuMini = ({ sx, ...other }) => {
-	const { menu, isLoading } = useMenu();
+	const { menuGroups } = useFobContext();
+	const { menu, isLoading } = useMenu({ groups: menuGroups });
 
 	if (isLoading) {
 		return null;
