@@ -1,19 +1,14 @@
-import React from 'react';
+import React from "react";
 
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  useTheme,
-} from '@mui/material';
+import { AppBar, Box, Toolbar, useTheme } from "@mui/material";
 
-import { HEADER } from './config';
-import DefaultMenu from './menu/horizontal/MenuHorizontal';
-import { bgBlur } from './utils/cssStyles';
+import { HEADER } from "./config";
+import DefaultMenu from "./menu/horizontal/MenuHorizontal";
+import { bgBlur } from "./utils/cssStyles";
 
-const Shadow = ({ menu: Menu = DefaultMenu, sx, ...other }) => {
+const Shadow = ({ sx, ...other }) => {
 	return (
 		<Box
 			sx={{
@@ -34,7 +29,7 @@ const Shadow = ({ menu: Menu = DefaultMenu, sx, ...other }) => {
 	);
 };
 
-const SidebarHorizontal = () => {
+const SidebarHorizontal = ({ menu: Menu = DefaultMenu }) => {
 	const theme = useTheme();
 	return (
 		<AppBar
