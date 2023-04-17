@@ -1,31 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+
+import { useLogout, useTranslate } from "react-admin";
 
 import {
-  useLogout,
-  useTranslate,
-} from 'react-admin';
-
-import {
-  Avatar,
-  Box,
-  Divider,
-  IconButton,
-  MenuItem,
-  Popover,
-  Typography,
-} from '@mui/material';
+	Avatar,
+	Box,
+	Divider,
+	IconButton,
+	MenuItem,
+	Popover,
+	Typography,
+} from "@mui/material";
 // @mui
-import {
-  alpha,
-  useTheme,
-} from '@mui/material/styles';
+import { alpha, useTheme } from "@mui/material/styles";
 
 import {
-  useIsImpersonating,
-  useUndoImpersonate,
-} from '../data/createAuthProvider';
+	useIsImpersonating,
+	useUndoImpersonate,
+} from "../data/createAuthProvider";
 
-const AccountPopover = ({ identity }) => {
+const UserMenu = ({ identity }) => {
 	const theme = useTheme();
 	const translate = useTranslate();
 	const [open, setOpen] = useState(null);
@@ -122,4 +116,4 @@ const AccountPopover = ({ identity }) => {
 	);
 };
 
-export default AccountPopover;
+export default UserMenu;

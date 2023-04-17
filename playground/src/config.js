@@ -1,5 +1,3 @@
-import logo from "./assets/img/logo.png";
-
 let environment = "PRODUCTION";
 let appUrl = `//${document.location.host}/`;
 if (appUrl.endsWith(":3000/")) {
@@ -18,11 +16,3 @@ export const FILE_FIELDS = [
 	"meta_image",
 	"background_image",
 ];
-
-export const fobConfig = {
-	logo,
-	logoSx: {
-		width: 80,
-	},
-	menuGroups: ["dashboard", "blog", "admin"],
-};

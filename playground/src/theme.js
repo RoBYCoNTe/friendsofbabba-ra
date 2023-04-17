@@ -1,6 +1,6 @@
-import { palette } from 'ra-friendsofbabba';
+import { palette } from "ra-friendsofbabba";
 
-import { alpha } from '@mui/material';
+import { alpha } from "@mui/material";
 
 const themeMode = "light";
 const themePalette = palette(themeMode);

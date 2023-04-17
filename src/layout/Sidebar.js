@@ -1,32 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from "react";
 
-import PropTypes from 'prop-types';
-import { useGetIdentity } from 'react-admin';
-import { useLocation } from 'react-router-dom';
+import PropTypes from "prop-types";
+import { useGetIdentity } from "react-admin";
+import { useLocation } from "react-router-dom";
 
-import {
-  Avatar,
-  Box,
-  Drawer,
-  Link,
-  Typography,
-} from '@mui/material';
-// @mui
-import {
-  alpha,
-  styled,
-  useTheme,
-} from '@mui/material/styles';
+import { Avatar, Box, Drawer, Link, Typography } from "@mui/material";
+import { alpha, styled, useTheme } from "@mui/material/styles";
 
-import { useFobContext } from '../context';
-import { NAV } from './config';
-import useResponsive from './hooks/useResponsive';
-import Logo from './Logo';
-import MenuVertical from './menu/vertical/MenuVertical';
-import MenuVerticalBottom from './menu/vertical/MenuVerticalBottom';
-import SidebarToggleButton from './SidebarToggleButton';
-
-// ----------------------------------------------------------------------
+import { NAV } from "./config";
+import useResponsive from "./hooks/useResponsive";
+import DefaultLogo from "./Logo";
+import DefaultMenu from "./menu/vertical/MenuVertical";
+import DefaultMenuBottom from "./menu/vertical/MenuVerticalBottom";
+import SidebarToggleButton from "./SidebarToggleButton";
 
 const StyledAccount = styled("div")(({ theme }) => ({
 	display: "flex",
@@ -39,14 +25,27 @@ const StyledAccount = styled("div")(({ theme }) => ({
 const Sidebar = ({
 	openNav,
 	onCloseNav,
-	menu: Menu = MenuVertical,
-	menuBottom: MenuBottom = MenuVerticalBottom,
+	menu: Menu = DefaultMenu,
+	menuBottom: MenuBottom = DefaultMenuBottom,
+	menuGroups = [],
+	logo,
 }) => {
 	const { pathname } = useLocation();
 	const theme = useTheme();
 	const isDesktop = useResponsive("up", "lg");
 	const { data: identity, isLoading } = useGetIdentity();
-	const { menuGroups } = useFobContext();
+	const Logo = useMemo(() => {
+		const logoType = typeof logo;
+		switch (logoType) {
+			case "string":
+				return <DefaultLogo src={logo} />;
+			case "function":
+				const CustomLogo = logo;
+				return <CustomLogo />;
+			default:
+				return undefined;
+		}
+	}, [logo]);
 
 	useEffect(() => {
 		if (openNav) {
@@ -61,9 +60,11 @@ const Sidebar = ({
 
 	const renderContent = (
 		<>
-			<Box sx={{ px: 2.5, py: 3, display: "inline-flex" }}>
-				<Logo />
-			</Box>
+			{Logo && (
+				<Box sx={{ px: 2.5, py: 3, display: "inline-flex" }}>
+					{React.cloneElement(Logo)}
+				</Box>
+			)}
 			<Box sx={{ mb: 5, mx: 2.5 }}>
 				<Link underline="none">
 					<StyledAccount>
@@ -89,13 +90,11 @@ const Sidebar = ({
 					</StyledAccount>
 				</Link>
 			</Box>
-			{(menuGroups || []).length > 0 && <Menu />}
+			<Menu groups={menuGroups} />
 			{MenuBottom && (
 				<>
 					<Box sx={{ flexGrow: 1 }} />
-					<Box sx={{ px: 2.5, pb: 3, mt: 10 }}>
-						<MenuBottom />
-					</Box>
+					<MenuBottom />
 				</>
 			)}
 		</>
@@ -145,8 +144,10 @@ const Sidebar = ({
 Sidebar.propTypes = {
 	openNav: PropTypes.bool,
 	onCloseNav: PropTypes.func,
-	menu: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
-	menuBottom: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
+	menu: PropTypes.func,
+	menuBottom: PropTypes.func,
+	menuGroups: PropTypes.array,
+	logo: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
 };
 
 export default Sidebar;

@@ -1,24 +1,23 @@
-import React from 'react';
+import React from "react";
 
-import PropTypes from 'prop-types';
-import { useTranslate } from 'react-admin';
+import PropTypes from "prop-types";
+import { useTranslate } from "react-admin";
 
-import {
-  List,
-  Stack,
-} from '@mui/material';
+import { List, Stack } from "@mui/material";
 
-import { useFobContext } from '../../../context/FobContext';
-import useMenu from '../../../hook/useMenu';
-import MenuVerticalList from './MenuVerticalList';
-import { StyledVerticalSubheader } from './styles';
+import useMenu from "../../../hook/useMenu";
+import MenuVerticalList from "./MenuVerticalList";
+import { StyledVerticalSubheader } from "./styles";
 
-const MenuVertical = ({ sx, ...other }) => {
+const MenuVertical = ({ sx, groups = [], ...other }) => {
 	const translate = useTranslate();
-	const { menuGroups } = useFobContext();
-	const { menu, isLoading } = useMenu({ menuGroups });
+	const { menu, isLoading } = useMenu({ menuGroups: groups });
 
 	if (isLoading) {
+		return null;
+	}
+
+	if (!menu || menu.length === 0) {
 		return null;
 	}
 
@@ -48,6 +47,8 @@ const MenuVertical = ({ sx, ...other }) => {
 
 MenuVertical.propTypes = {
 	data: PropTypes.array,
+	groups: PropTypes.array,
+	sx: PropTypes.object,
 };
 
 export default MenuVertical;

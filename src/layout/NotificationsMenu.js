@@ -1,39 +1,36 @@
-import React, {
-  useEffect,
-  useState,
-} from 'react';
+import React, { useEffect, useState } from "react";
 
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import {
-  DateField,
-  useGetList,
-  useRedirect,
-  useTranslate,
-  useUpdateMany,
-} from 'react-admin';
+	DateField,
+	useGetList,
+	useRedirect,
+	useTranslate,
+	useUpdateMany,
+} from "react-admin";
 
 // @mui
 import {
-  Badge,
-  Box,
-  Button,
-  Divider,
-  IconButton,
-  List,
-  ListItemButton,
-  ListItemText,
-  Popover,
-  Tooltip,
-  Typography,
-} from '@mui/material';
+	Badge,
+	Box,
+	Button,
+	Divider,
+	IconButton,
+	List,
+	ListItemButton,
+	ListItemText,
+	Popover,
+	Tooltip,
+	Typography,
+} from "@mui/material";
 
-import Iconify from './Iconify';
+import Iconify from "./Iconify";
 
 // components
 // require("moment/locale/it"); // importa il locale italiano
 // ----------------------------------------------------------------------
 
-const NotificationsPopover = () => {
+const NotificationsMenu = () => {
 	const { data, isLoading } = useGetList("notifications", {
 		pagination: { page: 1, perPage: 50 },
 		sort: { field: "created", order: "DESC" },
@@ -226,4 +223,4 @@ function NotificationItem({ notification, onClose }) {
 	);
 }
 
-export default NotificationsPopover;
+export default NotificationsMenu;

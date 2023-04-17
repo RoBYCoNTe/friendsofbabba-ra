@@ -1,19 +1,29 @@
-import React from 'react';
+import React, { useMemo } from "react";
 
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import {
-  Box,
-  Stack,
-} from '@mui/material';
+import { Box, Stack } from "@mui/material";
 
-import { NAV } from './config';
-import Logo from './Logo';
-import DefaultMenu from './menu/mini/MenuMini';
-import SidebarToggleButton from './SidebarToggleButton';
-import { hideScrollbarX } from './utils/cssStyles';
+import { NAV } from "./config";
+import DefaultLogo from "./Logo";
+import DefaultMenu from "./menu/mini/MenuMini";
+import SidebarToggleButton from "./SidebarToggleButton";
+import { hideScrollbarX } from "./utils/cssStyles";
 
-const SidebarMini = ({ menu: Menu = DefaultMenu }) => {
+const SidebarMini = ({ menu: Menu = DefaultMenu, menuGroups = [], logo }) => {
+	const Logo = useMemo(() => {
+		const logoType = typeof logo;
+		switch (logoType) {
+			case "string":
+				return <DefaultLogo src={logo} />;
+			case "function":
+				const CustomLogo = logo;
+				return <CustomLogo />;
+			default:
+				return undefined;
+		}
+	}, [logo]);
+
 	return (
 		<Box
 			component="nav"
@@ -38,7 +48,7 @@ const SidebarMini = ({ menu: Menu = DefaultMenu }) => {
 					...hideScrollbarX,
 				}}
 			>
-				<Logo sx={{ px: 1.2, my: 2 }} />
+				{Logo && React.cloneElement(Logo)}
 				<Menu />
 			</Stack>
 		</Box>
@@ -46,7 +56,9 @@ const SidebarMini = ({ menu: Menu = DefaultMenu }) => {
 };
 
 SidebarMini.propTypes = {
-	menu: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
+	menu: PropTypes.func,
+	menuGroups: PropTypes.array,
+	logo: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
 };
 
 export default SidebarMini;

@@ -1,18 +1,11 @@
-import React from 'react';
+import React from "react";
 
-import {
-  useLogout,
-  useTranslate,
-} from 'react-admin';
+import { useLogout, useTranslate } from "react-admin";
 
-import { Logout } from '@mui/icons-material';
-import {
-  Box,
-  Button,
-  Stack,
-} from '@mui/material';
+import { Logout } from "@mui/icons-material";
+import { Box, Button, Stack } from "@mui/material";
 
-const MenuVerticalBottom = () => {
+const MenuVerticalBottom = ({ children }) => {
 	const translate = useTranslate();
 	const logout = useLogout();
 	return (
@@ -22,6 +15,7 @@ const MenuVerticalBottom = () => {
 				spacing={3}
 				sx={{ pt: 5, borderRadius: 2, position: "relative" }}
 			>
+				{children}
 				<Button onClick={logout} color="error" variant="contained">
 					<Logout fontSize="small" sx={{ mr: 0.5 }} />
 					{translate("ra.auth.logout")}

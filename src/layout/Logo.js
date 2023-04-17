@@ -1,30 +1,19 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef } from "react";
 
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import { Box } from '@mui/material';
+import { Box } from "@mui/material";
 
-import { useFobContext } from '../context';
-
-const Logo = forwardRef(({ sx, ...other }, ref) => {
-	const { logo: src, logoSx = {} } = useFobContext();
-
+const Logo = forwardRef(({ src, sx, ...other }, ref) => {
 	if (!src) {
 		return null;
 	}
 
-	const logo = (
-		<Box
-			component="img"
-			src={src}
-			sx={{ cursor: "pointer", ...logoSx, ...sx }}
-		/>
-	);
-
-	return <>{logo}</>;
+	return <Box component="img" src={src} sx={{ ...sx }} />;
 });
 
 Logo.propTypes = {
+	src: PropTypes.string,
 	sx: PropTypes.object,
 };
 

@@ -24,7 +24,7 @@ const createGroups = ({
 		...resources,
 	};
 
-	if (!menuGroups) {
+	if (!menuGroups || menuGroups.length === 0) {
 		// Self generate menu groups
 		menuGroups = Object.values(_resources)
 			.map((resource) => resource.options?.group)

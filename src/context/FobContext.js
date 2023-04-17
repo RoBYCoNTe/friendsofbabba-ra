@@ -1,11 +1,6 @@
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-} from 'react';
+import React, { createContext, useCallback, useContext, useMemo } from "react";
 
-import useLocalStorage from '../layout/hooks/useLocalStorage';
+import useLocalStorage from "../layout/hooks/useLocalStorage";
 
 const FobContext = createContext();
 const defaultSettings = {
@@ -24,11 +19,23 @@ const FobProvider = ({ children, ...props }) => {
 			settings.themeLayout === "vertical" ? "mini" : "vertical";
 		setSettings({ ...settings, themeLayout });
 	}, [setSettings, settings]);
+	const setThemeLayout = useCallback(
+		(themeLayout) => {
+			setSettings({ ...settings, themeLayout });
+		},
+		[setSettings, settings]
+	);
 	// Stretch
 	const onToggleStretch = useCallback(() => {
 		const themeStretch = !settings.themeStretch;
 		setSettings({ ...settings, themeStretch });
 	}, [setSettings, settings]);
+	const setThemeStretch = useCallback(
+		(themeStretch) => {
+			setSettings({ ...settings, themeStretch });
+		},
+		[setSettings, settings]
+	);
 	// Contrast
 	const onToggleContrast = useCallback(() => {
 		const themeContrast =
@@ -44,8 +51,18 @@ const FobProvider = ({ children, ...props }) => {
 			onToggleLayout,
 			onToggleStretch,
 			onToggleContrast,
+			setThemeLayout,
+			setThemeStretch,
 		}),
-		[props, settings, onToggleLayout, onToggleStretch, onToggleContrast]
+		[
+			props,
+			settings,
+			onToggleLayout,
+			onToggleStretch,
+			onToggleContrast,
+			setThemeLayout,
+			setThemeStretch,
+		]
 	);
 
 	return (

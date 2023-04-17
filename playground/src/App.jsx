@@ -5,7 +5,6 @@ import {
   createI18nProvider,
   CrudProvider,
   CrudResource,
-  Layout,
   LoginPage,
   useAuthProvider,
   useDataProvider,
@@ -22,14 +21,15 @@ import {
   HelpOutline,
   HelpRounded,
   NotificationImportant,
+  PeopleAltOutlined,
   Textsms,
 } from '@mui/icons-material';
 
 import * as Components from './component';
+import Layout from './component/Layout';
 import {
   API_URL,
   FILE_FIELDS,
-  fobConfig,
 } from './config';
 import theme from './theme';
 
@@ -64,7 +64,6 @@ const App = () => {
 			<Admin
 				theme={theme}
 				layout={Layout}
-				fob={fobConfig}
 				loginPage={<LoginPage />}
 				queryClient={queryClient}
 				dataProvider={dataProvider}
@@ -140,6 +139,7 @@ const App = () => {
 				<Resource name="languages" />
 				<CrudResource
 					name="users"
+					icon={PeopleAltOutlined}
 					options={{
 						group: "admin",
 						roles: ["admin"],

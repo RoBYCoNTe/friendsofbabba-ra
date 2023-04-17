@@ -29,7 +29,7 @@ const Shadow = ({ sx, ...other }) => {
 	);
 };
 
-const SidebarHorizontal = ({ menu: Menu = DefaultMenu }) => {
+const SidebarHorizontal = ({ menu: Menu = DefaultMenu, menuGroups = [] }) => {
 	const theme = useTheme();
 	return (
 		<AppBar
@@ -47,7 +47,7 @@ const SidebarHorizontal = ({ menu: Menu = DefaultMenu }) => {
 					}),
 				}}
 			>
-				<Menu />
+				<Menu groups={menuGroups} />
 			</Toolbar>
 			<Shadow />
 		</AppBar>
@@ -55,7 +55,8 @@ const SidebarHorizontal = ({ menu: Menu = DefaultMenu }) => {
 };
 
 SidebarHorizontal.propTypes = {
-	menu: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
+	menu: PropTypes.func,
+	menuGroups: PropTypes.array,
 };
 
 export default SidebarHorizontal;

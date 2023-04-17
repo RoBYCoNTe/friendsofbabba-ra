@@ -1,33 +1,28 @@
-import React from 'react';
+import React, { useMemo } from "react";
 
-import PropTypes from 'prop-types';
-import {
-  LoadingIndicator,
-  useGetIdentity,
-} from 'react-admin';
+import PropTypes from "prop-types";
+import { LoadingIndicator, useGetIdentity } from "react-admin";
 
-import {
-  AppBar as MuiAppBar,
-  IconButton,
-  Stack,
-  Toolbar,
-} from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { AppBar as MuiAppBar, IconButton, Stack, Toolbar } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
-import { useFobContext } from '../context';
-import AccountPopover from './AccountPopover';
-import {
-  HEADER,
-  NAV,
-} from './config';
-import useOffSetTop from './hooks/useOffSetTop';
-import useResponsive from './hooks/useResponsive';
-import Iconify from './Iconify';
-import Logo from './Logo';
-import NotificationsPopover from './NotificationsPopover';
-import { bgBlur } from './utils/cssStyles';
+import { useFobContext } from "../context";
+import { HEADER, NAV } from "./config";
+import useOffSetTop from "./hooks/useOffSetTop";
+import useResponsive from "./hooks/useResponsive";
+import Iconify from "./Iconify";
+import DefaultLogo from "./Logo";
+import DefaultNotificationsMenu from "./NotificationsMenu";
+import DefaultUserMenu from "./UserMenu";
+import { bgBlur } from "./utils/cssStyles";
 
-const AppBar = ({ onOpenNav }) => {
+const AppBar = ({
+	onOpenNav,
+	logo,
+	userMenu: UserMenu = DefaultUserMenu,
+	notificationsMenu: NotificationsMenu = DefaultNotificationsMenu,
+	children,
+}) => {
 	const theme = useTheme();
 	const { themeLayout } = useFobContext();
 	const { data: identity, isLoading } = useGetIdentity();
@@ -35,12 +30,24 @@ const AppBar = ({ onOpenNav }) => {
 	const isNavMini = themeLayout === "mini";
 	const isDesktop = useResponsive("up", "lg");
 	const isOffset = useOffSetTop(HEADER.H_DASHBOARD_DESKTOP) && !isNavHorizontal;
+	const Logo = useMemo(() => {
+		const logoType = typeof logo;
+		switch (logoType) {
+			case "string":
+				return <DefaultLogo src={logo} sx={{ mr: 2.5, maxWidth: 80 }} />;
+			case "function":
+				const CustomLogo = logo;
+				return <CustomLogo sx={{ mr: 2.5, maxWidth: 80 }} />;
+			default:
+				return undefined;
+		}
+	}, [logo]);
 
 	if (isLoading) return null;
 
 	const renderContent = (
 		<>
-			{isDesktop && isNavHorizontal && <Logo sx={{ mr: 2.5 }} />}
+			{isDesktop && isNavHorizontal && Logo && React.cloneElement(Logo)}
 			{!isDesktop && (
 				<IconButton onClick={onOpenNav} sx={{ mr: 1, color: "text.primary" }}>
 					<Iconify icon="eva:menu-2-fill" />
@@ -53,13 +60,14 @@ const AppBar = ({ onOpenNav }) => {
 				justifyContent="flex-end"
 				spacing={{ xs: 0.5, sm: 1.5 }}
 			>
+				{children}
 				<LoadingIndicator
 					sx={{
 						color: "text.secondary",
 					}}
 				/>
-				<NotificationsPopover identity={identity} />
-				<AccountPopover identity={identity} />
+				<NotificationsMenu identity={identity} />
+				<UserMenu identity={identity} />
 			</Stack>
 		</>
 	);
@@ -108,6 +116,9 @@ const AppBar = ({ onOpenNav }) => {
 
 AppBar.propTypes = {
 	onOpenNav: PropTypes.func,
+	logo: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+	userMenu: PropTypes.func,
+	notificationsMenu: PropTypes.func,
 };
 
 export default AppBar;

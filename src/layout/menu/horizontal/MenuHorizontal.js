@@ -1,16 +1,20 @@
-import React, { Fragment } from 'react';
+import React, { Fragment } from "react";
 
-import { Stack } from '@mui/material';
+import PropTypes from "prop-types";
 
-import { useFobContext } from '../../../context/FobContext';
-import useMenu from '../../../hook/useMenu';
-import { hideScrollbarY } from '../../utils/cssStyles';
-import MenuHorizontalList from './MenuHorizontalList';
+import { Stack } from "@mui/material";
 
-const MenuHorizontal = ({ sx, ...other }) => {
-	const { menuGroups } = useFobContext();
-	const { menu, isLoading } = useMenu({ menuGroups });
+import useMenu from "../../../hook/useMenu";
+import { hideScrollbarY } from "../../utils/cssStyles";
+import MenuHorizontalList from "./MenuHorizontalList";
+
+const MenuHorizontal = ({ sx, groups = [], ...other }) => {
+	const { menu, isLoading } = useMenu({ menuGroups: groups });
 	if (isLoading) {
+		return null;
+	}
+
+	if (!menu || menu.length === 0) {
 		return null;
 	}
 
@@ -43,6 +47,11 @@ const MenuHorizontal = ({ sx, ...other }) => {
 			})}
 		</Stack>
 	);
+};
+
+MenuHorizontal.propTypes = {
+	sx: PropTypes.object,
+	groups: PropTypes.array,
 };
 
 export default MenuHorizontal;
