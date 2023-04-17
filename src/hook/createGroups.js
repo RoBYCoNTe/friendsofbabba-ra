@@ -1,4 +1,4 @@
-import { Dashboard } from '@mui/icons-material';
+import { Dashboard } from "@mui/icons-material";
 
 const createGroups = ({
 	menuGroups,
@@ -7,6 +7,7 @@ const createGroups = ({
 	badges,
 	hasDashboard,
 }) => {
+	console.log(resources);
 	const dashboardResource = hasDashboard
 		? {
 				dashboard: {
@@ -28,7 +29,7 @@ const createGroups = ({
 		menuGroups.reduce((acc, group) => {
 			const groupResources = Object.values(_resources)
 				.filter(
-					(resource) => resource.options.group === group && resource.hasList
+					(resource) => resource.options?.group === group && resource?.hasList
 				)
 				.map((resource) => ({
 					...resource,
