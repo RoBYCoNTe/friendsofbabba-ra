@@ -24,6 +24,14 @@ const createGroups = ({
 		...resources,
 	};
 
+	if (!menuGroups) {
+		// Self generate menu groups
+		menuGroups = Object.values(_resources)
+			.map((resource) => resource.options?.group)
+			.filter((group) => group !== undefined)
+			.filter((group, index, self) => self.indexOf(group) === index);
+	}
+
 	const groups = Object.values(
 		menuGroups.reduce((acc, group) => {
 			const groupResources = Object.values(_resources)
