@@ -7,7 +7,6 @@ const createGroups = ({
 	badges,
 	hasDashboard,
 }) => {
-	console.log(resources);
 	const dashboardResource = hasDashboard
 		? {
 				dashboard: {
