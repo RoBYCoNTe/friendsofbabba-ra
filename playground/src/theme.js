@@ -2,7 +2,8 @@ import { palette } from "ra-friendsofbabba";
 
 import { alpha } from "@mui/material";
 
-const themeMode = "light";
+const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)");
+const themeMode = prefersDarkMode.matches ? "dark" : "light";
 const themePalette = palette(themeMode);
 
 export const presets = {
