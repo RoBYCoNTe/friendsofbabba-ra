@@ -19,7 +19,7 @@ import {
 	useUndoImpersonate,
 } from "../data/createAuthProvider";
 
-const UserMenu = ({ identity }) => {
+const UserMenu = ({ identity, children }) => {
 	const theme = useTheme();
 	const translate = useTranslate();
 	const [open, setOpen] = useState(null);
@@ -90,18 +90,25 @@ const UserMenu = ({ identity }) => {
 						{identity.email}
 					</Typography>
 				</Box>
-				<Divider sx={{ borderStyle: "dashed" }} />
+				{React.Children.map(children, (child) =>
+					React.cloneElement(child, {
+						onClick: handleClose,
+					})
+				)}
 				<Divider sx={{ borderStyle: "dashed" }} />
 				{isImpersonating && (
-					<MenuItem
-						onClick={() => {
-							handleClose();
-							undoImpersonate();
-						}}
-						sx={{ m: 1 }}
-					>
-						{translate("ra.auth.impersonating.undo", identity)}
-					</MenuItem>
+					<>
+						<MenuItem
+							onClick={() => {
+								handleClose();
+								undoImpersonate();
+							}}
+							sx={{ m: 1 }}
+						>
+							{translate("ra.auth.impersonating.undo", identity)}
+						</MenuItem>
+						<Divider sx={{ borderStyle: "dashed" }} />
+					</>
 				)}
 				<MenuItem
 					onClick={() => {

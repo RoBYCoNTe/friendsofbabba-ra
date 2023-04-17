@@ -13,7 +13,10 @@ import {
   SidebarHorizontal as FobSidebarHorizontal,
   SidebarMini as FobSidebarMini,
   UserMenu as FobUserMenu,
+  UserMenuItem,
 } from 'ra-friendsofbabba';
+
+import { Divider } from '@mui/material';
 
 import logo from '../assets/img/logo.png';
 import logoMini from '../assets/img/logo.png'; // Icon logo
@@ -32,7 +35,12 @@ const LogoMini = () => {
 
 // AppBar customization
 const MyUserMenu = (props) => {
-	return <FobUserMenu {...props} />;
+	return (
+		<FobUserMenu {...props}>
+			<Divider sx={{ borderStyle: "dashed" }} />
+			<UserMenuItem to="/profile">User Profile</UserMenuItem>
+		</FobUserMenu>
+	);
 };
 
 const MyNotificationsMenu = (props) => {
