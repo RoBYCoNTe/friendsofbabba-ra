@@ -12,7 +12,18 @@ import {
   useI18nCatcher,
   useI18nLanguages,
 } from 'ra-friendsofbabba';
+import { Resource } from 'react-admin';
 import { QueryClient } from 'react-query';
+
+import {
+  CategoryOutlined,
+  DockOutlined,
+  FlagOutlined,
+  HelpOutline,
+  HelpRounded,
+  NotificationImportant,
+  Textsms,
+} from '@mui/icons-material';
 
 import * as Components from './component';
 import {
@@ -20,7 +31,6 @@ import {
   FILE_FIELDS,
   fobConfig,
 } from './config';
-import resources from './resources';
 import theme from './theme';
 
 const App = () => {
@@ -64,9 +74,106 @@ const App = () => {
 					locale: "it",
 				})}
 			>
-				{resources.map((resource) => (
-					<CrudResource key={resource.name} {...resource} />
-				))}
+				<CrudResource
+					name="posts"
+					icon={DockOutlined}
+					options={{
+						label: "Aliases",
+						group: "blog",
+						order: 1,
+					}}
+				/>
+				<CrudResource
+					name="blog-posts"
+					options={{
+						group: "blog",
+					}}
+					icon={DockOutlined}
+				/>
+				<CrudResource
+					name="blog-post-taxonomies"
+					options={{
+						group: "blog",
+					}}
+				/>
+				<CrudResource
+					name="tickets"
+					options={{
+						group: "dashboard",
+					}}
+					icon={HelpOutline}
+				/>
+				<CrudResource
+					name="ticket-types"
+					options={{
+						group: "admin",
+					}}
+					icon={HelpRounded}
+				/>
+				<Resource name="workflow/transactions/blog-posts" />
+				<Resource name="workflow/transactions/tickets" />
+				<CrudResource
+					name="blog-post-comments"
+					options={{
+						group: "blog",
+					}}
+					icon={Textsms}
+				/>
+				<CrudResource
+					name="blog-categories"
+					group="blog"
+					options={{
+						group: "blog",
+					}}
+					icon={CategoryOutlined}
+				/>
+
+				<CrudResource
+					name="notifications"
+					options={{
+						group: "dashboard",
+					}}
+					icon={NotificationImportant}
+				/>
+
+				<Resource name="roles" />
+				<Resource name="languages" />
+				<CrudResource
+					name="users"
+					options={{
+						group: "admin",
+						roles: ["admin"],
+					}}
+				/>
+				<CrudResource
+					name="language-messages"
+					options={{
+						group: "admin",
+						roles: ["admin"],
+					}}
+					icon={FlagOutlined}
+				/>
+				<CrudResource
+					name="commands"
+					options={{
+						group: "admin",
+						roles: ["admin"],
+					}}
+				/>
+				<CrudResource
+					name="command-logs"
+					options={{
+						group: "admin",
+						roles: ["admin"],
+					}}
+				/>
+				<CrudResource
+					name="command-log-rows"
+					options={{
+						group: "admin",
+						roles: ["admin"],
+					}}
+				/>
 			</Admin>
 		</CrudProvider>
 	);

@@ -24,5 +24,5 @@ export const fobConfig = {
 	logoSx: {
 		width: 80,
 	},
-	menuGroups: ["notifications", "users", "settings"],
+	menuGroups: ["dashboard", "blog", "admin"],
 };
