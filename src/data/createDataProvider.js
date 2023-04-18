@@ -114,19 +114,43 @@ const createDataProvider = ({
 				data: { ...(json.data || params.data), id: json.data.id },
 			}));
 		}),
-	update: (resource, params) =>
-		filesParser(params.data, fileFields).then((data) => {
-			const id = data && data.pk ? data.pk : params.id;
-			const url = `${apiUrl}/${resource}` + (id ? `/${id}` : "");
-			const options = {
-				method: "PUT",
-				body: JSON.stringify(prepareData(data)),
-				headers: getHeaders(),
+	update: async (resource, params) => {
+		const data = await filesParser(params.data, fileFields);
+		const id = data && data.pk ? data.pk : data.id;
+		const url = `${apiUrl}/${resource}` + (id ? `/${id}` : "");
+		const options = {
+			method: "PUT",
+			body: JSON.stringify(prepareData(data)),
+			headers: getHeaders(),
+		};
+		const response = await fetchJson(url, options);
+		const body = response.json();
+
+		console.log(response.status);
+
+		if (response.status < 200 || response.status >= 300) {
+			// throw new HttpError(
+			// 	(body && body.message) || response.status,
+			// 	response.status,
+			// 	{
+			// 		body: {
+			// 			errors: {
+			// 				name: "Error",
+			// 			},
+			// 		},
+			// 	}
+			// );
+			return {
+				errors: {
+					name: "Error",
+				},
 			};
-			return fetchJson(url, options).then(({ json }) => ({
-				data: { id: data.pk, ...json.data },
-			}));
-		}),
+		}
+
+		console.log("here");
+
+		return body;
+	},
 	updateMany: (resource, params) => {
 		return Promise.all(
 			params.ids.map((id) =>

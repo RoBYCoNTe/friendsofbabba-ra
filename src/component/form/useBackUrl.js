@@ -1,5 +1,7 @@
-import { get } from "lodash";
-import { useMemo } from "react";
+import { useMemo } from 'react';
+
+import { get } from 'lodash';
+import { useRecordContext } from 'react-admin';
 
 /**
  *
@@ -12,22 +14,22 @@ import { useMemo } from "react";
  * @returns {String}
  */
 const useBackUrl = ({
-  backRedirect,
-  backReferenceTarget,
-  backReference,
-  backTab = 1,
-  record,
+	backRedirect,
+	backReferenceTarget,
+	backReference,
+	backTab = 1,
 }) => {
-  const referenceId = get(record, backReferenceTarget, 0);
-  return useMemo(
-    () =>
-      referenceId === null || referenceId === 0
-        ? backRedirect
-        : backTab > 0
-        ? `/${backReference}/${referenceId}/${backTab}`
-        : `/${backReference}/${referenceId}`,
-    [backRedirect, backReference, referenceId, backTab]
-  );
+	const record = useRecordContext();
+	const referenceId = get(record, backReferenceTarget, 0);
+	return useMemo(
+		() =>
+			referenceId === null || referenceId === 0
+				? backRedirect
+				: backTab > 0
+				? `/${backReference}/${referenceId}/${backTab}`
+				: `/${backReference}/${referenceId}`,
+		[backRedirect, backReference, referenceId, backTab]
+	);
 };
 
 export default useBackUrl;

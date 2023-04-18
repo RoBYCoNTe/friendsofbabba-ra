@@ -12,8 +12,8 @@ import {
 
 import { Typography } from '@mui/material';
 
-const DateAgoField = () => {
-	const record = useRecordContext();
+const DateAgoField = (props) => {
+	const record = useRecordContext(props);
 	const locale = useLocale();
 	const fromNow = useMemo(() => {
 		moment.locale(locale);

@@ -46,9 +46,14 @@ const Datagrid = ({
 			{...props}
 			rowClick={rowClick === "edit" ? undefined : rowClick}
 		>
-			{actions && React.cloneElement(actions)}
 			{showPrimaryKey && <TextField source={primaryKey} />}
-			{children}
+			{React.Children.map(children, (child) => {
+				if (child?.key === "EditButton" || child?.key === "DeleteButton") {
+					return null;
+				}
+				return child;
+			})}
+			{actions && React.cloneElement(actions)}
 		</RaDatagrid>
 	);
 };

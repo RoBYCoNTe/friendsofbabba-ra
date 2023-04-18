@@ -1,12 +1,21 @@
-import React, { Fragment, useMemo } from "react";
+import React, {
+  Fragment,
+  useMemo,
+} from 'react';
 
-import moment from "moment";
-import { useRecordContext, useTranslate } from "react-admin";
+import moment from 'moment';
+import {
+  useRecordContext,
+  useTranslate,
+} from 'react-admin';
 
-import { Box, Typography } from "@mui/material";
+import {
+  Box,
+  Typography,
+} from '@mui/material';
 
-const NotificationField = () => {
-	const record = useRecordContext();
+const NotificationField = (props) => {
+	const record = useRecordContext(props);
 	const translate = useTranslate();
 	const readed = useMemo(
 		() =>

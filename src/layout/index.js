@@ -1,4 +1,5 @@
 export { default as UserMenu } from "./UserMenu";
+export { default as UserMenuItem } from "./UserMenuItem";
 export { default as AppBar } from "./AppBar";
 export { HEADER, ICON, NAV } from "./config";
 export { default as Iconify } from "./Iconify";

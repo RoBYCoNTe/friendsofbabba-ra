@@ -62,6 +62,7 @@ CreateEdit.defaultProps = {
 	actions: [],
 	leftSide: false,
 	rightSide: false,
+	mutationMode: "pessimistic",
 };
 
 CreateEdit.propTypes = {

@@ -1,12 +1,12 @@
-import del from 'rollup-plugin-delete';
-import dts from 'rollup-plugin-dts';
-import generateDeclarations from 'rollup-plugin-generate-declarations';
-import external from 'rollup-plugin-peer-deps-external';
+import del from "rollup-plugin-delete";
+import dts from "rollup-plugin-dts";
+import generateDeclarations from "rollup-plugin-generate-declarations";
+import external from "rollup-plugin-peer-deps-external";
 
-import babel from '@rollup/plugin-babel';
-import resolve from '@rollup/plugin-node-resolve';
+import babel from "@rollup/plugin-babel";
+import resolve from "@rollup/plugin-node-resolve";
 
-import pkg from './package.json';
+import pkg from "./package.json";
 
 const config = [
 	{
@@ -46,6 +46,7 @@ const config = [
 			"react-error-boundary",
 			"react-router-dom",
 			"ra-i18n-polyglot",
+			"react-hook-form",
 		]),
 	},
 	{
