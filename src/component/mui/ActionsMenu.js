@@ -52,7 +52,7 @@ const ActionsMenu = ({
 				open={open}
 				onClose={handleClose}
 				arrow="right-top"
-				sx={{ width: 140 }}
+				// sx={{ width: 140 }}
 			>
 				{actions
 					? actions.map((action, index) => (
@@ -61,7 +61,7 @@ const ActionsMenu = ({
 									...action.props,
 									sx: {
 										"&:hover": {
-											backgroundColor: "transparent",
+											backgroundColor: "transparent!important",
 										},
 										width: "100%",
 										margin: "0 auto",

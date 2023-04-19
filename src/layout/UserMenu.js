@@ -8,7 +8,6 @@ import {
 	Divider,
 	IconButton,
 	MenuItem,
-	Popover,
 	Typography,
 } from "@mui/material";
 // @mui
@@ -18,6 +17,7 @@ import {
 	useIsImpersonating,
 	useUndoImpersonate,
 } from "../data/createAuthProvider";
+import { MenuPopover } from "./menu-popover";
 
 const UserMenu = ({ identity, children }) => {
 	const theme = useTheme();
@@ -63,25 +63,7 @@ const UserMenu = ({ identity, children }) => {
 					</Avatar>
 				)}
 			</IconButton>
-			<Popover
-				open={Boolean(open)}
-				anchorEl={open}
-				onClose={handleClose}
-				anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-				transformOrigin={{ vertical: "top", horizontal: "right" }}
-				PaperProps={{
-					sx: {
-						p: 0,
-						mt: 1.5,
-						ml: 0.75,
-						width: 250,
-						"& .MuiMenuItem-root": {
-							typography: "body2",
-							borderRadius: 0.75,
-						},
-					},
-				}}
-			>
+			<MenuPopover open={open} onClose={handleClose} sx={{ width: 240, p: 0 }}>
 				<Box sx={{ my: 1.5, px: 2.5 }}>
 					<Typography variant="subtitle2" noWrap>
 						{identity.name}
@@ -118,7 +100,7 @@ const UserMenu = ({ identity, children }) => {
 				>
 					{translate("ra.auth.logout")}
 				</MenuItem>
-			</Popover>
+			</MenuPopover>
 		</>
 	);
 };

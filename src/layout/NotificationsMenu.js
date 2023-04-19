@@ -19,13 +19,14 @@ import {
 	List,
 	ListItemButton,
 	ListItemText,
-	Popover,
 	Tooltip,
 	Typography,
 } from "@mui/material";
 
 import Iconify from "./Iconify";
+import { MenuPopover } from "./menu-popover";
 
+// FIXME: Add locale to moment or replace moment with dayjs
 // components
 // require("moment/locale/it"); // importa il locale italiano
 // ----------------------------------------------------------------------
@@ -88,20 +89,7 @@ const NotificationsMenu = () => {
 					<Iconify icon="eva:bell-fill" />
 				</Badge>
 			</IconButton>
-			<Popover
-				open={Boolean(open)}
-				anchorEl={open}
-				onClose={handleClose}
-				anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-				transformOrigin={{ vertical: "top", horizontal: "right" }}
-				PaperProps={{
-					sx: {
-						mt: 1.5,
-						ml: 0.75,
-						width: 360,
-					},
-				}}
-			>
+			<MenuPopover open={open} onClose={handleClose} sx={{ width: 360, p: 0 }}>
 				<Box sx={{ display: "flex", alignItems: "center", py: 2, px: 2.5 }}>
 					<Box sx={{ flexGrow: 1 }}>
 						<Typography variant="subtitle1">
@@ -148,7 +136,7 @@ const NotificationsMenu = () => {
 						{translate("ra.action.view_all")}
 					</Button>
 				</Box>
-			</Popover>
+			</MenuPopover>
 		</>
 	);
 };
