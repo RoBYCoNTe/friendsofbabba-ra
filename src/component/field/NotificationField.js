@@ -1,6 +1,6 @@
 import React, { Fragment, useMemo } from "react";
 
-import moment from "moment";
+import { DateTime } from "luxon";
 import { useRecordContext, useTranslate } from "react-admin";
 
 import { Box, Typography } from "@mui/material";
@@ -11,7 +11,9 @@ const NotificationField = (props) => {
 	const readed = useMemo(
 		() =>
 			record?.readed
-				? moment(record?.readed).format(translate("app.date_format.long"))
+				? DateTime.fromISO(record?.readed).toFormat(
+						translate("app.date_format.long")
+				  )
 				: false,
 		[record?.readed, translate]
 	);
@@ -33,7 +35,7 @@ const NotificationField = (props) => {
 				dangerouslySetInnerHTML={{ __html: record?.content }}
 			/>
 			{readed && (
-				<Typography variant="caption" display="block" sx={{ marginTop: 1 }}>
+				<Typography variant="caption" display="block" sx={{ mt: 1 }}>
 					{translate("resources.notifications.readed", { readed })}
 				</Typography>
 			)}

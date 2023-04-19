@@ -1,17 +1,17 @@
-import React, { useCallback } from 'react';
+import React, { useCallback } from "react";
 
-import moment from 'moment';
+import { DateTime } from "luxon";
 import {
-  Button,
-  useListContext,
-  useNotify,
-  useRecordContext,
-  useRefresh,
-  useUnselectAll,
-  useUpdateMany,
-} from 'react-admin';
+	Button,
+	useListContext,
+	useNotify,
+	useRecordContext,
+	useRefresh,
+	useUnselectAll,
+	useUpdateMany,
+} from "react-admin";
 
-import { Email } from '@mui/icons-material';
+import { Email } from "@mui/icons-material";
 
 const MarkAsReadedButton = () => {
 	const refresh = useRefresh();
@@ -19,11 +19,11 @@ const MarkAsReadedButton = () => {
 	const unselectAll = useUnselectAll();
 	const { selectedIds } = useListContext();
 	const record = useRecordContext();
-	const [updateMany, { loading }] = useUpdateMany(
+	const [updateMany, { isLoading }] = useUpdateMany(
 		"notifications",
 		{
 			ids: selectedIds.length > 0 ? selectedIds : [record?.id],
-			data: { readed: moment().format() },
+			data: { readed: DateTime.now().toISO() },
 		},
 		{
 			onSuccess: () => {
@@ -45,7 +45,7 @@ const MarkAsReadedButton = () => {
 	return (
 		<Button
 			label="resources.notifications.buttons.mark_as_readed"
-			disabled={loading || record?.readed}
+			disabled={isLoading || record?.readed}
 			onClick={handleUpdateMany}
 		>
 			<Email />
