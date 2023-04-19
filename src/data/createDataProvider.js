@@ -1,9 +1,9 @@
-import { stringify } from 'query-string';
+import { stringify } from "query-string";
 
-import { getHeaders } from './authHeaders';
-import defaultPrepareData from './cakephp/createDataFormatter';
-import createFilesParser from './createFilesParser';
-import { fetchJson } from './fetch';
+import { getHeaders } from "./authHeaders";
+import defaultPrepareData from "./cakephp/createDataFormatter";
+import createFilesParser from "./createFilesParser";
+import { fetchJson } from "./fetch";
 
 const createDataProvider = ({
 	apiUrl,
@@ -114,43 +114,19 @@ const createDataProvider = ({
 				data: { ...(json.data || params.data), id: json.data.id },
 			}));
 		}),
-	update: async (resource, params) => {
-		const data = await filesParser(params.data, fileFields);
-		const id = data && data.pk ? data.pk : data.id;
-		const url = `${apiUrl}/${resource}` + (id ? `/${id}` : "");
-		const options = {
-			method: "PUT",
-			body: JSON.stringify(prepareData(data)),
-			headers: getHeaders(),
-		};
-		const response = await fetchJson(url, options);
-		const body = response.json();
-
-		console.log(response.status);
-
-		if (response.status < 200 || response.status >= 300) {
-			// throw new HttpError(
-			// 	(body && body.message) || response.status,
-			// 	response.status,
-			// 	{
-			// 		body: {
-			// 			errors: {
-			// 				name: "Error",
-			// 			},
-			// 		},
-			// 	}
-			// );
-			return {
-				errors: {
-					name: "Error",
-				},
+	update: (resource, params) =>
+		filesParser(params.data, fileFields).then((data) => {
+			const id = data && data.pk ? data.pk : data.id;
+			const url = `${apiUrl}/${resource}` + (id ? `/${id}` : "");
+			const options = {
+				method: "PUT",
+				body: JSON.stringify(prepareData(data)),
+				headers: getHeaders(),
 			};
-		}
-
-		console.log("here");
-
-		return body;
-	},
+			return fetchJson(url, options).then(({ json }) => ({
+				data: { ...(json.data || params.data), id: json.data.id },
+			}));
+		}),
 	updateMany: (resource, params) => {
 		return Promise.all(
 			params.ids.map((id) =>
@@ -193,7 +169,6 @@ const createDataProvider = ({
 			};
 		});
 	},
-
 	post(resource, params) {
 		const url = `${apiUrl}/${resource}`;
 		const options = {

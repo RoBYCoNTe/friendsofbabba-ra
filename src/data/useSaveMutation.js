@@ -1,27 +1,23 @@
-import { useCallback } from 'react';
+import { useCallback } from "react";
 
 import {
-  useDataProvider,
-  useNotify,
-  useRedirect,
-  useRefresh,
-  useResourceContext,
-} from 'react-admin';
-
-import createErrorMapper from './cakephp/createErrorMapper';
+	useDataProvider,
+	useNotify,
+	useRedirect,
+	useRefresh,
+	useResourceContext,
+} from "react-admin";
 
 /**
  *
  * @param {Object} props
  * @param {Function} props.onSuccess
  * @param {Function} props.onFailure
- * @param {Function} props.errorMapper
  * @param {Function} props.transform
  * @param {String} props.type - mutation type
  * @returns
  */
 const useSaveMutation = ({
-	errorMapper = createErrorMapper(),
 	onSuccess = undefined,
 	redir = null,
 	redirect,
@@ -49,43 +45,46 @@ const useSaveMutation = ({
 						id: values.id,
 						...(transform ? transform(values) : values),
 					},
-				});
-
-				if (!onSuccess) {
-					if (redir) {
-						redirect(redir);
-					} else if (refresh === true) {
-						if (values.id > 0) {
-							doRefresh();
+				}).then(() => {
+					if (!onSuccess) {
+						doRefresh();
+						if (redir) {
+							redirect(redir);
+						} else if (refresh === true) {
+							if (values.id > 0) {
+								doRefresh();
+							} else {
+								doRedirect("edit", resource, response.id);
+							}
 						} else {
-							doRedirect("edit", resource, response.id);
+							doRedirect(redirect, resource, response.id);
 						}
-					} else {
-						doRedirect(redirect, resource, response.id);
-					}
-					notify("ra.notification." + (values.id > 0 ? "updated" : "created"), {
-						type: "info",
-						messageArgs: {
-							smart_count: 1,
-						},
-					});
-				} else onSuccess(response, values);
+						notify(
+							"ra.notification." + (values.id > 0 ? "updated" : "created"),
+							{
+								type: "info",
+								messageArgs: {
+									smart_count: 1,
+								},
+							}
+						);
+					} else onSuccess(response, values);
+				});
 			} catch (error) {
-				return errorMapper(error, notify);
+				return error?.body?.errors;
 			}
 		},
 		[
 			dataProvider,
 			doRedirect,
 			doRefresh,
-			errorMapper,
 			notify,
-			onSuccess,
-			refresh,
 			redirect,
+			refresh,
 			resource,
 			transform,
 			type,
+			onSuccess,
 			redir,
 		]
 	);
