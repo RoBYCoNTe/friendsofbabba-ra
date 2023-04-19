@@ -57,7 +57,11 @@ const useSaveMutation = ({
 								doRedirect("edit", resource, response.id);
 							}
 						} else {
-							doRedirect(redirect, resource, response.id);
+							if (redirect === "edit" || redirect === "show") {
+								doRedirect(redirect, resource, response.id);
+							} else {
+								doRedirect(redirect, resource);
+							}
 						}
 						notify(
 							"ra.notification." + (values.id > 0 ? "updated" : "created"),
