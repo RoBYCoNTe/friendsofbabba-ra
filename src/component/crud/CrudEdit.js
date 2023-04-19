@@ -9,7 +9,7 @@ import Component from "./Component";
 import Form from "./Form";
 import useCustomComponents from "./useCustomComponents.js";
 
-const Edit = () => {
+const CrudEdit = () => {
 	const { getForm, components } = useCrudContext();
 	const resource = useResourceContext();
 	const customComponents = useCustomComponents(resource);
@@ -43,4 +43,4 @@ const Edit = () => {
 	);
 };
 
-export default Edit;
+export default CrudEdit;

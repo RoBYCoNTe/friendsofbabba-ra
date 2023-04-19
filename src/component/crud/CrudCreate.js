@@ -6,7 +6,7 @@ import { useCrudContext } from "../../data/cakephp/crud/CrudContext";
 import FobCreate from "../form/CreateEdit";
 import Form from "./Form";
 
-const Create = () => {
+const CrudCreate = () => {
 	const { getForm } = useCrudContext();
 	const resource = useResourceContext();
 	const form = useMemo(() => getForm(resource), [resource, getForm]);
@@ -18,4 +18,4 @@ const Create = () => {
 	);
 };
 
-export default Create;
+export default CrudCreate;

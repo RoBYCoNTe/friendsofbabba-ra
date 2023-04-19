@@ -13,4 +13,4 @@ export { default as useFieldLabel } from "./useFieldLabel";
 export { default as ReferenceListField } from "./ReferenceListField";
 export { default as CoverField } from "./CoverField";
 
-export * from "./reference-list";
+export * from "./reference-list/";

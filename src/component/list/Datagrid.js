@@ -1,14 +1,11 @@
-import React, { useMemo } from 'react';
+import React, { useMemo } from "react";
 
-import PropTypes from 'prop-types';
-import {
-  Datagrid as RaDatagrid,
-  TextField,
-} from 'react-admin';
+import PropTypes from "prop-types";
+import { Datagrid as RaDatagrid, TextField } from "react-admin";
 
-import { useTheme } from '@mui/material';
+import { useTheme } from "@mui/material";
 
-import { ActionsField } from '../field';
+import ActionsField from "../field/ActionsField";
 
 const Datagrid = ({
 	children,

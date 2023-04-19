@@ -1,13 +1,13 @@
 export { default as Component } from "./Component";
-export { default as Create } from "./Create";
+export { default as CrudCreate } from "./CrudCreate";
 export { default as createCrud } from "./createCrud";
 export { default as CrudResource } from "./CrudResource";
-export { default as Edit } from "./Edit";
+export { default as CrudEdit } from "./CrudEdit";
 export { default as exporter } from "./exporter";
 export { default as Form } from "./Form";
 export { default as FormActions } from "./FormActions";
 export { default as Input } from "./Input";
-export { default as List } from "./List";
+export { default as CrudList } from "./CrudList";
 export { default as ListBulkActionButtons } from "./ListBulkActionButtons";
 export { default as SimpleList } from "./SimpleList";
 export { default as Title } from "./Title";

@@ -1,30 +1,27 @@
-import React from 'react';
+import React from "react";
 
 import {
-  Loading,
-  useResourceContext,
-  useResourceDefinitionContext,
-  useTranslate,
-} from 'react-admin';
+	Loading,
+	useResourceContext,
+	useResourceDefinitionContext,
+	useTranslate,
+} from "react-admin";
 
-import { useMediaQuery } from '@mui/material';
+import { useMediaQuery } from "@mui/material";
 
-import { useCrudContext } from '../../data';
-import * as buttons from '../button/index.js';
-import * as fields from '../field/index.js';
-import * as inputs from '../input/index.js';
-import {
-  Datagrid,
-  List as FobList,
-} from '../list/';
-import * as lists from '../list/index.js';
-import Component from './Component';
-import exporter from './exporter';
-import ListBulkActionButtons from './ListBulkActionButtons';
-import SimpleList from './SimpleList';
-import useCustomComponents from './useCustomComponents';
+import { useCrudContext } from "../../data";
+import * as buttons from "../button/index.js";
+import * as fields from "../field/index.js";
+import * as inputs from "../input/index.js";
+import { Datagrid, List as FobList } from "../list";
+import * as lists from "../list/index.js";
+import Component from "./Component";
+import exporter from "./exporter";
+import ListBulkActionButtons from "./ListBulkActionButtons";
+import SimpleList from "./SimpleList";
+import useCustomComponents from "./useCustomComponents";
 
-const List = () => {
+const CrudList = () => {
 	const translate = useTranslate();
 	const { getGrid, loading } = useCrudContext();
 	const resource = useResourceContext();
@@ -139,4 +136,4 @@ const List = () => {
 	);
 };
 
-export default List;
+export default CrudList;

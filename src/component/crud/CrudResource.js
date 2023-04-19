@@ -1,15 +1,12 @@
-import * as React from 'react';
-import { isValidElement } from 'react';
+import * as React from "react";
+import { isValidElement } from "react";
 
-import { ResourceContextProvider } from 'react-admin';
-import {
-  Route,
-  Routes,
-} from 'react-router-dom';
+import { ResourceContextProvider } from "react-admin";
+import { Route, Routes } from "react-router-dom";
 
-import Create from './Create';
-import Edit from './Edit';
-import List from './List';
+import Create from "./CrudCreate";
+import Edit from "./CrudEdit";
+import List from "./CrudList";
 
 const CrudResource = (props) => {
 	const { create: Create, edit: Edit, list: List, name, show: Show } = props;

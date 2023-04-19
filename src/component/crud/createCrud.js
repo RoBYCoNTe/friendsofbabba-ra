@@ -1,6 +1,6 @@
-import Create from "./Create";
-import Edit from "./Edit";
-import List from "./List";
+import Create from "./CrudCreate";
+import Edit from "./CrudEdit";
+import List from "./CrudList";
 
 const createCrud = ({
 	icon = null,
