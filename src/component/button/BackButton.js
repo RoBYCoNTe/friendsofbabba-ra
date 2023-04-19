@@ -1,13 +1,10 @@
-import React, { useCallback } from 'react';
+import React, { useCallback } from "react";
 
-import PropTypes from 'prop-types';
-import { Button } from 'react-admin';
-import {
-  Link,
-  useNavigate,
-} from 'react-router-dom';
+import PropTypes from "prop-types";
+import { Button, useResourceContext } from "react-admin";
+import { Link, useNavigate } from "react-router-dom";
 
-import { ArrowBack } from '@mui/icons-material';
+import { ArrowBack } from "@mui/icons-material";
 
 /**
  * Renders a button that navigates back to the previous page (to).
@@ -28,13 +25,13 @@ import { ArrowBack } from '@mui/icons-material';
  * @returns {React.ReactElement}
  */
 const BackButton = ({
-	resource,
 	baseRecord,
 	to,
 	label = "ra.action.back",
 	mode = "to",
 	...props
 }) => {
+	const resource = useResourceContext();
 	const navigate = useNavigate();
 	const handleClick = useCallback(
 		(e) => {
