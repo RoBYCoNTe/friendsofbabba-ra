@@ -7,18 +7,13 @@ import {
 } from "react-admin";
 import { useController } from "react-hook-form";
 
-import { useDebounce } from "../../util";
-
 const CountableTextInput = ({ delay = 500, ...props }) => {
 	const translate = useTranslate();
 	const validationFn = maxLengthValidator(
 		props?.maxLength,
 		"app.input.max_length_error"
 	);
-	const value = useDebounce(
-		useController({ name: props?.source })?.field?.value,
-		delay
-	);
+	const value = useController({ name: props?.source })?.field?.value;
 
 	let helperText = props.helperText;
 	let validate = props.validate;

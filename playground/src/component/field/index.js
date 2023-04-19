@@ -1,3 +1,1 @@
-import BlogPostCommentsField from "./BlogPostCommentsField";
-
-export { BlogPostCommentsField };
+export { default as BlogPostCommentsField } from "./BlogPostCommentsField";

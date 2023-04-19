@@ -1,19 +1,21 @@
 import {
-  AutocompleteArrayInput,
-  AutocompleteInput,
-  DateInput,
-  DateTimeInput,
-  NullableBooleanInput,
-  SelectInput,
-  TextInput,
-} from 'react-admin';
+	AutocompleteArrayInput,
+	AutocompleteInput,
+	DateInput,
+	DateTimeInput,
+	NullableBooleanInput,
+	SelectInput,
+	TextInput,
+	TimeInput,
+} from "react-admin";
 
 export {
-  AutocompleteArrayInput,
-  AutocompleteInput,
-  DateInput,
-  DateTimeInput,
-  NullableBooleanInput,
-  SelectInput,
-  TextInput,
+	AutocompleteArrayInput,
+	AutocompleteInput,
+	DateInput,
+	DateTimeInput,
+	NullableBooleanInput,
+	SelectInput,
+	TextInput,
+	TimeInput,
 };

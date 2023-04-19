@@ -1,4 +1,2 @@
-import BlogPostCommentForm from "./BlogPostCommentForm";
-import BlogPostForm from "./BlogPostForm";
-
-export { BlogPostCommentForm, BlogPostForm };
+export { default as BlogPostCommentForm } from "./BlogPostCommentForm";
+export { default as BlogPostForm } from "./BlogPostForm";

@@ -1,18 +1,9 @@
-import React, {
-  Fragment,
-  useMemo,
-} from 'react';
+import React, { Fragment, useMemo } from "react";
 
-import moment from 'moment';
-import {
-  useRecordContext,
-  useTranslate,
-} from 'react-admin';
+import moment from "moment";
+import { useRecordContext, useTranslate } from "react-admin";
 
-import {
-  Box,
-  Typography,
-} from '@mui/material';
+import { Box, Typography } from "@mui/material";
 
 const NotificationField = (props) => {
 	const record = useRecordContext(props);
@@ -42,7 +33,7 @@ const NotificationField = (props) => {
 				dangerouslySetInnerHTML={{ __html: record?.content }}
 			/>
 			{readed && (
-				<Typography variant="caption" display="block">
+				<Typography variant="caption" display="block" sx={{ marginTop: 1 }}>
 					{translate("resources.notifications.readed", { readed })}
 				</Typography>
 			)}
