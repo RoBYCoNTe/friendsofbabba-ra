@@ -17,5 +17,6 @@ export { default as SvgColor } from "./SvgColor";
 export * from "./hooks";
 export * from "./menu";
 export * from "./scrollbar";
+export * from "./menu-popover";
 export * from "./theme";
 export * from "./utils";
