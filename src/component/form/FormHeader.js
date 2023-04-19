@@ -1,21 +1,13 @@
-import React from 'react';
+import React from "react";
 
-import PropTypes from 'prop-types';
-import {
-  useRecordContext,
-  useTranslate,
-} from 'react-admin';
+import PropTypes from "prop-types";
 
-import {
-  Stack,
-  Typography,
-} from '@mui/material';
+import { Stack, Typography } from "@mui/material";
 
-import ActionsMenu from '../mui/ActionsMenu';
+import { Title } from "../crud";
+import ActionsMenu from "../mui/ActionsMenu";
 
 const FormHeader = ({ title, actions }) => {
-	const translate = useTranslate();
-	const record = useRecordContext();
 	return (
 		<Stack
 			direction="row"
@@ -24,7 +16,7 @@ const FormHeader = ({ title, actions }) => {
 			mb={5}
 		>
 			<Typography variant="h4" gutterBottom>
-				{translate(title, { ...record })}
+				<Title content={title} />
 			</Typography>
 			<ActionsMenu actions={actions} />
 		</Stack>

@@ -6,7 +6,6 @@ import {
 	CreateBase,
 	Edit as RaEdit,
 	EditBase,
-	useResourceContext,
 } from "react-admin";
 
 import { Card, Container, styled } from "@mui/material";
@@ -33,13 +32,11 @@ const CreateEdit = ({
 	rightSide,
 	...props
 }) => {
-	const resource = useResourceContext();
-	const defaultTitle = `resources.${resource}.${mode}`;
 	const ActionComponent = mode === "create" ? CreateBase : EditBase;
 	return (
 		<StyledRoot className="FobForm">
 			<ActionComponent {...props}>
-				<FormHeader title={title || defaultTitle} actions={actions} />
+				{title && <FormHeader title={title} actions={actions} />}
 				{leftSide && React.cloneElement(leftSide)}
 				<Root>
 					{React.cloneElement(children, {

@@ -10,12 +10,9 @@ const Create = () => {
 	const { getForm } = useCrudContext();
 	const resource = useResourceContext();
 	const form = useMemo(() => getForm(resource), [resource, getForm]);
-	const hasTitle = useMemo(() => form?.titles?.create || form?.title, [form]);
+
 	return (
-		<FobCreate
-			title={hasTitle && (form?.titles?.create || form?.title)}
-			mode="create"
-		>
+		<FobCreate title={form?.titles?.create || form?.title} mode="create">
 			<Form />
 		</FobCreate>
 	);

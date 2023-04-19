@@ -14,11 +14,10 @@ const Edit = () => {
 	const resource = useResourceContext();
 	const customComponents = useCustomComponents(resource);
 	const form = useMemo(() => getForm(resource), [resource, getForm]);
-	const hasTitle = useMemo(() => form?.titles?.edit || form?.title, [form]);
 
 	return (
 		<FobEdit
-			title={hasTitle && (form?.titles?.create || form?.title)}
+			title={form?.titles?.edit || form?.title}
 			mode="edit"
 			actions={
 				form?.actions &&
