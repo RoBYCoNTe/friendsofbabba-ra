@@ -28,6 +28,7 @@ import {
 
 import * as Components from './component';
 import Layout from './component/Layout';
+import Logo from './component/Logo';
 import {
   API_URL,
   FILE_FIELDS,
@@ -66,7 +67,7 @@ const App = () => {
 				<Admin
 					theme={theme}
 					layout={Layout}
-					loginPage={<LoginPage />}
+					loginPage={<LoginPage logo={Logo} />}
 					queryClient={queryClient}
 					dataProvider={dataProvider}
 					authProvider={authProvider}

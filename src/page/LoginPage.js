@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 
 import PropTypes from "prop-types";
 import { LoginForm as DefaultLoginForm, useCheckAuth } from "react-admin";
@@ -6,15 +6,27 @@ import { useNavigate } from "react-router-dom";
 
 import { Card, styled } from "@mui/material";
 
-import { useFobContext } from "../context";
+import DefaultLogo from "../layout/Logo";
 
-const LoginPage = (props) => {
+const LoginPage = ({ logo, ...props }) => {
 	const { children, backgroundImage, ...rest } = props;
-	const { logo } = useFobContext();
 	const containerRef = useRef();
 	let backgroundImageLoaded = false;
 	const checkAuth = useCheckAuth();
 	const navigate = useNavigate();
+	const Logo = useMemo(() => {
+		const logoType = typeof logo;
+		switch (logoType) {
+			case "string":
+				return <DefaultLogo src={logo} sx={{ maxWidth: 80 }} />;
+			case "function":
+				const CustomLogo = logo;
+				return <CustomLogo sx={{ maxWidth: 80 }} />;
+			default:
+				return undefined;
+		}
+	}, [logo]);
+
 	useEffect(() => {
 		checkAuth({}, false)
 			.then(() => {
@@ -50,10 +62,8 @@ const LoginPage = (props) => {
 	return (
 		<Root {...rest} ref={containerRef}>
 			<Card className={LoginClasses.card}>
-				{logo && (
-					<div className={LoginClasses.avatar}>
-						<img src={logo} alt="logo" />
-					</div>
+				{Logo && (
+					<div className={LoginClasses.avatar}>{React.cloneElement(Logo)}</div>
 				)}
 				{children}
 			</Card>
@@ -88,9 +98,6 @@ const Root = styled("div", {
 		justifyContent: "center",
 		alignItems: "center",
 	},
-	[`& .${LoginClasses.avatar} img`]: {
-		maxWidth: 200,
-	},
 	[`& .${LoginClasses.icon}`]: {
 		backgroundColor: theme.palette.secondary[500],
 	},
@@ -100,6 +107,7 @@ LoginPage.propTypes = {
 	backgroundImage: PropTypes.string,
 	children: PropTypes.node,
 	className: PropTypes.string,
+	logo: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
 };
 
 LoginPage.defaultProps = {

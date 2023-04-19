@@ -18,13 +18,8 @@ import {
 
 import { Divider } from '@mui/material';
 
-import logo from '../assets/img/logo.png';
 import logoMini from '../assets/img/logo.png'; // Icon logo
-
-// Used in AppBar and SidebarHorizontal of Layout
-const Logo = ({ sx }) => {
-	return <FobLogo src={logo} sx={{ ...sx, width: 50 }} />;
-};
+import Logo from './Logo';
 
 // Used in SidebarMini of Layout
 const LogoMini = () => {
