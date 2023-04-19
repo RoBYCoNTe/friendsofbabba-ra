@@ -49,7 +49,7 @@ const SidebarMini = ({ menu: Menu = DefaultMenu, menuGroups = [], logo }) => {
 				}}
 			>
 				{Logo && React.cloneElement(Logo)}
-				<Menu />
+				<Menu menuGroups={menuGroups} />
 			</Stack>
 		</Box>
 	);

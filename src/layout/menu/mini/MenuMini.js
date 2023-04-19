@@ -1,21 +1,13 @@
-import React, {
-  Fragment,
-  memo,
-} from 'react';
+import React, { Fragment, memo } from "react";
 
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import {
-  Box,
-  Stack,
-} from '@mui/material';
+import { Box, Stack } from "@mui/material";
 
-import { useFobContext } from '../../../context/FobContext';
-import useMenu from '../../../hook/useMenu';
-import MenuMiniList from './MenuMiniList';
+import useMenu from "../../../hook/useMenu";
+import MenuMiniList from "./MenuMiniList";
 
-const MenuMini = ({ sx, ...other }) => {
-	const { menuGroups } = useFobContext();
+const MenuMini = ({ sx, menuGroups, ...other }) => {
 	const { menu, isLoading } = useMenu({ menuGroups });
 
 	if (isLoading) {
@@ -43,18 +35,18 @@ const MenuMini = ({ sx, ...other }) => {
 									depth={1}
 									hasChild={!!resource.options.children}
 								/>
-								{index < menu.length - 1 && (
-									<Box
-										sx={{
-											width: 24,
-											height: "1px",
-											bgcolor: "divider",
-											my: "8px !important",
-										}}
-									/>
-								)}
 							</Fragment>
 						))}
+						{index < menu.length - 1 && (
+							<Box
+								sx={{
+									width: 24,
+									height: "1px",
+									bgcolor: "divider",
+									my: "8px !important",
+								}}
+							/>
+						)}
 					</Fragment>
 				);
 			})}
