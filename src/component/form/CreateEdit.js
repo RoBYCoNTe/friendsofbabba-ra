@@ -1,21 +1,17 @@
-import React from 'react';
+import React from "react";
 
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import {
-  Create as RaCreate,
-  CreateBase,
-  Edit as RaEdit,
-  EditBase,
-  useResourceContext,
-} from 'react-admin';
+	Create as RaCreate,
+	CreateBase,
+	Edit as RaEdit,
+	EditBase,
+	useResourceContext,
+} from "react-admin";
 
-import {
-  Card,
-  Container,
-  styled,
-} from '@mui/material';
+import { Card, Container, styled } from "@mui/material";
 
-import FormHeader from './FormHeader';
+import FormHeader from "./FormHeader";
 
 const StyledRoot = styled(Container, {
 	// Configure which props should be forwarded on DOM
