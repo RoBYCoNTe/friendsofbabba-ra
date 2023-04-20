@@ -3,7 +3,6 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useTheme } from 'react-admin';
 
-// @mui
 import { CssBaseline } from '@mui/material';
 import {
   createTheme,
@@ -14,7 +13,6 @@ import {
 import customShadows from './customShadows';
 import GlobalStyles from './globalStyles';
 import { componentsOverride } from './overrides';
-//
 import palette from './palette';
 import shadows from './shadows';
 import typography from './typography';

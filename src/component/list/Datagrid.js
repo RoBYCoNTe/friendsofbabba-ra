@@ -1,11 +1,15 @@
-import React, { useMemo } from "react";
+import React, { useMemo } from 'react';
 
-import PropTypes from "prop-types";
-import { Datagrid as RaDatagrid, TextField } from "react-admin";
+import PropTypes from 'prop-types';
+import {
+  Datagrid as RaDatagrid,
+  TextField,
+} from 'react-admin';
 
-import { useTheme } from "@mui/material";
+import { useTheme } from '@mui/material';
 
-import ActionsField from "../field/ActionsField";
+import ActionsField from '../field/ActionsField';
+import Empty from './Empty';
 
 const Datagrid = ({
 	children,
@@ -42,6 +46,7 @@ const Datagrid = ({
 			sx={sx}
 			{...props}
 			rowClick={rowClick === "edit" ? undefined : rowClick}
+			empty={<Empty />}
 		>
 			{showPrimaryKey && <TextField source={primaryKey} />}
 			{React.Children.map(children, (child) => {

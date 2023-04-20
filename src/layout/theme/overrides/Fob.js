@@ -4,7 +4,7 @@ export default function Ra(theme) {
 			styleOverrides: {
 				root: {
 					"& .MuiInputBase-root": {
-						minWidth: theme.spacing(35),
+						minWidth: theme.spacing(38),
 					},
 					[theme.breakpoints.down("sm")]: {
 						"& .MuiFormControl-root": {

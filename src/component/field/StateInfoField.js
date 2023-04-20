@@ -56,13 +56,12 @@ const StateInfoField = ({
 	);
 
 	// TODO: Implement Alert/AlertTitle custom components
-
 	return (
 		<Alert
 			severity={severity}
 			variant={variant}
 			elevation={elevation}
-			sx={{ width: "100%" }}
+			sx={{ width: "100%", marginBottom: 2 }}
 		>
 			<AlertTitle sx={{ fontWeight: "bold" }}>{state?.name}</AlertTitle>
 			<Typography variant="body2">{state?.description}</Typography>

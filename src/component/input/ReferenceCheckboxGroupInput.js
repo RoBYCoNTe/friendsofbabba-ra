@@ -5,12 +5,8 @@ import {
   ReferenceArrayInput,
 } from 'react-admin';
 
-import { useTheme } from '@mui/material';
-
-import {
-  createManyFormatter,
-  createManyParser,
-} from '../../data';
+import createManyFormatter from '../../data/cakephp/createManyFormatter';
+import createManyParser from '../../data/cakephp/createManyParser';
 
 const ReferenceCheckboxGroupInput = ({
 	optionText,
@@ -18,17 +14,9 @@ const ReferenceCheckboxGroupInput = ({
 	format = createManyFormatter(),
 	...props
 }) => {
-	const theme = useTheme();
 	return (
 		<ReferenceArrayInput {...props} parse={parse} format={format}>
-			<CheckboxGroupInput
-				sx={{
-					"& legend": {
-						marginBottom: theme.spacing(1),
-					},
-				}}
-				optionText={optionText}
-			/>
+			<CheckboxGroupInput optionText={optionText} />
 		</ReferenceArrayInput>
 	);
 };

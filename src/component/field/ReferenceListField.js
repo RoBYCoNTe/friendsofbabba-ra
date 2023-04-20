@@ -1,21 +1,29 @@
-import React, { Fragment, useMemo } from "react";
+import React, {
+  Fragment,
+  useMemo,
+} from 'react';
 
-import { get } from "lodash";
-import PropTypes from "prop-types";
-import { EditButton, Labeled, ReferenceManyField, useInput } from "react-admin";
+import { get } from 'lodash';
+import PropTypes from 'prop-types';
+import {
+  EditButton,
+  Labeled,
+  ReferenceManyField,
+  useInput,
+} from 'react-admin';
 
-import { useMediaQuery } from "@mui/material";
+import { useMediaQuery } from '@mui/material';
 
-import DeleteWithConfirmButton from "../button/DeleteWithConfirmButton";
-import Component from "../crud/Component";
-import SimpleList from "../crud/SimpleList";
-import Datagrid from "../list/Datagrid";
-import EmptyMessage from "./reference-list/EmptyMessage";
-import Pagination from "./reference-list/Pagination";
-import Sorry from "./reference-list/SorryMessage";
-import Toolbar from "./reference-list/Toolbar";
-import useMakeRedirect from "./reference-list/useMakeRedirect";
-import ValidationError from "./reference-list/ValidationError";
+import DeleteWithConfirmButton from '../button/DeleteWithConfirmButton';
+import Component from '../crud/Component';
+import SimpleList from '../crud/SimpleList';
+import Datagrid from '../list/Datagrid';
+import EmptyMessage from './reference-list/EmptyMessage';
+import Pagination from './reference-list/Pagination';
+import Sorry from './reference-list/SorryMessage';
+import Toolbar from './reference-list/Toolbar';
+import useMakeRedirect from './reference-list/useMakeRedirect';
+import ValidationError from './reference-list/ValidationError';
 
 /**
  * Render list of records related to the current record.

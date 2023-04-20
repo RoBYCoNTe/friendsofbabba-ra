@@ -9,6 +9,7 @@ const ReferenceAutocompleteInput = ({
 	optionText,
 	optionValue,
 	helperText,
+	fullWidth,
 	...props
 }) => (
 	<ReferenceInput {...props}>
@@ -16,6 +17,8 @@ const ReferenceAutocompleteInput = ({
 			optionText={optionText}
 			optionValue={optionValue}
 			helperText={helperText}
+			size="small"
+			fullWidth={fullWidth}
 		/>
 	</ReferenceInput>
 );

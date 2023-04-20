@@ -1,10 +1,14 @@
-import React from "react";
+import React from 'react';
 
 // TODO: Use custom AutocompleteArrayInput
-import { AutocompleteArrayInput, ReferenceArrayInput } from "react-admin";
+import {
+  AutocompleteArrayInput,
+  ReferenceArrayInput,
+  useResourceContext,
+} from 'react-admin';
 
-import useManyFormatter from "../../data/cakephp/useManyFormatter";
-import useManyParser from "../../data/cakephp/useManyParser";
+import useManyFormatter from '../../data/cakephp/useManyFormatter';
+import useManyParser from '../../data/cakephp/useManyParser';
 
 const ReferenceAutocompleteArrayInput = ({
 	optionText,
@@ -12,6 +16,7 @@ const ReferenceAutocompleteArrayInput = ({
 	helperText,
 	...props
 }) => {
+	const resource = useResourceContext(props);
 	const manyFormatter = useManyFormatter();
 	const manyParser = useManyParser();
 	return (
@@ -25,7 +30,8 @@ const ReferenceAutocompleteArrayInput = ({
 				optionText={optionText}
 				optionValue={optionValue}
 				helperText={helperText}
-				resource={props.resource}
+				resource={resource}
+				size="small"
 			/>
 		</ReferenceArrayInput>
 	);
