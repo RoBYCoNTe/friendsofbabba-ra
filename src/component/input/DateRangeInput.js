@@ -12,7 +12,7 @@ const DateRangeInput = ({
 	daySource = "day",
 	...props
 }) => {
-	const { displayedFilters, filterValues, setFilters } = useListContext(props);
+	const { filterValues } = useListContext(props);
 	const viewMode = useMemo(
 		() => filterValues?.[props.source],
 		[filterValues, props.source]
@@ -23,9 +23,6 @@ const DateRangeInput = ({
 			<DateRangeSelectInput
 				{...props}
 				label={props.label || "app.date_range.label"}
-				displayedFilters={displayedFilters}
-				filterValues={filterValues}
-				setFilters={setFilters}
 				sx={(theme) =>
 					["range", "day"].indexOf(viewMode) > -1 && {
 						marginRight: theme.spacing(1),

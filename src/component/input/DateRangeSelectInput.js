@@ -3,9 +3,10 @@ import React from 'react';
 import { DateTime } from 'luxon';
 import {
   SelectInput,
-  useListController,
+  useListContext,
   useTranslate,
 } from 'react-admin';
+import { useFormContext } from 'react-hook-form';
 
 export const DATE_RANGE_EXPR = {
 	all: () => ({
@@ -14,29 +15,29 @@ export const DATE_RANGE_EXPR = {
 		day: null,
 	}),
 	today: () => ({
-		start_at: DateTime.local().toISODate(),
-		end_at: DateTime.local().toISODate(),
-		day: undefined,
+		start_at: null,
+		end_at: null,
+		day: DateTime.local().toISODate(),
 	}),
 	yesterday: () => ({
-		start_at: DateTime.local().minus({ days: 1 }).toISODate(),
-		end_at: DateTime.local().minus({ days: 1 }).toISODate(),
-		day: undefined,
+		start_at: null,
+		end_at: null,
+		day: DateTime.local().minus({ days: 1 }).toISODate(),
 	}),
 	last_7_days: () => ({
 		start_at: DateTime.local().minus({ days: 7 }).toISODate(),
 		end_at: DateTime.local().toISODate(),
-		day: undefined,
+		day: null,
 	}),
 	last_30_days: () => ({
 		start_at: DateTime.local().minus({ days: 30 }).toISODate(),
 		end_at: DateTime.local().toISODate(),
-		day: undefined,
+		day: null,
 	}),
 	prev_week: () => ({
 		start_at: DateTime.local().minus({ weeks: 1 }).startOf("week").toISODate(),
 		end_at: DateTime.local().minus({ weeks: 1 }).endOf("week").toISODate(),
-		day: undefined,
+		day: null,
 	}),
 	this_month: () => ({
 		name: (props, translate) =>
@@ -45,7 +46,7 @@ export const DATE_RANGE_EXPR = {
 			}),
 		start_at: DateTime.local().startOf("month").toISODate(),
 		end_at: DateTime.local().endOf("month").toISODate(),
-		day: undefined,
+		day: null,
 	}),
 	last_month: () => ({
 		name: (props, translate) =>
@@ -57,7 +58,7 @@ export const DATE_RANGE_EXPR = {
 			.startOf("month")
 			.toISODate(),
 		end_at: DateTime.local().minus({ months: 1 }).endOf("month").toISODate(),
-		day: undefined,
+		day: null,
 	}),
 	last_two_months: () => ({
 		name: (props, translate) =>
@@ -70,12 +71,12 @@ export const DATE_RANGE_EXPR = {
 			.startOf("month")
 			.toISODate(),
 		end_at: DateTime.local().endOf("month").toISODate(),
-		day: undefined,
+		day: null,
 	}),
 	range: () => ({
 		start_at: DateTime.local().startOf("month").toISODate(),
 		end_at: DateTime.local().endOf("month").toISODate(),
-		day: undefined,
+		day: null,
 	}),
 	day: () => ({
 		start_at: null,
@@ -98,9 +99,10 @@ const getRanges = (props, translate) =>
 		};
 	});
 
-const DateRangeSelectInput = (props) => {
+const DateRangeSelectInput = ({ onChange, ...props }) => {
 	const translate = useTranslate();
-	const { setFilters, filterValues, displayedFilters } = useListController();
+	const { setValue } = useFormContext();
+	const { filterValues } = useListContext();
 	const handleChange = (evt) => {
 		const value = evt.target.value;
 		const range = DATE_RANGE_EXPR[value]?.() ?? DATE_RANGE_EXPR.today();
@@ -109,7 +111,9 @@ const DateRangeSelectInput = (props) => {
 			[props.source]: value,
 			...range,
 		};
-		setFilters(newFilters, displayedFilters);
+		Object.keys(newFilters).forEach((key) => {
+			setValue(key, newFilters[key]);
+		});
 	};
 	return (
 		<SelectInput
