@@ -59,8 +59,10 @@ const useSaveMutation = ({
 						} else {
 							if (redirect === "edit" || redirect === "show") {
 								doRedirect(redirect, resource, response.id);
-							} else {
+							} else if (redirect === "list") {
 								doRedirect(redirect, resource);
+							} else {
+								doRedirect(redirect);
 							}
 						}
 						notify(
