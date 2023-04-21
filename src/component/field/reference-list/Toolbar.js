@@ -1,10 +1,14 @@
-import React from "react";
+import React from 'react';
 
-import { stringify } from "query-string";
-import { TopToolbar, useTranslate } from "react-admin";
-import { Link } from "react-router-dom";
+import { stringify } from 'query-string';
+import {
+  TopToolbar,
+  useTranslate,
+} from 'react-admin';
+import { Link } from 'react-router-dom';
 
-import { Button } from "@mui/material";
+import { Add } from '@mui/icons-material';
+import { Button } from '@mui/material';
 
 /**
  * Basic toolbar to handle referenced records in to `<ReferenceListField />`.
@@ -41,6 +45,7 @@ const Toolbar = ({
 	reference,
 	resource,
 	target,
+	icon = <Add />,
 }) => {
 	const translate = useTranslate();
 	return (
@@ -50,6 +55,8 @@ const Toolbar = ({
 				disableElevation
 				variant="outlined"
 				color="primary"
+				size="small"
+				startIcon={icon}
 				to={{
 					pathname: `/${reference}/create`,
 					search: stringify({
