@@ -1,16 +1,21 @@
-import React from "react";
+import React from 'react';
 
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 import {
-	Create as RaCreate,
-	CreateBase,
-	Edit as RaEdit,
-	EditBase,
-} from "react-admin";
+  Create as RaCreate,
+  CreateBase,
+  Edit as RaEdit,
+  EditBase,
+  useResourceContext,
+} from 'react-admin';
 
-import { Card, Container, styled } from "@mui/material";
+import {
+  Card,
+  Container,
+  styled,
+} from '@mui/material';
 
-import FormHeader from "./FormHeader";
+import FormHeader from './FormHeader';
 
 const StyledRoot = styled(Container, {
 	// Configure which props should be forwarded on DOM
@@ -32,11 +37,13 @@ const CreateEdit = ({
 	rightSide,
 	...props
 }) => {
+	const resource = useResourceContext(props);
 	const ActionComponent = mode === "create" ? CreateBase : EditBase;
+	const defaultTitle = `resources.${resource}.name`;
 	return (
 		<StyledRoot className="FobForm">
 			<ActionComponent {...props}>
-				{title && <FormHeader title={title} actions={actions} />}
+				<FormHeader title={title || defaultTitle} actions={actions} />
 				{leftSide && React.cloneElement(leftSide)}
 				<Root>
 					{React.cloneElement(children, {

@@ -1,19 +1,26 @@
-import React, { useMemo } from "react";
+import React, { useMemo } from 'react';
 
-import { useResourceContext } from "react-admin";
+import {
+  Loading,
+  useResourceContext,
+} from 'react-admin';
 
-import { useCrudContext } from "../../data/cakephp/crud/CrudContext";
-import * as buttons from "../button/index.js";
-import FobEdit from "../form/CreateEdit";
-import Component from "./Component";
-import Form from "./Form";
-import useCustomComponents from "./useCustomComponents.js";
+import { useCrudContext } from '../../data/cakephp/crud/CrudContext';
+import * as buttons from '../button/index.js';
+import FobEdit from '../form/CreateEdit';
+import Component from './Component';
+import Form from './Form';
+import useCustomComponents from './useCustomComponents.js';
 
 const CrudEdit = () => {
-	const { getForm, components } = useCrudContext();
+	const { getForm, loading, components } = useCrudContext();
 	const resource = useResourceContext();
 	const customComponents = useCustomComponents(resource);
 	const form = useMemo(() => getForm(resource), [resource, getForm]);
+
+	if (loading || !form) {
+		return <Loading />;
+	}
 
 	return (
 		<FobEdit
