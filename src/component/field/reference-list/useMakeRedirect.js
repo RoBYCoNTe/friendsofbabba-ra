@@ -1,4 +1,9 @@
-import { useMemo } from "react";
+import { useMemo } from 'react';
+
+import {
+  useRecordContext,
+  useResourceContext,
+} from 'react-admin';
 
 /**
  *
@@ -17,13 +22,16 @@ import { useMemo } from "react";
  *  Returns back redirect that can be used using `useRedirect` hook from `react-admin`.
  *
  */
-const useMakeRedirect = ({ resource, record, tab = 0, defaultRedirect }) =>
-  useMemo(
-    () =>
-      defaultRedirect || tab > 0
-        ? `/${resource}/${record?.id}/${tab}`
-        : `/${resource}/${record?.id}`,
-    [resource, record, tab, defaultRedirect]
-  );
+const useMakeRedirect = ({ tab = 0, defaultRedirect, ...props }) => {
+	const record = useRecordContext(props);
+	const resource = useResourceContext(props);
+	return useMemo(
+		() =>
+			defaultRedirect || tab > 0
+				? `/${resource}/${record?.id}/${tab}`
+				: `/${resource}/${record?.id}`,
+		[resource, record, tab, defaultRedirect]
+	);
+};
 
 export default useMakeRedirect;
