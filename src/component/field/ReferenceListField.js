@@ -10,6 +10,8 @@ import {
   Labeled,
   ReferenceManyField,
   useInput,
+  useRecordContext,
+  useResourceContext,
 } from 'react-admin';
 
 import { useMediaQuery } from '@mui/material';
@@ -18,6 +20,7 @@ import DeleteWithConfirmButton from '../button/DeleteWithConfirmButton';
 import Component from '../crud/Component';
 import SimpleList from '../crud/SimpleList';
 import Datagrid from '../list/Datagrid';
+import { ActionsMenu } from '../mui';
 import EmptyMessage from './reference-list/EmptyMessage';
 import Pagination from './reference-list/Pagination';
 import Sorry from './reference-list/SorryMessage';
@@ -146,39 +149,42 @@ import ValidationError from './reference-list/ValidationError';
  *  Suppose you are retrieving blog-post-comments, your foreign key should be `id`.
  * @returns {JSX.Element}
  */
-const ReferenceListField = ({
-	additionalData,
-	columns = [],
-	components = {},
-	create = true,
-	createLabel = "ra.action.create",
-	empty = "ra.no_results",
-	filter,
-	mobileBreakpoint,
-	mobileLinkType = false,
-	mobilePrimaryComponent = null,
-	mobilePrimaryComponentProps = null,
-	mobilePrimaryText = null,
-	mobileSecondaryComponent = null,
-	mobileSecondaryComponentProps = null,
-	mobileSecondaryText = null,
-	mobileTertiaryComponent = null,
-	mobileTertiaryComponentProps = null,
-	mobileTertiaryText = null,
-	modify = true,
-	modifyLabel = "ra.action.edit",
-	reference,
-	remove = true,
-	removeLabel = "ra.action.delete",
-	removeRedirect,
-	sorry = "ra.reference_list.sorry",
-	displaySorry = true,
-	tab = 0,
-	target,
-	foreignKey = "id",
-	...props
-}) => {
-	const { resource, record } = props;
+const ReferenceListField = (props) => {
+	const {
+		additionalData,
+		columns = [],
+		components = {},
+		create = true,
+		createLabel = "ra.action.create",
+		empty = "ra.no_results",
+		filter,
+		mobileBreakpoint,
+		mobileLinkType = false,
+		mobilePrimaryComponent = null,
+		mobilePrimaryComponentProps = null,
+		mobilePrimaryText = null,
+		mobileSecondaryComponent = null,
+		mobileSecondaryComponentProps = null,
+		mobileSecondaryText = null,
+		mobileTertiaryComponent = null,
+		mobileTertiaryComponentProps = null,
+		mobileTertiaryText = null,
+		modify = true,
+		// modifyLabel = "ra.action.edit",
+		reference,
+		remove = true,
+		// removeLabel = "ra.action.delete",
+		removeRedirect,
+		sorry = "ra.reference_list.sorry",
+		// displaySorry = true,
+		tab = 0,
+		target,
+		foreignKey = "id",
+		source,
+		...rest
+	} = props;
+	const record = useRecordContext(props);
+	const resource = useResourceContext();
 	const {
 		fieldState: { error },
 	} = useInput({ ...props });
@@ -199,8 +205,7 @@ const ReferenceListField = ({
 	const content = parentRecordExists ? (
 		<Fragment>
 			<ReferenceManyField
-				{...props}
-				empty={<EmptyMessage emptyText={empty} />}
+				{...rest}
 				reference={reference}
 				target={target}
 				filter={{ [target]: get(record, foreignKey), ...filter }}
@@ -223,7 +228,20 @@ const ReferenceListField = ({
 						components={components}
 					/>
 				) : (
-					<Datagrid inner>
+					<Datagrid
+						showPrimaryKey={false}
+						empty={<EmptyMessage emptyText={empty} />}
+						actions={
+							<ActionsMenu
+								actions={[
+									!props.disabled && modify && <EditButton />,
+									!props.disabled && remove && (
+										<DeleteWithConfirmButton redirect={removeRedir} />
+									),
+								]}
+							/>
+						}
+					>
 						{React.Children.map(props.children, (field, index) =>
 							React.isValidElement(field)
 								? React.cloneElement(field, { key: index })
@@ -232,10 +250,6 @@ const ReferenceListField = ({
 						{Component.mapColumns(columns, components, {
 							disabled: props.disabled,
 						})}
-						{!props.disabled && modify && <EditButton />}
-						{!props.disabled && remove && (
-							<DeleteWithConfirmButton redirect={removeRedir} />
-						)}
 					</Datagrid>
 				)}
 			</ReferenceManyField>
