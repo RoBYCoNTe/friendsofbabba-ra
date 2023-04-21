@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 
 import { useFobContext } from '../context/FobContext';
+import Breadcrumb from './Breadcrumb';
 import { HEADER } from './config';
 
 const Main = styled("div")(({ theme }) => ({
@@ -49,6 +50,11 @@ const LayoutView = ({ errorComponent, title, children }) => {
 						/>
 					)}
 				>
+					<Breadcrumb
+						sx={{
+							mb: 1.5,
+						}}
+					/>
 					{children}
 				</ErrorBoundary>
 				<Inspector />

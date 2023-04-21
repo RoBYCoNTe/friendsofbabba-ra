@@ -11,13 +11,12 @@ import {
 
 import {
   Card,
-  Container,
   styled,
 } from '@mui/material';
 
 import FormHeader from './FormHeader';
 
-const StyledRoot = styled(Container, {
+const StyledRoot = styled("div", {
 	// Configure which props should be forwarded on DOM
 	shouldForwardProp: (prop) =>
 		prop !== "color" && prop !== "variant" && prop !== "sx",
