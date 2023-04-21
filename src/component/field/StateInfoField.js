@@ -1,10 +1,16 @@
-import React, { useMemo } from "react";
+import React, { useMemo } from 'react';
 
-import { useRecordContext, useResourceContext } from "react-admin";
+import {
+  useRecordContext,
+  useResourceContext,
+} from 'react-admin';
 
-import { Alert, AlertTitle } from "@mui/material";
+import {
+  Alert,
+  AlertTitle,
+} from '@mui/material';
 
-import { useWorkflowContext } from "../../data/workflow/WorkflowContext";
+import { useWorkflowContext } from '../../data/workflow/WorkflowContext';
 
 /**
  * Allow to display the state of a workflow based on the current record.
@@ -57,7 +63,7 @@ const StateInfoField = ({
 			severity={severity}
 			variant={variant}
 			elevation={elevation}
-			sx={{ width: "100%" }}
+			sx={{ width: "100%", marginBottom: 2 }}
 		>
 			<AlertTitle
 				sx={{ fontWeight: "bold", marginBottom: !state?.description && 0 }}
