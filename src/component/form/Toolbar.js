@@ -1,21 +1,28 @@
-import React, { useCallback, useMemo } from "react";
+import React, {
+  useCallback,
+  useMemo,
+} from 'react';
 
 import {
-	SaveButton,
-	Toolbar as RaToolbar,
-	useGetIdentity,
-	useResourceContext,
-	useSaveContext,
-} from "react-admin";
-import { useFormContext, useFormState } from "react-hook-form";
+  SaveButton,
+  Toolbar as RaToolbar,
+  useGetIdentity,
+  useRecordContext,
+  useResourceContext,
+  useSaveContext,
+} from 'react-admin';
+import {
+  useFormContext,
+  useFormState,
+} from 'react-hook-form';
 
-import { useWorkflowContext } from "../../data/workflow/WorkflowContext";
-import BackButton from "../button/BackButton";
-import DeleteWithConfirmButton from "../button/DeleteWithConfirmButton";
-import StateButton from "../button/StateButton";
-import StateButtonMenu from "../button/StateButtonMenu";
-import Component from "../crud/Component";
-import useBackUrl from "./useBackUrl";
+import { useWorkflowContext } from '../../data/workflow/WorkflowContext';
+import BackButton from '../button/BackButton';
+import DeleteWithConfirmButton from '../button/DeleteWithConfirmButton';
+import StateButton from '../button/StateButton';
+import StateButtonMenu from '../button/StateButtonMenu';
+import Component from '../crud/Component';
+import useBackUrl from './useBackUrl';
 
 /**
  * @param {Object} props
@@ -39,10 +46,11 @@ const Toolbar = ({
 	...props
 }) => {
 	const resource = useResourceContext();
-	const { getValues, setValue } = useFormContext();
+	const _record = useRecordContext();
+	const record = useMemo(() => _record || {}, [_record]);
+	const { setValue } = useFormContext();
 	const { isDirty } = useFormState();
 	const { saving } = useSaveContext();
-	const record = getValues();
 	const backUrl = useBackUrl({
 		backRedirect,
 		backReferenceTarget,

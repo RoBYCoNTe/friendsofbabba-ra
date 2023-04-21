@@ -1,11 +1,14 @@
-import React from "react";
+import React from 'react';
 
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-import { Stack, Typography } from "@mui/material";
+import {
+  Stack,
+  Typography,
+} from '@mui/material';
 
-import Title from "../crud/Title";
-import ActionsMenu from "../mui/ActionsMenu";
+import Title from '../crud/Title';
+import ActionsMenu from '../mui/ActionsMenu';
 
 const FormHeader = ({ title, actions }) => {
 	return (

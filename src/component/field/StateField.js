@@ -1,14 +1,11 @@
-import React, { useMemo } from 'react';
+import React, { useMemo } from "react";
 
-import {
-  useRecordContext,
-  useResourceContext,
-} from 'react-admin';
+import { useRecordContext, useResourceContext } from "react-admin";
 
-import { Chip } from '@mui/material';
+import { Chip } from "@mui/material";
 
-import { useWorkflowContext } from '../../data/workflow/WorkflowContext';
-import LongTextField from './LongTextField';
+import { useWorkflowContext } from "../../data/workflow/WorkflowContext";
+import LongTextField from "./LongTextField";
 
 const StateField = ({ label = "app.label.workflow.state", ...props }) => {
 	const toResolve = useResourceContext();
@@ -36,9 +33,7 @@ const StateField = ({ label = "app.label.workflow.state", ...props }) => {
 
 	return (
 		<Chip
-			sx={(theme) => ({ padding: theme.spacing(1), height: "100%" })}
 			color="primary"
-			size="small"
 			label={
 				<LongTextField
 					variant="body2"

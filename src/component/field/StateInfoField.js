@@ -1,17 +1,10 @@
-import React, { useMemo } from 'react';
+import React, { useMemo } from "react";
 
-import {
-  useRecordContext,
-  useResourceContext,
-} from 'react-admin';
+import { useRecordContext, useResourceContext } from "react-admin";
 
-import {
-  Alert,
-  AlertTitle,
-  Typography,
-} from '@mui/material';
+import { Alert, AlertTitle } from "@mui/material";
 
-import { useWorkflowContext } from '../../data/workflow/WorkflowContext';
+import { useWorkflowContext } from "../../data/workflow/WorkflowContext";
 
 /**
  * Allow to display the state of a workflow based on the current record.
@@ -55,16 +48,23 @@ const StateInfoField = ({
 		[record, workflow]
 	);
 
-	// TODO: Implement Alert/AlertTitle custom components
+	if (!state) {
+		return null;
+	}
+
 	return (
 		<Alert
 			severity={severity}
 			variant={variant}
 			elevation={elevation}
-			sx={{ width: "100%", marginBottom: 2 }}
+			sx={{ width: "100%" }}
 		>
-			<AlertTitle sx={{ fontWeight: "bold" }}>{state?.name}</AlertTitle>
-			<Typography variant="body2">{state?.description}</Typography>
+			<AlertTitle
+				sx={{ fontWeight: "bold", marginBottom: !state?.description && 0 }}
+			>
+				{state?.name}
+			</AlertTitle>
+			{state?.description}
 		</Alert>
 	);
 };
