@@ -1,12 +1,12 @@
-import { useCallback } from "react";
+import { useCallback } from 'react';
 
 import {
-	useDataProvider,
-	useNotify,
-	useRedirect,
-	useRefresh,
-	useResourceContext,
-} from "react-admin";
+  useDataProvider,
+  useNotify,
+  useRedirect,
+  useRefresh,
+  useResourceContext,
+} from 'react-admin';
 
 /**
  *
@@ -34,7 +34,7 @@ const useSaveMutation = ({
 	const save = useCallback(
 		async (values) => {
 			try {
-				const { data: response } = await dataProvider[
+				await dataProvider[
 					type === null
 						? values.id && values.id > 0
 							? "update"
@@ -45,7 +45,7 @@ const useSaveMutation = ({
 						id: values.id,
 						...(transform ? transform(values) : values),
 					},
-				}).then(() => {
+				}).then(({ data: response }) => {
 					if (!onSuccess) {
 						doRefresh();
 						if (redir) {
