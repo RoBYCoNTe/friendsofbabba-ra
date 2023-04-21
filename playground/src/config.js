@@ -9,10 +9,4 @@ export const API_URL = `${APP_URL}api`;
 export const ENVIRONMENT = environment;
 export const RECAPTCHA_SITE_KEY = "?";
 
-export const FILE_FIELDS = [
-	"media_collection",
-	"media",
-	"logo",
-	"meta_image",
-	"background_image",
-];
+export const FILE_FIELDS = ["media_collection", "media", "thumbnail"];
