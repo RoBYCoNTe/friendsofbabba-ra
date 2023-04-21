@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
 import {
-	maxLength as maxLengthValidator,
-	TextInput,
-	useTranslate,
-} from "react-admin";
-import { useController } from "react-hook-form";
+  maxLength as maxLengthValidator,
+  TextInput,
+  useTranslate,
+} from 'react-admin';
+import { useController } from 'react-hook-form';
 
 const CountableTextInput = ({ delay = 500, ...props }) => {
 	const translate = useTranslate();
@@ -38,13 +38,7 @@ const CountableTextInput = ({ delay = 500, ...props }) => {
 				: usedCharsInfo;
 	}
 
-	return (
-		<TextInput
-			{...props}
-			validate={[maxLengthValidator(10, "error")]}
-			helperText={helperText}
-		/>
-	);
+	return <TextInput {...props} validate={validate} helperText={helperText} />;
 };
 
 export default CountableTextInput;
