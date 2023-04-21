@@ -104,8 +104,6 @@ const DateRangeSelectInput = (props) => {
 	const handleChange = (evt) => {
 		const value = evt.target.value;
 		const range = DATE_RANGE_EXPR[value]?.() ?? DATE_RANGE_EXPR.today();
-		console.log(range);
-
 		const newFilters = {
 			...filterValues,
 			[props.source]: value,

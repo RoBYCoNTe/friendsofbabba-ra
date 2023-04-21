@@ -29,7 +29,6 @@ const DateRangeInput = ({
 				sx={(theme) =>
 					["range", "day"].indexOf(viewMode) > -1 && {
 						marginRight: theme.spacing(1),
-						marginBottom: 0,
 					}
 				}
 			/>

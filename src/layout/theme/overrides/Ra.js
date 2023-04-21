@@ -14,6 +14,13 @@ export default function Ra(theme) {
 				},
 			},
 		},
+		MuiTextField: {
+			styleOverrides: {
+				root: {
+					marginBottom: theme.spacing(0.5),
+				},
+			},
+		},
 		RaCheckboxGroupInput: {
 			styleOverrides: {
 				root: {
