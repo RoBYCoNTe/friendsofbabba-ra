@@ -18,6 +18,7 @@ const Datagrid = ({
 	showPrimaryKey,
 	primaryKey,
 	rowClick,
+	alternateRows,
 	...props
 }) => {
 	const theme = useTheme();
@@ -37,16 +38,22 @@ const Datagrid = ({
 				maxWidth: "100%",
 				overflowX: "auto",
 			},
+			"& .RaDatagrid-rowOdd": {
+				backgroundColor: alternateRows
+					? theme.palette.background.default
+					: "inherit",
+			},
 		}),
-		[noWrap, theme]
+		[noWrap, theme, alternateRows]
 	);
 
 	return (
 		<RaDatagrid
 			sx={sx}
-			{...props}
 			rowClick={rowClick === "edit" ? undefined : rowClick}
 			empty={<Empty />}
+			size="small"
+			{...props}
 		>
 			{showPrimaryKey && <TextField source={primaryKey} />}
 			{React.Children.map(children, (child) => {
@@ -63,6 +70,7 @@ const Datagrid = ({
 Datagrid.defaultProps = {
 	...RaDatagrid.defaultProps,
 	noWrap: false,
+	alternateRows: true,
 	actions: <ActionsField />,
 	primaryKey: "id",
 	showPrimaryKey: true,
@@ -70,6 +78,7 @@ Datagrid.defaultProps = {
 Datagrid.propTypes = {
 	...RaDatagrid.propTypes,
 	noWrap: PropTypes.bool,
+	alternateRows: PropTypes.bool,
 	actions: PropTypes.oneOfType([PropTypes.bool, PropTypes.element]),
 	primaryKey: PropTypes.string,
 	showPrimaryKey: PropTypes.bool,
