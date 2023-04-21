@@ -1,6 +1,5 @@
 import React from 'react';
 
-// TODO: Use custom AutocompleteArrayInput
 import {
   AutocompleteArrayInput,
   ReferenceArrayInput,
@@ -20,18 +19,15 @@ const ReferenceAutocompleteArrayInput = ({
 	const manyFormatter = useManyFormatter();
 	const manyParser = useManyParser();
 	return (
-		<ReferenceArrayInput
-			{...props}
-			format={manyFormatter}
-			parse={manyParser}
-			fullWidth
-		>
+		<ReferenceArrayInput {...props} fullWidth>
 			<AutocompleteArrayInput
 				optionText={optionText}
 				optionValue={optionValue}
 				helperText={helperText}
 				resource={resource}
 				size="small"
+				format={manyFormatter}
+				parse={manyParser}
 			/>
 		</ReferenceArrayInput>
 	);

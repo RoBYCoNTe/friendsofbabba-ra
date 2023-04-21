@@ -15,8 +15,12 @@ const ReferenceCheckboxGroupInput = ({
 	...props
 }) => {
 	return (
-		<ReferenceArrayInput {...props} parse={parse} format={format}>
-			<CheckboxGroupInput optionText={optionText} />
+		<ReferenceArrayInput {...props}>
+			<CheckboxGroupInput
+				optionText={optionText}
+				parse={parse}
+				format={format}
+			/>
 		</ReferenceArrayInput>
 	);
 };
