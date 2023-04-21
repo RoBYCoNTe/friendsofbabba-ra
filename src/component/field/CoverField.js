@@ -1,18 +1,36 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { ImageField } from 'react-admin';
 
-const CoverField = ({ width = "150px", height = "150px", ...props }) => {
+const CoverField = ({
+	width: defaultWidth = 150,
+	height: defaultHeight = 150,
+	circle: defaultCircle = false,
+	...props
+}) => {
+	const sx = useMemo(
+		() => ({
+			width:
+				typeof defaultWidth === "number"
+					? `${defaultWidth}px !important`
+					: `${defaultWidth} !important`,
+			height:
+				typeof defaultHeight === "number"
+					? `${defaultHeight}px !important`
+					: `${defaultHeight} !important`,
+			borderRadius: defaultCircle ? "50%" : 1.5,
+		}),
+		[defaultWidth, defaultHeight, defaultCircle]
+	);
+
 	return (
 		<ImageField
 			sx={(theme) => ({
 				margin: 0,
 				"& img": {
-					borderRadius: 1.5,
 					border: `1px solid ${theme.palette.divider}`,
-					width: `${width} !important`,
-					height: `${height} !important`,
 					objectFit: "cover !important",
+					...sx,
 				},
 			})}
 			{...props}
