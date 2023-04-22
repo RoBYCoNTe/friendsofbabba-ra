@@ -1,15 +1,14 @@
-import React, { useMemo } from "react";
+import React, { useMemo } from 'react';
 
-import { useTranslate } from "react-admin";
-
-import useFieldLabel from "../field/useFieldLabel";
-import CountableTextInput from "./CountableTextInput";
+import CountableTextInput from './SmartTextInput';
+import useFieldLabel from '../field/useFieldLabel';
+import { useTranslate } from 'react-admin';
 
 const TransactionNotesInput = (props) => {
 	const translate = useTranslate();
-	const fieldLabel = useFieldLabel({ resource: "transactions" });
+	const fieldLabel = useFieldLabel({ resource: 'transactions' });
 	const label = useMemo(
-		() => props.label || fieldLabel("notes"),
+		() => props.label || fieldLabel('notes'),
 		[props.label, fieldLabel]
 	);
 	const helperText = useMemo(
