@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 
-import CountableTextInput from './SmartTextInput';
+import SmartTextInput from './SmartTextInput';
 import useFieldLabel from '../field/useFieldLabel';
 import { useTranslate } from 'react-admin';
 
@@ -17,7 +17,7 @@ const TransactionNotesInput = (props) => {
 	);
 
 	return (
-		<CountableTextInput
+		<SmartTextInput
 			{...props}
 			label={label}
 			helperText={helperText}
