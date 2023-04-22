@@ -1,6 +1,7 @@
+import { ImageField, useRecordContext } from 'react-admin';
 import React, { useMemo } from 'react';
 
-import { ImageField } from 'react-admin';
+import { get } from 'lodash';
 
 const CoverField = ({
 	width: defaultWidth = 150,
@@ -22,7 +23,12 @@ const CoverField = ({
 		}),
 		[defaultWidth, defaultHeight, defaultCircle]
 	);
-
+	// FIXME: react-admin ImageField is not working with sx prop when the sourceValue is null.
+	const record = useRecordContext(props);
+	const sourceValue = get(record, props.source);
+	if (!sourceValue) {
+		return null;
+	}
 	return (
 		<ImageField
 			sx={(theme) => ({
