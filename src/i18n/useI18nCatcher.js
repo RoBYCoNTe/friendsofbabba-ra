@@ -39,6 +39,9 @@ const useI18nCatcher = ({ apiUrl, loading }) => {
 		const consoleError = console.error;
 
 		console.error = function (message) {
+			if (typeof message === "string" && message === "%c%s") {
+				return;
+			}
 			if (
 				typeof message === "string" &&
 				message.indexOf("Missing translation for key: ") >= 0

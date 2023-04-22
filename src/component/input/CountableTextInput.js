@@ -7,7 +7,7 @@ import {
 } from 'react-admin';
 import { useController } from 'react-hook-form';
 
-const CountableTextInput = ({ delay = 500, ...props }) => {
+const CountableTextInput = ({ delay = 500, admin, ...props }) => {
 	const translate = useTranslate();
 	const validationFn = maxLengthValidator(
 		props?.maxLength,

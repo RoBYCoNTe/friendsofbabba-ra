@@ -20,7 +20,7 @@ import StateField from './StateField';
 import TransactionNotesField from './TransactionNotesField';
 import useFieldLabel from './useFieldLabel';
 
-const TransactionLogsField = ({ admin = false, label, ...props }) => {
+const TransactionLogsField = ({ admin = false, addLabel, label, ...props }) => {
 	const record = useRecordContext(props);
 	const resource = useResourceContext();
 	const { getWorkflow } = useWorkflowContext();
@@ -100,7 +100,7 @@ const TransactionLogsField = ({ admin = false, label, ...props }) => {
 			)}
 		</ReferenceManyField>
 	);
-	return props?.addLabel !== false ? (
+	return addLabel !== false ? (
 		<Labeled {...props} label={props?.label} fullWidth={props?.fullWidth}>
 			{content}
 		</Labeled>

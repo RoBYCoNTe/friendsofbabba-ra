@@ -265,13 +265,12 @@ const ReferenceListField = (props) => {
 	);
 	return props?.addLabel !== false ? (
 		<Labeled
-			{...props}
 			label={props?.label}
 			sx={(theme) => ({
 				// "& .MuiFormLabel-root": {
 				//   padding: theme.spacing(1),
 				// },
-				"& .MuiCardContent-root:first-child": {
+				"& .MuiCardContent-root:first-of-type": {
 					padding: theme.spacing(1),
 					paddingTop: 0,
 					paddingBottom: 0,

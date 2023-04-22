@@ -27,7 +27,10 @@ const CoverField = ({
 		<ImageField
 			sx={(theme) => ({
 				margin: 0,
+				display: "flex",
+				justifyContent: "center",
 				"& img": {
+					margin: "0px !important",
 					border: `1px solid ${theme.palette.divider}`,
 					objectFit: "cover !important",
 					...sx,

@@ -107,7 +107,6 @@ const Toolbar = ({
 			{statesToDisplay.length > maxButtonsToDisplay && (
 				<StateButtonMenu
 					states={statesToDisplay}
-					saving={saving}
 					disabled={saving || !isDirty}
 				/>
 			)}
@@ -116,7 +115,6 @@ const Toolbar = ({
 					<StateButton
 						key={state?.code}
 						state={state}
-						saving={saving}
 						disabled={saving || !isDirty}
 					/>
 				))}
