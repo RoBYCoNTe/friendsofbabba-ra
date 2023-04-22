@@ -83,6 +83,7 @@ const App = () => {
 							label: "Aliases",
 							group: "blog",
 							order: 1,
+							caption: true
 						}}
 					/>
 					<CrudResource
