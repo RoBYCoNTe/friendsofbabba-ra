@@ -3,9 +3,9 @@ export default function Ra(theme) {
 		FobForm: {
 			styleOverrides: {
 				root: {
-					"& .MuiInputBase-root": {
-						minWidth: theme.spacing(38),
-					},
+					// "& .MuiInputBase-root": {
+					// 	minWidth: theme.spacing(38),
+					// },
 					[theme.breakpoints.down("sm")]: {
 						"& .MuiFormControl-root": {
 							width: "100%",
