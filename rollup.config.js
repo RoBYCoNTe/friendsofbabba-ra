@@ -4,6 +4,7 @@ import generateDeclarations from 'rollup-plugin-generate-declarations';
 import external from 'rollup-plugin-peer-deps-external';
 
 import babel from '@rollup/plugin-babel';
+import image from '@rollup/plugin-image';
 import resolve from '@rollup/plugin-node-resolve';
 
 import pkg from './package.json';
@@ -26,6 +27,7 @@ const config = [
 			resolve({
 				extensions: [".js", ".jsx", ".ts", ".tsx"],
 			}),
+			image(),
 		],
 		external: Object.keys(pkg.peerDependencies || {}).concat([
 			"@mui/icons-material",

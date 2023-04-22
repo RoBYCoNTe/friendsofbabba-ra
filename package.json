@@ -76,6 +76,7 @@
     "@mui/x-date-pickers": "^6.2.0",
     "@rollup/plugin-babel": "^5.3.1",
     "@rollup/plugin-commonjs": "^24.1.0",
+    "@rollup/plugin-image": "^3.0.2",
     "@rollup/plugin-node-resolve": "^15.0.2",
     "@rollup/plugin-replace": "^4.0.0",
     "@rollup/plugin-typescript": "^8.3.2",
