@@ -1,6 +1,3 @@
-import React, { useCallback } from "react";
-
-import { DateTime } from "luxon";
 import {
 	Button,
 	useListContext,
@@ -10,7 +7,9 @@ import {
 	useUnselectAll,
 	useUpdateMany,
 } from "react-admin";
+import React, { useCallback } from "react";
 
+import { DateTime } from "luxon";
 import { Email } from "@mui/icons-material";
 
 const MarkAsReadedButton = () => {
@@ -45,7 +44,7 @@ const MarkAsReadedButton = () => {
 	return (
 		<Button
 			label="resources.notifications.buttons.mark_as_readed"
-			disabled={isLoading || record?.readed}
+			disabled={isLoading || record?.readed !== null}
 			onClick={handleUpdateMany}
 		>
 			<Email />

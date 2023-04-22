@@ -11,14 +11,14 @@ const CoverField = ({
 	const sx = useMemo(
 		() => ({
 			width:
-				typeof defaultWidth === "number"
+				typeof defaultWidth === 'number'
 					? `${defaultWidth}px !important`
 					: `${defaultWidth} !important`,
 			height:
-				typeof defaultHeight === "number"
+				typeof defaultHeight === 'number'
 					? `${defaultHeight}px !important`
 					: `${defaultHeight} !important`,
-			borderRadius: defaultCircle ? "50%" : 1.5,
+			borderRadius: defaultCircle ? '50%' : 1.5
 		}),
 		[defaultWidth, defaultHeight, defaultCircle]
 	);
@@ -27,14 +27,14 @@ const CoverField = ({
 		<ImageField
 			sx={(theme) => ({
 				margin: 0,
-				display: "flex",
-				justifyContent: "center",
-				"& img": {
-					margin: "0px !important",
+				display: 'flex',
+				justifyContent: 'center',
+				'& img': {
+					margin: '0px !important',
 					border: `1px solid ${theme.palette.divider}`,
-					objectFit: "cover !important",
-					...sx,
-				},
+					objectFit: 'cover !important',
+					...sx
+				}
 			})}
 			{...props}
 		/>
