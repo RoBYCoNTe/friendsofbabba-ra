@@ -27,7 +27,7 @@ const StyledRoot = styled("div", {
 })(({ theme }) => ({}));
 
 const CreateEdit = ({
-	component: Root,
+	component: Root = "div",
 	mode,
 	actions,
 	title,
@@ -68,7 +68,7 @@ CreateEdit.propTypes = {
 	...RaCreate.propTypes,
 	...RaEdit.propTypes,
 	mode: PropTypes.oneOf(["create", "edit"]),
-	component: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+	component: PropTypes.object,
 	actions: PropTypes.arrayOf(PropTypes.element),
 	title: PropTypes.string,
 	leftSide: PropTypes.oneOfType([PropTypes.bool, PropTypes.element]),

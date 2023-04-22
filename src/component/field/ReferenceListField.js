@@ -237,14 +237,12 @@ const ReferenceListField = (props) => {
 						{Component.mapColumns(columns, components, {
 							disabled: props.disabled,
 						})}
-						<ActionsMenu
-							actions={[
-								!props.disabled && modify && <EditButton />,
-								!props.disabled && remove && (
-									<DeleteWithConfirmButton redirect={removeRedir} />
-								),
-							]}
-						/>
+						<ActionsMenu>
+							{!props.disabled && modify && <EditButton />}
+							{!props.disabled && remove && (
+								<DeleteWithConfirmButton redirect={removeRedir} />
+							)}
+						</ActionsMenu>
 					</Datagrid>
 				)}
 			</ReferenceManyField>

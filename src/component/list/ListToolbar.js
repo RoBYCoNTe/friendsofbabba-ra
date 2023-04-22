@@ -19,15 +19,6 @@ import ActionsMenu from '../mui/ActionsMenu';
 
 const ListToolbar = ({ filters: _filters, actions, exporter, ...props }) => {
 	const isMobile = useResponsive("down", "lg");
-	const allActions = useMemo(() => {
-		if (actions.length > 0) {
-			return actions;
-		} else if (exporter !== false) {
-			return [<ExportButton />];
-		} else {
-			return null;
-		}
-	}, [actions, exporter]);
 
 	const filters = useMemo(() => {
 		return _filters?.filter(
@@ -35,7 +26,7 @@ const ListToolbar = ({ filters: _filters, actions, exporter, ...props }) => {
 		);
 	}, [_filters, isMobile]);
 
-	if (!filters && !allActions) {
+	if (!filters && !(actions?.length > 0) && exporter === false) {
 		return null;
 	}
 
@@ -81,7 +72,10 @@ const ListToolbar = ({ filters: _filters, actions, exporter, ...props }) => {
 								}}
 							/>
 						)}
-						<ActionsMenu actions={allActions} />
+						<ActionsMenu>
+							{actions.length > 0 && actions}
+							{exporter !== false && <ExportButton />}
+						</ActionsMenu>
 					</Stack>
 				</Grid>
 			</Grid>

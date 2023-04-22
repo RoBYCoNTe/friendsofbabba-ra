@@ -42,7 +42,7 @@ const Breadcrumb = ({ sx }) => {
 						: breadcrumb;
 
 				if (index === breadcrumbs.length - 1) {
-					return <span>{render}</span>;
+					return <span key={index}>{render}</span>;
 				}
 
 				return (
@@ -50,6 +50,7 @@ const Breadcrumb = ({ sx }) => {
 						component={RouterLink}
 						underline="hover"
 						color="inherit"
+						key={index}
 						to={match.pathname}
 					>
 						{render}

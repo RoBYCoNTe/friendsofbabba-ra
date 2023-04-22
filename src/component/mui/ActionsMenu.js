@@ -1,11 +1,18 @@
-import React, { Children, useState } from "react";
+import React, {
+  Children,
+  useState,
+} from 'react';
 
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-import { MoreVert } from "@mui/icons-material";
-import { IconButton, MenuItem, styled } from "@mui/material";
+import { MoreVert } from '@mui/icons-material';
+import {
+  IconButton,
+  MenuItem,
+  styled,
+} from '@mui/material';
 
-import MenuPopover from "../../layout/menu-popover/MenuPopover";
+import MenuPopover from '../../layout/menu-popover/MenuPopover';
 
 const StyledRoot = styled("div", {
 	// Configure which props should be forwarded on DOM
@@ -17,13 +24,7 @@ const StyledRoot = styled("div", {
 	overridesResolver: (props, styles) => [styles.root],
 })(({ theme }) => ({}));
 
-const ActionsMenu = ({
-	actions,
-	sx,
-	children,
-	disabledArrow,
-	arrow = "right-top",
-}) => {
+const ActionsMenu = ({ sx, children, disabledArrow, arrow = "right-top" }) => {
 	const [open, setOpen] = useState(null);
 	const handleClick = (e) => {
 		e.stopPropagation();
@@ -34,7 +35,7 @@ const ActionsMenu = ({
 		setOpen(null);
 	};
 
-	if (!actions || actions.length === 0) {
+	if (!children || React.Children.count(children) === 0) {
 		return null;
 	}
 
@@ -54,29 +55,30 @@ const ActionsMenu = ({
 				arrow="right-top"
 				// sx={{ width: 140 }}
 			>
-				{actions
-					? actions.map((action, index) => (
-							<MenuItem key={index} onClick={handleClose}>
-								{React.cloneElement(action, {
-									...action.props,
-									sx: {
-										"&:hover": {
-											backgroundColor: "transparent!important",
-										},
+				{Children.map(
+					children,
+					(action, index) =>
+						React.isValidElement(action) && (
+							<MenuItem
+								key={index}
+								onClick={handleClose}
+								sx={{
+									"& button, & a": {
 										width: "100%",
 										margin: "0 auto",
 										padding: 0,
 										height: 24,
-										...(action.props?.sx || {}),
+										justifyContent: "flex-start",
+										"&:hover": {
+											backgroundColor: "transparent!important",
+										},
 									},
-								})}
+								}}
+							>
+								{React.cloneElement(action)}
 							</MenuItem>
-					  ))
-					: Children.map(children, (child) => {
-							return React.cloneElement(child, {
-								...child.props,
-							});
-					  })}
+						)
+				)}
 			</MenuPopover>
 		</StyledRoot>
 	);
@@ -84,8 +86,7 @@ const ActionsMenu = ({
 
 ActionsMenu.propTypes = {
 	...MenuPopover.propTypes,
-	actions: PropTypes.arrayOf(PropTypes.element),
-	children: PropTypes.node,
+	children: PropTypes.node.isRequired,
 };
 
 export default ActionsMenu;

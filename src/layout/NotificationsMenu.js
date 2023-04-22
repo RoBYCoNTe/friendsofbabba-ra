@@ -1,30 +1,33 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  useEffect,
+  useState,
+} from 'react';
 
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 import {
-	DateField,
-	useGetList,
-	useRedirect,
-	useTranslate,
-	useUpdateMany,
-} from "react-admin";
+  DateField,
+  useGetList,
+  useRedirect,
+  useTranslate,
+  useUpdateMany,
+} from 'react-admin';
 
 // @mui
 import {
-	Badge,
-	Box,
-	Button,
-	Divider,
-	IconButton,
-	List,
-	ListItemButton,
-	ListItemText,
-	Tooltip,
-	Typography,
-} from "@mui/material";
+  Badge,
+  Box,
+  Button,
+  Divider,
+  IconButton,
+  List,
+  ListItemButton,
+  ListItemText,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 
-import Iconify from "./Iconify";
-import { MenuPopover } from "./menu-popover";
+import Iconify from './Iconify';
+import { MenuPopover } from './menu-popover';
 
 // FIXME: Add locale to moment or replace moment with dayjs
 // components
@@ -145,9 +148,16 @@ const NotificationsMenu = () => {
 
 NotificationItem.propTypes = {
 	notification: PropTypes.shape({
-		created: PropTypes.instanceOf(Date),
-		id: PropTypes.string,
-		readed: PropTypes.bool,
+		created: PropTypes.oneOfType([
+			PropTypes.instanceOf(Date),
+			PropTypes.string,
+		]),
+		id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+		readed: PropTypes.oneOfType([
+			PropTypes.instanceOf(Date),
+			PropTypes.string,
+			PropTypes.bool,
+		]),
 		title: PropTypes.string,
 		content: PropTypes.string,
 		resource: PropTypes.string,

@@ -21,7 +21,7 @@ const FormHeader = ({ title, actions }) => {
 			<Typography variant="h4" gutterBottom>
 				<Title content={title} />
 			</Typography>
-			<ActionsMenu actions={actions} />
+			<ActionsMenu>{actions}</ActionsMenu>
 		</Stack>
 	);
 };

@@ -48,9 +48,10 @@ const NotificationList = ({ ...props }) => {
 		<Datagrid {...props} rowStyle={handleRowStyle}>
 			<NotificationField source="notification" sortable={false} />
 			<DateAgoField source="created" />
-			<ActionsMenu
-				actions={[<MarkAsReadedButton />, <MarkAsUnreadedButton />]}
-			/>
+			<ActionsMenu>
+				<MarkAsReadedButton />
+				<MarkAsUnreadedButton />
+			</ActionsMenu>
 		</Datagrid>
 	);
 };

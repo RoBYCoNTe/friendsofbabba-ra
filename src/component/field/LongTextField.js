@@ -26,7 +26,7 @@ const LongTextField = ({
 			title={record?.[source]}
 			sx={{
 				overflow: "hidden",
-				"text-overflow": "ellipsis",
+				textOverflow: "ellipsis",
 				display: "-webkit-box",
 				WebkitBoxOrient: "vertical",
 				whiteSpace: "break-spaces",

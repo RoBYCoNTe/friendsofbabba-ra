@@ -1,30 +1,26 @@
-import React, { useMemo } from "react";
+import React from 'react';
 
-import PropTypes from "prop-types";
-import { CloneButton, DeleteWithConfirmButton, EditButton } from "react-admin";
+import PropTypes from 'prop-types';
+import {
+  CloneButton,
+  DeleteWithConfirmButton,
+  EditButton,
+} from 'react-admin';
 
-import ActionsMenu from "../mui/ActionsMenu";
+import ActionsMenu from '../mui/ActionsMenu';
 
 const ActionsField = ({ canEdit, canDelete, canClone }) => {
-	const actions = useMemo(() => {
-		let _actions = [];
-		if (canEdit) {
-			_actions.push(<EditButton />);
-		}
-		if (canDelete) {
-			_actions.push(<DeleteWithConfirmButton />);
-		}
-		if (canClone) {
-			_actions.push(<CloneButton />);
-		}
-		return _actions;
-	}, [canEdit, canDelete, canClone]);
-
 	if (!canEdit && !canDelete && !canClone) {
 		return null;
 	}
 
-	return <ActionsMenu actions={actions} />;
+	return (
+		<ActionsMenu>
+			{canEdit && <EditButton />}
+			{canDelete && <DeleteWithConfirmButton />}
+			{canClone && <CloneButton />}
+		</ActionsMenu>
+	);
 };
 
 ActionsField.defaultProps = {
