@@ -63,7 +63,7 @@ const Form = ({ ...props }) => {
 					}}
 				/>
 			}
-			defaultValues={form?.initialValues}
+			defaultValues={form?.defaultValues}
 			sanitizeEmptyValues={form?.sanitizeEmptyValues}
 			// FIXME: Disabled while this issue is not fixed:
 			// https://github.com/marmelab/react-admin/issues/8819
