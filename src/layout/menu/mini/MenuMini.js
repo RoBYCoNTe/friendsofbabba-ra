@@ -1,11 +1,9 @@
-import React, { Fragment, memo } from "react";
+import { Box, Stack } from '@mui/material';
+import React, { Fragment, memo } from 'react';
 
-import PropTypes from "prop-types";
-
-import { Box, Stack } from "@mui/material";
-
-import useMenu from "../../../hook/useMenu";
-import MenuMiniList from "./MenuMiniList";
+import MenuMiniList from './MenuMiniList';
+import PropTypes from 'prop-types';
+import useMenu from '../../../hook/useMenu';
 
 const MenuMini = ({ sx, menuGroups, ...other }) => {
 	const { menu, isLoading } = useMenu({ menuGroups });
@@ -20,14 +18,14 @@ const MenuMini = ({ sx, menuGroups, ...other }) => {
 			alignItems="center"
 			sx={{
 				px: 0.75,
-				...sx,
+				...sx
 			}}
 			{...other}
 		>
 			{menu.map((item, index) => {
 				const key = item.group;
 				return (
-					<Fragment key={key} disablePadding sx={{ px: 2 }}>
+					<Fragment key={key}>
 						{item.resources.map((resource) => (
 							<Fragment key={resource.name}>
 								<MenuMiniList
@@ -41,9 +39,9 @@ const MenuMini = ({ sx, menuGroups, ...other }) => {
 							<Box
 								sx={{
 									width: 24,
-									height: "1px",
-									bgcolor: "divider",
-									my: "8px !important",
+									height: '1px',
+									bgcolor: 'divider',
+									my: '8px !important'
 								}}
 							/>
 						)}
@@ -55,7 +53,7 @@ const MenuMini = ({ sx, menuGroups, ...other }) => {
 };
 
 MenuMini.propTypes = {
-	sx: PropTypes.object,
+	sx: PropTypes.object
 };
 
 export default memo(MenuMini);
