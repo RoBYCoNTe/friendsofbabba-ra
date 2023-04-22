@@ -75,7 +75,7 @@ const TransactionLogsField = ({ admin = false, label, ...props }) => {
 					linkType={false}
 				/>
 			) : (
-				<Datagrid showPrimaryKey={false} actions={false}>
+				<Datagrid>
 					{admin && <TextField label={fieldLabel("id")} source="id" />}
 					<DateField
 						label={fieldLabel("created")}

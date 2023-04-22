@@ -123,7 +123,7 @@ const CrudList = () => {
 					}}
 				/>
 			) : (
-				<Datagrid showPrimaryKey={false} {...grid?.componentProps}>
+				<Datagrid {...grid?.componentProps}>
 					{Component.mapColumns(grid?.columns, {
 						...fields,
 						...inputs,

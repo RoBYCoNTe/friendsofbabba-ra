@@ -1,26 +1,13 @@
 import React, { useMemo } from 'react';
 
 import PropTypes from 'prop-types';
-import {
-  Datagrid as RaDatagrid,
-  TextField,
-} from 'react-admin';
+import { Datagrid as RaDatagrid } from 'react-admin';
 
 import { useTheme } from '@mui/material';
 
-import ActionsField from '../field/ActionsField';
 import Empty from './Empty';
 
-const Datagrid = ({
-	children,
-	noWrap,
-	actions,
-	showPrimaryKey,
-	primaryKey,
-	rowClick,
-	alternateRows,
-	...props
-}) => {
+const Datagrid = ({ children, noWrap, alternateRows, ...props }) => {
 	const theme = useTheme();
 	const sx = useMemo(
 		() => ({
@@ -48,21 +35,8 @@ const Datagrid = ({
 	);
 
 	return (
-		<RaDatagrid
-			sx={sx}
-			rowClick={rowClick === "edit" ? undefined : rowClick}
-			empty={<Empty />}
-			size="small"
-			{...props}
-		>
-			{showPrimaryKey && <TextField source={primaryKey} />}
-			{React.Children.map(children, (child) => {
-				if (child?.key === "EditButton" || child?.key === "DeleteButton") {
-					return null;
-				}
-				return child;
-			})}
-			{actions && React.cloneElement(actions)}
+		<RaDatagrid sx={sx} empty={<Empty />} {...props}>
+			{children}
 		</RaDatagrid>
 	);
 };
@@ -71,17 +45,11 @@ Datagrid.defaultProps = {
 	...RaDatagrid.defaultProps,
 	noWrap: false,
 	alternateRows: true,
-	actions: <ActionsField />,
-	primaryKey: "id",
-	showPrimaryKey: true,
 };
 Datagrid.propTypes = {
 	...RaDatagrid.propTypes,
 	noWrap: PropTypes.bool,
 	alternateRows: PropTypes.bool,
-	actions: PropTypes.oneOfType([PropTypes.bool, PropTypes.element]),
-	primaryKey: PropTypes.string,
-	showPrimaryKey: PropTypes.bool,
 };
 
 export default Datagrid;

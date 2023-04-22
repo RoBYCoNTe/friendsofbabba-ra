@@ -228,20 +228,7 @@ const ReferenceListField = (props) => {
 						components={components}
 					/>
 				) : (
-					<Datagrid
-						showPrimaryKey={false}
-						empty={<EmptyMessage emptyText={empty} />}
-						actions={
-							<ActionsMenu
-								actions={[
-									!props.disabled && modify && <EditButton />,
-									!props.disabled && remove && (
-										<DeleteWithConfirmButton redirect={removeRedir} />
-									),
-								]}
-							/>
-						}
-					>
+					<Datagrid empty={<EmptyMessage emptyText={empty} />}>
 						{React.Children.map(props.children, (field, index) =>
 							React.isValidElement(field)
 								? React.cloneElement(field, { key: index })
@@ -250,6 +237,14 @@ const ReferenceListField = (props) => {
 						{Component.mapColumns(columns, components, {
 							disabled: props.disabled,
 						})}
+						<ActionsMenu
+							actions={[
+								!props.disabled && modify && <EditButton />,
+								!props.disabled && remove && (
+									<DeleteWithConfirmButton redirect={removeRedir} />
+								),
+							]}
+						/>
 					</Datagrid>
 				)}
 			</ReferenceManyField>

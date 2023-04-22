@@ -30,9 +30,10 @@ const NotificationList = ({ ...props }) => {
 	);
 	const handleRowStyle = useCallback(
 		(record) => ({
+			// TODO: Fix left border bug
 			// marginLeft: -2,
-			// borderRightWidth: 2,
-			// borderRightStyle: "solid",
+			// borderLeftWidth: 2,
+			// borderLeftStyle: "solid",
 			// borderLeftColor: record?.readed
 			// 	? colorize(theme.palette.primary[mode], density)
 			// 	: theme.palette.secondary[mode],
@@ -44,18 +45,12 @@ const NotificationList = ({ ...props }) => {
 	);
 
 	return (
-		<Datagrid
-			{...props}
-			showPrimaryKey={false}
-			actions={
-				<ActionsMenu
-					actions={[<MarkAsReadedButton />, <MarkAsUnreadedButton />]}
-				/>
-			}
-			rowStyle={handleRowStyle}
-		>
+		<Datagrid {...props} rowStyle={handleRowStyle}>
 			<NotificationField source="notification" sortable={false} />
 			<DateAgoField source="created" />
+			<ActionsMenu
+				actions={[<MarkAsReadedButton />, <MarkAsUnreadedButton />]}
+			/>
 		</Datagrid>
 	);
 };
