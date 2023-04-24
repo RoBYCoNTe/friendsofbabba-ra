@@ -10,6 +10,8 @@ import {
   Link,
 } from '@mui/material';
 
+import { slugify } from '../util';
+
 const Breadcrumb = ({ sx }) => {
 	const translate = useTranslate();
 	const breadcrumbs = useBreadcrumbs();
@@ -24,19 +26,21 @@ const Breadcrumb = ({ sx }) => {
 					sx={{
 						width: 4,
 						height: 4,
-						borderRadius: "50%",
-						bgcolor: "text.disabled",
+						borderRadius: '50%',
+						bgcolor: 'text.disabled'
 					}}
 				/>
 			}
 		>
 			{breadcrumbs.map(({ match, breadcrumb }, index) => {
 				const render =
-					typeof breadcrumb.props?.children === "string"
+					typeof breadcrumb.props?.children === 'string'
 						? translate(
-								`breadcrumbs.${breadcrumb.props?.children?.toLowerCase()}`,
+								`breadcrumbs.${slugify(
+									breadcrumb.props?.children?.toLowerCase()
+								)}`,
 								{
-									_: breadcrumb.props?.children,
+									_: breadcrumb.props?.children
 								}
 						  )
 						: breadcrumb;
