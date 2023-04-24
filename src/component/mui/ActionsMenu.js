@@ -14,17 +14,17 @@ import {
 
 import MenuPopover from '../../layout/menu-popover/MenuPopover';
 
-const StyledRoot = styled("div", {
+const StyledRoot = styled('div', {
 	// Configure which props should be forwarded on DOM
 	shouldForwardProp: (prop) =>
-		prop !== "color" && prop !== "variant" && prop !== "sx",
-	slot: "Root",
-	name: "FobActionsMenu",
+		prop !== 'color' && prop !== 'variant' && prop !== 'sx',
+	slot: 'Root',
+	name: 'FobActionsMenu',
 	// We are specifying here how the styleOverrides are being applied based on props
-	overridesResolver: (props, styles) => [styles.root],
+	overridesResolver: (props, styles) => [styles.root]
 })(({ theme }) => ({}));
 
-const ActionsMenu = ({ sx, children, disabledArrow, arrow = "right-top" }) => {
+const ActionsMenu = ({ sx, children, disabledArrow, arrow = 'right-top' }) => {
 	const [open, setOpen] = useState(null);
 	const handleClick = (e) => {
 		e.stopPropagation();
@@ -35,7 +35,11 @@ const ActionsMenu = ({ sx, children, disabledArrow, arrow = "right-top" }) => {
 		setOpen(null);
 	};
 
-	if (!children || React.Children.count(children) === 0) {
+	if (
+		!children ||
+		React.Children.count(children) === 0 ||
+		children.filter((c) => React.isValidElement(c)).length === 0
+	) {
 		return null;
 	}
 
@@ -45,7 +49,7 @@ const ActionsMenu = ({ sx, children, disabledArrow, arrow = "right-top" }) => {
 				aria-label="more"
 				aria-haspopup="true"
 				onClick={handleClick}
-				color={open ? "inherit" : "default"}
+				color={open ? 'inherit' : 'default'}
 			>
 				<MoreVert />
 			</IconButton>
@@ -63,16 +67,16 @@ const ActionsMenu = ({ sx, children, disabledArrow, arrow = "right-top" }) => {
 								key={index}
 								onClick={handleClose}
 								sx={{
-									"& button, & a": {
-										width: "100%",
-										margin: "0 auto",
+									'& button, & a': {
+										width: '100%',
+										margin: '0 auto',
 										padding: 0,
 										height: 24,
-										justifyContent: "flex-start",
-										"&:hover": {
-											backgroundColor: "transparent!important",
-										},
-									},
+										justifyContent: 'flex-start',
+										'&:hover': {
+											backgroundColor: 'transparent!important'
+										}
+									}
 								}}
 							>
 								{React.cloneElement(action)}
@@ -86,7 +90,7 @@ const ActionsMenu = ({ sx, children, disabledArrow, arrow = "right-top" }) => {
 
 ActionsMenu.propTypes = {
 	...MenuPopover.propTypes,
-	children: PropTypes.node.isRequired,
+	children: PropTypes.node.isRequired
 };
 
 export default ActionsMenu;

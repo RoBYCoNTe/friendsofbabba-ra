@@ -18,7 +18,7 @@ import { useResponsive } from '../../layout';
 import ActionsMenu from '../mui/ActionsMenu';
 
 const ListToolbar = ({ filters: _filters, actions, exporter, ...props }) => {
-	const isMobile = useResponsive("down", "lg");
+	const isMobile = useResponsive('down', 'lg');
 
 	const filters = useMemo(() => {
 		return _filters?.filter(
@@ -33,10 +33,10 @@ const ListToolbar = ({ filters: _filters, actions, exporter, ...props }) => {
 	return (
 		<Box
 			sx={{
-				"& .MuiMenuItem-root .MuiButtonBase-root": {
-					color: "red",
-					backgroundColor: "transparent",
-				},
+				'& .MuiMenuItem-root .MuiButtonBase-root': {
+					color: 'red',
+					backgroundColor: 'transparent'
+				}
 			}}
 		>
 			<Grid container spacing={0} alignItems="center">
@@ -45,7 +45,7 @@ const ListToolbar = ({ filters: _filters, actions, exporter, ...props }) => {
 						<FilterForm
 							sx={{
 								padding: 2,
-								paddingTop: 1,
+								paddingTop: 1
 							}}
 							filters={filters}
 						/>
@@ -58,17 +58,17 @@ const ListToolbar = ({ filters: _filters, actions, exporter, ...props }) => {
 						alignItems="center"
 						sx={[
 							{ paddingRight: 1, paddingLeft: 1 },
-							!filters && { padding: 1 },
+							!filters && { padding: 1 }
 						]}
 					>
 						{filters && (
 							<FilterButton
 								filters={filters}
 								sx={{
-									"& .MuiButtonBase-root": {
-										whiteSpace: "nowrap",
-										textTransform: "uppercase",
-									},
+									'& .MuiButtonBase-root': {
+										whiteSpace: 'nowrap',
+										textTransform: 'uppercase'
+									}
 								}}
 							/>
 						)}
@@ -86,13 +86,13 @@ const ListToolbar = ({ filters: _filters, actions, exporter, ...props }) => {
 ListToolbar.defaultProps = {
 	...RaListToolbar.defaultProps,
 	actions: [],
-	exporter: undefined,
+	exporter: undefined
 };
 
 ListToolbar.propTypes = {
 	...RaListToolbar.propTypes,
 	actions: PropTypes.arrayOf(PropTypes.element),
-	exporter: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
+	exporter: PropTypes.oneOfType([PropTypes.bool, PropTypes.func])
 };
 
 export default ListToolbar;
