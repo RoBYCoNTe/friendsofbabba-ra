@@ -14,7 +14,49 @@ import { slugify } from '../util';
 
 const Breadcrumb = ({ sx }) => {
 	const translate = useTranslate();
-	const breadcrumbs = useBreadcrumbs();
+	const breadcrumbs = useBreadcrumbs([
+		{
+			path: '/',
+			breadcrumb: translate('breadcrumbs.items.home', {
+				_: 'Home'
+			})
+		},
+		{
+			path: '/:resource/create/*',
+			breadcrumb: ({ match }) =>
+				translate(`breadcrumbs.items.${match?.params?.resource}.create`, {
+					_: 'Create'
+				})
+		},
+		{
+			path: '/:resource/:id/show/*',
+			breadcrumb: ({ match }) =>
+				translate(`breadcrumbs.items.${match?.params?.resource}.show`, {
+					_: 'Show'
+				})
+		},
+		{
+			path: '/:resource/:id/',
+			breadcrumb: ({ match }) =>
+				translate(`breadcrumbs.items.${match?.params?.resource}.edit`, {
+					_: 'Edit'
+				})
+		},
+		{
+			path: '/:resource/*',
+			breadcrumb: ({ match }) => {
+				const resource = match?.params?.resource;
+				if (!resource) {
+					return translate('breadcrumbs.items.list', { _: 'List' });
+				}
+				const defaultName =
+					resource.charAt(0).toUpperCase() + resource.slice(1);
+				return translate(`breadcrumbs.items.${resource}.list`, {
+					_: defaultName
+				});
+			}
+		}
+	]);
 
 	return (
 		<Breadcrumbs
