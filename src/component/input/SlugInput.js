@@ -1,26 +1,22 @@
-import React, { useCallback } from "react";
+import React, { useCallback } from 'react';
 
-import { TextInput } from "react-admin";
-import { useFormContext, useWatch } from "react-hook-form";
+import { TextInput } from 'react-admin';
+import {
+  useFormContext,
+  useWatch,
+} from 'react-hook-form';
 
-import { Refresh } from "@mui/icons-material";
-import { IconButton, InputAdornment } from "@mui/material";
+import { Refresh } from '@mui/icons-material';
+import {
+  IconButton,
+  InputAdornment,
+} from '@mui/material';
 
-const defaultSlugify = (str) =>
-	str
-		.toString() // Cast to string
-		.toLowerCase() // Convert the string to lowercase letters
-		.trim() // Remove whitespace from both sides of a string
-		.replace(/\s+/g, "-") // Replace spaces with -
-		.replace(/&/g, "-y-") // Replace & with 'and'
-		// eslint-disable-next-line no-useless-escape
-		.replace(/[^\w\-]+/g, "") // Remove all non-word chars
-		// eslint-disable-next-line no-useless-escape
-		.replace(/\-\-+/g, "-"); // Replace multiple - with single -
+import defaultSlugify from '../../util/slugify';
 
 const validate = (value) => {
 	if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value)) {
-		return "ra.validation.slug";
+		return 'ra.validation.slug';
 	}
 	return undefined;
 };
@@ -49,7 +45,7 @@ const SlugInput = ({ dependency, slugify = defaultSlugify, ...props }) => {
 							<Refresh />
 						</IconButton>
 					</InputAdornment>
-				),
+				)
 			}}
 		/>
 	);
