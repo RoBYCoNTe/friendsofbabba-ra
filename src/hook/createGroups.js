@@ -1,27 +1,27 @@
-import { Dashboard } from "@mui/icons-material";
+import { Dashboard } from '@mui/icons-material';
 
 const createGroups = ({
 	menuGroups,
 	resources,
 	permissions,
 	badges,
-	hasDashboard,
+	hasDashboard
 }) => {
 	const dashboardResource = hasDashboard
 		? {
 				dashboard: {
-					name: "dashboard",
+					name: 'dashboard',
 					icon: Dashboard,
 					options: {
-						group: "dashboard",
-					},
-				},
+						group: 'dashboard'
+					}
+				}
 		  }
 		: {};
 
 	let _resources = {
 		...dashboardResource,
-		...resources,
+		...resources
 	};
 
 	if (!menuGroups || menuGroups.length === 0) {
@@ -41,8 +41,11 @@ const createGroups = ({
 				.map((resource) => ({
 					...resource,
 					...(resource?.options || {}),
-					badge: badges?.[resource.name] || null,
-					path: `/${resource.name}`,
+					badge:
+						badges?.[resource.name] && badges?.[resource.name].show === true
+							? badges?.[resource.name]
+							: null,
+					path: `/${resource.name}`
 				}));
 			const hasPermissions = groupResources.every(
 				(resource) =>
@@ -63,8 +66,8 @@ const createGroups = ({
 						...acc,
 						{
 							group,
-							resources: groupResources,
-						},
+							resources: groupResources
+						}
 				  ]
 				: acc;
 		}, [])
