@@ -35,7 +35,7 @@ const useCustomInput = ({
 		resource,
 		source,
 		validate,
-		...rest,
+		...rest
 	});
 
 	const { error, invalid, isTouched } = fieldState;
@@ -61,16 +61,15 @@ const useCustomInput = ({
 						helperText={helperText}
 					/>
 				),
-				size: "small",
+				size: 'small',
 				variant,
 				margin,
 				error: (isTouched || isSubmitted) && invalid,
-				className: clsx("ra-input", `ra-input-${source}`, className),
-				InputLabelProps: defaultInputLabelProps,
+				className: clsx('ra-input', `ra-input-${source}`, className),
 				format,
 				parse,
-				...sanitizeInputRestProps(rest),
-			},
+				...sanitizeInputRestProps(rest)
+			}
 		}),
 		[
 			className,
@@ -89,11 +88,9 @@ const useCustomInput = ({
 			field,
 			id,
 			format,
-			parse,
+			parse
 		]
 	);
 };
-
-const defaultInputLabelProps = { shrink: true };
 
 export default useCustomInput;

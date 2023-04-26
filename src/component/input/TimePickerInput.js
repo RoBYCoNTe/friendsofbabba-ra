@@ -24,9 +24,14 @@ import useCustomInput from './useCustomInput';
  * @doc https://mui.com/x/api/date-pickers/time-picker/
  */
 const TimePickerInput = ({ mode, ...props }) => {
-	const { id, field, fieldProps } = useCustomInput(props);
+	const { id, field, fieldProps } = useCustomInput({
+		...props,
+		InputLabelProps: {
+			shrink: true
+		}
+	});
 	const { components, source, label, ...rest } = props;
-	const PickerComponent = mode === "dialog" ? MobileTimePicker : TimePicker;
+	const PickerComponent = mode === 'dialog' ? MobileTimePicker : TimePicker;
 	const parsedValue = useMemo(
 		() =>
 			DateTime.fromISO(field.value).invalid === null
@@ -58,9 +63,9 @@ const TimePickerInput = ({ mode, ...props }) => {
 								<InputAdornment position="end">
 									<AccessTime />
 								</InputAdornment>
-							),
-						},
-					},
+							)
+						}
+					}
 				}}
 				{...sanitizeInputRestProps(rest)}
 			/>
@@ -70,14 +75,14 @@ const TimePickerInput = ({ mode, ...props }) => {
 
 TimePickerInput.defaultProps = {
 	ampmInClock: true,
-	views: ["hours", "minutes"],
-	mode: "dialog",
+	views: ['hours', 'minutes'],
+	mode: 'dialog'
 };
 
 TimePickerInput.propTypes = {
 	...TimePicker.propTypes,
 	...TextInput.propTypes,
-	mode: PropTypes.oneOf(["text", "dialog", "responsive"]),
+	mode: PropTypes.oneOf(['text', 'dialog', 'responsive'])
 };
 
 export default TimePickerInput;

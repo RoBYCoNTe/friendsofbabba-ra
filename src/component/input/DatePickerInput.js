@@ -18,7 +18,12 @@ import useCustomInput from './useCustomInput';
  * @doc https://mui.com/x/api/date-pickers/date-picker/
  */
 const DatePickerInput = (props) => {
-	const { id, field, fieldProps } = useCustomInput(props);
+	const { id, field, fieldProps } = useCustomInput({
+		...props,
+		InputLabelProps: {
+			shrink: true
+		}
+	});
 	const { components, ...rest } = props;
 	const parsedValue = useMemo(
 		() =>
@@ -45,7 +50,7 @@ const DatePickerInput = (props) => {
 				onChange={handleChange}
 				slotProps={{
 					textField: fieldProps,
-					...sanitizeInputRestProps(props),
+					...sanitizeInputRestProps(props)
 				}}
 				{...sanitizeInputRestProps(rest)}
 			/>
@@ -55,7 +60,7 @@ const DatePickerInput = (props) => {
 
 DatePickerInput.propTypes = {
 	...DatePicker.propTypes,
-	...TextInput.propTypes,
+	...TextInput.propTypes
 };
 
 export default DatePickerInput;

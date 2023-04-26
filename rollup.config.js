@@ -13,54 +13,55 @@ const config = [
 	{
 		input: pkg.source,
 		output: [
-			{ file: pkg.main, format: "cjs" },
-			{ file: pkg.module, format: "esm" },
+			{ file: pkg.main, format: 'cjs' },
+			{ file: pkg.module, format: 'esm' }
 		],
 		plugins: [
 			external(),
 			babel({
-				exclude: "node_modules/**",
-				babelHelpers: "bundled",
+				exclude: 'node_modules/**',
+				babelHelpers: 'bundled'
 			}),
-			del({ targets: ["dist/*.js"] }),
+			del({ targets: ['dist/*.js'] }),
 			generateDeclarations(),
 			resolve({
-				extensions: [".js", ".jsx", ".ts", ".tsx"],
+				extensions: ['.js', '.jsx', '.ts', '.tsx']
 			}),
-			image(),
+			image()
 		],
 		external: Object.keys(pkg.peerDependencies || {}).concat([
-			"@mui/icons-material",
-			"@mui/material",
-			"@mui/material/styles",
-			"@mui/x-date-pickers",
-			"classnames",
-			"clsx",
-			"jsonexport/dist",
-			"lodash",
-			"lodash/merge",
-			"framer-motion",
-			"simplebar-react",
-			"@iconify/react",
-			"react-query",
-			"prop-types",
-			"query-string",
-			"react-error-boundary",
-			"react-router-dom",
-			"ra-i18n-polyglot",
-			"react-hook-form",
-			"luxon",
-			"use-react-router-breadcrumbs",
-		]),
+			'@mui/icons-material',
+			'@mui/material',
+			'@mui/material/styles',
+			'@mui/x-date-pickers',
+			'classnames',
+			'clsx',
+			'jsonexport/dist',
+			'lodash',
+			'lodash/merge',
+			'framer-motion',
+			'simplebar-react',
+			'@iconify/react',
+			'react-query',
+			'prop-types',
+			'query-string',
+			'react-error-boundary',
+			'react-router-dom',
+			'ra-i18n-polyglot',
+			'react-hook-form',
+			'luxon',
+			'use-react-router-breadcrumbs',
+			'react-color'
+		])
 	},
 	{
 		// Build the TypeScript definitions for javascript files.
 		// This task can be done only after generateDeclarations() call that
 		// will generate required files for standard definitions.
-		input: "dist/index.d.ts",
-		output: [{ file: "dist/types.d.ts", format: "es" }],
-		plugins: [dts()],
-	},
+		input: 'dist/index.d.ts',
+		output: [{ file: 'dist/types.d.ts', format: 'es' }],
+		plugins: [dts()]
+	}
 ];
 
 export default config;
