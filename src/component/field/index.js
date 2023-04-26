@@ -13,5 +13,7 @@ export { default as useFieldLabel } from './useFieldLabel';
 export { default as ReferenceListField } from './ReferenceListField';
 export { default as CoverField } from './CoverField';
 export { default as ProgressField } from './ProgressField';
+export { default as BoldField } from './BoldField';
+export { default as ColorField } from './ColorField';
 
-export * from "./reference-list/";
+export * from './reference-list/';
