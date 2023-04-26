@@ -5,10 +5,19 @@ import {
   SelectInput,
 } from 'react-admin';
 
-const ReferenceSelectInput = ({ optionText, helperText, ...props }) => {
+const ReferenceSelectInput = ({
+	optionText,
+	helperText,
+	fullWidth = false,
+	...props
+}) => {
 	return (
 		<ReferenceInput {...props}>
-			<SelectInput optionText={optionText} helperText={helperText} />
+			<SelectInput
+				optionText={optionText}
+				helperText={helperText}
+				fullWidth={fullWidth}
+			/>
 		</ReferenceInput>
 	);
 };
