@@ -17,30 +17,22 @@ const Breadcrumb = ({ sx }) => {
 	const breadcrumbs = useBreadcrumbs([
 		{
 			path: '/',
-			breadcrumb: translate('breadcrumbs.items.home', {
-				_: 'Home'
-			})
+			breadcrumb: translate('breadcrumbs.items.home')
 		},
 		{
 			path: '/:resource/create/*',
 			breadcrumb: ({ match }) =>
-				translate(`breadcrumbs.items.${match?.params?.resource}.create`, {
-					_: 'Create'
-				})
+				translate(`breadcrumbs.items.${match?.params?.resource}.create`)
 		},
 		{
 			path: '/:resource/:id/show/*',
 			breadcrumb: ({ match }) =>
-				translate(`breadcrumbs.items.${match?.params?.resource}.show`, {
-					_: 'Show'
-				})
+				translate(`breadcrumbs.items.${match?.params?.resource}.show`)
 		},
 		{
 			path: '/:resource/:id/',
 			breadcrumb: ({ match }) =>
-				translate(`breadcrumbs.items.${match?.params?.resource}.edit`, {
-					_: 'Edit'
-				})
+				translate(`breadcrumbs.items.${match?.params?.resource}.edit`)
 		},
 		{
 			path: '/:resource/*',
@@ -49,11 +41,7 @@ const Breadcrumb = ({ sx }) => {
 				if (!resource) {
 					return translate('breadcrumbs.items.list', { _: 'List' });
 				}
-				const defaultName =
-					resource.charAt(0).toUpperCase() + resource.slice(1);
-				return translate(`breadcrumbs.items.${resource}.list`, {
-					_: defaultName
-				});
+				return translate(`breadcrumbs.items.${resource}.list`);
 			}
 		}
 	]);
