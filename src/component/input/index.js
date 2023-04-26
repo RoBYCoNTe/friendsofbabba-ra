@@ -16,6 +16,7 @@ export {
   DateInput,
   DateTimeInput,
   NullableBooleanInput,
+  NumberInput,
   SelectInput,
   TextInput,
   TimeInput,
