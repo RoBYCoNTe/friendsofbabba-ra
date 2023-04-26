@@ -3,41 +3,52 @@ export default function Ra(theme) {
 		RaSelectInput: {
 			styleOverrides: {
 				root: {
-					marginTop: 0,
-				},
-			},
+					marginTop: 0
+				}
+			}
 		},
 		RaNullableBooleanInput: {
 			styleOverrides: {
 				root: {
-					marginBottom: theme.spacing(0.5),
-				},
-			},
+					marginBottom: theme.spacing(0.5)
+				}
+			}
 		},
 		MuiTextField: {
 			styleOverrides: {
 				root: {
-					marginBottom: theme.spacing(0.5),
-				},
-			},
+					marginBottom: theme.spacing(0.5)
+				}
+			}
 		},
 		RaCheckboxGroupInput: {
 			styleOverrides: {
 				root: {
-					margin: 0,
-				},
-			},
+					margin: 0
+				}
+			}
 		},
 		MuiFormHelperText: {
 			styleOverrides: {
 				root: {
 					marginTop: theme.spacing(1),
 					marginBottom: theme.spacing(1),
-					"& span": {
-						display: "none",
-					},
-				},
-			},
+					'& span': {
+						display: 'none'
+					}
+				}
+			}
 		},
+		MuiTab: {
+			defaultProps: {
+				disableRipple: true,
+				iconPosition: 'start'
+			},
+			styleOverrides: {
+				root: ({ ownerState }) => ({
+					minHeight: 48
+				})
+			}
+		}
 	};
 }
