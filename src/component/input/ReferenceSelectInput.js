@@ -9,6 +9,7 @@ const ReferenceSelectInput = ({
 	optionText,
 	helperText,
 	fullWidth = false,
+	sx = {},
 	...props
 }) => {
 	return (
@@ -17,6 +18,7 @@ const ReferenceSelectInput = ({
 				optionText={optionText}
 				helperText={helperText}
 				fullWidth={fullWidth}
+				sx={sx}
 			/>
 		</ReferenceInput>
 	);
