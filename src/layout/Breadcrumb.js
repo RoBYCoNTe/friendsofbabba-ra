@@ -30,9 +30,18 @@ const Breadcrumb = ({ sx }) => {
 				translate(`breadcrumbs.items.${match?.params?.resource}.show`)
 		},
 		{
-			path: '/:resource/:id/',
+			path: '/:resource/:id',
 			breadcrumb: ({ match }) =>
 				translate(`breadcrumbs.items.${match?.params?.resource}.edit`)
+		},
+		{
+			path: '/:resource/:id/:tab',
+			breadcrumb: ({ match }) =>
+				translate(
+					`breadcrumbs.items.${match?.params?.resource}.edit${
+						match?.params?.tab ? `.${match?.params?.tab}` : ''
+					}`
+				)
 		},
 		{
 			path: '/:resource/*',
