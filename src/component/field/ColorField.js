@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
+import {
+  get,
+  set,
+} from 'lodash';
 import PropTypes from 'prop-types';
 import {
   ChipField,
@@ -12,16 +16,19 @@ const ColorField = (props) => {
 	const { labelSource, sx, ...rest } = props;
 	const record = useRecordContext(props);
 	const theme = useTheme();
-	const color = theme.palette.getContrastText(record?.color || '#000');
+	const backgroundColor = get(record, props.source);
+	const color = theme.palette.getContrastText(backgroundColor || '#000');
+	const newRecord = useMemo(
+		() => set({}, props.source, get(record, labelSource || props.source, '-')),
+		[record, props.source, labelSource]
+	);
 
 	return (
 		<ChipField
 			{...rest}
-			record={{
-				[props.source]: record?.[labelSource || props.source]
-			}}
+			record={newRecord}
 			sx={{
-				backgroundColor: record?.color || 'initial',
+				backgroundColor: backgroundColor || 'initial',
 				color,
 				...(sx || {})
 			}}
@@ -30,6 +37,7 @@ const ColorField = (props) => {
 };
 
 ColorField.propTypes = {
+	...ChipField.propTypes,
 	labelSource: PropTypes.string
 };
 
