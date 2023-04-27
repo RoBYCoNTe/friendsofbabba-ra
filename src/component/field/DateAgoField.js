@@ -3,7 +3,8 @@ import React, {
   useMemo,
 } from 'react';
 
-import { DateTime } from 'luxon';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import {
   DateField,
   useLocale,
@@ -12,22 +13,20 @@ import {
 
 import { Typography } from '@mui/material';
 
+dayjs.extend(relativeTime);
+
 const DateAgoField = (props) => {
 	const record = useRecordContext(props);
 	const locale = useLocale();
 	const fromNow = useMemo(
-		() =>
-			DateTime.fromISO(record?.created).toRelative({
-				base: DateTime.now(),
-				locale,
-			}),
+		() => dayjs(record?.created).locale(locale).fromNow(),
 		[record?.created, locale]
 	);
 	return (
 		<Fragment>
 			<DateField record={record} source="created" showTime />
 			<br />
-			<Typography variant="caption">{fromNow}</Typography>
+			<Typography variant="body2">{fromNow}</Typography>
 		</Fragment>
 	);
 };

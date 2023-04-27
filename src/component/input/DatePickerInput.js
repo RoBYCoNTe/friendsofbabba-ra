@@ -3,7 +3,7 @@ import React, {
   useMemo,
 } from 'react';
 
-import { DateTime } from 'luxon';
+import * as dayjs from 'dayjs';
 import {
   sanitizeInputRestProps,
   TextInput,
@@ -24,21 +24,19 @@ const DatePickerInput = (props) => {
 			shrink: true
 		}
 	});
+	const { onChange } = field;
 	const { components, ...rest } = props;
-	const parsedValue = useMemo(
-		() =>
-			DateTime.fromISO(field.value).invalid === null
-				? DateTime.fromISO(field.value)
-				: null,
-		[field.value]
-	);
+	const parsedValue = useMemo(() => {
+		const _date = dayjs(field.value);
+		return _date.isValid() ? _date : null;
+	}, [field.value]);
 
 	const handleChange = useCallback(
 		(_date) => {
-			const date = new DateTime(_date);
-			field.onChange(date.toISODate());
+			const date = dayjs(_date);
+			onChange(date.format('YYYY-MM-DD'));
 		},
-		[field]
+		[onChange]
 	);
 
 	return (

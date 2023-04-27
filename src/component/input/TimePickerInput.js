@@ -3,7 +3,9 @@ import React, {
   useMemo,
 } from 'react';
 
-import { DateTime } from 'luxon';
+import * as dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
 import PropTypes from 'prop-types';
 import {
   sanitizeInputRestProps,
@@ -20,32 +22,33 @@ import {
 import BasePickerInput from './BasePickerInput';
 import useCustomInput from './useCustomInput';
 
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
 /**
  * @doc https://mui.com/x/api/date-pickers/time-picker/
  */
-const TimePickerInput = ({ mode, ...props }) => {
+const TimePickerInput = ({ mode, pmInClock, ...props }) => {
 	const { id, field, fieldProps } = useCustomInput({
 		...props,
 		InputLabelProps: {
 			shrink: true
 		}
 	});
+	const { onChange } = field;
 	const { components, source, label, ...rest } = props;
 	const PickerComponent = mode === 'dialog' ? MobileTimePicker : TimePicker;
-	const parsedValue = useMemo(
-		() =>
-			DateTime.fromISO(field.value).invalid === null
-				? DateTime.fromISO(field.value)
-				: null,
-		[field.value]
-	);
+	const parsedValue = useMemo(() => {
+		const _date = dayjs(field.value);
+		return _date.isValid() ? _date : null;
+	}, [field.value]);
 
 	const handleChange = useCallback(
 		(_date) => {
-			const date = new DateTime(_date);
-			field.onChange(date.toISO());
+			const date = dayjs(_date);
+			onChange(date.tz().format());
 		},
-		[field]
+		[onChange]
 	);
 
 	return (
@@ -53,6 +56,7 @@ const TimePickerInput = ({ mode, ...props }) => {
 			<PickerComponent
 				id={id}
 				{...field}
+				pmInClock={pmInClock}
 				value={parsedValue}
 				onChange={handleChange}
 				slotProps={{

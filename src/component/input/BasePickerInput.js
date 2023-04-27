@@ -1,10 +1,15 @@
+import 'dayjs/locale/it';
+import 'dayjs/locale/de';
+import 'dayjs/locale/fr';
+import 'dayjs/locale/es';
+
 import React from 'react';
 
 import PropTypes from 'prop-types';
 import { useLocale } from 'react-admin';
 
 import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import {
   deDE,
   esES,
@@ -16,7 +21,7 @@ const localeTexts = {
 	it: itIT.components.MuiLocalizationProvider.defaultProps.localeText,
 	de: deDE.components.MuiLocalizationProvider.defaultProps.localeText,
 	fr: frFR.components.MuiLocalizationProvider.defaultProps.localeText,
-	es: esES.components.MuiLocalizationProvider.defaultProps.localeText,
+	es: esES.components.MuiLocalizationProvider.defaultProps.localeText
 };
 
 const BasePickerInput = ({ children, locale, dateAdapter, ...props }) => {
@@ -34,13 +39,13 @@ const BasePickerInput = ({ children, locale, dateAdapter, ...props }) => {
 };
 
 BasePickerInput.defaultProps = {
-	dateAdapter: AdapterLuxon,
+	dateAdapter: AdapterDayjs
 };
 
 BasePickerInput.propTypes = {
-	children: PropTypes.func.isRequired,
+	children: PropTypes.element.isRequired,
 	dateAdapter: PropTypes.func,
-	locale: PropTypes.string,
+	locale: PropTypes.string
 };
 
 export default BasePickerInput;

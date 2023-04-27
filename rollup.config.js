@@ -34,6 +34,15 @@ const config = [
 			'@mui/material',
 			'@mui/material/styles',
 			'@mui/x-date-pickers',
+			'@mui/x-date-pickers/AdapterDayjs',
+			'dayjs',
+			'dayjs/plugin/relativeTime',
+			'dayjs/plugin/timezone',
+			'dayjs/plugin/utc',
+			'dayjs/locale/it',
+			'dayjs/locale/de',
+			'dayjs/locale/fr',
+			'dayjs/locale/es',
 			'classnames',
 			'clsx',
 			'jsonexport/dist',
@@ -49,7 +58,6 @@ const config = [
 			'react-router-dom',
 			'ra-i18n-polyglot',
 			'react-hook-form',
-			'luxon',
 			'use-react-router-breadcrumbs',
 			'react-color'
 		])

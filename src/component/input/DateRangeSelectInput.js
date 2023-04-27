@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { DateTime } from 'luxon';
+import dayjs from 'dayjs';
 import {
   SelectInput,
   useListContext,
@@ -12,77 +12,77 @@ export const DATE_RANGE_EXPR = {
 	all: () => ({
 		start_at: null,
 		end_at: null,
-		day: null,
+		day: null
 	}),
 	today: () => ({
 		start_at: null,
 		end_at: null,
-		day: DateTime.local().toISODate(),
+		day: dayjs().format('YYYY-MM-DD')
 	}),
 	yesterday: () => ({
 		start_at: null,
 		end_at: null,
-		day: DateTime.local().minus({ days: 1 }).toISODate(),
+		day: dayjs().subtract(1, 'day').format('YYYY-MM-DD')
 	}),
 	last_7_days: () => ({
-		start_at: DateTime.local().minus({ days: 7 }).toISODate(),
-		end_at: DateTime.local().toISODate(),
-		day: null,
+		start_at: dayjs().subtract(7, 'day').format('YYYY-MM-DD'),
+		end_at: dayjs().format('YYYY-MM-DD'),
+		day: null
 	}),
 	last_30_days: () => ({
-		start_at: DateTime.local().minus({ days: 30 }).toISODate(),
-		end_at: DateTime.local().toISODate(),
-		day: null,
+		start_at: dayjs().subtract(30, 'day').format('YYYY-MM-DD'),
+		end_at: dayjs().format('YYYY-MM-DD'),
+		day: null
 	}),
 	prev_week: () => ({
-		start_at: DateTime.local().minus({ weeks: 1 }).startOf("week").toISODate(),
-		end_at: DateTime.local().minus({ weeks: 1 }).endOf("week").toISODate(),
-		day: null,
+		start_at: dayjs().subtract(1, 'week').startOf('week').format('YYYY-MM-DD'),
+		end_at: dayjs().subtract(1, 'week').endOf('week').format('YYYY-MM-DD'),
+		day: null
 	}),
 	this_month: () => ({
 		name: (props, translate) =>
 			translate(`app.date_range.this_month`, {
-				month: DateTime.local().toFormat("MMMM"),
+				month: dayjs().format('MMMM')
 			}),
-		start_at: DateTime.local().startOf("month").toISODate(),
-		end_at: DateTime.local().endOf("month").toISODate(),
-		day: null,
+		start_at: dayjs().startOf('month').format('YYYY-MM-DD'),
+		end_at: dayjs().endOf('month').format('YYYY-MM-DD'),
+		day: null
 	}),
 	last_month: () => ({
 		name: (props, translate) =>
 			translate(`app.date_range.last_month`, {
-				month: DateTime.local().minus({ months: 1 }).toFormat("MMMM"),
+				month: dayjs().subtract(1, 'month').format('MMMM')
 			}),
-		start_at: DateTime.local()
-			.minus({ months: 1 })
-			.startOf("month")
-			.toISODate(),
-		end_at: DateTime.local().minus({ months: 1 }).endOf("month").toISODate(),
-		day: null,
+		start_at: dayjs()
+			.subtract(1, 'month')
+			.startOf('month')
+			.format('YYYY-MM-DD'),
+		end_at: dayjs().subtract(1, 'month').endOf('month').format('YYYY-MM-DD'),
+		day: null
 	}),
 	last_two_months: () => ({
 		name: (props, translate) =>
 			translate(`app.date_range.last_two_months`, {
-				from: DateTime.local().minus({ months: 1 }).toFormat("MMMM"),
-				to: DateTime.local().toFormat("MMMM"),
+				from: dayjs().subtract(1, 'month').format('MMMM'),
+				to: dayjs().format('MMMM')
 			}),
-		start_at: DateTime.local()
-			.minus({ months: 1 })
-			.startOf("month")
-			.toISODate(),
-		end_at: DateTime.local().endOf("month").toISODate(),
-		day: null,
+		start_at: dayjs()
+			.subtract(1, 'month')
+			.startOf('month')
+			.format('YYYY-MM-DD'),
+		end_at: dayjs().endOf('month').format('YYYY-MM-DD'),
+		day: null
 	}),
 	range: () => ({
-		start_at: DateTime.local().startOf("month").toISODate(),
-		end_at: DateTime.local().endOf("month").toISODate(),
-		day: null,
+		start_at: dayjs().startOf('month').format('YYYY-MM-DD'),
+		end_at: dayjs().endOf('month').format('YYYY-MM-DD'),
+		day: null
 	}),
 	day: () => ({
 		start_at: null,
 		end_at: null,
-		day: DateTime.local().toISODate(),
-	}),
+		day: dayjs().format('YYYY-MM-DD')
+	})
 };
 
 const getRanges = (props, translate) =>
@@ -95,7 +95,7 @@ const getRanges = (props, translate) =>
 			: nameResolver(props, translate);
 		return {
 			id,
-			name,
+			name
 		};
 	});
 
@@ -109,7 +109,7 @@ const DateRangeSelectInput = ({ onChange, ...props }) => {
 		const newFilters = {
 			...filterValues,
 			[props.source]: value,
-			...range,
+			...range
 		};
 		Object.keys(newFilters).forEach((key) => {
 			setValue(key, newFilters[key]);
@@ -118,7 +118,7 @@ const DateRangeSelectInput = ({ onChange, ...props }) => {
 	return (
 		<SelectInput
 			{...props}
-			label={props.label || "app.date_range.label"}
+			label={props.label || 'app.date_range.label'}
 			choices={getRanges(props, translate)}
 			onChange={handleChange}
 		/>
