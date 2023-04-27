@@ -23,10 +23,7 @@ const ReferenceAutocompleteInput = ({
 		<>
 			<ReferenceInput {...props}>
 				<AutocompleteInput
-					optionText={(r) => {
-						console.log('Record:', r);
-						return r?.[optionText];
-					}}
+					optionText={optionText}
 					optionValue={optionValue}
 					helperText={helperText}
 					size="small"
@@ -44,6 +41,11 @@ const ReferenceAutocompleteInput = ({
 			</ReferenceInput>
 		</>
 	);
+};
+
+ReferenceAutocompleteInput.defaultProps = {
+	optionText: 'name',
+	optionValue: 'id'
 };
 
 ReferenceAutocompleteInput.propTypes = {
