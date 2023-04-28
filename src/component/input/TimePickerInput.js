@@ -1,23 +1,14 @@
-import React, {
-  useCallback,
-  useMemo,
-} from 'react';
+import React, { useCallback, useMemo } from 'react';
 
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import PropTypes from 'prop-types';
-import {
-  sanitizeInputRestProps,
-  TextInput,
-} from 'react-admin';
+import { sanitizeInputRestProps, TextInput } from 'react-admin';
 
 import { AccessTime } from '@mui/icons-material';
 import { InputAdornment } from '@mui/material';
-import {
-  MobileTimePicker,
-  TimePicker,
-} from '@mui/x-date-pickers';
+import { MobileTimePicker, TimePicker } from '@mui/x-date-pickers';
 
 import BasePickerInput from './BasePickerInput';
 import useCustomInput from './useCustomInput';

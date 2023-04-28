@@ -1,34 +1,34 @@
-import { get } from "lodash";
-import { DateTime } from "luxon";
+import dayjs from 'dayjs';
+import { get } from 'lodash';
 
 export const allowAll = (value) => true;
 
 export const required = (value) => {
 	return value && value !== null && value.toString().length > 0
 		? true
-		: "ra.validation.required";
+		: 'ra.validation.required';
 };
 export const url = (value) => {
 	var pattern = new RegExp(
-		"^(https?:\\/\\/)?" + // protocol
-			"((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
-			"((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-			"(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-			"(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-			"(\\#[-a-z\\d_]*)?$",
-		"i"
+		'^(https?:\\/\\/)?' + // protocol
+			'((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+			'((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+			'(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+			'(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+			'(\\#[-a-z\\d_]*)?$',
+		'i'
 	); // fragment locator
-	return !!pattern.test(value) ? true : "ra.validation.url";
+	return !!pattern.test(value) ? true : 'ra.validation.url';
 };
 
 export const checked = (value) =>
-	value === true ? true : "ra.validation.required";
+	value === true ? true : 'ra.validation.required';
 
 export const email = (value) => {
 	const re =
 		// eslint-disable-next-line
 		/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-	return re.test(String(value).toLowerCase()) ? true : "ra.validation.email";
+	return re.test(String(value).toLowerCase()) ? true : 'ra.validation.email';
 };
 
 export const json = (value) => {
@@ -36,33 +36,31 @@ export const json = (value) => {
 		JSON.parse(value);
 		return true;
 	} catch (e) {
-		return "ra.validation.json";
+		return 'ra.validation.json';
 	}
 };
 
 export const date =
-	(message = "ra.validation.invalid_date") =>
+	(message = 'ra.validation.invalid_date') =>
 	(value) =>
-		value && value.length > 0 && !DateTime.fromISO(value).isValid
-			? message
-			: undefined;
+		value && value.length > 0 && dayjs(value).isValid() ? message : undefined;
 
 export const isAdult =
-	(message = "ra.validation.is_not_adult") =>
+	(message = 'ra.validation.is_not_adult') =>
 	(value) => {
 		if (!value || value.length === 0) {
 			return undefined;
 		}
-		const luxonDate = DateTime.fromISO(value);
-		if (!luxonDate.isValid) {
+		const date = dayjs(value);
+		if (!date.isValid()) {
 			return undefined;
 		}
-		const today = DateTime.now();
+		const today = dayjs();
 
-		const years = today.diff(luxonDate, "years").years;
+		const years = today.diff(date, 'year');
 		return years >= 18
 			? years >= 100
-				? message.replace("_not_", "_too_")
+				? message.replace('_not_', '_too_')
 				: undefined
 			: message;
 	};
@@ -71,13 +69,13 @@ export const validate = (record, fields, translate) =>
 	fields
 		.map(({ props: { name, validate } }) => ({
 			name,
-			valid: validate(get(record, name)),
+			valid: validate(get(record, name))
 		}))
 		.filter((f) => f.valid !== true)
 		.reduce(
 			(errors, { name, valid }) => ({
 				...errors,
-				[name]: translate(valid),
+				[name]: translate(valid)
 			}),
 			{}
 		);
@@ -89,7 +87,7 @@ export const mapErrors = (errors, name, error) => {
 		.reduce(
 			(map, key) => ({
 				...map,
-				[key]: errors[key],
+				[key]: errors[key]
 			}),
 			{}
 		);
@@ -100,7 +98,7 @@ export const mapRemoteErrors = (errors) =>
 			...errorList,
 			[errorField]: Object.keys(errors[errorField])
 				.map((key) => errors[errorField][key])
-				.join("\n"),
+				.join('\n')
 		}),
 		{}
 	);

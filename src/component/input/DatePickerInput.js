@@ -1,13 +1,7 @@
-import React, {
-  useCallback,
-  useMemo,
-} from 'react';
+import React, { useCallback, useMemo } from 'react';
 
-import * as dayjs from 'dayjs';
-import {
-  sanitizeInputRestProps,
-  TextInput,
-} from 'react-admin';
+import dayjs from 'dayjs';
+import { sanitizeInputRestProps, TextInput } from 'react-admin';
 
 import { DatePicker } from '@mui/x-date-pickers';
 

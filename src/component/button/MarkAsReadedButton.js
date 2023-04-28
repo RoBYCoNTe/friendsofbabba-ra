@@ -1,3 +1,6 @@
+import React, { useCallback } from 'react';
+
+import dayjs from 'dayjs';
 import {
 	Button,
 	useListContext,
@@ -5,12 +8,10 @@ import {
 	useRecordContext,
 	useRefresh,
 	useUnselectAll,
-	useUpdateMany,
-} from "react-admin";
-import React, { useCallback } from "react";
+	useUpdateMany
+} from 'react-admin';
 
-import { DateTime } from "luxon";
-import { Email } from "@mui/icons-material";
+import { Email } from '@mui/icons-material';
 
 const MarkAsReadedButton = () => {
 	const refresh = useRefresh();
@@ -19,19 +20,19 @@ const MarkAsReadedButton = () => {
 	const { selectedIds } = useListContext();
 	const record = useRecordContext();
 	const [updateMany, { isLoading }] = useUpdateMany(
-		"notifications",
+		'notifications',
 		{
 			ids: selectedIds.length > 0 ? selectedIds : [record?.id],
-			data: { readed: DateTime.now().toISO() },
+			data: { readed: dayjs().format('YYYY-MM-DD HH:mm:ss') }
 		},
 		{
 			onSuccess: () => {
 				refresh();
-				notify("resources.notifications.messages.readed.done");
-				unselectAll("notifications");
+				notify('resources.notifications.messages.readed.done');
+				unselectAll('notifications');
 			},
 			onFailure: () =>
-				notify("resources.notifications.messages.readed.error", "warning"),
+				notify('resources.notifications.messages.readed.error', 'warning')
 		}
 	);
 	const handleUpdateMany = useCallback(

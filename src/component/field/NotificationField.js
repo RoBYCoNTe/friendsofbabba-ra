@@ -1,9 +1,9 @@
-import React, { Fragment, useMemo } from "react";
+import React, { Fragment, useMemo } from 'react';
 
-import { DateTime } from "luxon";
-import { useRecordContext, useTranslate } from "react-admin";
+import dayjs from 'dayjs';
+import { useRecordContext, useTranslate } from 'react-admin';
 
-import { Box, Typography } from "@mui/material";
+import { Box, Typography } from '@mui/material';
 
 const NotificationField = (props) => {
 	const record = useRecordContext(props);
@@ -11,9 +11,7 @@ const NotificationField = (props) => {
 	const readed = useMemo(
 		() =>
 			record?.readed
-				? DateTime.fromISO(record?.readed).toFormat(
-						translate("app.date_format.long")
-				  )
+				? dayjs(record?.readed).format(translate('app.date_format.long'))
 				: false,
 		[record?.readed, translate]
 	);
@@ -21,22 +19,22 @@ const NotificationField = (props) => {
 	return (
 		<Fragment>
 			<Typography variant="subtitle1">
-				<Box fontWeight={"bold"}> {record?.title}</Box>
+				<Box fontWeight={'bold'}> {record?.title}</Box>
 			</Typography>
 			<Typography
 				variant="body1"
 				sx={{
-					overflow: "hidden",
-					textOverflow: "ellipsis",
-					display: "-webkit-box",
-					WebkitBoxOrient: "vertical",
-					whiteSpace: "break-spaces",
+					overflow: 'hidden',
+					textOverflow: 'ellipsis',
+					display: '-webkit-box',
+					WebkitBoxOrient: 'vertical',
+					whiteSpace: 'break-spaces'
 				}}
 				dangerouslySetInnerHTML={{ __html: record?.content }}
 			/>
 			{readed && (
 				<Typography variant="caption" display="block" sx={{ mt: 1 }}>
-					{translate("resources.notifications.readed", { readed })}
+					{translate('resources.notifications.readed', { readed })}
 				</Typography>
 			)}
 		</Fragment>
