@@ -27,7 +27,7 @@ const RecordInput = ({ source, minWidth = 300 }) => {
 				.update(resource, {
 					id: record.id,
 					data: {
-						id: record?.id,
+						...record,
 						[source]: value,
 						_changed: source
 					}
@@ -45,7 +45,7 @@ const RecordInput = ({ source, minWidth = 300 }) => {
 			.update(resource, {
 				id: record.id,
 				data: {
-					id: record?.id,
+					...record,
 					[source]: value,
 					_changed: source
 				}
