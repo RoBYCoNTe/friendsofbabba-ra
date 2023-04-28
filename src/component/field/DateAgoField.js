@@ -1,15 +1,8 @@
-import React, {
-  Fragment,
-  useMemo,
-} from 'react';
+import React, { Fragment, useMemo } from 'react';
 
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import {
-  DateField,
-  useLocale,
-  useRecordContext,
-} from 'react-admin';
+import { DateField, useLocale, useRecordContext } from 'react-admin';
 
 import { Typography } from '@mui/material';
 
@@ -26,7 +19,9 @@ const DateAgoField = (props) => {
 		<Fragment>
 			<DateField record={record} source="created" showTime />
 			<br />
-			<Typography variant="body2">{fromNow}</Typography>
+			<Typography variant="caption" color="textSecondary">
+				{fromNow}
+			</Typography>
 		</Fragment>
 	);
 };

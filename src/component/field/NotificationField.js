@@ -1,19 +1,22 @@
 import React, { Fragment, useMemo } from 'react';
 
 import dayjs from 'dayjs';
-import { useRecordContext, useTranslate } from 'react-admin';
+import { useLocale, useRecordContext, useTranslate } from 'react-admin';
 
 import { Box, Typography } from '@mui/material';
 
 const NotificationField = (props) => {
 	const record = useRecordContext(props);
 	const translate = useTranslate();
+	const locale = useLocale();
 	const readed = useMemo(
 		() =>
 			record?.readed
-				? dayjs(record?.readed).format(translate('app.date_format.long'))
+				? dayjs(record?.readed)
+						.locale(locale)
+						.format('ddd, DD MMM YYYY HH:mm:ss')
 				: false,
-		[record?.readed, translate]
+		[record?.readed, locale]
 	);
 
 	return (
@@ -33,7 +36,12 @@ const NotificationField = (props) => {
 				dangerouslySetInnerHTML={{ __html: record?.content }}
 			/>
 			{readed && (
-				<Typography variant="caption" display="block" sx={{ mt: 1 }}>
+				<Typography
+					variant="caption"
+					display="block"
+					sx={{ mt: 1 }}
+					color="textSecondary"
+				>
 					{translate('resources.notifications.readed', { readed })}
 				</Typography>
 			)}
