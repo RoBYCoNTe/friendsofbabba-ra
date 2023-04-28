@@ -1,17 +1,14 @@
-import React, {
-  Fragment,
-  useMemo,
-} from 'react';
+import React, { Fragment, useMemo } from 'react';
 
 import { get } from 'lodash';
 import PropTypes from 'prop-types';
 import {
-  EditButton,
-  Labeled,
-  ReferenceManyField,
-  useInput,
-  useRecordContext,
-  useResourceContext,
+	EditButton,
+	Labeled,
+	ReferenceManyField,
+	useInput,
+	useRecordContext,
+	useResourceContext
 } from 'react-admin';
 
 import { useMediaQuery } from '@mui/material';
@@ -155,8 +152,9 @@ const ReferenceListField = (props) => {
 		columns = [],
 		components = {},
 		create = true,
-		createLabel = "ra.action.create",
-		empty = "ra.no_results",
+		createLabel = 'ra.action.create',
+		empty = 'ra.no_results',
+		// bulkActionsButtons = <BulkActionsButtons />,
 		filter,
 		mobileBreakpoint,
 		mobileLinkType = false,
@@ -175,28 +173,28 @@ const ReferenceListField = (props) => {
 		remove = true,
 		// removeLabel = "ra.action.delete",
 		removeRedirect,
-		sorry = "ra.reference_list.sorry",
+		sorry = 'ra.reference_list.sorry',
 		// displaySorry = true,
 		tab = 0,
 		target,
-		foreignKey = "id",
+		foreignKey = 'id',
 		source,
 		...rest
 	} = props;
 	const record = useRecordContext(props);
 	const resource = useResourceContext();
 	const {
-		fieldState: { error },
+		fieldState: { error }
 	} = useInput({ ...props });
 	const isMobile = useMediaQuery((theme) =>
-		theme.breakpoints.down(mobileBreakpoint ?? "sm")
+		theme.breakpoints.down(mobileBreakpoint ?? 'sm')
 	);
 	const parentRecordExists = useMemo(() => record?.id > 0, [record?.id]);
 	const removeRedir = useMakeRedirect({
 		resource,
 		record,
 		tab,
-		defaultRedirect: removeRedirect,
+		defaultRedirect: removeRedirect
 	});
 	if (!parentRecordExists && sorry === false) {
 		return null;
@@ -228,14 +226,17 @@ const ReferenceListField = (props) => {
 						components={components}
 					/>
 				) : (
-					<Datagrid empty={<EmptyMessage emptyText={empty} />}>
+					<Datagrid
+						empty={<EmptyMessage emptyText={empty} />}
+						bulkActionButtons={!props.disabled && remove ? undefined : false}
+					>
 						{React.Children.map(props.children, (field, index) =>
 							React.isValidElement(field)
 								? React.cloneElement(field, { key: index })
 								: null
 						)}
 						{Component.mapColumns(columns, components, {
-							disabled: props.disabled,
+							disabled: props.disabled
 						})}
 						<ActionsMenu>
 							{!props.disabled && modify && <EditButton />}
@@ -255,7 +256,7 @@ const ReferenceListField = (props) => {
 						record,
 						reference,
 						resource,
-						target,
+						target
 					}}
 				/>
 			)}
@@ -270,15 +271,15 @@ const ReferenceListField = (props) => {
 				// "& .MuiFormLabel-root": {
 				//   padding: theme.spacing(1),
 				// },
-				"& .MuiCardContent-root:first-of-type": {
+				'& .MuiCardContent-root:first-of-type': {
 					padding: theme.spacing(1),
 					paddingTop: 0,
-					paddingBottom: 0,
+					paddingBottom: 0
 				},
-				"& .MuiTablePagination-toolbar > .MuiTablePagination-input > div": {
+				'& .MuiTablePagination-toolbar > .MuiTablePagination-input > div': {
 					// Fix alignment of the input with consecutive pagination buttons
-					paddingTop: theme.spacing(1),
-				},
+					paddingTop: theme.spacing(1)
+				}
 			})}
 			fullWidth={props?.fullWidth}
 		>
@@ -295,27 +296,27 @@ ReferenceListField.propTypes = {
 		PropTypes.string,
 		PropTypes.element,
 		PropTypes.func,
-		PropTypes.bool,
+		PropTypes.bool
 	]),
 	mobileBreakpoint: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 	mobilePrimaryText: PropTypes.oneOfType([
 		PropTypes.element,
 		PropTypes.func,
-		PropTypes.string,
+		PropTypes.string
 	]),
 	mobilePrimaryComponent: PropTypes.string,
 	mobilePrimaryComponentProps: PropTypes.object,
 	mobileSecondaryText: PropTypes.oneOfType([
 		PropTypes.element,
 		PropTypes.func,
-		PropTypes.string,
+		PropTypes.string
 	]),
 	mobileSecondaryComponent: PropTypes.string,
 	mobileSecondaryComponentProps: PropTypes.object,
 	mobileTertiaryText: PropTypes.oneOfType([
 		PropTypes.element,
 		PropTypes.func,
-		PropTypes.string,
+		PropTypes.string
 	]),
 	mobileTertiaryComponent: PropTypes.string,
 	mobileTertiaryComponentProps: PropTypes.object,
@@ -336,7 +337,7 @@ ReferenceListField.propTypes = {
 	record: PropTypes.object,
 	resource: PropTypes.string,
 	children: PropTypes.node,
-	columns: PropTypes.array,
+	columns: PropTypes.array
 };
 
 export default ReferenceListField;
