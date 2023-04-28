@@ -1,14 +1,10 @@
-import React, {
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { get } from 'lodash';
 import {
-  useDataProvider,
-  useRecordContext,
-  useResourceContext,
+	useDataProvider,
+	useRecordContext,
+	useResourceContext
 } from 'react-admin';
 
 import { TextField } from '@mui/material';
@@ -16,14 +12,14 @@ import { TextField } from '@mui/material';
 const RecordInput = ({ source, minWidth = 300 }) => {
 	const resource = useResourceContext();
 	const record = useRecordContext();
-	const [value, setValue] = useState(get(record, source, ""));
+	const [value, setValue] = useState(get(record, source, ''));
 	const [updating, setUpdating] = useState(false);
 	const handleChange = useCallback((evt) => setValue(evt.target.value), []);
 	const dataProvider = useDataProvider();
 
 	const handleKeyPress = useCallback(
 		(evt) => {
-			if (evt.key !== "Enter") {
+			if (evt.key !== 'Enter') {
 				return;
 			}
 			setUpdating(true);
@@ -31,10 +27,10 @@ const RecordInput = ({ source, minWidth = 300 }) => {
 				.update(resource, {
 					id: record.id,
 					data: {
-						...record,
+						id: record?.id,
 						[source]: value,
-						_changed: source,
-					},
+						_changed: source
+					}
 				})
 				.then(() => setUpdating(false));
 		},
@@ -49,10 +45,10 @@ const RecordInput = ({ source, minWidth = 300 }) => {
 			.update(resource, {
 				id: record.id,
 				data: {
-					...record,
+					id: record?.id,
 					[source]: value,
-					_changed: source,
-				},
+					_changed: source
+				}
 			})
 			.then(() => setUpdating(false));
 	}, [value, dataProvider, resource, source, record]);
@@ -65,9 +61,10 @@ const RecordInput = ({ source, minWidth = 300 }) => {
 			onChange={handleChange}
 			onKeyPress={handleKeyPress}
 			onBlur={handleBlur}
-			style={{ minWidth, width: "100%" }}
+			style={{ minWidth, width: '100%' }}
 			multiline
-			InputProps={{ "arial-label": "naked" }}
+			InputProps={{ 'arial-label': 'naked' }}
+			size="small"
 		/>
 	);
 };
