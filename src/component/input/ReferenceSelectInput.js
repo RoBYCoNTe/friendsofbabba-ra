@@ -1,15 +1,13 @@
 import React from 'react';
 
-import {
-  ReferenceInput,
-  SelectInput,
-} from 'react-admin';
+import { ReferenceInput, SelectInput } from 'react-admin';
 
 const ReferenceSelectInput = ({
 	optionText,
 	helperText,
 	fullWidth = false,
 	sx = {},
+	disabled = false,
 	...props
 }) => {
 	return (
@@ -18,6 +16,7 @@ const ReferenceSelectInput = ({
 				optionText={optionText}
 				helperText={helperText}
 				fullWidth={fullWidth}
+				disabled={disabled}
 				sx={sx}
 			/>
 		</ReferenceInput>
