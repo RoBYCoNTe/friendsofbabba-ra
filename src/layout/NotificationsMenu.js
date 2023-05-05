@@ -1,46 +1,41 @@
-import React, {
-  useEffect,
-  useState,
-} from 'react';
-
-import PropTypes from 'prop-types';
-import {
-  DateField,
-  useGetList,
-  useRedirect,
-  useTranslate,
-  useUpdateMany,
-} from 'react-admin';
-
 // @mui
 import {
-  Badge,
-  Box,
-  Button,
-  Divider,
-  IconButton,
-  List,
-  ListItemButton,
-  ListItemText,
-  Tooltip,
-  Typography,
+	Badge,
+	Box,
+	Button,
+	Divider,
+	IconButton,
+	List,
+	ListItemButton,
+	ListItemText,
+	Tooltip,
+	Typography
 } from '@mui/material';
+import {
+	DateField,
+	useGetList,
+	useRedirect,
+	useTranslate,
+	useUpdateMany
+} from 'react-admin';
+import React, { useEffect, useState } from 'react';
 
 import Iconify from './Iconify';
 import { MenuPopover } from './menu-popover';
+import PropTypes from 'prop-types';
 
 // FIXME: Add locale to moment or replace moment with dayjs
 // components
 // require("moment/locale/it"); // importa il locale italiano
 // ----------------------------------------------------------------------
 
-const NotificationsMenu = () => {
-	const { data, isLoading } = useGetList("notifications", {
+const NotificationsMenu = ({ resource = 'notifications' }) => {
+	const { data, isLoading } = useGetList(resource, {
 		pagination: { page: 1, perPage: 50 },
-		sort: { field: "created", order: "DESC" },
+		sort: { field: 'created', order: 'DESC' },
 		filter: {
-			readed: false,
-		},
+			readed: false
+		}
 	});
 	const translate = useTranslate();
 	const redirect = useRedirect();
@@ -70,21 +65,21 @@ const NotificationsMenu = () => {
 		setNotifications(
 			notifications.map((notification) => ({
 				...notification,
-				readed: true,
+				readed: true
 			}))
 		);
-		updateMany("notifications", {
+		updateMany(resource, {
 			ids: notifications.map((item) => item.id),
 			data: {
-				readed: new Date(),
-			},
+				readed: new Date()
+			}
 		});
 	};
 
 	return (
 		<>
 			<IconButton
-				color={open ? "primary" : "default"}
+				color={open ? 'primary' : 'default'}
 				onClick={handleOpen}
 				sx={{ width: 40, height: 40 }}
 			>
@@ -93,19 +88,19 @@ const NotificationsMenu = () => {
 				</Badge>
 			</IconButton>
 			<MenuPopover open={open} onClose={handleClose} sx={{ width: 360, p: 0 }}>
-				<Box sx={{ display: "flex", alignItems: "center", py: 2, px: 2.5 }}>
+				<Box sx={{ display: 'flex', alignItems: 'center', py: 2, px: 2.5 }}>
 					<Box sx={{ flexGrow: 1 }}>
 						<Typography variant="subtitle1">
-							{translate("ra.notifications.title")}
+							{translate('ra.notifications.title')}
 						</Typography>
-						<Typography variant="body2" sx={{ color: "text.secondary" }}>
-							{translate("ra.notifications.unreaded", {
-								unreaded,
+						<Typography variant="body2" sx={{ color: 'text.secondary' }}>
+							{translate('ra.notifications.unreaded', {
+								unreaded
 							})}
 						</Typography>
 					</Box>
 					{unreaded > 0 && (
-						<Tooltip title={translate("ra.notifications.read_all")}>
+						<Tooltip title={translate('ra.notifications.read_all')}>
 							<IconButton color="primary" onClick={handleMarkAllAsRead}>
 								<Iconify icon="eva:done-all-fill" />
 							</IconButton>
@@ -114,7 +109,7 @@ const NotificationsMenu = () => {
 				</Box>
 				{notifications.length > 0 && (
 					<>
-						<Divider sx={{ borderStyle: "dashed" }} />
+						<Divider sx={{ borderStyle: 'dashed' }} />
 						<List disablePadding>
 							{notifications.map((notification) => (
 								<NotificationItem
@@ -124,7 +119,7 @@ const NotificationsMenu = () => {
 								/>
 							))}
 						</List>
-						<Divider sx={{ borderStyle: "dashed" }} />
+						<Divider sx={{ borderStyle: 'dashed' }} />
 					</>
 				)}
 				<Box sx={{ p: 1 }}>
@@ -132,11 +127,11 @@ const NotificationsMenu = () => {
 						fullWidth
 						disableRipple
 						onClick={() => {
-							redirect("/notifications");
+							redirect('/notifications');
 							handleClose();
 						}}
 					>
-						{translate("ra.action.view_all")}
+						{translate('ra.action.view_all')}
 					</Button>
 				</Box>
 			</MenuPopover>
@@ -150,18 +145,18 @@ NotificationItem.propTypes = {
 	notification: PropTypes.shape({
 		created: PropTypes.oneOfType([
 			PropTypes.instanceOf(Date),
-			PropTypes.string,
+			PropTypes.string
 		]),
 		id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 		readed: PropTypes.oneOfType([
 			PropTypes.instanceOf(Date),
 			PropTypes.string,
-			PropTypes.bool,
+			PropTypes.bool
 		]),
 		title: PropTypes.string,
 		content: PropTypes.string,
-		resource: PropTypes.string,
-	}),
+		resource: PropTypes.string
+	})
 };
 
 function NotificationItem({ notification, onClose }) {
@@ -173,17 +168,17 @@ function NotificationItem({ notification, onClose }) {
 				if (resource) {
 					redirect(`/${resource}`);
 				} else {
-					redirect("/notifications");
+					redirect('/notifications');
 				}
 				onClose();
 			}}
 			sx={{
 				py: 1.5,
 				px: 2.5,
-				mt: "1px",
+				mt: '1px',
 				...(notification.readed && {
-					bgcolor: "action.selected",
-				}),
+					bgcolor: 'action.selected'
+				})
 			}}
 		>
 			<ListItemText
@@ -193,7 +188,7 @@ function NotificationItem({ notification, onClose }) {
 						<Typography
 							component="span"
 							variant="body2"
-							sx={{ color: "text.secondary" }}
+							sx={{ color: 'text.secondary' }}
 						>
 							&nbsp; {content}
 						</Typography>
@@ -204,9 +199,9 @@ function NotificationItem({ notification, onClose }) {
 						variant="caption"
 						sx={{
 							mt: 0.5,
-							display: "flex",
-							alignItems: "center",
-							color: "text.disabled",
+							display: 'flex',
+							alignItems: 'center',
+							color: 'text.disabled'
 						}}
 					>
 						<Iconify
