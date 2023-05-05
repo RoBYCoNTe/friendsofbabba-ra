@@ -1,12 +1,14 @@
 import { ImageField, useRecordContext } from 'react-admin';
 import React, { useMemo } from 'react';
 
+import PropTypes from 'prop-types';
 import { get } from 'lodash';
 
 const CoverField = ({
 	width: defaultWidth = 150,
 	height: defaultHeight = 150,
 	circle: defaultCircle = false,
+	justify: defaultJustify = 'flex-start',
 	...props
 }) => {
 	const sx = useMemo(
@@ -23,7 +25,6 @@ const CoverField = ({
 		}),
 		[defaultWidth, defaultHeight, defaultCircle]
 	);
-	// FIXME: react-admin ImageField is not working with sx prop when the sourceValue is null.
 	const record = useRecordContext(props);
 	const sourceValue = get(record, props.source);
 	if (!sourceValue) {
@@ -34,16 +35,26 @@ const CoverField = ({
 			sx={(theme) => ({
 				margin: 0,
 				display: 'flex',
-				justifyContent: 'center',
+				justifyContent: defaultJustify,
 				'& img': {
 					margin: '0px !important',
 					border: `1px solid ${theme.palette.divider}`,
 					objectFit: 'cover !important',
-					...sx
+					...sx,
+					minWidth: sx.width,
+					minHeight: sx.height
 				}
 			})}
 			{...props}
 		/>
 	);
 };
+
+CoverField.propTypes = {
+	width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+	height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+	circle: PropTypes.bool,
+	justify: PropTypes.oneOf(['flex-start', 'center', 'flex-end'])
+};
+
 export default CoverField;
