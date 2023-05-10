@@ -1,28 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import PropTypes from "prop-types";
-import { SkipNavigationButton } from "react-admin";
+import PropTypes from 'prop-types';
+import { SkipNavigationButton } from 'react-admin';
 
-import { styled } from "@mui/material";
+import { styled } from '@mui/material';
 
-import { useFobContext } from "../context";
-import DefaultAppBar from "./AppBar";
-import { HEADER } from "./config";
-import useResponsive from "./hooks/useResponsive";
-import DefaultLayoutView from "./LayoutView";
-import DefaultMenuHorizontal from "./menu/horizontal/MenuHorizontal";
-import DefaultMenuMini from "./menu/mini/MenuMini";
-import DefaultMenu from "./menu/vertical/MenuVertical";
-import DefaultMenuBottom from "./menu/vertical/MenuVerticalBottom";
-import DefaultSidebar from "./Sidebar";
-import DefaultSidebarHorizontal from "./SidebarHorizontal";
-import DefaultSidebarMini from "./SidebarMini";
+import { useFobContext } from '../context';
+import DefaultAppBar from './AppBar';
+import { HEADER } from './config';
+import useResponsive from './hooks/useResponsive';
+import DefaultLayoutView from './LayoutView';
+import DefaultMenuHorizontal from './menu/horizontal/MenuHorizontal';
+import DefaultMenuMini from './menu/mini/MenuMini';
+import DefaultMenu from './menu/vertical/MenuVertical';
+import DefaultMenuBottom from './menu/vertical/MenuVerticalBottom';
+import DefaultSidebar from './Sidebar';
+import DefaultSidebarHorizontal from './SidebarHorizontal';
+import DefaultSidebarMini from './SidebarMini';
 
-const StyledRoot = styled("div")(({ theme, horizontal }) => ({
-	display: "flex",
-	minHeight: "100%",
-	overflow: "hidden",
-	paddingTop: horizontal && HEADER.H_MOBILE,
+const StyledRoot = styled('div')(({ theme, horizontal }) => ({
+	display: 'flex',
+	minHeight: '100%',
+	overflow: 'hidden',
+	paddingTop: horizontal && HEADER.H_MOBILE
 }));
 
 const Layout = ({ children, ...props }) => {
@@ -47,9 +47,9 @@ const Layout = ({ children, ...props }) => {
 	} = props;
 	const [open, setOpen] = useState(false);
 	const { themeLayout, setThemeLayout, setThemeStretch } = useFobContext();
-	const isDesktop = useResponsive("up", "lg");
-	const isSidebarHorizontal = themeLayout === "horizontal";
-	const isSidebarMini = themeLayout === "mini";
+	const isDesktop = useResponsive('up', 'lg');
+	const isSidebarHorizontal = themeLayout === 'horizontal';
+	const isSidebarMini = themeLayout === 'mini';
 	const handleOpen = () => {
 		setOpen(true);
 	};
@@ -69,12 +69,12 @@ const Layout = ({ children, ...props }) => {
 	);
 
 	useEffect(() => {
-		if (initialThemeLayout === "horizontal") {
+		if (initialThemeLayout === 'horizontal') {
 			setThemeLayout(initialThemeLayout);
 		} else {
 			// Vertical or Mini
-			if (themeLayout !== "mini") {
-				setThemeLayout("vertical");
+			if (themeLayout !== 'mini') {
+				setThemeLayout('vertical');
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -147,8 +147,8 @@ Layout.propTypes = {
 	layoutView: PropTypes.func,
 	logo: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
 	logoMini: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-	themeLayout: PropTypes.oneOf(["vertical", "horizontal"]),
-	themeStretch: PropTypes.bool,
+	themeLayout: PropTypes.oneOf(['vertical', 'horizontal']),
+	themeStretch: PropTypes.bool
 };
 
 export default Layout;
