@@ -1,16 +1,11 @@
-import {
-	ImageInput as RaImageInput,
-	useEditContext,
-	useRecordContext
-} from 'react-admin';
-import React, { useEffect, useMemo } from 'react';
+import { ImageInput as RaImageInput, useRecordContext } from 'react-admin';
+import React, { useMemo } from 'react';
 
 import CoverField from '../field/CoverField';
-import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { useWatch } from 'react-hook-form';
 
-const ImageInput = ({ baseUrl, ...props }) => {
+const ImageInput = ({ ...props }) => {
 	const file = useWatch({ name: props.source });
 	const record = useRecordContext(props);
 	const source = useMemo(
@@ -25,11 +20,11 @@ const ImageInput = ({ baseUrl, ...props }) => {
 		() => ({
 			...record,
 			file: {
-				path: `${baseUrl}/${get(record, props.source)}`,
+				path: get(record, `_${props.source}`),
 				name: get(record, props.source)
 			}
 		}),
-		[record, baseUrl, props.source]
+		[record, props.source]
 	);
 	return (
 		<RaImageInput {...props} record={_record} accept="image/*">
@@ -42,8 +37,6 @@ const ImageInput = ({ baseUrl, ...props }) => {
 	);
 };
 
-ImageInput.propTypes = {
-	baseUrl: PropTypes.string
-};
+ImageInput.propTypes = {};
 
 export default ImageInput;
