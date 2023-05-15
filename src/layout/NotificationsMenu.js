@@ -18,16 +18,12 @@ import {
 	useTranslate,
 	useUpdateMany
 } from 'react-admin';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import Iconify from './Iconify';
 import { MenuPopover } from './menu-popover';
 import PropTypes from 'prop-types';
-
-// FIXME: Add locale to moment or replace moment with dayjs
-// components
-// require("moment/locale/it"); // importa il locale italiano
-// ----------------------------------------------------------------------
+import dayjs from 'dayjs';
 
 const NotificationsMenu = ({ resource = 'notifications' }) => {
 	const { data, isLoading } = useGetList(resource, {
@@ -71,7 +67,7 @@ const NotificationsMenu = ({ resource = 'notifications' }) => {
 		updateMany(resource, {
 			ids: notifications.map((item) => item.id),
 			data: {
-				readed: new Date()
+				readed: dayjs().format('YYYY-MM-DD HH:mm:ss')
 			}
 		});
 	};
@@ -114,6 +110,7 @@ const NotificationsMenu = ({ resource = 'notifications' }) => {
 							{notifications.map((notification) => (
 								<NotificationItem
 									key={notification.id}
+									resource={resource}
 									notification={notification}
 									onClose={handleClose}
 								/>
@@ -127,7 +124,7 @@ const NotificationsMenu = ({ resource = 'notifications' }) => {
 						fullWidth
 						disableRipple
 						onClick={() => {
-							redirect('/notifications');
+							redirect(`/${resource}`);
 							handleClose();
 						}}
 					>
@@ -145,13 +142,16 @@ NotificationItem.propTypes = {
 	notification: PropTypes.shape({
 		created: PropTypes.oneOfType([
 			PropTypes.instanceOf(Date),
-			PropTypes.string
+			PropTypes.string,
+			PropTypes.bool,
+			PropTypes.number
 		]),
 		id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 		readed: PropTypes.oneOfType([
 			PropTypes.instanceOf(Date),
 			PropTypes.string,
-			PropTypes.bool
+			PropTypes.bool,
+			PropTypes.number
 		]),
 		title: PropTypes.string,
 		content: PropTypes.string,
@@ -159,19 +159,28 @@ NotificationItem.propTypes = {
 	})
 };
 
-function NotificationItem({ notification, onClose }) {
+function NotificationItem({
+	notification,
+	resource: notificationsResource,
+	onClose
+}) {
 	const { title, content, resource } = notification;
 	const redirect = useRedirect();
+	const handleClick = useCallback(() => {
+		if (resource) {
+			if (resource.startsWith('/')) {
+				redirect(resource);
+			} else {
+				document.location.href = resource;
+			}
+		} else {
+			redirect(`/${notificationsResource}`);
+		}
+		onClose();
+	}, [notificationsResource, onClose, redirect, resource]);
 	return (
 		<ListItemButton
-			onClick={() => {
-				if (resource) {
-					redirect(`/${resource}`);
-				} else {
-					redirect('/notifications');
-				}
-				onClose();
-			}}
+			onClick={handleClick}
 			sx={{
 				py: 1.5,
 				px: 2.5,

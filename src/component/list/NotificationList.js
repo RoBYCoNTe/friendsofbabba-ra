@@ -1,30 +1,19 @@
-import React, {
-  useCallback,
-  useMemo,
-} from 'react';
+import { DateAgoField, NotificationField } from '../field/index.js';
+import React, { useCallback, useMemo } from 'react';
+import { darken, lighten, useTheme } from '@mui/material';
 
-import {
-  darken,
-  lighten,
-  useTheme,
-} from '@mui/material';
-
-import MarkAsReadedButton from '../button/MarkAsReadedButton.js';
-import MarkAsUnreadedButton from '../button/MarkAsUnreadedButton.js';
-import {
-  DateAgoField,
-  NotificationField,
-} from '../field/index.js';
 import ActionsMenu from '../mui/ActionsMenu.js';
 import Datagrid from './Datagrid';
+import MarkAsReadedButton from '../button/MarkAsReadedButton.js';
+import MarkAsUnreadedButton from '../button/MarkAsUnreadedButton.js';
 
 const NotificationList = ({ ...props }) => {
 	const theme = useTheme();
 	const { mode, colorize, density } = useMemo(
 		() => ({
 			mode: theme.palette.mode,
-			colorize: theme.palette.mode === "dark" ? darken : lighten,
-			density: theme.palette.mode === "dark" ? 0.5 : 0.9,
+			colorize: theme.palette.mode === 'dark' ? darken : lighten,
+			density: theme.palette.mode === 'dark' ? 0.5 : 0.9
 		}),
 		[theme.palette.mode]
 	);
@@ -39,7 +28,7 @@ const NotificationList = ({ ...props }) => {
 			// 	: theme.palette.secondary[mode],
 			backgroundColor: record?.readed
 				? colorize(theme.palette.primary[mode], density)
-				: colorize(theme.palette.secondary[mode], density),
+				: colorize(theme.palette.secondary[mode], density)
 		}),
 		[theme, mode, colorize, density]
 	);

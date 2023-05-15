@@ -1,23 +1,24 @@
+import { DateField, useLocaleState, useRecordContext } from 'react-admin';
 import React, { Fragment, useMemo } from 'react';
 
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import { DateField, useLocale, useRecordContext } from 'react-admin';
-
 import { Typography } from '@mui/material';
+import dayjs from 'dayjs';
+import { get } from 'lodash';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
 dayjs.extend(relativeTime);
 
 const DateAgoField = (props) => {
 	const record = useRecordContext(props);
-	const locale = useLocale();
+	const locale = useLocaleState();
 	const fromNow = useMemo(
-		() => dayjs(record?.created).locale(locale).fromNow(),
-		[record?.created, locale]
+		() => dayjs(get(record, props?.source)).locale(locale).fromNow(),
+		[record, props?.source, locale]
 	);
+
 	return (
 		<Fragment>
-			<DateField record={record} source="created" showTime />
+			<DateField record={record} source={props.source} showTime />
 			<br />
 			<Typography variant="caption" color="textSecondary">
 				{fromNow}

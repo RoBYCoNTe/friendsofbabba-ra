@@ -1,14 +1,24 @@
-import React, { Fragment, useMemo } from 'react';
+import { Box, Typography } from '@mui/material';
+import React, { Fragment, useCallback, useMemo } from 'react';
+import {
+	useLocaleState,
+	useNotify,
+	useRecordContext,
+	useRedirect,
+	useResourceContext,
+	useTranslate,
+	useUpdate
+} from 'react-admin';
 
 import dayjs from 'dayjs';
-import { useLocale, useRecordContext, useTranslate } from 'react-admin';
-
-import { Box, Typography } from '@mui/material';
 
 const NotificationField = (props) => {
 	const record = useRecordContext(props);
+	const resource = useResourceContext(props);
+	const redirect = useRedirect();
+	const notify = useNotify();
 	const translate = useTranslate();
-	const locale = useLocale();
+	const locale = useLocaleState();
 	const readed = useMemo(
 		() =>
 			record?.readed
@@ -19,8 +29,34 @@ const NotificationField = (props) => {
 		[record?.readed, locale]
 	);
 
+	const [update] = useUpdate(
+		resource,
+		{
+			id: record?.id,
+			data: {
+				...record,
+				readed: dayjs().format('YYYY-MM-DD HH:mm:ss')
+			}
+		},
+		{
+			onSuccess: () => {
+				if (record?.resource) {
+					if (record?.resource.startsWith('/')) {
+						redirect(record?.resource);
+					} else {
+						document.location.href = record?.resource;
+					}
+				}
+			},
+			onFailure: () => {
+				notify('resources.notifications.messages.readed.error', 'warning');
+			}
+		}
+	);
+	const handleUpdate = useCallback(() => update(), [update]);
+
 	return (
-		<Fragment>
+		<div onClick={handleUpdate} style={{ cursor: 'pointer' }}>
 			<Typography variant="subtitle1">
 				<Box fontWeight={'bold'}> {record?.title}</Box>
 			</Typography>
@@ -45,7 +81,7 @@ const NotificationField = (props) => {
 					{translate('resources.notifications.readed', { readed })}
 				</Typography>
 			)}
-		</Fragment>
+		</div>
 	);
 };
 export default NotificationField;
