@@ -1,22 +1,22 @@
-import React, { createContext, useCallback, useContext, useMemo } from "react";
+import React, { createContext, useCallback, useContext, useMemo } from 'react';
 
-import useLocalStorage from "../layout/hooks/useLocalStorage";
+import useLocalStorage from '../layout/hooks/useLocalStorage';
 
 const FobContext = createContext();
 const defaultSettings = {
 	onToggleLayout: () => {},
 	onToggleStretch: () => {},
-	themeContrast: "bold",
-	themeLayout: "horizontal",
-	themeStretch: true,
+	themeContrast: 'bold',
+	themeLayout: 'vertical',
+	themeStretch: true
 };
 
 const FobProvider = ({ children, ...props }) => {
-	const [settings, setSettings] = useLocalStorage("settings", defaultSettings);
+	const [settings, setSettings] = useLocalStorage('settings', defaultSettings);
 	// Layout
 	const onToggleLayout = useCallback(() => {
 		const themeLayout =
-			settings.themeLayout === "vertical" ? "mini" : "vertical";
+			settings.themeLayout === 'vertical' ? 'mini' : 'vertical';
 		setSettings({ ...settings, themeLayout });
 	}, [setSettings, settings]);
 	const setThemeLayout = useCallback(
@@ -39,7 +39,7 @@ const FobProvider = ({ children, ...props }) => {
 	// Contrast
 	const onToggleContrast = useCallback(() => {
 		const themeContrast =
-			settings.themeContrast === "default" ? "bold" : "default";
+			settings.themeContrast === 'default' ? 'bold' : 'default';
 		setSettings({ ...settings, themeContrast });
 	}, [setSettings, settings]);
 
@@ -47,12 +47,12 @@ const FobProvider = ({ children, ...props }) => {
 		() => ({
 			...props,
 			...settings,
-			themeContrast: "bold",
+			themeContrast: 'bold',
 			onToggleLayout,
 			onToggleStretch,
 			onToggleContrast,
 			setThemeLayout,
-			setThemeStretch,
+			setThemeStretch
 		}),
 		[
 			props,
@@ -61,7 +61,7 @@ const FobProvider = ({ children, ...props }) => {
 			onToggleStretch,
 			onToggleContrast,
 			setThemeLayout,
-			setThemeStretch,
+			setThemeStretch
 		]
 	);
 
@@ -71,7 +71,7 @@ const FobProvider = ({ children, ...props }) => {
 };
 
 FobProvider.defaultProps = {
-	settings: defaultSettings,
+	settings: defaultSettings
 };
 
 const useFobContext = () => useContext(FobContext);

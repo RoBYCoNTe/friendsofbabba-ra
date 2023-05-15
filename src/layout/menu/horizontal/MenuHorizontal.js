@@ -1,10 +1,12 @@
 import React, { Fragment } from 'react';
 
-import MenuHorizontalList from './MenuHorizontalList';
 import PropTypes from 'prop-types';
+
 import { Stack } from '@mui/material';
-import { hideScrollbarY } from '../../utils/cssStyles';
+
 import useMenu from '../../../hook/useMenu';
+import { hideScrollbarY } from '../../utils/cssStyles';
+import MenuHorizontalList from './MenuHorizontalList';
 
 const MenuHorizontal = ({ sx, groups = [], ...other }) => {
 	const { menu, isLoading } = useMenu({ menuGroups: groups });
