@@ -1,14 +1,9 @@
+import { Link, MenuItem } from '@mui/material';
 import React, { useMemo } from 'react';
 
 import { Button } from 'react-admin';
-
-import {
-  Link,
-  MenuItem,
-} from '@mui/material';
-
 import { getToken } from '../../data/authHeaders';
-import { useCrudContext } from '../../data/cakephp/crud/CrudContext';
+import { useCrudContext } from '../../data/crud/CrudContext';
 
 const ExportToXlsxButton = (
 	{
@@ -16,11 +11,11 @@ const ExportToXlsxButton = (
 		filterValues,
 		baseUrl,
 		onClick,
-		label = "ra.action.export",
+		label = 'ra.action.export',
 		menu = false,
 		resource,
-		extension = "xlsx",
-		sort,
+		extension = 'xlsx',
+		sort
 	},
 	ref
 ) => {
@@ -39,7 +34,7 @@ const ExportToXlsxButton = (
 					filterValues[name] !== undefined && filterValues[name] !== null
 			)
 			.map((name) => `${name}=${filterValues[name]}`)
-			.join("&");
+			.join('&');
 		const order = currentSort
 			? `&sort=${currentSort.field}&direction=${currentSort.order}`
 			: `&sort=${sort?.field}&direction=${sort?.order}`;

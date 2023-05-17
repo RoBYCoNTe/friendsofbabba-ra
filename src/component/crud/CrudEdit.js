@@ -1,15 +1,12 @@
+import * as buttons from '../button/index.js';
+
+import { Loading, useResourceContext } from 'react-admin';
 import React, { useMemo } from 'react';
 
-import {
-  Loading,
-  useResourceContext,
-} from 'react-admin';
-
-import { useCrudContext } from '../../data/cakephp/crud/CrudContext';
-import * as buttons from '../button/index.js';
-import FobEdit from '../form/CreateEdit';
 import Component from './Component';
+import FobEdit from '../form/CreateEdit';
 import Form from './Form';
+import { useCrudContext } from '../../data/crud/CrudContext';
 import useCustomComponents from './useCustomComponents.js';
 
 const CrudEdit = () => {
@@ -34,12 +31,12 @@ const CrudEdit = () => {
 						component={component}
 						componentProps={{
 							resource,
-							...componentProps,
+							...componentProps
 						}}
 						components={{
 							...buttons,
 							...components,
-							...customComponents,
+							...customComponents
 						}}
 					/>
 				))

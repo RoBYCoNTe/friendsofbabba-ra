@@ -1,15 +1,10 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
-import { get } from 'lodash';
 import PropTypes from 'prop-types';
-
+import { get } from 'lodash';
 import useCrud from './useCrud';
 
+const defaultResponseDataMapper = ({ data }) => data;
 /**
  * Export a context that will be used to provide the crud instance to the children.
  */
@@ -24,9 +19,15 @@ const CrudContext = createContext({});
  *
  * @returns {React.ReactElement}
  */
-const CrudProvider = ({ children, components, apiUrl }) => {
+const CrudProvider = ({
+	children,
+	components,
+	apiUrl,
+	endpoint = '/crud/load',
+	responseDataMapper = defaultResponseDataMapper
+}) => {
 	const [entities, setEntities] = useState({});
-	const { loading, data } = useCrud({ apiUrl });
+	const { loading, data } = useCrud({ apiUrl, endpoint, responseDataMapper });
 
 	const getGrid = (entity) => get(entities, `${entity}.grid`, false);
 	const getForm = (entity) => get(entities, `${entity}.form`, false);
@@ -60,7 +61,7 @@ CrudProvider.propTypes = {
 	 *
 	 * @type {string}
 	 */
-	apiUrl: PropTypes.string.isRequired,
+	apiUrl: PropTypes.string.isRequired
 };
 
 const useCrudContext = () => useContext(CrudContext);
