@@ -137,25 +137,29 @@ const createAuthProvider = ({ apiUrl }) => ({
 				if (!success) {
 					throw new Error(data.message);
 				}
-				['token', 'roles', 'username', 'profile', 'email'].forEach((param) => {
-					const toSaveParam = `admin_${param}`;
-					localStorage.setItem(toSaveParam, localStorage.getItem(param));
-					localStorage.setItem(
-						param,
-						['profile', 'roles'].indexOf(param) !== -1
-							? JSON.stringify(data[param])
-							: data[param]
-					);
-				});
+				['token', 'roles', 'username', 'profile', 'email', 'avatar'].forEach(
+					(param) => {
+						const toSaveParam = `admin_${param}`;
+						localStorage.setItem(toSaveParam, localStorage.getItem(param));
+						localStorage.setItem(
+							param,
+							['profile', 'roles'].indexOf(param) !== -1
+								? JSON.stringify(data[param])
+								: data[param]
+						);
+					}
+				);
 				localStorage.setItem('impersonate', true);
 			});
 	},
 	stopImpersonate() {
-		['token', 'roles', 'username', 'profile', 'email'].forEach((param) => {
-			const savedParam = `admin_${param}`;
-			localStorage.setItem(param, localStorage.getItem(savedParam));
-			localStorage.removeItem(savedParam);
-		});
+		['token', 'roles', 'username', 'profile', 'email', 'avatar'].forEach(
+			(param) => {
+				const savedParam = `admin_${param}`;
+				localStorage.setItem(param, localStorage.getItem(savedParam));
+				localStorage.removeItem(savedParam);
+			}
+		);
 		localStorage.setItem('impersonate', false);
 		return Promise.resolve();
 	}
