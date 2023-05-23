@@ -14,7 +14,7 @@ const AvatarField = ({ ...props }) => {
 					borderRadius: '50%',
 					width: '50px !important',
 					height: '50px !important',
-					objectFit: 'cover'
+					objectFit: 'cover !important'
 				}
 			}}
 		/>
