@@ -47,29 +47,19 @@ const createGroups = ({
 							: null,
 					path: `/${resource.name}`
 				}));
-			const hasPermissions = groupResources.every(
+
+			const groupResourcesWithPermissions = groupResources.filter(
 				(resource) =>
 					permissions &&
-					permissions.every(
-						(permission) =>
-							resource.options.roles === undefined ||
-							resource.options.roles.includes(permission)
-					)
+					(resource.options.roles === undefined ||
+						resource.options.roles.some((role) => permissions.includes(role)))
 			);
 
 			groupResources.sort((a, b) =>
 				a?.order < b?.order ? -1 : a?.order > b?.order ? 1 : 0
 			);
 
-			return hasPermissions
-				? [
-						...acc,
-						{
-							group,
-							resources: groupResources
-						}
-				  ]
-				: acc;
+			return [...acc, { group, resources: groupResourcesWithPermissions }];
 		}, [])
 	).filter((group) => group.resources.length > 0);
 
