@@ -1,4 +1,7 @@
-import { useEffect, useState } from 'react';
+import {
+  useEffect,
+  useState,
+} from 'react';
 
 const useI18nLanguages = ({
 	apiUrl,
@@ -13,7 +16,8 @@ const useI18nLanguages = ({
 		fetch(`${apiUrl}${endpoint}`, { headers })
 			.then((response) => response.json())
 			.then((response) => setData({ loading: false, ...mapper(response) }));
-	}, [apiUrl, endpoint, mapper]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [apiUrl, endpoint]);
 
 	return data;
 };
