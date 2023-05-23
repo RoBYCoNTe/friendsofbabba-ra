@@ -15,5 +15,6 @@ export { default as CoverField } from './CoverField';
 export { default as ProgressField } from './ProgressField';
 export { default as BoldField } from './BoldField';
 export { default as ColorField } from './ColorField';
+export { default as AvatarField } from './AvatarField';
 
 export * from './reference-list/';

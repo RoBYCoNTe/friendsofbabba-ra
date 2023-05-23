@@ -1,16 +1,18 @@
-import { Avatar, Box, Drawer, Link, Typography } from '@mui/material';
 import React, { useEffect, useMemo } from 'react';
+
+import PropTypes from 'prop-types';
+import { useGetIdentity } from 'react-admin';
+import { useLocation } from 'react-router-dom';
+
+import { Avatar, Box, Drawer, Link, Typography } from '@mui/material';
 import { alpha, styled, useTheme } from '@mui/material/styles';
 
+import { NAV } from './config';
+import useResponsive from './hooks/useResponsive';
 import DefaultLogo from './Logo';
 import DefaultMenu from './menu/vertical/MenuVertical';
 import DefaultMenuBottom from './menu/vertical/MenuVerticalBottom';
-import { NAV } from './config';
-import PropTypes from 'prop-types';
 import SidebarToggleButton from './SidebarToggleButton';
-import { useGetIdentity } from 'react-admin';
-import { useLocation } from 'react-router-dom';
-import useResponsive from './hooks/useResponsive';
 
 const StyledAccount = styled('div')(({ theme }) => ({
 	display: 'flex',
@@ -75,7 +77,7 @@ const Sidebar = ({
 						)}
 						<Box sx={{ ml: 2 }}>
 							<Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-								{identity?.full_name}
+								{identity?.name} {identity?.surname}
 							</Typography>
 							{identity?.roles && (
 								<Typography variant="body2" sx={{ color: 'text.secondary' }}>
