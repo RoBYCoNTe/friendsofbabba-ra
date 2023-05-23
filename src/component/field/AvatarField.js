@@ -9,7 +9,7 @@ const AvatarField = ({ ...props }) => {
 			// source={source}
 			sx={{
 				display: 'flex',
-				justifyContent: 'center',
+				// justifyContent: 'center',
 				'& img': {
 					borderRadius: '50%',
 					width: '50px !important',
