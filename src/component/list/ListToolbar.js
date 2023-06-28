@@ -74,7 +74,7 @@ const ListToolbar = ({ filters: _filters, actions, exporter, ...props }) => {
 						)}
 						<ActionsMenu>
 							{actions.length > 0 && actions}
-							{exporter !== false && <ExportButton closeOnClick={true} />}
+							{exporter !== false && <ExportButton />}
 						</ActionsMenu>
 					</Stack>
 				</Grid>

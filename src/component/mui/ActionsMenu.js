@@ -62,31 +62,31 @@ const ActionsMenu = ({ sx, children, disabledArrow, arrow = 'right-top' }) => {
 			>
 				{Children.map(children, (action, index) => {
 					if (Array.isArray(action)) {
-						return action.map((a, i) => (
-							<MenuItem
-								key={i}
-								onClick={a?.props?.closeOnClick && handleClose}
-								sx={{
-									'& button, & a': {
-										width: '100%',
-										margin: '0 auto',
-										padding: 0,
-										height: 24,
-										justifyContent: 'flex-start',
-										'&:hover': {
-											backgroundColor: 'transparent!important'
+						return action.map((a, i) => {
+							return (
+								<MenuItem
+									key={i}
+									sx={{
+										'& button, & a': {
+											width: '100%',
+											margin: '0 auto',
+											padding: 0,
+											height: 24,
+											justifyContent: 'flex-start',
+											'&:hover': {
+												backgroundColor: 'transparent!important'
+											}
 										}
-									}
-								}}
-							>
-								{React.cloneElement(a)}
-							</MenuItem>
-						));
+									}}
+								>
+									{React.cloneElement(a)}
+								</MenuItem>
+							);
+						});
 					} else if (React.isValidElement(action)) {
 						return (
 							<MenuItem
 								key={index}
-								onClick={action?.props?.closeOnClick && handleClose}
 								sx={{
 									'& button, & a': {
 										width: '100%',
