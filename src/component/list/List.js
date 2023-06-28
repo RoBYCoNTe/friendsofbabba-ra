@@ -17,14 +17,14 @@ import ListHeader from './ListHeader';
 import ListToolbar from './ListToolbar';
 import Pagination from './Pagination';
 
-const StyledRoot = styled("div", {
+const StyledRoot = styled('div', {
 	// Configure which props should be forwarded on DOM
 	shouldForwardProp: (prop) =>
-		prop !== "color" && prop !== "variant" && prop !== "sx",
-	slot: "Root",
-	name: "FobList",
+		prop !== 'color' && prop !== 'variant' && prop !== 'sx',
+	slot: 'Root',
+	name: 'FobList',
 	// We are specifying here how the styleOverrides are being applied based on props
-	overridesResolver: (props, styles) => [styles.root],
+	overridesResolver: (props, styles) => [styles.root]
 })(({ theme }) => ({}));
 
 const List = ({
@@ -50,7 +50,7 @@ const List = ({
 			{header &&
 				React.cloneElement(header, {
 					title: listTitle,
-					hasCreate: props?.hasCreate,
+					hasCreate: props?.hasCreate
 				})}
 			{leftSide && React.cloneElement(leftSide)}
 			<ListComponent>
@@ -59,7 +59,7 @@ const List = ({
 						React.cloneElement(toolbar, { filters, actions, exporter })}
 					{children && React.isValidElement(children)
 						? React.cloneElement(children, {
-								bulkActionButtons,
+								bulkActionButtons
 						  })
 						: children}
 					{pagination && React.cloneElement(pagination)}
@@ -79,7 +79,7 @@ List.defaultProps = {
 	leftSide: false,
 	rightSide: false,
 	component: Card,
-	filters: [<SearchInput source="q" alwaysOn />],
+	filters: [<SearchInput source="q" alwaysOn />]
 };
 
 List.propTypes = {
@@ -87,12 +87,17 @@ List.propTypes = {
 	header: PropTypes.element,
 	leftSide: PropTypes.oneOfType([PropTypes.bool, PropTypes.element]),
 	rightSide: PropTypes.oneOfType([PropTypes.bool, PropTypes.element]),
+	actions: PropTypes.oneOfType([
+		PropTypes.bool,
+		PropTypes.element,
+		PropTypes.arrayOf(PropTypes.element)
+	]),
 	component: PropTypes.oneOfType([
 		PropTypes.string,
 		PropTypes.func,
 		PropTypes.element,
-		PropTypes.object,
-	]),
+		PropTypes.object
+	])
 };
 
 export default List;

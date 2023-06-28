@@ -31,7 +31,7 @@ const CrudList = () => {
 	const customComponents = useCustomComponents();
 	const isMobile =
 		useMediaQuery((theme) =>
-			theme.breakpoints.down(grid?.mobileBreakpoint ?? "sm")
+			theme.breakpoints.down(grid?.mobileBreakpoint ?? 'sm')
 		) && grid.mobilePrimaryText != null;
 	const hasBulkActionButtons = React.useMemo(
 		() => grid?.bulkActionButtons?.length > 0 || grid?.canDelete !== false,
@@ -85,12 +85,12 @@ const CrudList = () => {
 				grid?.filters
 					? Component.mapFilters(grid.filters, {
 							...inputs,
-							...customComponents,
+							...customComponents
 					  })
 					: null
 			}
 		>
-			{grid?.component && grid?.component !== "Datagrid" ? (
+			{grid?.component && grid?.component !== 'Datagrid' ? (
 				<Component
 					component={grid.component}
 					componentProps={grid.componentProps}
@@ -98,7 +98,7 @@ const CrudList = () => {
 						Datagrid,
 						SimpleList,
 						...lists,
-						...customComponents,
+						...customComponents
 					}}
 				/>
 			) : isMobile ? (
@@ -119,7 +119,7 @@ const CrudList = () => {
 						...fields,
 						...inputs,
 						...buttons,
-						...customComponents,
+						...customComponents
 					}}
 				/>
 			) : (
@@ -128,7 +128,7 @@ const CrudList = () => {
 						...fields,
 						...inputs,
 						...buttons,
-						...customComponents,
+						...customComponents
 					})}
 				</Datagrid>
 			)}

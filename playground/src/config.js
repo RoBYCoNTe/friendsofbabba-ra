@@ -1,6 +1,6 @@
 let environment = 'PRODUCTION';
 let appUrl = `//${document.location.host}/`;
-if (appUrl.endsWith(':3000/')) {
+if (appUrl.endsWith(':3000/') || appUrl.endsWith(':3001/')) {
 	appUrl = 'https://friendsofbabba-core-sample.ddev.site/';
 	environment = 'DEVELOPER';
 }

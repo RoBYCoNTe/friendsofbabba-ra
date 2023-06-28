@@ -38,7 +38,8 @@ const ActionsMenu = ({ sx, children, disabledArrow, arrow = 'right-top' }) => {
 	if (
 		!children ||
 		React.Children.count(children) === 0 ||
-		children.filter((c) => React.isValidElement(c)).length === 0
+		children.filter((c) => React.isValidElement(c) || Array.isArray(c))
+			.length === 0
 	) {
 		return null;
 	}
@@ -59,10 +60,30 @@ const ActionsMenu = ({ sx, children, disabledArrow, arrow = 'right-top' }) => {
 				arrow="right-top"
 				// sx={{ width: 140 }}
 			>
-				{Children.map(
-					children,
-					(action, index) =>
-						React.isValidElement(action) && (
+				{Children.map(children, (action, index) => {
+					if (Array.isArray(action)) {
+						return action.map((a, i) => (
+							<MenuItem
+								key={i}
+								onClick={handleClose}
+								sx={{
+									'& button, & a': {
+										width: '100%',
+										margin: '0 auto',
+										padding: 0,
+										height: 24,
+										justifyContent: 'flex-start',
+										'&:hover': {
+											backgroundColor: 'transparent!important'
+										}
+									}
+								}}
+							>
+								{React.cloneElement(a)}
+							</MenuItem>
+						));
+					} else if (React.isValidElement(action)) {
+						return (
 							<MenuItem
 								key={index}
 								onClick={handleClose}
@@ -81,8 +102,11 @@ const ActionsMenu = ({ sx, children, disabledArrow, arrow = 'right-top' }) => {
 							>
 								{React.cloneElement(action)}
 							</MenuItem>
-						)
-				)}
+						);
+					} else {
+						return null;
+					}
+				})}
 			</MenuPopover>
 		</StyledRoot>
 	);
