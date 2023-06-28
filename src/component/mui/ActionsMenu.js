@@ -65,7 +65,7 @@ const ActionsMenu = ({ sx, children, disabledArrow, arrow = 'right-top' }) => {
 						return action.map((a, i) => (
 							<MenuItem
 								key={i}
-								onClick={handleClose}
+								onClick={a?.props?.closeOnClick && handleClose}
 								sx={{
 									'& button, & a': {
 										width: '100%',
@@ -86,7 +86,7 @@ const ActionsMenu = ({ sx, children, disabledArrow, arrow = 'right-top' }) => {
 						return (
 							<MenuItem
 								key={index}
-								onClick={handleClose}
+								onClick={action?.props?.closeOnClick && handleClose}
 								sx={{
 									'& button, & a': {
 										width: '100%',

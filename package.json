@@ -9,7 +9,7 @@
 		"access": "public",
 		"registry": "https://registry.npmjs.org/"
 	},
-	"version": "4.0.0-rc2",
+	"version": "4.0.0-rc3",
 	"private": false,
 	"main": "dist/index.cjs.js",
 	"module": "dist/index.esm.js",
