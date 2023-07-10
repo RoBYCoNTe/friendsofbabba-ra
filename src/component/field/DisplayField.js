@@ -27,7 +27,8 @@ const StyledButton = styled(EditButton)((theme) => ({
 	display: 'none',
 	position: 'absolute',
 	right: 0,
-	top: -3
+	top: '50%',
+	transform: 'translateY(-50%);'
 }));
 
 const DisplayField = ({ children, buttonProps, component, ...props }) => {
