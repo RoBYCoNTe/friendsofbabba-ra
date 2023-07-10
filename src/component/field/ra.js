@@ -1,8 +1,33 @@
 import {
+  ArrayField,
+  BooleanField,
   ChipField,
   DateField,
   EmailField,
+  FileField,
+  FunctionField,
+  ImageField,
+  RichTextField,
+  SelectField,
   TextField,
+  TranslatableFields,
+  UrlField,
+  WrapperField,
 } from 'react-admin';
 
-export { ChipField, DateField, EmailField, TextField };
+export {
+  ArrayField,
+  BooleanField,
+  ChipField,
+  DateField,
+  EmailField,
+  FileField,
+  FunctionField,
+  ImageField,
+  RichTextField,
+  SelectField,
+  TextField,
+  TranslatableFields,
+  UrlField,
+  WrapperField,
+};
