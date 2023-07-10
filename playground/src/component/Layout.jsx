@@ -24,7 +24,7 @@ import Logo from './Logo';
 // Used in SidebarMini of Layout
 const LogoMini = () => {
 	return (
-		<FobLogo src={logoMini} sx={{ width: 40, mx: "auto", mt: 2, mb: 5 }} />
+		<FobLogo src={logoMini} sx={{ width: 40, mx: 'auto', mt: 2, mb: 5 }} />
 	);
 };
 
@@ -32,7 +32,7 @@ const LogoMini = () => {
 const MyUserMenu = (props) => {
 	return (
 		<FobUserMenu {...props}>
-			<Divider sx={{ borderStyle: "dashed" }} />
+			<Divider sx={{ borderStyle: 'dashed' }} />
 			<UserMenuItem to="/profile">User Profile</UserMenuItem>
 		</FobUserMenu>
 	);
@@ -90,12 +90,12 @@ const Layout = (props) => {
 			sidebar={MySidebar}
 			sidebarHorizontal={MySidebarHorizontal}
 			sidebarMini={MySidebarMini}
-			menuGroups={["dashboard", "blog", "admin"]}
+			menuGroups={['dashboard', 'blog', 'admin']}
 			menu={MyMenu}
 			menuHorizontal={MyMenuHorizontal}
 			menuMini={MyMenuMini}
 			menuBottom={MyMenuBottom}
-			themeLayout="vertical"
+			themeLayout="horizontal"
 			themeStretch={true}
 		/>
 	);

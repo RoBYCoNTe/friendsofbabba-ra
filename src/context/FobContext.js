@@ -1,4 +1,9 @@
-import React, { createContext, useCallback, useContext, useMemo } from 'react';
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+} from 'react';
 
 import useLocalStorage from '../layout/hooks/useLocalStorage';
 
@@ -21,27 +26,30 @@ const FobProvider = ({ children, ...props }) => {
 	}, [setSettings, settings]);
 	const setThemeLayout = useCallback(
 		(themeLayout) => {
-			setSettings({ ...settings, themeLayout });
+			setSettings((_settings) => ({ ..._settings, themeLayout }));
 		},
-		[setSettings, settings]
+		[setSettings]
 	);
 	// Stretch
 	const onToggleStretch = useCallback(() => {
-		const themeStretch = !settings.themeStretch;
-		setSettings({ ...settings, themeStretch });
-	}, [setSettings, settings]);
+		setSettings((_settings) => ({
+			..._settings,
+			themeStretch: !_settings.themeStretch
+		}));
+	}, [setSettings]);
 	const setThemeStretch = useCallback(
 		(themeStretch) => {
-			setSettings({ ...settings, themeStretch });
+			setSettings((_settings) => ({ ..._settings, themeStretch }));
 		},
-		[setSettings, settings]
+		[setSettings]
 	);
 	// Contrast
 	const onToggleContrast = useCallback(() => {
-		const themeContrast =
-			settings.themeContrast === 'default' ? 'bold' : 'default';
-		setSettings({ ...settings, themeContrast });
-	}, [setSettings, settings]);
+		setSettings((_settings) => ({
+			..._settings,
+			themeContrast: _settings.themeContrast === 'default' ? 'bold' : 'default'
+		}));
+	}, [setSettings]);
 
 	const memoizedValue = useMemo(
 		() => ({
