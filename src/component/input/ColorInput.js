@@ -8,11 +8,13 @@ import {
   Box,
   InputAdornment,
   TextField,
+  useTheme,
 } from '@mui/material';
 
 import useCustomInput from './useCustomInput';
 
 const ColorInput = ({ components, ...props }) => {
+	const theme = useTheme();
 	const [show, setShow] = useState(false);
 	const { id, field, fieldProps } = useCustomInput({
 		...props
@@ -48,7 +50,16 @@ const ColorInput = ({ components, ...props }) => {
 				}}
 			/>
 			{show ? (
-				<Box className="ColorInput-popup">
+				<Box
+					className="ColorInput-popup"
+					sx={{
+						'& input': {
+							color: `${theme.palette.text.primary} !important`,
+							background: 'transparent !important',
+							border: `${theme.palette.divider} !important`
+						}
+					}}
+				>
 					{/* eslint-disable-next-line */}
 					<Box
 						className="ColorInput-cover"
@@ -61,7 +72,20 @@ const ColorInput = ({ components, ...props }) => {
 							left: 0
 						}}
 					/>
-					<Picker {...options} color={field.value} onChange={handleChange} />
+					<Picker
+						{...options}
+						styles={{
+							default: {
+								picker: {
+									position: 'absolute',
+									zIndex: 10,
+									backgroundColor: theme.palette.background.paper
+								}
+							}
+						}}
+						color={field.value}
+						onChange={handleChange}
+					/>
 				</Box>
 			) : null}
 		</div>
