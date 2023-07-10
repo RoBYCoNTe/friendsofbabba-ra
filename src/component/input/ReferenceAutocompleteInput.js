@@ -17,6 +17,7 @@ const ReferenceAutocompleteInput = ({
 	create,
 	createResource,
 	createSource,
+	isRequired = false,
 	...props
 }) => {
 	return (
@@ -29,6 +30,7 @@ const ReferenceAutocompleteInput = ({
 					size="small"
 					fullWidth={fullWidth}
 					sx={sx}
+					isRequired={isRequired}
 					create={
 						create && (
 							<CreateSuggestionInput

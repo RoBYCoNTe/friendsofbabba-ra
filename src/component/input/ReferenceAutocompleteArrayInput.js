@@ -13,6 +13,7 @@ const ReferenceAutocompleteArrayInput = ({
 	optionText,
 	optionValue,
 	helperText,
+	isRequired = false,
 	...props
 }) => {
 	const resource = useResourceContext(props);
@@ -28,6 +29,7 @@ const ReferenceAutocompleteArrayInput = ({
 				size="small"
 				format={manyFormatter}
 				parse={manyParser}
+				isRequired={isRequired}
 			/>
 		</ReferenceArrayInput>
 	);

@@ -1,6 +1,9 @@
 import React from 'react';
 
-import { ReferenceInput, SelectInput } from 'react-admin';
+import {
+  ReferenceInput,
+  SelectInput,
+} from 'react-admin';
 
 const ReferenceSelectInput = ({
 	optionText,
@@ -8,6 +11,7 @@ const ReferenceSelectInput = ({
 	fullWidth = false,
 	sx = {},
 	disabled = false,
+	isRequired = false,
 	...props
 }) => {
 	return (
@@ -18,6 +22,7 @@ const ReferenceSelectInput = ({
 				fullWidth={fullWidth}
 				disabled={disabled}
 				sx={sx}
+				isRequired={isRequired}
 			/>
 		</ReferenceInput>
 	);

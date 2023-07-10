@@ -12,6 +12,7 @@ const ReferenceCheckboxGroupInput = ({
 	optionText,
 	parse = createManyParser(),
 	format = createManyFormatter(),
+	isRequired = false,
 	...props
 }) => {
 	return (
@@ -20,6 +21,7 @@ const ReferenceCheckboxGroupInput = ({
 				optionText={optionText}
 				parse={parse}
 				format={format}
+				isRequired={isRequired}
 			/>
 		</ReferenceArrayInput>
 	);
