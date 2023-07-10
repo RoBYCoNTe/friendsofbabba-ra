@@ -10,9 +10,9 @@ import {
   useMediaQuery,
 } from '@mui/material';
 
-import { useCrudContext } from '../../data';
-import { Component } from '../crud';
-import * as fields from '../field/index.js';
+import { useCrudContext } from '../../data/crud/CrudContext';
+import Component from '../crud/Component';
+import * as fields from '../field/index';
 
 const Root = styled(Box)({
 	position: 'relative',
