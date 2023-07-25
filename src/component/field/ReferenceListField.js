@@ -1,14 +1,17 @@
-import React, { Fragment, useMemo } from 'react';
+import React, {
+  Fragment,
+  useMemo,
+} from 'react';
 
 import { get } from 'lodash';
 import PropTypes from 'prop-types';
 import {
-	EditButton,
-	Labeled,
-	ReferenceManyField,
-	useInput,
-	useRecordContext,
-	useResourceContext
+  EditButton,
+  Labeled,
+  ReferenceManyField,
+  useInput,
+  useRecordContext,
+  useResourceContext,
 } from 'react-admin';
 
 import { useMediaQuery } from '@mui/material';
@@ -17,7 +20,9 @@ import DeleteWithConfirmButton from '../button/DeleteWithConfirmButton';
 import Component from '../crud/Component';
 import SimpleList from '../crud/SimpleList';
 import Datagrid from '../list/Datagrid';
+import DraggableDatagridBody from '../list/DraggableDatagridBody';
 import { ActionsMenu } from '../mui';
+import DraggableField from './DraggableField';
 import EmptyMessage from './reference-list/EmptyMessage';
 import Pagination from './reference-list/Pagination';
 import Sorry from './reference-list/SorryMessage';
@@ -179,6 +184,8 @@ const ReferenceListField = (props) => {
 		target,
 		foreignKey = 'id',
 		source,
+		draggable = false,
+		draggableField = 'order_index',
 		...rest
 	} = props;
 	const record = useRecordContext(props);
@@ -229,7 +236,15 @@ const ReferenceListField = (props) => {
 					<Datagrid
 						empty={<EmptyMessage emptyText={empty} />}
 						bulkActionButtons={!props.disabled && remove ? undefined : false}
+						body={
+							draggable ? (
+								<DraggableDatagridBody
+									draggableField={draggableField ?? 'order_index'}
+								/>
+							) : null
+						}
 					>
+						{draggable && <DraggableField />}
 						{React.Children.map(props.children, (field, index) =>
 							React.isValidElement(field)
 								? React.cloneElement(field, { key: index })
@@ -337,7 +352,9 @@ ReferenceListField.propTypes = {
 	record: PropTypes.object,
 	resource: PropTypes.string,
 	children: PropTypes.node,
-	columns: PropTypes.array
+	columns: PropTypes.array,
+	draggable: PropTypes.bool,
+	draggableField: PropTypes.string
 };
 
 export default ReferenceListField;
