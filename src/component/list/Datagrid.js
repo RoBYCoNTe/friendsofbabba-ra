@@ -11,25 +11,25 @@ const Datagrid = ({ children, noWrap, alternateRows, ...props }) => {
 	const theme = useTheme();
 	const sx = useMemo(
 		() => ({
-			"& .RaDatagrid-headerCell": {
-				whiteSpace: noWrap ? "nowrap" : "normal",
-				backgroundColor: theme.palette.background.neutral,
+			'& .RaDatagrid-headerCell': {
+				whiteSpace: noWrap ? 'nowrap' : 'normal',
+				backgroundColor: theme.palette.background.neutral
 			},
-			"& .RaDatagrid-headerCell:first-of-type": {
-				borderRadius: 0,
+			'& .RaDatagrid-headerCell:first-of-type': {
+				borderRadius: 0
 			},
-			"& .RaDatagrid-headerCell:last-of-type": {
-				borderRadius: 0,
+			'& .RaDatagrid-headerCell:last-of-type': {
+				borderRadius: 0
 			},
-			"& .RaDatagrid-tableWrapper": {
-				maxWidth: "100%",
-				overflowX: "auto",
+			'& .RaDatagrid-tableWrapper': {
+				maxWidth: '100%',
+				overflowX: 'auto'
 			},
-			"& .RaDatagrid-rowOdd": {
+			'& .RaDatagrid-rowOdd': {
 				backgroundColor: alternateRows
 					? theme.palette.background.default
-					: "inherit",
-			},
+					: 'inherit'
+			}
 		}),
 		[noWrap, theme, alternateRows]
 	);
@@ -44,12 +44,12 @@ const Datagrid = ({ children, noWrap, alternateRows, ...props }) => {
 Datagrid.defaultProps = {
 	...RaDatagrid.defaultProps,
 	noWrap: false,
-	alternateRows: true,
+	alternateRows: true
 };
 Datagrid.propTypes = {
 	...RaDatagrid.propTypes,
 	noWrap: PropTypes.bool,
-	alternateRows: PropTypes.bool,
+	alternateRows: PropTypes.bool
 };
 
 export default Datagrid;

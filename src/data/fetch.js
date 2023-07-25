@@ -1,23 +1,23 @@
-import { stringify } from "query-string";
-import { HttpError } from "react-admin";
+import { stringify } from 'query-string';
+import { HttpError } from 'react-admin';
 
-import { createErrorMapper } from "./cakephp";
+import { createErrorMapper } from './cakephp';
 
 export const createHeadersFromOptions = (options) => {
 	const requestHeaders =
 		options.headers ||
 		new Headers({
-			Accept: "application/json",
+			Accept: 'application/json'
 		});
 	if (
-		!requestHeaders.has("Content-Type") &&
-		!(options && (!options.method || options.method === "GET")) &&
+		!requestHeaders.has('Content-Type') &&
+		!(options && (!options.method || options.method === 'GET')) &&
 		!(options && options.body && options.body instanceof FormData)
 	) {
-		requestHeaders.set("Content-Type", "application/json");
+		requestHeaders.set('Content-Type', 'application/json');
 	}
 	if (options.user && options.user.authenticated && options.user.token) {
-		requestHeaders.set("Authorization", options.user.token);
+		requestHeaders.set('Authorization', options.user.token);
 	}
 	return requestHeaders;
 };
@@ -29,7 +29,7 @@ export const fetchJson = (url, options = {}) => {
 				status: response.status,
 				statusText: response.statusText,
 				headers: response.headers,
-				body: text,
+				body: text
 			}))
 		)
 		.then(({ status, statusText, headers, body }) => {
@@ -46,8 +46,8 @@ export const fetchJson = (url, options = {}) => {
 						json?.data?.code || status,
 						{
 							errors: createErrorMapper({
-								body: json,
-							}),
+								body: json
+							})
 						}
 					)
 				);
@@ -64,8 +64,8 @@ const isValidObject = (value) => {
 	}
 
 	const isArray = Array.isArray(value);
-	const isBuffer = typeof Buffer !== "undefined" && Buffer.isBuffer(value);
-	const isObject = Object.prototype.toString.call(value) === "[object Object]";
+	const isBuffer = typeof Buffer !== 'undefined' && Buffer.isBuffer(value);
+	const isObject = Object.prototype.toString.call(value) === '[object Object]';
 	const hasKeys = !!Object.keys(value).length;
 
 	return !isArray && !isBuffer && isObject && hasKeys;
@@ -80,6 +80,6 @@ export const flattenObject = (value, path = []) => {
 			)
 		);
 	} else {
-		return path.length ? { [path.join(".")]: value } : value;
+		return path.length ? { [path.join('.')]: value } : value;
 	}
 };

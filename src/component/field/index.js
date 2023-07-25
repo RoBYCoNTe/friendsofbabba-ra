@@ -32,5 +32,6 @@ export { default as BoldField } from './BoldField';
 export { default as ColorField } from './ColorField';
 export { default as AvatarField } from './AvatarField';
 export { default as DisplayField } from './DisplayField';
+export { default as DraggableField } from './DraggableField';
 
 export * from './reference-list/';

@@ -59,7 +59,8 @@ const config = [
 			'ra-i18n-polyglot',
 			'react-hook-form',
 			'use-react-router-breadcrumbs',
-			'react-color'
+			'react-color',
+			'@hello-pangea/dnd'
 		])
 	},
 	{

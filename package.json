@@ -9,7 +9,7 @@
 		"access": "public",
 		"registry": "https://registry.npmjs.org/"
 	},
-	"version": "4.0.0-rc7",
+	"version": "4.0.0-rc8",
 	"private": false,
 	"main": "dist/index.cjs.js",
 	"module": "dist/index.esm.js",
@@ -19,6 +19,7 @@
 	"dependencies": {
 		"@emotion/react": "^11.10.6",
 		"@emotion/styled": "^11.10.6",
+		"@hello-pangea/dnd": "^16.3.0",
 		"@iconify/react": "^4.1.0",
 		"@mui/x-date-pickers": "^6.2.0",
 		"@testing-library/jest-dom": "^5.16.5",

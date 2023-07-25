@@ -97,7 +97,7 @@ const createAuthProvider = ({ apiUrl }) => ({
 	checkAuth: () =>
 		localStorage.getItem('token') ? Promise.resolve() : Promise.reject(),
 	checkError: (error) => {
-		if (error.status === 401 || error.status === 500) {
+		if (error.status === 401 || error.status === 403) {
 			return Promise.reject(error?.message);
 		}
 		return Promise.resolve();
