@@ -1,6 +1,11 @@
 import React from 'react';
 
-import { Loading, useResourceContext, useTranslate } from 'react-admin';
+import {
+  DatagridBody,
+  Loading,
+  useResourceContext,
+  useTranslate,
+} from 'react-admin';
 
 import { useMediaQuery } from '@mui/material';
 
@@ -8,7 +13,10 @@ import { useCrudContext } from '../../data';
 import * as buttons from '../button/index.js';
 import * as fields from '../field/index.js';
 import * as inputs from '../input/index.js';
-import { Datagrid, List as FobList } from '../list';
+import {
+  Datagrid,
+  List as FobList,
+} from '../list';
 import * as lists from '../list/index.js';
 import Component from './Component';
 import exporter from './exporter';
@@ -133,7 +141,9 @@ const CrudList = () => {
 								components={lists}
 								draggableField={grid?.draggableField ?? 'order_index'}
 							/>
-						) : null
+						) : (
+							<DatagridBody />
+						)
 					}
 				>
 					{Component.mapColumns(grid?.columns, {
