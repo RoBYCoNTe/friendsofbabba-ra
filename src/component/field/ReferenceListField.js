@@ -6,6 +6,7 @@ import React, {
 import { get } from 'lodash';
 import PropTypes from 'prop-types';
 import {
+  DatagridBody,
   EditButton,
   Labeled,
   ReferenceManyField,
@@ -241,7 +242,9 @@ const ReferenceListField = (props) => {
 								<DraggableDatagridBody
 									draggableField={draggableField ?? 'order_index'}
 								/>
-							) : null
+							) : (
+								<DatagridBody />
+							)
 						}
 					>
 						{draggable && <DraggableField />}
