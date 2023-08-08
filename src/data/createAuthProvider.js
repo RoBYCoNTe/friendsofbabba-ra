@@ -1,7 +1,15 @@
-import { getHeaders, notifyToken } from "./authHeaders";
-import { useAuthProvider, useNotify, useRedirect } from "ra-core";
+import { useCallback } from 'react';
 
-import { useCallback } from "react";
+import {
+  useAuthProvider,
+  useNotify,
+  useRedirect,
+} from 'ra-core';
+
+import {
+  getHeaders,
+  notifyToken,
+} from './authHeaders';
 
 export const clearAuth = () => {
   ["token", "roles", "username", "profile", "email"].forEach((param) => {
@@ -95,7 +103,7 @@ const createAuthProvider = ({ apiUrl }) => ({
   checkAuth: () =>
     localStorage.getItem("token") ? Promise.resolve() : Promise.reject(),
   checkError: (error) => {
-    if (error.status === 401 || error.status === 500) {
+    if (error.status === 401) {
       return Promise.reject(error?.message);
     }
     return Promise.resolve();
