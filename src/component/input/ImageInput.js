@@ -1,9 +1,13 @@
-import { ImageInput as RaImageInput, useRecordContext } from 'react-admin';
 import React, { useMemo } from 'react';
 
-import CoverField from '../field/CoverField';
 import { get } from 'lodash';
+import {
+  ImageInput as RaImageInput,
+  useRecordContext,
+} from 'react-admin';
 import { useWatch } from 'react-hook-form';
+
+import CoverField from '../field/CoverField';
 
 const ImageInput = ({ ...props }) => {
 	const file = useWatch({ name: props.source });
@@ -32,6 +36,10 @@ const ImageInput = ({ ...props }) => {
 				record={{ ..._record, ...file }}
 				source={source}
 				title={title}
+				width={props?.width}
+				height={props?.height || 'auto'}
+				circle={props?.circle}
+				justify={props?.justify}
 			/>
 		</RaImageInput>
 	);

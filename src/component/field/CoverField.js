@@ -1,8 +1,11 @@
-import { ImageField, useRecordContext } from 'react-admin';
 import React, { useMemo } from 'react';
 
-import PropTypes from 'prop-types';
 import { get } from 'lodash';
+import PropTypes from 'prop-types';
+import {
+  ImageField,
+  useRecordContext,
+} from 'react-admin';
 
 const CoverField = ({
 	width: defaultWidth = 150,
