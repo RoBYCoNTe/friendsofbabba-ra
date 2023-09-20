@@ -158,28 +158,6 @@ const createDataProvider = ({
 		};
 		return fetchJson(url, options).then(({ json }) => json);
 	},
-	deleteManyPromise: (resource, params) => {
-		return Promise.all(
-			params.ids.map((id) =>
-				fetch(`${apiUrl}/${resource}/${id}`, {
-					method: 'DELETE',
-					headers: getHeaders()
-				}).then((response) => response.json())
-			)
-		).then((responses) => {
-			let errors = responses.filter(
-				(r) =>
-					r.data && r.data.code && (r.data.code === 409 || r.data.code === 403)
-			);
-			if (errors.length > 0) {
-				return Promise.reject(errors.map((e) => e.data.message).join('\n'));
-			}
-
-			return {
-				data: responses.map(({ json }) => ({ data: json }))
-			};
-		});
-	},
 	post(resource, params) {
 		const url = `${apiUrl}/${resource}`;
 		const options = {
