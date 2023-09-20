@@ -1,10 +1,6 @@
 import React from 'react';
 
-import {
-  AdminUI,
-  defaultI18nProvider,
-  localStorageStore,
-} from 'react-admin';
+import { AdminUI, defaultI18nProvider, localStorageStore } from 'react-admin';
 
 import AdminContext from './AdminContext';
 
@@ -30,16 +26,23 @@ const Admin = (props) => {
 		store,
 		ready,
 		theme,
-		title = "React Admin",
+		title = 'React Admin',
 		// Custom prop
-		fob,
+		fob
 	} = props;
 
-	if (loginPage === true && process.env.NODE_ENV !== "production") {
+	if (loginPage === true && process.env.NODE_ENV !== 'production') {
 		console.warn(
-			"You passed true to the loginPage prop. You must either pass false to disable it or a component class to customize it"
+			'You passed true to the loginPage prop. You must either pass false to disable it or a component class to customize it'
 		);
 	}
+
+	const email = localStorage.getItem('email');
+	const profile = JSON.parse(localStorage.getItem('profile'));
+	const defaultStore = localStorageStore(
+		undefined,
+		`_user_${profile?.user_id}` || email
+	);
 
 	return (
 		<AdminContext
@@ -47,7 +50,7 @@ const Admin = (props) => {
 			basename={basename}
 			dataProvider={dataProvider}
 			i18nProvider={i18nProvider}
-			store={store}
+			store={store || defaultStore}
 			history={history}
 			queryClient={queryClient}
 			theme={theme}
@@ -75,7 +78,7 @@ const Admin = (props) => {
 
 Admin.defaultProps = {
 	i18nProvider: defaultI18nProvider,
-	store: localStorageStore(),
+	store: undefined
 };
 
 export default Admin;
