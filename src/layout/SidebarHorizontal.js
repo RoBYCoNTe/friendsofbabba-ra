@@ -1,12 +1,17 @@
-import React from "react";
+import React from 'react';
 
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-import { AppBar, Box, Toolbar, useTheme } from "@mui/material";
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  useTheme,
+} from '@mui/material';
 
-import { HEADER } from "./config";
-import DefaultMenu from "./menu/horizontal/MenuHorizontal";
-import { bgBlur } from "./utils/cssStyles";
+import { HEADER } from './config';
+import DefaultMenu from './menu/horizontal/MenuHorizontal';
+import { bgBlur } from './utils/cssStyles';
 
 const Shadow = ({ sx, ...other }) => {
 	return (
@@ -18,11 +23,11 @@ const Shadow = ({ sx, ...other }) => {
 				height: 24,
 				zIndex: -1,
 				width: 1,
-				m: "auto",
-				borderRadius: "50%",
-				position: "absolute",
-				boxShadow: (theme) => theme.customShadows.z8,
-				...sx,
+				m: 'auto',
+				borderRadius: '50%',
+				position: 'absolute',
+				boxShadow: (theme) => theme.customShadows?.z8,
+				...sx
 			}}
 			{...other}
 		/>
@@ -37,14 +42,14 @@ const SidebarHorizontal = ({ menu: Menu = DefaultMenu, menuGroups = [] }) => {
 			color="transparent"
 			sx={{
 				boxShadow: 0,
-				top: HEADER.H_DASHBOARD_DESKTOP_OFFSET,
+				top: HEADER.H_DASHBOARD_DESKTOP_OFFSET
 			}}
 		>
 			<Toolbar
 				sx={{
 					...bgBlur({
-						color: theme.palette.background.default,
-					}),
+						color: theme.palette.background.default
+					})
 				}}
 			>
 				<Menu groups={menuGroups} />
@@ -56,7 +61,7 @@ const SidebarHorizontal = ({ menu: Menu = DefaultMenu, menuGroups = [] }) => {
 
 SidebarHorizontal.propTypes = {
 	menu: PropTypes.func,
-	menuGroups: PropTypes.array,
+	menuGroups: PropTypes.array
 };
 
 export default SidebarHorizontal;

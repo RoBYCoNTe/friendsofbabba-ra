@@ -15,9 +15,10 @@ export { default as SidebarToggleButton } from './SidebarToggleButton';
 export { default as SvgColor } from './SvgColor';
 export { default as Breadcrumb } from './Breadcrumb';
 
-export * from "./hooks";
-export * from "./menu";
-export * from "./scrollbar";
-export * from "./menu-popover";
-export * from "./theme";
-export * from "./utils";
+export * from './hooks';
+export * from './menu';
+export * from './scrollbar';
+export * from './menu-popover';
+export * from './theme';
+export * from './utils';
+export * from './settings';

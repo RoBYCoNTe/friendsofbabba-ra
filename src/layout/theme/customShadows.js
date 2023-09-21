@@ -6,7 +6,7 @@ import palette from './palette';
 
 // ----------------------------------------------------------------------
 
-const themeColor = palette("light");
+const themeColor = palette('light');
 
 const LIGHT_MODE = themeColor.grey[500];
 
@@ -38,12 +38,12 @@ function createShadow(color) {
 		dropdown: `0 0 2px 0 ${alpha(color, 0.24)}, -20px 20px 40px -4px ${alpha(
 			color,
 			0.24
-		)}`,
+		)}`
 	};
 }
 
 export default function customShadows(themeMode) {
-	return themeMode === "light"
+	return themeMode === 'light'
 		? createShadow(LIGHT_MODE)
 		: createShadow(DARK_MODE);
 }

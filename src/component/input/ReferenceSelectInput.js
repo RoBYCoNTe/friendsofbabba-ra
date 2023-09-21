@@ -14,16 +14,18 @@ const ReferenceSelectInput = ({
 	isRequired = false,
 	...props
 }) => {
+	const selectProps = {
+		optionText: optionText,
+		helperText: helperText,
+		fullWidth: fullWidth,
+		sx: sx,
+		disabled: disabled === true ? true : undefined,
+		isRequired
+	};
+
 	return (
 		<ReferenceInput {...props}>
-			<SelectInput
-				optionText={optionText}
-				helperText={helperText}
-				fullWidth={fullWidth}
-				disabled={disabled}
-				sx={sx}
-				isRequired={isRequired}
-			/>
+			<SelectInput {...selectProps} />
 		</ReferenceInput>
 	);
 };
