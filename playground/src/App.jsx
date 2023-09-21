@@ -1,38 +1,35 @@
 import React from 'react';
 
 import {
-  Admin,
-  createI18nProvider,
-  CrudProvider,
-  CrudResource,
-  LoginPage,
-  useAuthProvider,
-  useDataProvider,
-  useI18nCatcher,
-  useI18nLanguages,
-  WorkflowProvider,
+	Admin,
+	createI18nProvider,
+	CrudProvider,
+	CrudResource,
+	LoginPage,
+	useAuthProvider,
+	useDataProvider,
+	useI18nCatcher,
+	useI18nLanguages,
+	WorkflowProvider
 } from 'ra-friendsofbabba';
 import { Resource } from 'react-admin';
 import { QueryClient } from 'react-query';
 
 import {
-  CategoryOutlined,
-  DockOutlined,
-  FlagOutlined,
-  HelpOutline,
-  HelpRounded,
-  NotificationImportant,
-  PeopleAltOutlined,
-  Textsms,
+	CategoryOutlined,
+	DockOutlined,
+	FlagOutlined,
+	HelpOutline,
+	HelpRounded,
+	NotificationImportant,
+	PeopleAltOutlined,
+	Textsms
 } from '@mui/icons-material';
 
 import * as Components from './component';
 import Layout from './component/Layout';
 import Logo from './component/Logo';
-import {
-  API_URL,
-  FILE_FIELDS,
-} from './config';
+import { API_URL, FILE_FIELDS } from './config';
 import theme from './theme';
 
 const App = () => {
@@ -46,15 +43,15 @@ const App = () => {
 	const dataProvider = useDataProvider({
 		apiUrl,
 		// List of media fields that needs to be uploaded.
-		fileFields: FILE_FIELDS,
+		fileFields: FILE_FIELDS
 	});
 
 	const queryClient = new QueryClient({
 		defaultOptions: {
 			queries: {
-				refetchOnWindowFocus: false,
-			},
-		},
+				refetchOnWindowFocus: false
+			}
+		}
 	});
 
 	if (languages?.loading) {
@@ -65,6 +62,10 @@ const App = () => {
 		<WorkflowProvider apiUrl={apiUrl}>
 			<CrudProvider apiUrl={apiUrl} components={Components}>
 				<Admin
+					// Insert here your custom color palette
+					// fob={{
+					// 	presets
+					// }}
 					theme={theme}
 					layout={Layout}
 					loginPage={<LoginPage logo={Logo} />}
@@ -73,15 +74,15 @@ const App = () => {
 					authProvider={authProvider}
 					i18nProvider={createI18nProvider({
 						languages: languages.data,
-						locale: "it",
+						locale: 'it'
 					})}
 				>
 					<CrudResource
 						name="posts"
 						icon={DockOutlined}
 						options={{
-							label: "Aliases",
-							group: "blog",
+							label: 'Aliases',
+							group: 'blog',
 							order: 1,
 							caption: true
 						}}
@@ -89,27 +90,27 @@ const App = () => {
 					<CrudResource
 						name="blog-posts"
 						options={{
-							group: "blog",
+							group: 'blog'
 						}}
 						icon={DockOutlined}
 					/>
 					<CrudResource
 						name="blog-post-taxonomies"
 						options={{
-							group: "blog",
+							group: 'blog'
 						}}
 					/>
 					<CrudResource
 						name="tickets"
 						options={{
-							group: "dashboard",
+							group: 'dashboard'
 						}}
 						icon={HelpOutline}
 					/>
 					<CrudResource
 						name="ticket-types"
 						options={{
-							group: "admin",
+							group: 'admin'
 						}}
 						icon={HelpRounded}
 					/>
@@ -118,7 +119,7 @@ const App = () => {
 					<CrudResource
 						name="blog-post-comments"
 						options={{
-							group: "blog",
+							group: 'blog'
 						}}
 						icon={Textsms}
 					/>
@@ -126,7 +127,7 @@ const App = () => {
 						name="blog-categories"
 						group="blog"
 						options={{
-							group: "blog",
+							group: 'blog'
 						}}
 						icon={CategoryOutlined}
 					/>
@@ -134,7 +135,7 @@ const App = () => {
 					<CrudResource
 						name="notifications"
 						options={{
-							group: "dashboard",
+							group: 'dashboard'
 						}}
 						icon={NotificationImportant}
 					/>
@@ -145,37 +146,37 @@ const App = () => {
 						name="users"
 						icon={PeopleAltOutlined}
 						options={{
-							group: "admin",
-							roles: ["admin"],
+							group: 'admin',
+							roles: ['admin']
 						}}
 					/>
 					<CrudResource
 						name="language-messages"
 						options={{
-							group: "admin",
-							roles: ["admin"],
+							group: 'admin',
+							roles: ['admin']
 						}}
 						icon={FlagOutlined}
 					/>
 					<CrudResource
 						name="commands"
 						options={{
-							group: "admin",
-							roles: ["admin"],
+							group: 'admin',
+							roles: ['admin']
 						}}
 					/>
 					<CrudResource
 						name="command-logs"
 						options={{
-							group: "admin",
-							roles: ["admin"],
+							group: 'admin',
+							roles: ['admin']
 						}}
 					/>
 					<CrudResource
 						name="command-log-rows"
 						options={{
-							group: "admin",
-							roles: ["admin"],
+							group: 'admin',
+							roles: ['admin']
 						}}
 					/>
 				</Admin>

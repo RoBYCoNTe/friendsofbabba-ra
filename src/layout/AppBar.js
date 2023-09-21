@@ -1,18 +1,30 @@
 import React, { useMemo } from 'react';
 
 import PropTypes from 'prop-types';
-import { LoadingIndicator, useGetIdentity } from 'react-admin';
+import {
+  LoadingIndicator,
+  useGetIdentity,
+} from 'react-admin';
 
-import { AppBar as MuiAppBar, IconButton, Stack, Toolbar } from '@mui/material';
+import {
+  AppBar as MuiAppBar,
+  IconButton,
+  Stack,
+  Toolbar,
+} from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
-import { useFobContext } from '../context';
-import { HEADER, NAV } from './config';
+import { useFobContext } from '../context/FobContext';
+import {
+  HEADER,
+  NAV,
+} from './config';
 import useOffSetTop from './hooks/useOffSetTop';
 import useResponsive from './hooks/useResponsive';
 import Iconify from './Iconify';
 import DefaultLogo from './Logo';
 import DefaultNotificationsMenu from './NotificationsMenu';
+import DefaultSettingsButton from './settings/SettingsButton';
 import DefaultUserMenu from './UserMenu';
 import { bgBlur } from './utils/cssStyles';
 
@@ -21,6 +33,7 @@ const AppBar = ({
 	logo,
 	userMenu: UserMenu = DefaultUserMenu,
 	notificationsMenu: NotificationsMenu = DefaultNotificationsMenu,
+	settingsButton: SettingsButton = DefaultSettingsButton,
 	children
 }) => {
 	const theme = useTheme();
@@ -75,6 +88,7 @@ const AppBar = ({
 						color: 'text.secondary'
 					}}
 				/>
+				<SettingsButton />
 				<NotificationsMenu identity={identity} />
 				<UserMenu identity={identity} />
 			</Stack>
@@ -127,7 +141,8 @@ AppBar.propTypes = {
 	onOpenNav: PropTypes.func,
 	logo: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
 	userMenu: PropTypes.func,
-	notificationsMenu: PropTypes.func
+	notificationsMenu: PropTypes.func,
+	settingsButton: PropTypes.func
 };
 
 export default AppBar;

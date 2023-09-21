@@ -10,13 +10,13 @@ import {
   useTheme,
 } from '@mui/material/styles';
 
-import { useFobContext } from '../../context';
+import { useFobContext } from '../../context/FobContext';
 
 const ThemeContrastProvider = ({ children }) => {
 	const outerTheme = useTheme();
 	const { themeContrast } = useFobContext();
-	const isLight = outerTheme.mode === "light";
-	const isContrastBold = themeContrast === "bold";
+	const isLight = outerTheme.mode === 'light';
+	const isContrastBold = themeContrast === 'bold';
 	const themeOptions = useMemo(
 		() => ({
 			palette: {
@@ -24,21 +24,21 @@ const ThemeContrastProvider = ({ children }) => {
 					...(isContrastBold && {
 						default: isLight
 							? outerTheme.palette.grey[100]
-							: outerTheme.palette.grey[900],
-					}),
-				},
+							: outerTheme.palette.grey[900]
+					})
+				}
 			},
 			components: {
 				MuiCard: {
 					styleOverrides: {
 						...(isContrastBold && {
 							root: {
-								boxShadow: outerTheme.customShadows.z4,
-							},
-						}),
-					},
-				},
-			},
+								boxShadow: outerTheme.customShadows.z4
+							}
+						})
+					}
+				}
+			}
 		}),
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -56,7 +56,7 @@ const ThemeContrastProvider = ({ children }) => {
 };
 
 ThemeContrastProvider.propTypes = {
-	children: PropTypes.node,
+	children: PropTypes.node
 };
 
 export default ThemeContrastProvider;

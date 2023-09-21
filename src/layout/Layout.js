@@ -1,14 +1,11 @@
-import React, {
-  useEffect,
-  useState,
-} from 'react';
+import React, { useState } from 'react';
 
 import PropTypes from 'prop-types';
 import { SkipNavigationButton } from 'react-admin';
 
 import { styled } from '@mui/material';
 
-import { useFobContext } from '../context';
+import { useFobContext } from '../context/FobContext';
 import DefaultAppBar from './AppBar';
 import { HEADER } from './config';
 import useResponsive from './hooks/useResponsive';
@@ -17,6 +14,7 @@ import DefaultMenuHorizontal from './menu/horizontal/MenuHorizontal';
 import DefaultMenuMini from './menu/mini/MenuMini';
 import DefaultMenu from './menu/vertical/MenuVertical';
 import DefaultMenuBottom from './menu/vertical/MenuVerticalBottom';
+import DefaultSettingsMenu from './settings/SettingsMenu';
 import DefaultSidebar from './Sidebar';
 import DefaultSidebarHorizontal from './SidebarHorizontal';
 import DefaultSidebarMini from './SidebarMini';
@@ -40,16 +38,15 @@ const Layout = ({ children, ...props }) => {
 		sidebar: Sidebar = DefaultSidebar,
 		sidebarMini: SidebarMini = DefaultSidebarMini,
 		sidebarHorizontal: SidebarHorizontal = DefaultSidebarHorizontal,
+		settingsMenu: SettingsMenu = DefaultSettingsMenu,
 		layoutView: LayoutView = DefaultLayoutView,
 		logo,
 		logoMini,
 		title,
-		themeLayout: initialThemeLayout,
-		themeStretch: initialThemeStretch,
 		...rest
 	} = props;
 	const [open, setOpen] = useState(false);
-	const { themeLayout, setThemeLayout, setThemeStretch } = useFobContext();
+	const { themeLayout } = useFobContext();
 	const isDesktop = useResponsive('up', 'lg');
 	const isSidebarHorizontal = themeLayout === 'horizontal';
 	const isSidebarMini = themeLayout === 'mini';
@@ -71,23 +68,6 @@ const Layout = ({ children, ...props }) => {
 		/>
 	);
 
-	useEffect(() => {
-		if (initialThemeLayout === 'horizontal') {
-			setThemeLayout(initialThemeLayout);
-		} else {
-			// Vertical or Mini
-			if (themeLayout !== 'mini') {
-				setThemeLayout('vertical');
-			}
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [initialThemeLayout]);
-
-	useEffect(() => {
-		setThemeStretch(initialThemeStretch);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [initialThemeStretch]);
-
 	if (isSidebarHorizontal) {
 		return (
 			<StyledRoot {...rest} horizontal={isSidebarHorizontal && isDesktop}>
@@ -101,6 +81,7 @@ const Layout = ({ children, ...props }) => {
 				<LayoutView errorComponent={errorComponent} title={title}>
 					{children}
 				</LayoutView>
+				<SettingsMenu />
 			</StyledRoot>
 		);
 	}
@@ -122,6 +103,7 @@ const Layout = ({ children, ...props }) => {
 				<LayoutView errorComponent={errorComponent} title={title}>
 					{children}
 				</LayoutView>
+				<SettingsMenu />
 			</StyledRoot>
 		);
 	}
@@ -134,6 +116,7 @@ const Layout = ({ children, ...props }) => {
 			<LayoutView errorComponent={errorComponent} title={title}>
 				{children}
 			</LayoutView>
+			<SettingsMenu />
 		</StyledRoot>
 	);
 };

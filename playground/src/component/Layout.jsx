@@ -1,19 +1,19 @@
 import React from 'react';
 
 import {
-  AppBar as FobAppBar,
-  Layout as FobLayout,
-  Logo as FobLogo,
-  MenuHorizontal as FobMenuHorizontal,
-  MenuMini as FobMenuMini,
-  MenuVertical as FobMenuVertical,
-  MenuVerticalBottom as FobMenuVerticalBottom,
-  NotificationsMenu as FobNotificationsMenu,
-  Sidebar as FobSidebar,
-  SidebarHorizontal as FobSidebarHorizontal,
-  SidebarMini as FobSidebarMini,
-  UserMenu as FobUserMenu,
-  UserMenuItem,
+	AppBar as FobAppBar,
+	Layout as FobLayout,
+	Logo as FobLogo,
+	MenuHorizontal as FobMenuHorizontal,
+	MenuMini as FobMenuMini,
+	MenuVertical as FobMenuVertical,
+	MenuVerticalBottom as FobMenuVerticalBottom,
+	NotificationsMenu as FobNotificationsMenu,
+	Sidebar as FobSidebar,
+	SidebarHorizontal as FobSidebarHorizontal,
+	SidebarMini as FobSidebarMini,
+	UserMenu as FobUserMenu,
+	UserMenuItem
 } from 'ra-friendsofbabba';
 
 import { Divider } from '@mui/material';
@@ -47,6 +47,8 @@ const MyAppBar = (props) => (
 		{...props}
 		userMenu={MyUserMenu}
 		notificationsMenu={MyNotificationsMenu}
+		// Disable theme settings menu
+		// settingsButton={() => {}}
 	/>
 );
 
@@ -95,8 +97,10 @@ const Layout = (props) => {
 			menuHorizontal={MyMenuHorizontal}
 			menuMini={MyMenuMini}
 			menuBottom={MyMenuBottom}
-			themeLayout="horizontal"
-			themeStretch={true}
+			// themeLayout="horizontal"
+			// themeStretch={true}
+			// Disable theme settings menu
+			// settingsMenu={() => {}}
 		/>
 	);
 };

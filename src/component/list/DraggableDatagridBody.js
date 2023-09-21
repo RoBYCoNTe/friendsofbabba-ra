@@ -1,25 +1,18 @@
 import * as React from 'react';
-import {
-  cloneElement,
-  memo,
-} from 'react';
+import { cloneElement, memo } from 'react';
 
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {
-  DatagridBody as RaDatagridBody,
-  DatagridClasses,
-  PureDatagridRow,
-  useDataProvider,
-  useListContext,
-  useResourceContext,
+	DatagridBody as RaDatagridBody,
+	DatagridClasses,
+	PureDatagridRow,
+	useDataProvider,
+	useListContext,
+	useResourceContext
 } from 'react-admin';
 
-import {
-  DragDropContext,
-  Draggable,
-  Droppable,
-} from '@hello-pangea/dnd';
+import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
 import { TableBody } from '@mui/material';
 
 import { DraggableProvider } from '../../context/DraggableContext';
@@ -44,7 +37,7 @@ const DraggableDatagridBody = ({
 	const { refetch } = useListContext();
 	const dataProvider = useDataProvider();
 	const droppableResource = useResourceContext(resource);
-	const [localData, setLocalData] = React.useState(data);
+	const [localData, setLocalData] = React.useState();
 	const onDragEnd = async (result) => {
 		if (!result.destination) {
 			return;
@@ -118,7 +111,7 @@ const DraggableDatagridBody = ({
 							{...droppableProvided.droppableProps}
 							{...rest}
 						>
-							{localData.map((record, rowIndex) => (
+							{localData?.map((record, rowIndex) => (
 								<Draggable
 									draggableId={record?.id.toString()}
 									index={record?.[draggableField] ?? rowIndex}
