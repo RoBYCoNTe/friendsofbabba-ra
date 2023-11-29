@@ -1,9 +1,31 @@
 export default function Ra(theme) {
 	return {
+		RaLoadingInput: {
+			styleOverrides: {
+				root: {
+					'& input.Mui-disabled': {
+						padding: '8.5px 14px'
+					},
+					'& .MuiFormLabel-root': {
+						transform: 'translate(14px, 9px) scale(1)'
+					}
+				}
+			}
+		},
 		RaSelectInput: {
 			styleOverrides: {
 				root: {
 					marginTop: 0
+				}
+			}
+		},
+		RaSelectArrayInput: {
+			styleOverrides: {
+				root: {
+					marginBottom: theme.spacing(0.5),
+					'& .MuiFormLabel-root': {
+						transform: 'translate(14px, 9px) scale(1)'
+					}
 				}
 			}
 		},
