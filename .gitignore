@@ -35,3 +35,5 @@ friendsofbabba-ra.code-workspace
 
 playground-applica
 crm.incisor.it
+example/**
+!example/.gitkeep

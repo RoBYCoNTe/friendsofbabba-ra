@@ -23,7 +23,7 @@ export default function Ra(theme) {
 			styleOverrides: {
 				root: {
 					marginBottom: theme.spacing(0.5),
-					'& .MuiFormLabel-root': {
+					'& .MuiFormLabel-root:not(.MuiInputLabel-shrink)': {
 						transform: 'translate(14px, 9px) scale(1)'
 					}
 				}
