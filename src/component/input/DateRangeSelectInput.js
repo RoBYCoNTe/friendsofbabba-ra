@@ -1,11 +1,7 @@
 import React from 'react';
 
 import dayjs from 'dayjs';
-import {
-  SelectInput,
-  useListContext,
-  useTranslate,
-} from 'react-admin';
+import { SelectInput, useListContext, useTranslate } from 'react-admin';
 import { useFormContext } from 'react-hook-form';
 
 export const DATE_RANGE_EXPR = {
@@ -99,7 +95,13 @@ const getRanges = (props, translate) =>
 		};
 	});
 
-const DateRangeSelectInput = ({ onChange, ...props }) => {
+const DateRangeSelectInput = ({
+	onChange,
+	startAtSource = 'start_at',
+	endAtSource = 'end_at',
+	daySource = 'day',
+	...props
+}) => {
 	const translate = useTranslate();
 	const { setValue } = useFormContext();
 	const { filterValues } = useListContext();
@@ -109,7 +111,9 @@ const DateRangeSelectInput = ({ onChange, ...props }) => {
 		const newFilters = {
 			...filterValues,
 			[props.source]: value,
-			...range
+			[startAtSource]: range.start_at,
+			[endAtSource]: range.end_at,
+			[daySource]: range.day
 		};
 		Object.keys(newFilters).forEach((key) => {
 			setValue(key, newFilters[key]);

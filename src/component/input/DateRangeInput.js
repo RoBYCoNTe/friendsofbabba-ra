@@ -7,9 +7,9 @@ import DateRangeSelectInput from './DateRangeSelectInput';
 
 const DateRangeInput = ({
 	defaultValue,
-	startAtSource = "start_at",
-	endAtSource = "end_at",
-	daySource = "day",
+	startAtSource = 'start_at',
+	endAtSource = 'end_at',
+	daySource = 'day',
 	...props
 }) => {
 	const { filterValues } = useListContext(props);
@@ -22,18 +22,21 @@ const DateRangeInput = ({
 		<>
 			<DateRangeSelectInput
 				{...props}
-				label={props.label || "app.date_range.label"}
+				label={props.label || 'app.date_range.label'}
+				startAtSource={startAtSource}
+				endAtSource={endAtSource}
+				daySource={daySource}
 				sx={(theme) =>
-					["range", "day"].indexOf(viewMode) > -1 && {
-						marginRight: theme.spacing(1),
+					['range', 'day'].indexOf(viewMode) > -1 && {
+						marginRight: theme.spacing(1)
 					}
 				}
 			/>
-			{viewMode === "range" && (
+			{viewMode === 'range' && (
 				<DatePickerInput
 					{...props}
 					sx={(theme) => ({
-						marginRight: theme.spacing(1),
+						marginRight: theme.spacing(1)
 					})}
 					label="app.label.start_at"
 					source={startAtSource}
@@ -41,22 +44,22 @@ const DateRangeInput = ({
 					fullWidth
 				/>
 			)}
-			{viewMode === "range" && (
+			{viewMode === 'range' && (
 				<DatePickerInput
 					{...props}
 					sx={(theme) => ({
-						marginRight: theme.spacing(1),
+						marginRight: theme.spacing(1)
 					})}
 					label="app.label.end_at"
 					source={endAtSource}
 					fullWidth
 				/>
 			)}
-			{viewMode === "day" && (
+			{viewMode === 'day' && (
 				<DatePickerInput
 					{...props}
 					sx={(theme) => ({
-						marginRight: theme.spacing(1),
+						marginRight: theme.spacing(1)
 					})}
 					label="app.label.day"
 					source={daySource}
